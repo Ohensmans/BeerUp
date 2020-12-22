@@ -4,7 +4,7 @@ using Repo.Modeles.Identity;
 
 namespace Repo.Contexts
 {
-    class UserContext : IdentityDbContext<Utilisateur>
+    public class UserContext : IdentityDbContext<Utilisateur>
     {
         public UserContext(DbContextOptions<UserContext> options): base(options)
         {

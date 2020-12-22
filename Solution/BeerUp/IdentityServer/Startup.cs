@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repo.Modeles.Identity;
+using Repo.Contexts;
 using System.Reflection;
-using Microsoft.AspNetCore.Identity;
 
 namespace IdentityServer
 {
@@ -23,7 +26,7 @@ namespace IdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddControllersWithViews();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
@@ -33,6 +36,7 @@ namespace IdentityServer
             services.AddIdentity<Utilisateur, IdentityRole>()
                 .AddEntityFrameworkStores<UserContext>()
                 .AddDefaultTokenProviders();
+
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -59,15 +63,13 @@ namespace IdentityServer
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseIdentityServer();
             app.UseAuthorization();
+            app.UseMvc();
 
             app.UseEndpoints(endpoints =>
             {
