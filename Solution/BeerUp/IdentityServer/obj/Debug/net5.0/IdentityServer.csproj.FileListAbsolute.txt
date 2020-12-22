@@ -1,0 +1,9 @@
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.csprojAssemblyReference.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.GeneratedMSBuildEditorConfig.editorconfig
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.AssemblyInfoInputs.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.AssemblyInfo.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.csproj.CoreCompileInputs.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.MvcApplicationPartsAssemblyInfo.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.MvcApplicationPartsAssemblyInfo.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.RazorAssemblyInfo.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.RazorAssemblyInfo.cs

@@ -1,0 +1,9 @@
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\bin\Debug\netcoreapp3.1\Repo.deps.json
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\bin\Debug\netcoreapp3.1\Repo.dll
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\bin\Debug\netcoreapp3.1\Repo.pdb
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.csprojAssemblyReference.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.AssemblyInfoInputs.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.AssemblyInfo.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.csproj.CoreCompileInputs.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.dll
+F:\Projets GitHub\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.pdb

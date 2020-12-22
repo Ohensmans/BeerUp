@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerUpApi", "BeerUpApi\BeerUpApi.csproj", "{94D5F8AA-DCC3-4A6E-9A46-5D1968CF50E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{C46C1FCD-172B-4AF3-887E-ECCC5A84582C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repo", "Repo\Repo.csproj", "{22E44A0F-FC70-434E-B260-344B89C5403F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94D5F8AA-DCC3-4A6E-9A46-5D1968CF50E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D5F8AA-DCC3-4A6E-9A46-5D1968CF50E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D5F8AA-DCC3-4A6E-9A46-5D1968CF50E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D5F8AA-DCC3-4A6E-9A46-5D1968CF50E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C46C1FCD-172B-4AF3-887E-ECCC5A84582C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C46C1FCD-172B-4AF3-887E-ECCC5A84582C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C46C1FCD-172B-4AF3-887E-ECCC5A84582C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C46C1FCD-172B-4AF3-887E-ECCC5A84582C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E44A0F-FC70-434E-B260-344B89C5403F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E44A0F-FC70-434E-B260-344B89C5403F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E44A0F-FC70-434E-B260-344B89C5403F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E44A0F-FC70-434E-B260-344B89C5403F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E0CA615-FD15-4793-88C2-31B81C9512CB}
+	EndGlobalSection
+EndGlobal
