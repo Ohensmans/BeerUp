@@ -15,5 +15,9 @@ namespace IdentityServer.ViewModels.Account
         public string ConfirmPassword { get; set; }
         public string ReturnUrl { get; set; }
 
+        public bool OrgExiste { get; set; }
+
+        public bool OrgRegister { get; set; }
+
     }
 }
