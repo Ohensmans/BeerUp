@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace BeerUpApi.ModelesBeerUp
+namespace Repo.Modeles.ModelesBeerUp
 {
     public partial class AvisBiereUser
     {
@@ -14,7 +14,7 @@ namespace BeerUpApi.ModelesBeerUp
         public DateTime AviBieUserDateAvis { get; set; }
         public bool AviBieUserActif { get; set; }
 
-        public virtual Avi Avis { get; set; }
+        public virtual Avis Avis { get; set; }
         public virtual Biere Bie { get; set; }
     }
 }

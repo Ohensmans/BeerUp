@@ -1,4 +1,4 @@
-using BeerUpApi.ModelesBeerUp;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Repo.Modeles.ModelesBeerUp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace BeerUpApi
             
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<BeerUpContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbEtablissement"), sql => sql.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<BeerUpContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbBeerUp"), sql => sql.MigrationsAssembly(migrationsAssembly)));
 
             services.AddSwaggerGen(c =>
             {

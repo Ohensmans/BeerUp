@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace BeerUpApi.ModelesBeerUp
+namespace Repo.Modeles.ModelesBeerUp
 {
     public partial class BeerUpContext : DbContext
     {
@@ -19,7 +19,7 @@ namespace BeerUpApi.ModelesBeerUp
 
         public virtual DbSet<AchatsVue> AchatsVues { get; set; }
         public virtual DbSet<AdressesFacturation> AdressesFacturations { get; set; }
-        public virtual DbSet<Avi> Avis { get; set; }
+        public virtual DbSet<Avis> Avis { get; set; }
         public virtual DbSet<AvisBiereUser> AvisBiereUsers { get; set; }
         public virtual DbSet<Biere> Bieres { get; set; }
         public virtual DbSet<Etablissement> Etablissements { get; set; }
@@ -119,7 +119,7 @@ namespace BeerUpApi.ModelesBeerUp
                     .HasColumnName("AdrFac.Vil");
             });
 
-            modelBuilder.Entity<Avi>(entity =>
+            modelBuilder.Entity<Avis>(entity =>
             {
                 entity.HasKey(e => e.AvisId);
 

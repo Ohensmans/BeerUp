@@ -1,0 +1,49 @@
+﻿@model IdentityServer.ViewModels.Account.LoginInputViewModel
+@{
+    ViewData["Title"] = "Se connecter";
+}
+
+<h1>Se connecter</h1>
+
+@using (Html.BeginForm(FormMethod.Post, new { @class = "row" }))
+{
+    @Html.HiddenFor(model => model.ReturnUrl)
+
+    <div class="col-md-12">
+
+        <fieldset>
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <br />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username, "Login", new { @class = "control-label" })
+                <br />
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                <br />
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, "Mot de passe", new { @class = "control-label" })
+                <br />
+                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password" })
+                <br />
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.RememberLogin, new { @class = "form-control" })
+                @Html.LabelFor(model => model.RememberLogin, "Se rappeler du login", new { @class = "control-label" })
+                <br />
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary" name="button" value="login">Se connecter</button>
+                <button type="submit" class="btn btn-danger" name="button" value="cancel">Annuler</button>
+                <br />
+                <br />
+                <button type="submit" class="btn btn-success" name="button" value="register">Créer un nouveau compte</button>
+            </div>
+        </fieldset>
+    </div>
+}

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace BeerUpApi.ModelesBeerUp
+namespace Repo.Modeles.ModelesBeerUp
 {
-    public partial class Avi
+    public partial class Avis
     {
-        public Avi()
+        public Avis()
         {
             AvisBiereUsers = new HashSet<AvisBiereUser>();
         }

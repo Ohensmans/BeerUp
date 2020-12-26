@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Repo\Repo.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Mobile\" />
+    <Folder Include="Validator\" />
+  </ItemGroup>
+
 </Project>

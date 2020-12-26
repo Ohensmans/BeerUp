@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace BeerUpApi.ModelesBeerUp
+namespace Repo.Modeles.ModelesBeerUp
 {
     public partial class AchatsVue
     {
