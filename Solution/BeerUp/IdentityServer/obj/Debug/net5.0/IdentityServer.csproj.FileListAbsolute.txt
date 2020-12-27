@@ -101,5 +101,5 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Identit
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.genruntimeconfig.cache
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Home\AccessDenied.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\Index.cshtml.g.cs
-F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\LoginMobile.cshtml.g.cs
-F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\RegisterMobile.cshtml.g.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\LoginWeb.cshtml.g.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\RegisterWeb.cshtml.g.cs

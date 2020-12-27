@@ -48,7 +48,7 @@
             <div class="col-md-12 row">
 
                 <div class="col-md-6 form-group">
-                    @Html.EditorFor(model => model.OrgExiste, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.OrgExiste, new { @class = "form-control", id="OrgaExist"})
                     @Html.LabelFor(model => model.OrgExiste, "Mon organisation est déjà enregistrée", new { @class = "control-label" })
                     <br />
                     @Html.ValidationMessageFor(model => model.OrgExiste, "", new { @class = "text-danger" })
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="col-md-12 form-group">
-                    @Html.EditorFor(model => model.OrgRegister, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.OrgRegister, new { @class = "form-control", id="OrgaRegister"})
                     @Html.LabelFor(model => model.OrgRegister, "Je souhaite enregistrer mon organisation et la représenter", new { @class = "control-label" })
                     <br />
                     @Html.ValidationMessageFor(model => model.OrgRegister, "", new { @class = "text-danger" })
@@ -70,7 +70,7 @@
 
             </div>
 
-            <div class="col-md-12 row">
+            <div class="col-md-12 row" id="registerOrga">
 
                 <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.Organisation.OrgNom, "Nom de l'Organisation", new { @class = "control-label" })
@@ -147,6 +147,5 @@
 }
 
 @section Scripts{
-    <script src="~/js/toastr.js"></script>
-    <script src="~/js/RemplissageFormulaire.js"></script>
+    <script src="~/js/RegisterWeb.js"></script>
 }

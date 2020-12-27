@@ -98,7 +98,7 @@ namespace IdentityServer
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Accountweb}/{action=Loginmobile}/{id?}");
+                    pattern: "{controller=Accountweb}/{action=Loginweb}/{id?}");
             });
         }
 

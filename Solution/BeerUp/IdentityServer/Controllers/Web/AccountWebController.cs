@@ -37,7 +37,7 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpGet]
-        public IActionResult RegisterMobile(string returnUrl)
+        public IActionResult RegisterWeb(string returnUrl)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterMobile(RegisterViewModel model, string button)
+        public async Task<IActionResult> RegisterWeb(RegisterViewModel model, string button)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace IdentityServer.Controllers.Web
 
 
         [HttpGet]
-        public IActionResult LoginMobile(string returnUrl)
+        public IActionResult LoginWeb(string returnUrl)
         {
             var rUrl = returnUrl;
 
@@ -110,7 +110,7 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> LoginMobile(LoginInputViewModel vm, string button)
+        public async Task<IActionResult> LoginWeb(LoginInputViewModel vm, string button)
         {
             try
             {
