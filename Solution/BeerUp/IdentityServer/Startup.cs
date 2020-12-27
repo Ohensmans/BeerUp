@@ -61,6 +61,9 @@ namespace IdentityServer
 
             IConfigurationSection sec = Configuration.GetSection("BaseUrl");
             services.Configure<BaseUrl>(sec);
+
+            services.UseServicesVAT();
+            services.UseServicesOrganisation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

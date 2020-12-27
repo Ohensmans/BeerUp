@@ -26,7 +26,7 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> Apis =>
         new List<ApiResource>
         {
-            new ApiResource("Api", "Api Services"),
+            new ApiResource("ApiBeerUp", "Api BeerUp"),
             new ApiResource("ApiExterne", "Api Externes"),
         };
 
