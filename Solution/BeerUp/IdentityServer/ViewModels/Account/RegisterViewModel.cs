@@ -9,8 +9,16 @@ namespace IdentityServer.ViewModels.Account
 {
     public class RegisterViewModel
     {
-        public Utilisateur User { get; set; }
+        public RegisterViewModel()
+        {
+            this.lOrganisations = new List<Organisation>();
+        }
+
         public Organisation Organisation { get; set; }
+
+        public Utilisateur User { get; set; }
+        public List<Organisation> lOrganisations { get; set; }
+
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string ReturnUrl { get; set; }
@@ -18,6 +26,8 @@ namespace IdentityServer.ViewModels.Account
         public bool OrgExiste { get; set; }
 
         public bool OrgRegister { get; set; }
+
+        public string NomOrganisation { get; set; }
 
     }
 }

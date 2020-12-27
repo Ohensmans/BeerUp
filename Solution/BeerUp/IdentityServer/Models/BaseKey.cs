@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Models
 {
-    public class BaseUrl
+    public class BaseKey
     {
-        public string BeerUpWebUrl { get; set; }
-
-        public string VatUrl { get; set; }
+        public string VATApi { get; set; }
     }
 }

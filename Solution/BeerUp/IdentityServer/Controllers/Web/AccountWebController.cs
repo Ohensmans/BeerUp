@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Controllers.Web
 {
-    public class AccountController : Controller
+    public class AccountWebController : Controller
     {
         private readonly UserManager<Utilisateur> _userManager;
         private readonly SignInManager<Utilisateur> _signInManager;
@@ -22,7 +22,7 @@ namespace IdentityServer.Controllers.Web
         //Adresse de retour sur le site
         private readonly string BeerUpWebUrl;
 
-        public AccountController(
+        public AccountWebController(
             UserManager<Utilisateur> userManager,
             SignInManager<Utilisateur> signInManager,
             IIdentityServerInteractionService interaction,
@@ -37,7 +37,7 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpGet]
-        public IActionResult Register(string returnUrl)
+        public IActionResult RegisterMobile(string returnUrl)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model, string button)
+        public async Task<IActionResult> RegisterMobile(RegisterViewModel model, string button)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace IdentityServer.Controllers.Web
 
                         if (result.Succeeded)
                         {
-                            if (await PutInRole(model.User))
+                            /*if (await PutInRole(model.User))
                             {
 
                                 if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrateur"))
@@ -80,7 +80,7 @@ namespace IdentityServer.Controllers.Web
                                 }
                                 var signInResult = await _signInManager.PasswordSignInAsync(model.User, model.Password, false, false);
                                 return Redirect(model.ReturnUrl);
-                            }
+                            }*/
                         }
                     }
                     return View(model);
@@ -99,7 +99,7 @@ namespace IdentityServer.Controllers.Web
 
 
         [HttpGet]
-        public IActionResult Login(string returnUrl)
+        public IActionResult LoginMobile(string returnUrl)
         {
             var rUrl = returnUrl;
 
@@ -110,7 +110,7 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginInputViewModel vm, string button)
+        public async Task<IActionResult> LoginMobile(LoginInputViewModel vm, string button)
         {
             try
             {

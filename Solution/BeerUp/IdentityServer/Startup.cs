@@ -12,6 +12,10 @@ using IdentityServer4.EntityFramework.DbContexts;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer.Models;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using IdentityServer.Validator;
+using IdentityServer.ViewModels.Account;
 
 namespace IdentityServer
 {
@@ -30,7 +34,7 @@ namespace IdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(options => options.EnableEndpointRouting = false).AddFluentValidation();
             services.AddControllersWithViews();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
@@ -59,8 +63,14 @@ namespace IdentityServer
                 })
                 .AddAspNetIdentity<Utilisateur>();
 
-            IConfigurationSection sec = Configuration.GetSection("BaseUrl");
-            services.Configure<BaseUrl>(sec);
+
+            services.AddScoped<IValidator<Utilisateur>, UtilisateurValidator>();
+            services.AddTransient<IValidator<RegisterViewModel>, RegisterValidator>();
+            services.AddTransient<IValidator<LoginInputViewModel>, LoginValidator>();
+
+
+            services.Configure<BaseUrl>(Configuration.GetSection("BaseUrl"));
+            services.Configure<BaseKey>(Configuration.GetSection("ApiKey"));
 
             services.UseServicesVAT();
             services.UseServicesOrganisation();
@@ -88,7 +98,7 @@ namespace IdentityServer
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Accountweb}/{action=Loginmobile}/{id?}");
             });
         }
 

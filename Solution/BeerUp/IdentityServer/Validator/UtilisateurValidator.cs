@@ -24,11 +24,13 @@ namespace IdentityServer.Validator
 
         }
 
+        //vérifie que le login n'existe pas déjà
         public bool MailEstUnique(Utilisateur user, string newValue)
         {
-            return _Utilisateurs.All(u => u.Equals(user) || u.Email != newValue);
+            return _Utilisateurs.All(u => u.UserName != newValue);
         }
 
+        //vérifie que l'adresse mail est bien une adresse mail
         public bool MailEstValide(string newValue)
         {
             try
