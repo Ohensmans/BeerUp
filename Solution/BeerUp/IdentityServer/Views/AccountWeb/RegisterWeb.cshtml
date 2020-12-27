@@ -10,7 +10,11 @@
 @using (Html.BeginForm(FormMethod.Post, new { @class = "row" }))
 {
     @Html.HiddenFor(model => model.ReturnUrl)
-    @Html.HiddenFor(model => model.lOrganisations)
+
+    @for (int i = 0; i < Model.lOrgaNom.Count; i++)
+    {
+        @Html.HiddenFor(model => model.lOrgaNom[i])
+    }
 
     <div class="col-md-12">
 
@@ -48,7 +52,7 @@
             <div class="col-md-12 row">
 
                 <div class="col-md-6 form-group">
-                    @Html.EditorFor(model => model.OrgExiste, new { @class = "form-control", id="OrgaExist"})
+                    @Html.EditorFor(model => model.OrgExiste, new { @class = "form-control", id = "OrgaExist" })
                     @Html.LabelFor(model => model.OrgExiste, "Mon organisation est déjà enregistrée", new { @class = "control-label" })
                     <br />
                     @Html.ValidationMessageFor(model => model.OrgExiste, "", new { @class = "text-danger" })
@@ -56,13 +60,13 @@
                 </div>
 
                 <div class="col-md-6 form-group">
-                    @Html.DropDownListFor(model => model.NomOrganisation, new SelectList(Model.lOrganisations), "Sélectionnez votre organisation", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.NomOrganisation, new SelectList(Model.lOrgaNom), "Sélectionnez votre organisation", new { @class = "form-control" })
                     <br />
                     @Html.ValidationMessageFor(model => model.NomOrganisation, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="col-md-12 form-group">
-                    @Html.EditorFor(model => model.OrgRegister, new { @class = "form-control", id="OrgaRegister"})
+                    @Html.EditorFor(model => model.OrgRegister, new { @class = "form-control", id = "OrgaRegister" })
                     @Html.LabelFor(model => model.OrgRegister, "Je souhaite enregistrer mon organisation et la représenter", new { @class = "control-label" })
                     <br />
                     @Html.ValidationMessageFor(model => model.OrgRegister, "", new { @class = "text-danger" })

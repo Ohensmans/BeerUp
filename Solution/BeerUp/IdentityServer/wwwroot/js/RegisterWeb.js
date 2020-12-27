@@ -1,5 +1,9 @@
 ﻿window.onload = function () {
-    $("#registerOrga").hide();
+
+    if (!document.getElementById("OrgRegister").checked) {
+        $("#registerOrga").hide();
+    }
+    
 }
 
 const OrgaRegister = document.getElementById("OrgRegister");

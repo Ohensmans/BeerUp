@@ -20,8 +20,8 @@ namespace IdentityServer.Validator
                 .MaximumLength(200).WithMessage("Maximum 200 caractères pour le nom");
 
             RuleFor(x => x.OrgTva)
-                .NotNull().WithMessage("Le numéro de TVA est obligatoire")
-                .MustAsync(NumTvaValide).WithMessage("Le numéro de TVA doit être valide, n'oubliez pas le code pays par exemple : BE0409.458.972").When(x => x.OrgTva !=null);
+                .NotNull().WithMessage("Le numéro de TVA est obligatoire");
+                //.MustAsync(NumTvaValide).WithMessage("Le numéro de TVA doit être valide, n'oubliez pas le code pays par exemple : BE0409.458.972").When(x => x.OrgTva !=null);
 
             RuleFor(x => x.OrgEmail)
                 .NotNull().WithMessage("L'adresse mail professionnelle est obligatoire")

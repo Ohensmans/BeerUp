@@ -9,6 +9,8 @@ namespace IdentityServer.Models
     {
         public string BeerUpWebUrl { get; set; }
 
+        public string BeerUpApi { get; set; }
+
         public string VatUrl { get; set; }
     }
 }

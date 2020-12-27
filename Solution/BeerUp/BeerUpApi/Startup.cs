@@ -47,7 +47,7 @@ namespace BeerUpApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BeerUpApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiBeerUp", Version = "v1" });
             });
         }
 

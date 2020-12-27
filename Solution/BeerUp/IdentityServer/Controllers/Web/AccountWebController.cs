@@ -1,13 +1,18 @@
-﻿using IdentityServer.ViewModels;
+﻿using IdentityServer.ExternalApiCall.BeerUp;
+using IdentityServer.ViewModels;
 using IdentityServer.ViewModels.Account;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Repo.Modeles.Identity;
+using Repo.Modeles.ModelesBeerUp;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Controllers.Web
@@ -18,30 +23,36 @@ namespace IdentityServer.Controllers.Web
         private readonly SignInManager<Utilisateur> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
+        private readonly IOrganisationService organisationService;
 
         //Adresse de retour sur le site
         private readonly string BeerUpWebUrl;
 
-        public AccountWebController(
-            UserManager<Utilisateur> userManager,
-            SignInManager<Utilisateur> signInManager,
-            IIdentityServerInteractionService interaction,
-            IEventService events,
-            IOptions<Models.BaseUrl> url)
+        public AccountWebController(UserManager<Utilisateur> userManager, SignInManager<Utilisateur> signInManager, IIdentityServerInteractionService interaction, IEventService events,
+            IOptions<Models.BaseUrl> url, IOrganisationService organisationService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
             _events = events; 
             this.BeerUpWebUrl = url.Value.BeerUpWebUrl;
+            this.organisationService = organisationService;
         }
 
         [HttpGet]
-        public IActionResult RegisterWeb(string returnUrl)
+        public async Task<IActionResult> RegisterWeb(string returnUrl)
         {
             try
             {
                 RegisterViewModel rvm = new RegisterViewModel();
+
+                List<Organisation> lOrganisations = await organisationService.GetAllOrganisationsAsync();
+
+                foreach(Organisation org in lOrganisations)
+                {
+                    rvm.lOrgaNom.Add(org.OrgNom);
+                }
+
                 var rUrl = returnUrl;
                 if (returnUrl == null)
                     rUrl = this.BeerUpWebUrl;
@@ -67,21 +78,34 @@ namespace IdentityServer.Controllers.Web
                 {
                     if (ModelState.IsValid)
                     {
+                        string role;
+                        if (model.OrgExiste)
+                        {
+                            List<Organisation> lOrganisations = await organisationService.GetAllOrganisationsAsync();
+                            model.User.OrgId = lOrganisations.FirstOrDefault(x => x.OrgNom == model.NomOrganisation).OrgId;
+                            role = "GroupUser";
+                        }
+                        else if (model.OrgRegister)
+                        {
+                            model.User.OrgId = AddOrganisation(model.Organisation).Result;
+                            role = "GroupAdmin";
+                        }
+                        else
+                        {
+                            return View(model);
+                        }
+
                         var result = await _userManager.CreateAsync(model.User, model.Password);
 
-                        if (result.Succeeded)
+                        if(result.Succeeded)
                         {
-                            /*if (await PutInRole(model.User))
+                            result = await _userManager.AddToRoleAsync(model.User, role);
+                            if(result.Succeeded)
                             {
-
-                                if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrateur"))
-                                {
-                                    return RedirectToAction("ListeUser", "Administration", new { returnUrl = model.ReturnUrl });
-                                }
                                 var signInResult = await _signInManager.PasswordSignInAsync(model.User, model.Password, false, false);
                                 return Redirect(model.ReturnUrl);
-                            }*/
-                        }
+                            }
+                        }                      
                     }
                     return View(model);
                 }
@@ -94,6 +118,22 @@ namespace IdentityServer.Controllers.Web
             {
                 ErrorViewModel vme = new ErrorViewModel(ex.Message);
                 return View("Error", vme);
+            }
+        }
+
+        private async Task<Guid> AddOrganisation (Organisation organisation)
+        {
+
+            //crée l'organisation
+            var idToken = await HttpContext.GetTokenAsync("access_token");
+            try
+            {
+                Organisation orga = await organisationService.CreateOrganisationAsync(organisation, idToken);
+                return orga.OrgId;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 

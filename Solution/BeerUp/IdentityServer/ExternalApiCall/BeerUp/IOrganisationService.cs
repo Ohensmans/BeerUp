@@ -12,9 +12,9 @@ namespace IdentityServer.ExternalApiCall.BeerUp
 
         Task<Organisation> GetOrganisationAsync(Guid id);
 
-        Task<Organisation> CreateOrganisationAsync(Organisation etablissement, string idToken);
+        Task<Organisation> CreateOrganisationAsync(Organisation organisation, string idToken);
 
-        Task<Organisation> UpdateOrganisationAsync(Organisation etablissement, string idToken);
+        Task<Organisation> UpdateOrganisationAsync(Organisation organisation, string idToken);
 
         Task DeleteOrganisationAsync(Guid id, string idToken);
     }

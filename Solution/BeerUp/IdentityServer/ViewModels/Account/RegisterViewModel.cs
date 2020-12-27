@@ -11,13 +11,14 @@ namespace IdentityServer.ViewModels.Account
     {
         public RegisterViewModel()
         {
-            this.lOrganisations = new List<Organisation>();
+            this.lOrgaNom = new List<string>();
         }
 
         public Organisation Organisation { get; set; }
 
         public Utilisateur User { get; set; }
-        public List<Organisation> lOrganisations { get; set; }
+
+        public List<string> lOrgaNom { get; set; }
 
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
