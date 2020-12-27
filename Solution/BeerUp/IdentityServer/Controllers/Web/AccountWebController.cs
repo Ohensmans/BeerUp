@@ -78,34 +78,41 @@ namespace IdentityServer.Controllers.Web
                 {
                     if (ModelState.IsValid)
                     {
-                        string role;
-                        if (model.OrgExiste)
-                        {
-                            List<Organisation> lOrganisations = await organisationService.GetAllOrganisationsAsync();
-                            model.User.OrgId = lOrganisations.FirstOrDefault(x => x.OrgNom == model.NomOrganisation).OrgId;
-                            role = "GroupUser";
-                        }
-                        else if (model.OrgRegister)
-                        {
-                            model.User.OrgId = AddOrganisation(model.Organisation).Result;
-                            role = "GroupAdmin";
-                        }
-                        else
-                        {
-                            return View(model);
-                        }
-
                         var result = await _userManager.CreateAsync(model.User, model.Password);
-
-                        if(result.Succeeded)
+                       
+                        if (result.Succeeded)
                         {
-                            result = await _userManager.AddToRoleAsync(model.User, role);
-                            if(result.Succeeded)
+                            //doit logger l'utilisateur pour pouvoir créer une organisation
+                            var signInResult = await _signInManager.PasswordSignInAsync(model.User, model.Password, false, false);
+
+                            string role;
+                            if (model.OrgExiste)
                             {
-                                var signInResult = await _signInManager.PasswordSignInAsync(model.User, model.Password, false, false);
-                                return Redirect(model.ReturnUrl);
+                                List<Organisation> lOrganisations = await organisationService.GetAllOrganisationsAsync();
+                                model.User.OrgId = lOrganisations.FirstOrDefault(x => x.OrgNom == model.NomOrganisation).OrgId;
+                                role = "GroupUser";
                             }
-                        }                      
+                            else if (model.OrgRegister)
+                            {
+                                model.User.OrgId = AddOrganisation(model.Organisation).Result;
+                                role = "GroupAdmin";
+                            }
+                            else
+                            {
+                                return View(model);
+                            }
+
+                            result = await _userManager.UpdateAsync(model.User);
+                            
+                            if (result.Succeeded)
+                            {
+                                result = await _userManager.AddToRoleAsync(model.User, role);
+                                if (result.Succeeded)
+                                {                                  
+                                    return Redirect(model.ReturnUrl);
+                                }
+                            }
+                        }
                     }
                     return View(model);
                 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,7 @@ namespace BeerUpApi.Controllers
 
         // PUT: api/Organisations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrganisation(Guid id, Organisation organisation)
         {
@@ -74,6 +76,7 @@ namespace BeerUpApi.Controllers
 
         // POST: api/Organisations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Organisation>> PostOrganisation(Organisation organisation)
         {
@@ -84,6 +87,7 @@ namespace BeerUpApi.Controllers
         }
 
         // DELETE: api/Organisations/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrganisation(Guid id)
         {
