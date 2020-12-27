@@ -6,12 +6,13 @@
     <title>@ViewData["Title"] - BeerUp IdentityServer</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/toastr.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IdentityServer</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Back">Beer Up</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,11 +20,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Back">Accueil</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin")) 
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Administration", "Index", "AdministrationUsers", null, new { @class = "nav-link text-dark" })
+                            </li>
+                        }
                         @if (User?.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown ml-auto">
