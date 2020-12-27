@@ -38,8 +38,8 @@
             <h3>Il n'y a pas encore d'utilisateurs</h3>
         }
         <div>
-            @Html.ActionLink("Ajouter un nouvel utilisateur", "Register", "Account", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
-            @Html.ActionLink("Gérer les utilisateurs", "ListeUsers", "Administration", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "AccountWeb", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Gérer les utilisateurs", "ListeUsers", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
         </div>
 
     </div>
@@ -75,9 +75,9 @@
         <div>
             @if (User.IsInRole("Administrateur"))
             {
-            @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "Administration", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
             }
-            @Html.ActionLink("Gérer les rôles", "ListeRoles", "Administration", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Gérer les rôles", "ListeRoles", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
         </div>
 
     </div>

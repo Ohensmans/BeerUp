@@ -17,6 +17,9 @@ namespace Repo.Contexts
             modelBuilder.Entity<Utilisateur>()
                         .Property(u => u.OrgId);
 
+            modelBuilder.Entity<Utilisateur>()
+                        .Property(u => u.Valide);
+
         }
     }
 }

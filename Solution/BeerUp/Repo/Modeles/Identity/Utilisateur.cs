@@ -9,6 +9,8 @@ namespace Repo.Modeles.Identity
     {
         public Guid OrgId { get; set; }
 
+        public bool Valide { get; set; }
+
     }
    
 }

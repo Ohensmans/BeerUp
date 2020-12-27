@@ -1,0 +1,94 @@
+﻿@model IdentityServer.ViewModels.Administration.ListeUsersViewModel
+
+@{
+    ViewData["Title"] = "ListeUsers";
+}
+
+<h1>Liste des utilisateurs</h1>
+@Html.HiddenFor(model => model.returnUrl)
+<br />
+@Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "AccountWeb", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })
+@Html.ActionLink("Retour au tableau de bord", "Index", "AdministrationUsers", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-danger" })
+<br />
+<br />
+
+@if (Model.lUser.Any())
+{
+
+    <table class="table table-striped" id="myTable">
+        <thead>
+            <tr>
+                <th class="NomColonne" id="0">UserName</th>
+                <th>Rôles</th>
+                <th>Valider l'utilisateur</th>
+                <th>Modifier l'utilisateur</th>
+                <th>Supprimer l'utilisateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i<Model.lUser.Count;i++)
+            {
+                <tr>
+                    <td>@Html.Label("", Model.lUser[i].UserName)</td>
+                    <td>@Html.Label("", Model.lRoles[i])</td>
+                    <td>
+                        @if (Model.lUser[i].Valide)
+                        {
+                            @Html.ActionLink("Dévalider", "ValidateUser", "AdministrationUsers", new { userId = Model.lUser[i].Id, valide = false, returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Valider", "ValidateUser", "AdministrationUsers", new { userId = Model.lUser[i].Id, valide = true, returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })
+                        }
+                    </td>
+                    <td>@Html.ActionLink("Modifier", "EditUser", "AdministrationUsers", new { userId = Model.lUser[i].Id, returnUrl = Model.returnUrl }, new { @class = "btn btn-warning" })</td>
+                    <td>
+                        @using (Html.BeginForm("DeleteUser", "AdministrationUsers", new { userId = Model.lUser[i].Id, returnUrl = Model.returnUrl }, FormMethod.Post))
+                        {
+                            <span id="confirmDeleteSpan_@Model.lUser[i].Id" style="display:none">
+                                <span>Etes-vous sûr de vouloir supprimer ce rôle ?</span>
+                                <button type="submit" class="btn btn-danger">Oui</button>
+                                <a href="#" class="btn btn-primary" onclick="confirmDelete('@Model.lUser[i].Id', false)">Non</a>
+                            </span>
+
+                            <span id="deleteSpan_@Model.lUser[i].Id">
+                                <a href="#" class="btn btn-danger" onclick="confirmDelete('@Model.lUser[i].Id', true)">Supprimer</a>
+                            </span>
+                        }
+                    </td>
+
+
+                    @Html.Hidden(Model.lUser[i].Id, Model.lUser[i].Id)
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="centerAll" class="pagination">
+        <a id="paginationButtonPrevious" href="#">&laquo;</a>
+        <a id="" class="paginationButtonNum active" href="#"></a>
+        <a id="" class="paginationButtonNum" href="#"></a>
+        <a id="" class="paginationButtonNum" href="#"></a>
+        <a id="paginationButtonNext" href="#">&raquo;</a>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            Il n'existe pas encore d'utilisateur
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Utilisez le bouton ci-dessous pour créer un utilisateur
+            </h5>
+            @Html.ActionLink("Ajouter un nouvel utilisateur", "Register", "Account", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+    <script src="~/js/SortTable.js"></script>
+    <script src="~/js/Pagination.js"></script>
+}
