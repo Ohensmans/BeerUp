@@ -1,0 +1,38 @@
+﻿@model List<IdentityServer.ViewModels.Administration.RolesUserViewModel>
+@{
+    ViewData["Title"] = "Gérer les rôles de l'utilisateur";
+    var userId = ViewBag.userId;
+    var returnUrl = ViewBag.returnUrl;
+}
+
+
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <div class="card">
+        <div class="card-header">
+            <h2>Gérer les rôles de l'utilisateur</h2>
+        </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    @Html.HiddenFor(model => model[i].RoleId)
+                    @Html.HiddenFor(model => model[i].RoleName)
+                    @Html.EditorFor(model => model[i].isSelected)
+                    @Html.Label("", Model[i].RoleName)
+                </div>
+            }
+
+
+        </div>
+
+        <div class="card-footer">
+            <button style="width:auto" type="submit" name="button" value="update" class="btn btn-success">Mettre à jour l'utilisateur</button>
+            @Html.ActionLink("Retour à la liste des utilisateurs", "ListeUsers", "AdministrationUsers", new { userId = userId, returnUrl = returnUrl }, new { @class = "btn btn-danger" })
+        </div>
+    </div>
+
+}

@@ -24,8 +24,6 @@ namespace IdentityServer.ExternalApiCall.BeerUp
 
         public async Task<Organisation> CreateOrganisationAsync(Organisation organisation, string idToken)
         {
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", idToken);
-
             var content = JsonConvert.SerializeObject(organisation);
             var httpResponse = await client.PostAsync(baseUrl, new StringContent(content, Encoding.Default, "application/json"));
 

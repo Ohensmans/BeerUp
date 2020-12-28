@@ -5,6 +5,7 @@ using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -96,6 +97,7 @@ namespace IdentityServer.Controllers.Web
                             {
                                 model.User.OrgId = AddOrganisation(model.Organisation).Result;
                                 role = "GroupAdmin";
+                                model.User.Valide = true;
                             }
                             else
                             {
@@ -128,6 +130,7 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
+        [Authorize]
         private async Task<Guid> AddOrganisation (Organisation organisation)
         {
 
@@ -153,7 +156,7 @@ namespace IdentityServer.Controllers.Web
             if (returnUrl == null)
                 rUrl = this.BeerUpWebUrl;
 
-            return View(new LoginInputViewModel { ReturnUrl = returnUrl });
+            return View(new LoginInputViewModel { ReturnUrl = rUrl });
         }
 
         [HttpPost]
@@ -228,6 +231,11 @@ namespace IdentityServer.Controllers.Web
                 // get context information (client name, post logout redirect URI and iframe for federated signout)
                 var logout = await _interaction.GetLogoutContextAsync(logoutId);
                 var PostLogoutRedirectUri = logout?.PostLogoutRedirectUri;
+
+                if (PostLogoutRedirectUri==null)
+                {
+                    PostLogoutRedirectUri = BeerUpWebUrl;
+                }
 
                 if (User?.Identity.IsAuthenticated == true)
                 {

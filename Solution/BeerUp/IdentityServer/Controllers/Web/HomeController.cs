@@ -1,5 +1,6 @@
 ﻿using IdentityServer.ViewModels;
 using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +65,15 @@ namespace IdentityServer.Controllers.Web
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Privacy()
+        {
+            var idToken = await HttpContext.GetTokenAsync("access_token");
+
             return View();
         }
     }

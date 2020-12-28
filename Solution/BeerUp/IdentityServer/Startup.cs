@@ -16,6 +16,8 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using IdentityServer.Validator;
 using IdentityServer.ViewModels.Account;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServer
 {
@@ -45,7 +47,6 @@ namespace IdentityServer
                 .AddEntityFrameworkStores<UserContext>()
                 .AddDefaultTokenProviders();
 
-
             var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -64,6 +65,8 @@ namespace IdentityServer
                 .AddAspNetIdentity<Utilisateur>();
 
 
+            services.AddScoped<IUserClaimsPrincipalFactory<Utilisateur>, MyUserClaimsPrincipalFactory>();
+
             services.AddScoped<IValidator<Utilisateur>, UtilisateurValidator>();
             services.AddTransient<IValidator<RegisterViewModel>, RegisterValidator>();
             services.AddTransient<IValidator<LoginInputViewModel>, LoginValidator>();
@@ -74,6 +77,7 @@ namespace IdentityServer
 
             services.UseServicesVAT();
             services.UseServicesOrganisation();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,7 +88,7 @@ namespace IdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
-            //InitializeDatabase(app);
+            InitializeDatabase(app);
 
 
             app.UseStaticFiles();
@@ -96,9 +100,7 @@ namespace IdentityServer
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Accountweb}/{action=Loginweb}/{id?}");
+                endpoints.MapDefaultControllerRoute();
             });
         }
 
@@ -111,32 +113,26 @@ namespace IdentityServer
                 var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
                 context.Database.Migrate();
 
-                if (!context.Clients.Any())
+
+                foreach (var client in Config.Clients)
                 {
-                    foreach (var client in Config.Clients)
-                    {
+                    if (!context.Clients.Any(x => x.ClientName == client.ClientName))
                         context.Clients.Add(client.ToEntity());
-                    }
-                    context.SaveChanges();
                 }
 
-                if (!context.IdentityResources.Any())
+                foreach (var resource in Config.Ids)
                 {
-                    foreach (var resource in Config.Ids)
-                    {
+                    if (!context.IdentityResources.Any(x => x.Name == resource.Name))
                         context.IdentityResources.Add(resource.ToEntity());
-                    }
-                    context.SaveChanges();
                 }
 
-                if (!context.ApiResources.Any())
+                foreach (var resource in Config.Apis)
                 {
-                    foreach (var resource in Config.Apis)
-                    {
+                    if (!context.ApiResources.Any(x => x.Name == resource.Name))
                         context.ApiResources.Add(resource.ToEntity());
-                    }
-                    context.SaveChanges();
                 }
+                context.SaveChanges();
+                
             }
         }
     }

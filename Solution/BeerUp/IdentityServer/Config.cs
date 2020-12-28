@@ -18,7 +18,14 @@ namespace IdentityServer
                 new IdentityResource
                 {
                     Name = "role",
-                    UserClaims = new List<string>{"role"}
+                    UserClaims = new[] {"role"},
+                    DisplayName = "User Role"
+                },
+                new IdentityResource
+                {
+                    Name = "orgId",
+                    UserClaims = new[] {"OrgId"},
+                    DisplayName = "User Organisation Id"
                 }
 
             };
@@ -59,7 +66,39 @@ namespace IdentityServer
                     IdentityServerConstants.StandardScopes.Profile,
                     "Api",
                     "ApiExterne",
-                    "role"
+                    "role",
+                    "orgId"
+
+                },
+                AllowOfflineAccess = true
+            },
+                        new Client
+            {
+                ClientId = "IdentityServer",
+                ClientName = "IdentityServer",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+                RequireConsent = false,
+                RequirePkce = true,
+
+                AllowedGrantTypes = GrantTypes.Code,
+
+                // where to redirect to after login
+                RedirectUris = { "http://localhost:5000/signin-oidc" },
+
+                // where to redirect to after logout
+                PostLogoutRedirectUris = { "http://localhost:5000/signout-callback-oidc" },
+
+
+                AlwaysIncludeUserClaimsInIdToken = true,
+
+                AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "Api",
+                    "ApiExterne",
+                    "role",
+                    "orgId"
 
                 },
                 AllowOfflineAccess = true

@@ -16,7 +16,7 @@
         @if (Model.UserNames.Any())
         {
 
-            <table class="table table-striped">
+            <table class="table table-striped" id="myTable">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -32,6 +32,15 @@
                     }
                 </tbody>
             </table>
+            <div id="centerAll" class="pagination">
+                <a id="paginationButtonPrevious" href="#">&laquo;</a>
+                <a id="" class="paginationButtonNum active" href="#"></a>
+                <a id="" class="paginationButtonNum" href="#"></a>
+                <a id="" class="paginationButtonNum" href="#"></a>
+                <a id="paginationButtonNext" href="#">&raquo;</a>
+            </div>
+
+
         }
         else
         {
@@ -95,4 +104,5 @@
 @section Scripts{
     <script src="~/js/toastr.js"></script>
     <script src="~/js/TableauBordUsers.js"></script>
+    <script src="~/js/site.js"></script>
 }

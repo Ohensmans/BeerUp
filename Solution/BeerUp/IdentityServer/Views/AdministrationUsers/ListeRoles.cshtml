@@ -1,0 +1,97 @@
+﻿@model IdentityServer.ViewModels.Administration.ListeRoleViewModel
+
+@{
+    ViewData["Title"] = "Liste des rôles";
+}
+
+<h1>Liste des rôles</h1>
+
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+@Html.HiddenFor(model => model.returnUrl)
+
+@if (Model.lRoles.Any())
+{
+    <br />
+    <div>
+        @if (User.IsInRole("Administrateur"))
+        {
+        @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "AdministrationUsers", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })
+        }
+        @Html.ActionLink("Retour au tableau de bord", "Index", "AdministrationUsers", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-success" })
+    </div>
+    <br />
+    <br />
+    <table class="table table-striped" id="myTable">
+        <thead>
+            <tr>
+                <th class="NomColonne" id="0">Nom</th>
+                <th class="text-center">Modifier</th>
+                @if (User.IsInRole("Administrateur"))
+                {
+                    <th class="text-center">Supprimer</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var role in Model.lRoles)
+            {
+
+            <tr>
+                <td>@Html.Label("", role.Name)</td>
+                <td class="text-center">@Html.ActionLink("Modifier", "EditRole", "AdministrationUsers", new { id = role.Id, returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })</td>
+                @if (User.IsInRole("Administrateur"))
+                {
+                    <td class="text-center">
+                        @using (Html.BeginForm("DeleteRole", "AdministrationUsers", new { roleId = role.Id, returnUrl = Model.returnUrl }, FormMethod.Post))
+                        {
+                            <span id="confirmDeleteSpan_@role.Id" style="display:none">
+                                <span>Etes-vous sûr de vouloir supprimer ce rôle ?</span>
+                                <button type="submit" class="btn btn-danger">Oui</button>
+                                <a href="#" class="btn btn-primary" onclick="confirmDelete('@role.Id', false)">Non</a>
+                            </span>
+
+                            <span id="deleteSpan_@role.Id">
+                                <a href="#" class="btn btn-danger" onclick="confirmDelete('@role.Id', true)">Supprimer</a>
+                            </span>
+                        }
+                    </td>
+                }
+                @Html.Hidden(role.Id, role.Id)
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="centerAll" class="pagination">
+        <a id="paginationButtonPrevious" href="#">&laquo;</a>
+        <a id="" class="paginationButtonNum active" href="#"></a>
+        <a id="" class="paginationButtonNum" href="#"></a>
+        <a id="" class="paginationButtonNum" href="#"></a>
+        <a id="paginationButtonNext" href="#">&raquo;</a>
+    </div>
+
+}
+else
+{
+<div class="card">
+    <div class="card-header">
+        Il n'existe pas encore de rôles
+    </div>
+    @if (User.IsInRole("Administrateur"))
+    {
+        <div class="card-body">
+            <h5 class="card-title">
+                Utilisez le bouton ci-dessous pour créer un rôle
+            </h5>
+            @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "AdministrationUsers", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-success" })
+        </div>
+    }
+</div>
+}
+
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+}
