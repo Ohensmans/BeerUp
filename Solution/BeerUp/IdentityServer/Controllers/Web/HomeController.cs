@@ -73,7 +73,7 @@ namespace IdentityServer.Controllers.Web
         public async Task<IActionResult> Privacy()
         {
             var idToken = await HttpContext.GetTokenAsync("access_token");
-
+            var user = User;
             return View();
         }
     }

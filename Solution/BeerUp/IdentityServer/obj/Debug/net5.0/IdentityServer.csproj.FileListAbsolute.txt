@@ -100,9 +100,6 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\ref\Ide
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.pdb
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.genruntimeconfig.cache
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Home\AccessDenied.cshtml.g.cs
-F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\Index.cshtml.g.cs
-F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\LoginWeb.cshtml.g.cs
-F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AccountWeb\RegisterWeb.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\Index.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\ListeUsers.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\CreateRole.cshtml.g.cs
@@ -110,3 +107,6 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\V
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\ListeRoles.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\EditUsersInRole.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\ManageUserRoles.cshtml.g.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Account\Index.cshtml.g.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Account\RegisterWeb.cshtml.g.cs

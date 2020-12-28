@@ -62,7 +62,8 @@ namespace IdentityServer
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString("DbIdentity"), sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
-                .AddAspNetIdentity<Utilisateur>();
+                .AddAspNetIdentity<Utilisateur>()
+                .AddProfileService<Configs.IdentityProfileService>();
 
 
             services.AddScoped<IUserClaimsPrincipalFactory<Utilisateur>, MyUserClaimsPrincipalFactory>();
@@ -78,6 +79,7 @@ namespace IdentityServer
             services.UseServicesVAT();
             services.UseServicesOrganisation();
 
+            builder.AddDeveloperSigningCredential();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,6 +97,7 @@ namespace IdentityServer
 
             app.UseRouting();
             app.UseIdentityServer();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseMvc();
 

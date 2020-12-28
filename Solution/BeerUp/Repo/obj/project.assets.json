@@ -5956,8 +5956,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Olivier\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Olivier\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -5968,13 +5967,9 @@
       "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
       "outputPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
         "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "rZinoia/VhBDLhilHCOIZdbeDMF0NhVuOhYcUwAEdaX7J+Cye3nlsEtRXNE463GhgWqFbtCdkze8ZbsNk/mp4w==",
+  "dgSpecHash": "h2H9yep5VUdx4v21OPiWSCp9hHlBeAzcFAnhjcHCydpKcvVAmpTFL3I1ixR2MEF+4LZ03Aofh5vT2Uw9BsFSJQ==",
   "success": true,
   "projectFilePath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
   "expectedPackageFiles": [
@@ -67,7 +67,7 @@
     "C:\\Users\\Olivier\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\5.0.1\\microsoft.visualstudio.web.codegenerators.mvc.5.0.1.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
-    "C:\\Microsoft\\Xamarin\\NuGet\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\Olivier\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.4\\sqlitepclraw.bundle_e_sqlite3.2.0.4.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\sqlitepclraw.core\\2.0.4\\sqlitepclraw.core.2.0.4.nupkg.sha512",
