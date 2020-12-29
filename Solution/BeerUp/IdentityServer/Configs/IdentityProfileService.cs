@@ -5,6 +5,7 @@ using Repo.Modeles.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Configs
@@ -32,6 +33,7 @@ namespace IdentityServer.Configs
 
             var principal = await _claimsFactory.CreateAsync(user);
             var claims = principal.Claims.ToList();
+            claims.Add(new Claim("OrgId", user.OrgId.ToString() ?? ""));
 
             //claims.Add(new System.Security.Claims.Claim("OrgId", user.OrgId));
             //Add more claims like this

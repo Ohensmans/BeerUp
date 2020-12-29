@@ -150,7 +150,7 @@ namespace IdentityServer.Controllers.Web
 
                     foreach (string role in lRolesUser)
                     {
-                        roles = role + "; ";
+                        roles = roles + role + "; ";
                     }
 
                     vm.lRoles.Add(roles);
@@ -637,7 +637,7 @@ namespace IdentityServer.Controllers.Web
                     return View(model);
                 }
 
-                return RedirectToAction("EditUser", new { userId, returnUrl });
+                return RedirectToAction("ListeUsers", new { userId, returnUrl });
             }
             catch (Exception ex)
             {
