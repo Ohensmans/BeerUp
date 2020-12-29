@@ -72,22 +72,24 @@ namespace IdentityServer
                 },
                 AllowOfflineAccess = true
             },
-                        new Client
+                new Client
             {
-                ClientId = "IdentityServer",
-                ClientName = "IdentityServer",
-                ClientSecrets = { new Secret("secret".Sha256()) },
+                ClientId = "BeerUpWeb",
+                ClientName = "BeerUpWeb",
                 RequireConsent = false,
+                RequireClientSecret = false,
                 RequirePkce = true,
 
                 AllowedGrantTypes = GrantTypes.Code,
 
                 // where to redirect to after login
-                RedirectUris = { "http://localhost:5000/signin-oidc" },
+                RedirectUris = { "http://localhost:4200/auth-callback" },
 
                 // where to redirect to after logout
-                PostLogoutRedirectUris = { "http://localhost:5000/signout-callback-oidc" },
+                PostLogoutRedirectUris = { "http://localhost:4200/" },
 
+                AllowAccessTokensViaBrowser = true,
+                AccessTokenLifetime = 3600,
 
                 AlwaysIncludeUserClaimsInIdToken = true,
 
@@ -96,12 +98,9 @@ namespace IdentityServer
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "ApiBeerUp",
-                    "ApiExterne",
                     "role",
                     "orgId"
-
                 },
-                AllowOfflineAccess = true
             }
 
         };

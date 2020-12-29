@@ -1,0 +1,33 @@
+
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow bd-navbar mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Back">BeerUp</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Home</a></li>
+                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Administration</a></li>
+                        <li routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link" routerLink="home">S'identifier</a></li>     
+                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">S'enregistrer</a></li>  
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</header>
+<body> 
+    <div class="container bg-light mt-2">
+        <router-outlet></router-outlet>
+    </div>
+
+    <footer class="border-top footer text-muted bg-white">
+        <div class="container">
+            &copy; 2020 - BeerUp - Privacy
+        </div>
+    </footer>
+</body>
+
