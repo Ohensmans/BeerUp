@@ -14,5 +14,9 @@ namespace IdentityServer.ViewModels.Administration
         public bool isEditable { get; set; }
 
         public bool isSelected { get; set; }
+
+        public bool isFullAcces { get; set; }
+
+        public bool isPartialAccess { get; set; }
     }
 }

@@ -587,6 +587,8 @@ namespace IdentityServer.Controllers.Web
 
                 List<Role> lAllRoles = roleManager.Roles.ToList();
 
+                var claims = await userManager.GetClaimsAsync(user);
+
                 foreach (var role in lAllRoles)
                 {
                     if (User.IsInRole("Administrateur") || (role.Name != "Administrateur"&& role.Name != "User"))
@@ -597,6 +599,29 @@ namespace IdentityServer.Controllers.Web
                             RoleName = role.Name
                         };
                         rolesUserViewModel.isSelected = await userManager.IsInRoleAsync(user, role.Name);
+                       
+                        rolesUserViewModel.isEditable = role.isEditable;
+
+                        var claimAll = claims.Any(x => x.Type.ToString() == role.Name && x.Value == "All");
+
+                        if (!rolesUserViewModel.isSelected)
+                        {
+                            rolesUserViewModel.isFullAcces = false;
+                            rolesUserViewModel.isPartialAccess = false;
+                        }
+                        else
+                        {
+                            if (!role.isEditable || claimAll)
+                            {
+                                rolesUserViewModel.isFullAcces = true;
+                                rolesUserViewModel.isPartialAccess = false;
+                            }
+                            else
+                            {
+                                rolesUserViewModel.isFullAcces = false;
+                                rolesUserViewModel.isPartialAccess = true;
+                            }
+                        }
 
                         lRoles.Add(rolesUserViewModel);
                     }
