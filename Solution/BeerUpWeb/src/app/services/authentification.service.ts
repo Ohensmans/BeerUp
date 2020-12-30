@@ -4,9 +4,7 @@ export class AuthentificationService {
   private isAuth:boolean
   private manager:UserManager;
 
-  private user !: User;
-
-
+  private user = null as any;
 
   constructor() { 
     this.isAuth = false;    
@@ -14,10 +12,7 @@ export class AuthentificationService {
     this.manager.getUser()
     .then(
       user => {
-        if (user!=null)
-        {
-          this.user = user;
-        }   
+          this.user = user;   
       }
     
     );
@@ -38,7 +33,7 @@ export class AuthentificationService {
         // le type de réponse
         response_type:"code",
         // les scopes
-        scope:"openid profile ApiBeerUp",
+        scope:"openid profile",
         // url app Angular au retour d'IS après logout (attention AccountOptions à modifier dans IS)
         post_logout_redirect_uri:'http://localhost:4200/',
         // pour save le user dans localStorage

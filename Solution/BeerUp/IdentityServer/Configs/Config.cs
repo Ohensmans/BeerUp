@@ -34,7 +34,6 @@ namespace IdentityServer
         new List<ApiResource>
         {
             new ApiResource("ApiBeerUp", "Api BeerUp"),
-            new ApiResource("ApiExterne", "Api Externes"),
         };
 
         public static IEnumerable<Client> Clients =>
@@ -65,7 +64,6 @@ namespace IdentityServer
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "ApiBeerUp",
-                    "ApiExterne",
                     "role",
                     "orgId"
 
@@ -87,6 +85,8 @@ namespace IdentityServer
 
                 // where to redirect to after logout
                 PostLogoutRedirectUris = { "http://localhost:4200/" },
+
+                AllowedCorsOrigins =     { "http://localhost:4200" },
 
                 AllowAccessTokensViaBrowser = true,
                 AccessTokenLifetime = 3600,

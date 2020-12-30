@@ -11,10 +11,13 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 
 import { AuthentificationService } from './services/authentification.service';
+import { AuthGuardService} from 'src/app/services/authguard.service';
 
 import { HomeComponent } from './component/home/home.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { AuthCallbackComponent } from './component/auth-callback/auth-callback.component';
+import { LoginComponent } from './component/login/login.component';
+
 
 
 @NgModule({
@@ -23,6 +26,7 @@ import { AuthCallbackComponent } from './component/auth-callback/auth-callback.c
     HomeComponent,
     NotFoundComponent,
     AuthCallbackComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,9 +37,10 @@ import { AuthCallbackComponent } from './component/auth-callback/auth-callback.c
     RouterModule.forRoot([
       { path:'',component:HomeComponent },
       { path:'home',component:HomeComponent },
-      //{ path:'login',component:LoginComponent },
+      { path:'login', component:LoginComponent },
+      { path:'logout', component:LoginComponent },
       { path: 'auth-callback', component : AuthCallbackComponent},
-      //{ path: 'call-api', canActivate:[AuthgardService], component : CallApiComponent},
+      //{ path: 'call-api', canActivate:[AuthGuardService], component : CallApiComponent},
       { path: 'not-found', component : NotFoundComponent},      
       { path: '**', redirectTo: 'not-found' }
     ]),

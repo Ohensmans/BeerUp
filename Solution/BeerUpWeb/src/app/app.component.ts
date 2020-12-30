@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'BeerUpWeb';
+
+  constructor(private authSrv:AuthentificationService)
+  {
+  }
+
+  isAuth() {
+    return this.authSrv.isAuthenticate();
+  }
 }

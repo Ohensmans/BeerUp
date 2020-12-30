@@ -23,6 +23,7 @@ namespace IdentityServer
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IWebHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
 
@@ -36,6 +37,16 @@ namespace IdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+            });
+
+
             services.AddMvc(options => options.EnableEndpointRouting = false).AddFluentValidation();
             services.AddControllersWithViews();
 
@@ -96,6 +107,7 @@ namespace IdentityServer
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
