@@ -13,7 +13,7 @@
                         <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Administration</a></li>
 
                         <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link" routerLink="login">S'identifier</a></li>     
-                        <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">S'enregistrer</a></li>  
+                        <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item"><a class="nav-link" href="{{registerUrl}}">S'enregistrer</a></li>  
 
                         <li *ngIf="isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link" routerLink="login">Se déconnecter</a></li>  
 

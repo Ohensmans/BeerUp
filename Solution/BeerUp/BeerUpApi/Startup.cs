@@ -61,6 +61,10 @@ namespace BeerUpApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BeerUpApi v1"));
             }
 
+            //to use https
+            app.UseHsts();
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseAuthentication();

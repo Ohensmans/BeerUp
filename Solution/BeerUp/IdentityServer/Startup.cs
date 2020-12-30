@@ -102,7 +102,7 @@ namespace IdentityServer
             }
 
             InitializeDatabase(app);
-
+            
 
             app.UseStaticFiles();
 
