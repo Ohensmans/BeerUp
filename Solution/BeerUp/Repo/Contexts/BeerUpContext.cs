@@ -212,6 +212,10 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasMaxLength(200)
                     .HasColumnName("Bie.Photo");
 
+                entity.Property(e => e.BieDegreAlcool)
+                    .HasMaxLength(200)
+                    .HasColumnName("Bie.DegreAlcool");
+
                 entity.Property(e => e.BieValide).HasColumnName("Bie.Valide");
 
                 entity.Property(e => e.EtaId).HasColumnName("Eta.Id");

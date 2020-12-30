@@ -20,7 +20,7 @@ namespace IdentityServer
             services.AddDbContext<UserContext>(options =>
                options.UseSqlServer(connectionString));
 
-            services.AddIdentity<Utilisateur, IdentityRole>()
+            services.AddIdentity<Utilisateur, Role>()
                 .AddEntityFrameworkStores<UserContext>()
                 .AddDefaultTokenProviders();
 
@@ -31,11 +31,11 @@ namespace IdentityServer
                     var context = scope.ServiceProvider.GetService<UserContext>();
                     context.Database.Migrate();
 
-                    var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                    var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
                     var admin = roleMgr.FindByNameAsync("Administrateur").Result;
                     if (admin == null)
                     {
-                        admin = new IdentityRole
+                        admin = new Role
                         {
                             Name = "Administrateur"
                         };
@@ -59,7 +59,7 @@ namespace IdentityServer
                     var GroupAdmin = roleMgr.FindByNameAsync("GroupAdmin").Result;
                     if (GroupAdmin == null)
                     {
-                        GroupAdmin = new IdentityRole
+                        GroupAdmin = new Role
                         {
                             Name = "GroupAdmin"
                         };
@@ -83,7 +83,7 @@ namespace IdentityServer
                     var User = roleMgr.FindByNameAsync("User").Result;
                     if (User == null)
                     {
-                        User = new IdentityRole
+                        User = new Role
                         {
                             Name = "User"
                         };
@@ -107,7 +107,7 @@ namespace IdentityServer
                     var GroupBiere = roleMgr.FindByNameAsync("GroupBiere").Result;
                     if (GroupBiere == null)
                     {
-                        GroupBiere = new IdentityRole
+                        GroupBiere = new Role
                         {
                             Name = "GroupBiere"
                         };
@@ -131,7 +131,7 @@ namespace IdentityServer
                     var GroupAchat = roleMgr.FindByNameAsync("GroupAchat").Result;
                     if (GroupAchat == null)
                     {
-                        GroupAchat = new IdentityRole
+                        GroupAchat = new Role
                         {
                             Name = "GroupAchat"
                         };
@@ -155,7 +155,7 @@ namespace IdentityServer
                     var GroupEtablissement = roleMgr.FindByNameAsync("GroupEtablissement").Result;
                     if (GroupEtablissement == null)
                     {
-                        GroupEtablissement = new IdentityRole
+                        GroupEtablissement = new Role
                         {
                             Name = "GroupEtablissement"
                         };
@@ -179,7 +179,7 @@ namespace IdentityServer
                     var GroupUser = roleMgr.FindByNameAsync("GroupUser").Result;
                     if (GroupUser == null)
                     {
-                        GroupUser = new IdentityRole
+                        GroupUser = new Role
                         {
                             Name = "GroupUser"
                         };

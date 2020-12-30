@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 
@@ -22,8 +23,14 @@ namespace BeerUpApi.Controllers
 
         // GET: api/Bieres
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Biere>>> GetBieres()
+        public async Task<ActionResult<IEnumerable<Biere>>> GetBieres(string? orgId)
         {
+            if (orgId!=null)
+            {
+                var param  = new SqlParameter("@OrgId", orgId);
+                return _context.Bieres.FromSqlRaw("GetBieresOrganistion @OrgId", param).ToList();
+            }
+            else
             return await _context.Bieres.ToListAsync();
         }
 

@@ -20,6 +20,10 @@ namespace Repo.Contexts
             modelBuilder.Entity<Utilisateur>()
                         .Property(u => u.Valide);
 
+            modelBuilder.Entity<Role>()
+                        .Property(r => r.isEditable)
+                        .HasDefaultValue(false);
+
         }
     }
 }

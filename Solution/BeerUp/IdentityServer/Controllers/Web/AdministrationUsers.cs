@@ -16,11 +16,11 @@ namespace IdentityServer.Controllers.Web
     public class AdministrationUsers : Controller
     {
 
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<Role> roleManager;
         private readonly UserManager<Utilisateur> userManager;
         private readonly string BeerUpWebUrl;
 
-        public AdministrationUsers(RoleManager<IdentityRole> roleManager, UserManager<Utilisateur> userManager, IOptions<Models.BaseUrl> url)
+        public AdministrationUsers(RoleManager<Role> roleManager, UserManager<Utilisateur> userManager, IOptions<Models.BaseUrl> url)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -272,7 +272,7 @@ namespace IdentityServer.Controllers.Web
                 {
                     if (ModelState.IsValid)
                     {
-                        IdentityRole identityRole = new IdentityRole
+                        Role identityRole = new Role
                         {
                             Name = model.RoleName
                         };
@@ -341,6 +341,7 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
+        [Authorize(Roles = "Administrateur")]
         [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
@@ -400,6 +401,7 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
+        [Authorize(Roles = "Administrateur")]
         [HttpPost]
         public async Task<IActionResult> DeleteRole(string roleId, string returnUrl)
         {
@@ -583,7 +585,7 @@ namespace IdentityServer.Controllers.Web
             {
                 List<RolesUserViewModel> lRoles = new List<RolesUserViewModel>();
 
-                List<IdentityRole> lAllRoles = roleManager.Roles.ToList();
+                List<Role> lAllRoles = roleManager.Roles.ToList();
 
                 foreach (var role in lAllRoles)
                 {

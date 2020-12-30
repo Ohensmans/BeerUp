@@ -25,6 +25,7 @@ namespace Repo.Modeles.ModelesBeerUp
         public DateTime BieDateCre { get; set; }
         public bool BieValide { get; set; }
         public bool BieActif { get; set; }
+        public decimal BieDegreAlcool { get; set; }
         public Guid UserId { get; set; }
 
         public virtual Etablissement Eta { get; set; }

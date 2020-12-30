@@ -5,9 +5,9 @@ using Repo.Modeles.Identity;
 
 namespace IdentityServer
 {
-    public class MyUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<Utilisateur, IdentityRole>
+    public class MyUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<Utilisateur, Role>
     {
-        public MyUserClaimsPrincipalFactory(UserManager<Utilisateur> userManager, RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> optionsAccessor)
+        public MyUserClaimsPrincipalFactory(UserManager<Utilisateur> userManager, RoleManager<Role> roleManager, IOptions<IdentityOptions> optionsAccessor)
             : base(userManager, roleManager, optionsAccessor)
         {
         }

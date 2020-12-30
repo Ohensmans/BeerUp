@@ -54,7 +54,7 @@ namespace IdentityServer
 
             services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbUser"), sql => sql.MigrationsAssembly(migrationsAssembly)));
 
-            services.AddIdentity<Utilisateur, IdentityRole>()
+            services.AddIdentity<Utilisateur, Role>()
                 .AddEntityFrameworkStores<UserContext>()
                 .AddDefaultTokenProviders();
 
