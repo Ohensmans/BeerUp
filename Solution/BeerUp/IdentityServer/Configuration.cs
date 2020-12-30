@@ -19,5 +19,25 @@ namespace IdentityServer
         {
             services.AddHttpClient<IOrganisationService, OrganisationService>();
         }
+
+        public static void UseServicesBiere(this IServiceCollection services)
+        {
+            services.AddHttpClient<IBiereService, BiereService>();
+        }
+
+        public static void UseServicesEtablissement(this IServiceCollection services)
+        {
+            services.AddHttpClient<IEtablissementService, EtablissementService>();
+        }
+
+        public static void UseServicesBieresOrga(this IServiceCollection services)
+        {
+            services.AddHttpClient<IBieresOrgaService, BieresOrgaService>();
+        }
+
+        public static void UseServicesEtabsOrga(this IServiceCollection services)
+        {
+            services.AddHttpClient<IEtabsOrgaService, EtabsOrgaService>();
+        }
     }
 }

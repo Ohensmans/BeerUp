@@ -89,6 +89,10 @@ namespace IdentityServer
 
             services.UseServicesVAT();
             services.UseServicesOrganisation();
+            services.UseServicesBiere();
+            services.UseServicesEtablissement();
+            services.UseServicesBieresOrga();
+            services.UseServicesEtabsOrga();
 
             builder.AddDeveloperSigningCredential();
         }

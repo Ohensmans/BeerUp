@@ -1,4 +1,4 @@
-﻿@model List<IdentityServer.ViewModels.Administration.RolesUserViewModel>
+﻿@model IdentityServer.ViewModels.Administration.ManageRolesUserViewModel
 @{
     ViewData["Title"] = "Gérer les rôles de l'utilisateur";
     var userId = ViewBag.userId;
@@ -16,6 +16,7 @@
         <div class="card-body">
 
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.userId)
 
             <table class="table table-striped" id="myTable">
                 <thead>
@@ -30,29 +31,29 @@
                 <tbody>
 
 
-                    @for (int i = 0; i < Model.Count; i++)
+                    @for (int i = 0; i < Model.lRoles.Count; i++)
                     {
-                    <tr>
-                        <td class="text-center">@Html.EditorFor(model => model[i].isSelected)</td>
-                        <td>@Html.Label("", Model[i].RoleName)</td>
-                        <td class="text-center">@Html.DisplayFor(model => model[i].isFullAcces)</td>
-                        <td class="text-center">@Html.DisplayFor(model => model[i].isPartialAccess)</td>
-                        <td class="text-center">
-                            @if (Model[i].isEditable && Model[i].isSelected)
-                            {
-                                @Html.ActionLink("Modifier", "EditScopeRole", "AdministrationUsers", new { roleId = Model[i].RoleId }, new { @class = "btn btn-primary" })
-                            }
+                        <tr>
+                            <td class="text-center">@Html.EditorFor(model => model.lRoles[i].isSelected)</td>
+                            <td>@Html.Label("", Model.lRoles[i].RoleName)</td>
+                            <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isFullAcces)</td>
+                            <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isPartialAccess)</td>
+                            <td class="text-center">
+                                @if (Model.lRoles[i].isEditable && Model.lRoles[i].isSelected)
+                                {
+                                    @Html.ActionLink("Modifier", "EditScopeRole", "AdministrationUsers", new { userId = Model.userId, roleId = Model.lRoles[i].RoleId }, new { @class = "btn btn-primary" })
+                                }
 
-                            @Html.HiddenFor(model => model[i].RoleId)
-                            @Html.HiddenFor(model => model[i].RoleName)
-                            @Html.HiddenFor(model => model[i].isPartialAccess)
-                            @Html.HiddenFor(model => model[i].isFullAcces)
-                            @Html.HiddenFor(model => model[i].isEditable)
+                                @Html.HiddenFor(model => model.lRoles[i].RoleId)
+                                @Html.HiddenFor(model => model.lRoles[i].RoleName)
+                                @Html.HiddenFor(model => model.lRoles[i].isPartialAccess)
+                                @Html.HiddenFor(model => model.lRoles[i].isFullAcces)
+                                @Html.HiddenFor(model => model.lRoles[i].isEditable)
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     }
-                       
+
 
                 </tbody>
             </table>

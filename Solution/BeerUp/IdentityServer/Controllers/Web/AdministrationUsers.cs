@@ -561,7 +561,8 @@ namespace IdentityServer.Controllers.Web
 
                 if (user !=null && (User.IsInRole("Administrateur") || user.OrgId== currentUserOrgId))
                 {
-                    var model = await getListUserRoles(user);
+                    ManageRolesUserViewModel model = await getListUserRoles(user);
+                    model.userId = userId;
 
                     return View(model);
                 }
@@ -579,11 +580,11 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
-        public async Task<List<RolesUserViewModel>> getListUserRoles(Utilisateur user)
+        public async Task<ManageRolesUserViewModel> getListUserRoles(Utilisateur user)
         {
             try
             {
-                List<RolesUserViewModel> lRoles = new List<RolesUserViewModel>();
+                ManageRolesUserViewModel vm = new ManageRolesUserViewModel();
 
                 List<Role> lAllRoles = roleManager.Roles.ToList();
 
@@ -623,10 +624,10 @@ namespace IdentityServer.Controllers.Web
                             }
                         }
 
-                        lRoles.Add(rolesUserViewModel);
+                        vm.lRoles.Add(rolesUserViewModel);
                     }
                 }
-                return lRoles;
+                return vm;
             }
             catch (Exception)
             {
@@ -673,6 +674,14 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditScopeRole(string userId, string roleId)
+        {
+            EditAccessUser vm = new EditAccessUser();
 
+            vm.UserId = userId;
+
+            return View(vm);
+        }
     }
 }
