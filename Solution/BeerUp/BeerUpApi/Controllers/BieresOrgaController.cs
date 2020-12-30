@@ -31,7 +31,7 @@ namespace BeerUpApi.Controllers
 
             if (biere == null)
             {
-                return NotFound();
+                biere = new List<Biere>();
             }
 
             return biere;

@@ -1,10 +1,12 @@
-﻿using IdentityServer.ViewModels;
+﻿using IdentityServer.ExternalApiCall.BeerUp;
+using IdentityServer.ViewModels;
 using IdentityServer.ViewModels.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Repo.Modeles.Identity;
+using Repo.Modeles.ModelesBeerUp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +21,16 @@ namespace IdentityServer.Controllers.Web
         private readonly RoleManager<Role> roleManager;
         private readonly UserManager<Utilisateur> userManager;
         private readonly string BeerUpWebUrl;
+        private readonly IBieresOrgaService bieresOrgaService;
+        private readonly IEtabsOrgaService etabsOrgaService;
 
-        public AdministrationUsers(RoleManager<Role> roleManager, UserManager<Utilisateur> userManager, IOptions<Models.BaseUrl> url)
+        public AdministrationUsers(RoleManager<Role> roleManager, UserManager<Utilisateur> userManager, IOptions<Models.BaseUrl> url, IBieresOrgaService bieresOrgaService, IEtabsOrgaService etabsOrgaService )
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
-            BeerUpWebUrl = url.Value.BeerUpWebUrl;
+            this.BeerUpWebUrl = url.Value.BeerUpWebUrl;
+            this.bieresOrgaService = bieresOrgaService;
+            this.etabsOrgaService = etabsOrgaService;
         }
 
         [HttpGet]
@@ -677,11 +683,76 @@ namespace IdentityServer.Controllers.Web
         [HttpGet]
         public async Task<IActionResult> EditScopeRole(string userId, string roleId)
         {
-            EditAccessUser vm = new EditAccessUser();
+            try
+            {
+                EditAccessUser vm = new EditAccessUser();
 
-            vm.UserId = userId;
+                vm.UserId = userId;
+                
+                
+                Utilisateur user = userManager.Users.FirstOrDefault(u => u.Id == userId);
+                
+                Guid userOrgId = user.OrgId;
+                vm.NomUser = user.UserName;
+                vm.NomRole = roleManager.Roles.FirstOrDefault(u => u.Id == roleId).Name;
 
-            return View(vm);
+                var lBieres = await bieresOrgaService.GetAllBieresOrgaAsync(userOrgId);
+                var lEtablissements = await etabsOrgaService.GetAllEtablissementsOrgaAsync(userOrgId);
+
+                var claims = await userManager.GetClaimsAsync(user);
+
+                if (lBieres.Any())
+                {
+                    vm.lBieres = lBieres;
+
+                    //si contient tous les accès rempli juste un indice de true
+                    //à vérifier si la liste d'accès est plus longue que celle de bière sinon : all = true
+                    if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals("All")))
+                        vm.lAccesBiere.Add(true);
+
+                    //sinon rempli pour chaque élément de la liste
+                    else
+                    {
+                        foreach (Biere biere in lBieres)
+                        {
+                            if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals(biere.BieId.ToString())))
+                                vm.lAccesBiere.Add(true);
+                            else
+                                vm.lAccesBiere.Add(false);
+                        }
+                    }
+                }
+
+                if (lEtablissements.Any())
+                {
+                    vm.lEtablissements = lEtablissements;
+
+                    //si contient tous les accès rempli juste un indice de true
+                    //à vérifier si la liste d'accès est plus longue que celle de bière sinon : all = true
+                    if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals("All")))
+                        vm.lAccesEtab.Add(true);
+
+                    //sinon rempli pour chaque élément de la liste
+                    else
+                    {
+                        foreach (Etablissement etab in lEtablissements)
+                        {
+                            if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals(etab.EtaId.ToString())))
+                                vm.lAccesBiere.Add(true);
+                            else
+                                vm.lAccesBiere.Add(false);
+                        }
+                    }
+                }
+
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                ErrorViewModel vme = new ErrorViewModel(ex.Message);
+                return View("Error", vme);
+            }
+
         }
     }
 }

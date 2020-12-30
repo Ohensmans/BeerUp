@@ -32,7 +32,7 @@ namespace BeerUpApi.Controllers
 
             if (etab == null)
             {
-                return NotFound();
+                etab = new List<Etablissement>();
             }
 
             return etab;
