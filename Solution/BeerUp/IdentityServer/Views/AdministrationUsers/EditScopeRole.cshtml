@@ -1,5 +1,138 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IdentityServer.ViewModels.Administration.EditAccessUserViewModel
 @{
+    ViewData["Title"] = "Modification de l'accès de l'utilisateur pour un rôle";
+}
+
+@using (Html.BeginForm("EditScopeRole", "AdministrationUsers", FormMethod.Post))
+{
+    <h5>Modifications des accès pour le rôle @Model.NomRole de l'utilisateur : @Model.NomUser</h5>
+    <br />
+    <br />
+
+    <div class="col-md-12 row">
+        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.RoleId)
+        @Html.HiddenFor(model => model.ReturnUrl)
+        @Html.HiddenFor(model => model.NomRole)
+        @Html.HiddenFor(model => model.NomUser)
+
+        @if (Model.lBieres.Any())
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Bières</h5>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-striped" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Attribuer</th>
+                                    <th class="NomColonne" id="0">Nom de la bière</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" id="val-bie-0">
+                                        @Html.EditorFor(model => model.lAccesBiere[0])
+
+                                    </td>
+                                    <td>@Html.Label("", "Toutes")</td>
+                                </tr>
+
+                                @for (int i = 0; i < Model.lBieres.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="text-center" id="val-bie-@i+1">
+                                            @Html.EditorFor(model => model.lAccesBiere[i + 1])
+                                        </td>
+                                        <td>
+                                            @Html.Label("", Model.lBieres[i].BieNom)
+                                            @Html.HiddenFor(model => model.lBieres[i].BieId)
+                                            @Html.HiddenFor(model => model.lBieres[i].BieNom)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div id="centerAll" class="pagination">
+                            <a id="paginationButtonPrevious" href="#">&laquo;</a>
+                            <a id="" class="paginationButtonNum active" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="paginationButtonNext" href="#">&raquo;</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+        @if (Model.lEtablissements.Any())
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Etablissements</h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-striped" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Attribuer</th>
+                                    <th class="NomColonne" id="0">Nom de l'établissement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" id="val-etab-0">
+                                        @Html.EditorFor(model => model.lAccesEtab[0])
+                                    </td>
+                                    <td>@Html.Label("", "Tous")</td>
+                                </tr>
+
+                                @for (int i = 0; i < Model.lEtablissements.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="text-center" id="val-etab-@i+1">
+                                            @Html.EditorFor(model => model.lAccesEtab[i + 1])
+                                        </td>
+                                        <td>
+                                            @Html.Label("", Model.lEtablissements[i].EtaNom)
+                                            @Html.HiddenFor(model => model.lEtablissements[i].EtaId)
+                                            @Html.HiddenFor(model => model.lEtablissements[i].EtaNom)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div id="centerAll" class="pagination">
+                            <a id="paginationButtonPrevious" href="#">&laquo;</a>
+                            <a id="" class="paginationButtonNum active" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="paginationButtonNext" href="#">&raquo;</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+    <div>
+        <button style="width:auto" type="submit" value="submit" name="button" class="btn btn-success">Mettre à jour l'utilisateur</button>
+        @Html.ActionLink("Retour à l'utilisateur", "ManageUserRoles", "AdministrationUsers", new { userId = Model.UserId, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-danger" })
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+    <script src="~/js/Coche.js"></script>
 }

@@ -10,6 +10,7 @@ using Repo.Modeles.ModelesBeerUp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Controllers.Web
@@ -24,7 +25,11 @@ namespace IdentityServer.Controllers.Web
         private readonly IBieresOrgaService bieresOrgaService;
         private readonly IEtabsOrgaService etabsOrgaService;
 
-        public AdministrationUsers(RoleManager<Role> roleManager, UserManager<Utilisateur> userManager, IOptions<Models.BaseUrl> url, IBieresOrgaService bieresOrgaService, IEtabsOrgaService etabsOrgaService )
+        private const string accessAll = "All";
+        private const string accessBiere = "Biere";
+        private const string accessEtablissement = "Etab";
+
+        public AdministrationUsers(RoleManager<Role> roleManager, UserManager<Utilisateur> userManager, IOptions<Models.BaseUrl> url, IBieresOrgaService bieresOrgaService, IEtabsOrgaService etabsOrgaService)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -50,7 +55,7 @@ namespace IdentityServer.Controllers.Web
                 var userId = User.Claims.FirstOrDefault(x => x.Type.ToString() == "sub").Value;
                 Guid userOrgId = userManager.Users.FirstOrDefault(u => u.Id == userId).OrgId;
 
-                if(User.IsInRole("GroupAdmin"))
+                if (User.IsInRole("GroupAdmin"))
                 {
                     vm.NbreUserAValider = userManager.Users.Where(u => u.OrgId == userOrgId && !u.Valide).Count();
                 }
@@ -83,7 +88,7 @@ namespace IdentityServer.Controllers.Web
                     return userManager.Users.Select(u => u.UserName).ToList();
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }
@@ -133,7 +138,7 @@ namespace IdentityServer.Controllers.Web
             try
             {
                 ListeUsersViewModel vm = new ListeUsersViewModel();
-                
+
                 vm.returnUrl = returnUrl;
 
                 if (vm.returnUrl == null)
@@ -170,7 +175,7 @@ namespace IdentityServer.Controllers.Web
                     return View("Error", vme);
                 }
 
-                    return View(vm);
+                return View(vm);
             }
             catch (Exception ex)
             {
@@ -179,7 +184,7 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
-        
+
         public async Task<IActionResult> DeleteUser(string userId, string returnUrl)
         {
             try
@@ -216,7 +221,7 @@ namespace IdentityServer.Controllers.Web
 
         }
 
-        
+
         public async Task<IActionResult> ValidateUser(string userId, string returnUrl)
         {
             try
@@ -252,7 +257,7 @@ namespace IdentityServer.Controllers.Web
 
         }
 
-        [Authorize(Roles ="Administrateur")]
+        [Authorize(Roles = "Administrateur")]
         [HttpGet]
         public IActionResult CreateRole(string returnUrl)
         {
@@ -337,7 +342,7 @@ namespace IdentityServer.Controllers.Web
                     if (await userManager.IsInRoleAsync(user, role.Name))
                     {
                         if (User.IsInRole("Administrateur") || user.OrgId == userOrgId)
-                            model.Users.Add(user.UserName);                       
+                            model.Users.Add(user.UserName);
                     }
                 }
 
@@ -373,10 +378,6 @@ namespace IdentityServer.Controllers.Web
                         return RedirectToAction("ListeRoles", new { returnUrl = model.returnUrl });
                     }
 
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
                     return View(model);
                 }
             }
@@ -399,9 +400,9 @@ namespace IdentityServer.Controllers.Web
                 if (User.IsInRole("Administrateur"))
                     vm.lRoles = roleManager.Roles;
                 else
-                    vm.lRoles = roleManager.Roles.Where(x => x.Name != "Administrateur"&& x.Name!="User");
+                    vm.lRoles = roleManager.Roles.Where(x => x.Name != "Administrateur" && x.Name != "User");
 
-                
+
                 return View(vm);
             }
             catch (Exception ex)
@@ -569,7 +570,7 @@ namespace IdentityServer.Controllers.Web
                 var currentUserId = User.Claims.FirstOrDefault(x => x.Type.ToString() == "sub").Value;
                 Guid currentUserOrgId = userManager.Users.FirstOrDefault(u => u.Id == currentUserId).OrgId;
 
-                if (user !=null && (User.IsInRole("Administrateur") || user.OrgId== currentUserOrgId))
+                if (user != null && (User.IsInRole("Administrateur") || user.OrgId == currentUserOrgId))
                 {
                     ManageRolesUserViewModel model = await getListUserRoles(user);
                     model.userId = userId;
@@ -602,7 +603,7 @@ namespace IdentityServer.Controllers.Web
 
                 foreach (var role in lAllRoles)
                 {
-                    if (User.IsInRole("Administrateur") || (role.Name != "Administrateur"&& role.Name != "User"))
+                    if (User.IsInRole("Administrateur") || (role.Name != "Administrateur" && role.Name != "User"))
                     {
                         var rolesUserViewModel = new RolesUserViewModel
                         {
@@ -611,10 +612,10 @@ namespace IdentityServer.Controllers.Web
                             RoleDescription = role.Description
                         };
                         rolesUserViewModel.isSelected = await userManager.IsInRoleAsync(user, role.Name);
-                       
+
                         rolesUserViewModel.isEditable = role.isEditable;
 
-                        var claimAll = claims.Any(x => x.Type.ToString() == role.Name && x.Value == "All");
+                        var claimAll = claims.Any(x => x.Type.ToString().Contains(role.Name) && x.Value == accessAll);
 
                         if (!rolesUserViewModel.isSelected)
                         {
@@ -647,7 +648,7 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> ManageUserRoles(List<RolesUserViewModel> model, string userId, string returnUrl)
+        public async Task<IActionResult> ManageUserRoles(ManageRolesUserViewModel model, string userId, string returnUrl)
         {
             try
             {
@@ -668,12 +669,46 @@ namespace IdentityServer.Controllers.Web
                     return View(model);
                 }
 
-                result = await userManager.AddToRolesAsync(user, model.Where(x => x.isSelected).Select(y => y.RoleName));
+                List<string> lRoleName = new List<string>();
 
-                if (!result.Succeeded)
+                foreach(RolesUserViewModel role in model.lRoles)
                 {
-                    ModelState.AddModelError("", "Ne peut pas ajouter l'utilisaeur à ces rôles");
-                    return View(model);
+                    if (role.isSelected)
+                        lRoleName.Add(role.RoleName);
+                }
+
+                if (lRoleName.Any())
+                {
+                    result = await userManager.AddToRolesAsync(user, lRoleName);
+
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError("", "Ne peut pas ajouter l'utilisaeur à ces rôles");
+                        return View(model);
+                    }
+
+                    foreach (string roleName in lRoleName)
+                    {
+                        List<Claim> lClaimsUser = new List<Claim>();
+
+                        Role role = await roleManager.FindByNameAsync(roleName);
+                        var lClaimRole = await roleManager.GetClaimsAsync(role);
+
+                        foreach(Claim claim in lClaimRole)
+                        {
+                            lClaimsUser.Add(new Claim(roleName + claim.Value, accessAll));
+                        }
+
+                        result = await userManager.AddClaimsAsync(user, lClaimsUser);
+
+                        if (!result.Succeeded)
+                        {
+                            ModelState.AddModelError("", "Ne peut pas ajouter l'utilisaeur les claims liés à ces rôles");
+                            return View(model);
+                        }
+
+                    }
+
                 }
 
                 return RedirectToAction("ListeUsers", new { userId, returnUrl });
@@ -686,70 +721,151 @@ namespace IdentityServer.Controllers.Web
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditScopeRole(string userId, string roleId)
+        public async Task<IActionResult> EditScopeRole(string userId, string roleId, string returnUrl)
         {
             try
             {
-                EditAccessUser vm = new EditAccessUser();
+                EditAccessUserViewModel vm = new EditAccessUserViewModel();
 
                 vm.UserId = userId;
-   
+                vm.ReturnUrl = returnUrl;
+                vm.RoleId = roleId;
+
                 Utilisateur user = userManager.Users.FirstOrDefault(u => u.Id == userId);
-                
+                Role role = roleManager.Roles.FirstOrDefault(r => r.Id == roleId);
+
                 Guid userOrgId = user.OrgId;
                 vm.NomUser = user.UserName;
-                vm.NomRole = roleManager.Roles.FirstOrDefault(u => u.Id == roleId).Name;
+                vm.NomRole = role.Name;
 
                 List<Biere> lBieres = await bieresOrgaService.GetAllBieresOrgaAsync(userOrgId);
                 List<Etablissement> lEtablissements = await etabsOrgaService.GetAllEtablissementsOrgaAsync(userOrgId);
 
-                var claims = await userManager.GetClaimsAsync(user);
+                var claimsRole = await roleManager.GetClaimsAsync(role);
+                var claimsUser = await userManager.GetClaimsAsync(user);
 
-                if (lBieres.Any())
+                if (claimsRole.Any(c => c.Type.ToString().Equals("Access") && c.Value.Equals("Bieres")) && lBieres.Any())
                 {
                     vm.lBieres = lBieres;
-
-                    //si contient tous les accès rempli juste un indice de true
-                    //à vérifier si la liste d'accès est plus longue que celle de bière sinon : all = true
-                    if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals("All")))
-                        vm.lAccesBiere.Add(true);
-
-                    //sinon rempli pour chaque élément de la liste
-                    else
-                    {
-                        foreach (Biere biere in lBieres)
-                        {
-                            if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals(biere.BieId.ToString())))
-                                vm.lAccesBiere.Add(true);
-                            else
-                                vm.lAccesBiere.Add(false);
-                        }
-                    }
+                    vm.lAccesBiere = getListeAccessBiere(lBieres, role.Name, claimsUser);
                 }
 
-                if (lEtablissements.Any())
+                if (claimsRole.Any(c => c.Type.ToString().Equals("Access") && c.Value.Equals("Etablissements")) && lEtablissements.Any())
                 {
                     vm.lEtablissements = lEtablissements;
-
-                    //si contient tous les accès rempli juste un indice de true
-                    //à vérifier si la liste d'accès est plus longue que celle de bière sinon : all = true
-                    if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals("All")))
-                        vm.lAccesEtab.Add(true);
-
-                    //sinon rempli pour chaque élément de la liste
-                    else
-                    {
-                        foreach (Etablissement etab in lEtablissements)
-                        {
-                            if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals(etab.EtaId.ToString())))
-                                vm.lAccesEtab.Add(true);
-                            else
-                                vm.lAccesEtab.Add(false);
-                        }
-                    }
+                    vm.lAccesEtab = getListeAccessEtablissement(lEtablissements, role.Name, claimsUser);
                 }
 
                 return View(vm);
+            }
+            catch (Exception ex)
+            {
+                ErrorViewModel vme = new ErrorViewModel(ex.Message);
+                return View("Error", vme);
+            }
+
+        }
+
+        public List<bool> getListeAccessBiere(List<Biere> lBieres, string nomRole, IList<Claim> lClaimsUser)
+        {
+            //attention contient toujours un élément de plus que la lBieres pour la valeur All
+            List<bool> lAcces = new List<bool>();
+
+            if (lClaimsUser.Any(x => x.Type.ToString().Equals((nomRole + accessBiere)) && x.Value.Equals(accessAll)))
+                lAcces.Add(true);
+
+            //sinon rempli pour chaque élément de la liste
+            else
+            {
+                lAcces.Add(false);
+            }
+
+            foreach (Biere biere in lBieres)
+            {
+                if (lClaimsUser.Any(x => x.Type.ToString().Equals((nomRole + accessBiere)) && x.Value.Equals(biere.BieId.ToString())))
+                    lAcces.Add(true);
+                else
+                    lAcces.Add(false);
+            }
+
+            return lAcces;
+        }
+
+        public List<bool> getListeAccessEtablissement(List<Etablissement> lEtablissement, string nomRole, IList<Claim> lClaimsUser)
+        {
+            //attention contient toujours un élément de plus que la lEtablissement pour la valeur All
+            List<bool> lAcces = new List<bool>();
+
+            if (lClaimsUser.Any(x => x.Type.ToString().Equals((nomRole + accessEtablissement)) && x.Value.Equals(accessAll)))
+                lAcces.Add(true);
+
+            else
+            {
+                lAcces.Add(false);
+            }
+
+            foreach (Etablissement etab in lEtablissement)
+            {
+                if (lClaimsUser.Any(x => x.Type.ToString().Equals((nomRole + accessEtablissement)) && x.Value.Equals(etab.EtaId.ToString())))
+                    lAcces.Add(true);
+                else
+                    lAcces.Add(false);
+            }
+
+            return lAcces;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditScopeRole(EditAccessUserViewModel vm)
+        {
+            try
+            {
+                Utilisateur user = userManager.Users.FirstOrDefault(u => u.Id == vm.UserId);
+
+                var lClaims = await userManager.GetClaimsAsync(user);
+                List<Claim> lUserClaimsInRole = lClaims.Where(c => c.Type.ToString().Contains(vm.NomRole)).ToList();
+
+                var result = await userManager.RemoveClaimsAsync(user, lUserClaimsInRole);
+
+                List<Claim> lNewClaims = new List<Claim>();
+
+                if(result.Succeeded)
+                {
+                    if(vm.lBieres.Any())
+                    {
+                        string nomClaim = vm.NomRole + accessBiere;
+
+                        if (vm.lAccesBiere[0])
+                            lNewClaims.Add(new Claim(nomClaim, accessAll));
+                        else
+                            for (int i = 0; i<vm.lBieres.Count;i++)
+                            {
+                                if(vm.lAccesBiere[i+1])
+                                    lNewClaims.Add(new Claim(nomClaim, vm.lBieres[i].BieId.ToString()));
+                            }
+                    }
+                    if (vm.lEtablissements.Any())
+                    {
+                        string nomClaim = vm.NomRole + accessEtablissement;
+
+                        if (vm.lAccesEtab[0])
+                            lNewClaims.Add(new Claim(nomClaim, accessAll));
+                        else
+                            for (int i = 0; i < vm.lEtablissements.Count; i++)
+                            {
+                                if (vm.lAccesEtab[i + 1])
+                                    lNewClaims.Add(new Claim(nomClaim, vm.lEtablissements[i].EtaId.ToString()));
+                            }
+                    }
+
+                    if(lNewClaims.Any())
+                    {
+                        result = await userManager.AddClaimsAsync(user, lNewClaims);
+                    }
+                    return RedirectToAction("EditScopeRole", new { vm.UserId, vm.RoleId,vm.ReturnUrl });
+                }
+                return View(vm);
+
             }
             catch (Exception ex)
             {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.ViewModels.Administration
 {
-    public class EditAccessUser
+    public class EditAccessUserViewModel
     {
-        public EditAccessUser()
+        public EditAccessUserViewModel()
         {
             this.lBieres = new List<Biere>();
             this.lEtablissements = new List<Etablissement>();
@@ -22,8 +22,10 @@ namespace IdentityServer.ViewModels.Administration
         public List<bool> lAccesEtab { get; set; }
 
         public string UserId { get; set; }
-
+        public string ReturnUrl { get; set; }
         public string NomRole { get; set; }
+
+        public string RoleId { get; set; }
         public string NomUser { get; set; }
     }
 }
