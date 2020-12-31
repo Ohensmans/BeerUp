@@ -8,5 +8,7 @@ namespace Repo.Modeles.Identity
     public class Role : IdentityRole
     {
         public bool isEditable { set; get; }
+
+        public string? Description { get; set; } 
     }
 }

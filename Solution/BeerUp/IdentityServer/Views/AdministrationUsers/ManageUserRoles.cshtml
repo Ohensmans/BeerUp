@@ -21,8 +21,9 @@
             <table class="table table-striped" id="myTable">
                 <thead>
                     <tr>
-                        <th class="text-center">Cocher pour attribuer le rôle</th>
+                        <th class="text-center">Attribuer le rôle</th>
                         <th class="NomColonne" id="0">Nom du rôle</th>
+                        <th>Description</th>
                         <th class="NomColonne text-center" id="1">Accès complet</th>
                         <th class="NomColonne text-center" id="2">Accès partiel</th>
                         <th class="text-center">Modifier l'accès de l'utilisateur</th>
@@ -36,6 +37,9 @@
                         <tr>
                             <td class="text-center">@Html.EditorFor(model => model.lRoles[i].isSelected)</td>
                             <td>@Html.Label("", Model.lRoles[i].RoleName)</td>
+                            <td>@if (Model.lRoles[i].RoleDescription != null)
+                                { @Html.Label("",Model.lRoles[i].RoleDescription)}
+                            </td>
                             <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isFullAcces)</td>
                             <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isPartialAccess)</td>
                             <td class="text-center">
@@ -46,6 +50,7 @@
 
                                 @Html.HiddenFor(model => model.lRoles[i].RoleId)
                                 @Html.HiddenFor(model => model.lRoles[i].RoleName)
+                                @Html.HiddenFor(model => model.lRoles[i].RoleDescription)
                                 @Html.HiddenFor(model => model.lRoles[i].isPartialAccess)
                                 @Html.HiddenFor(model => model.lRoles[i].isFullAcces)
                                 @Html.HiddenFor(model => model.lRoles[i].isEditable)

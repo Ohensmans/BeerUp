@@ -16,6 +16,8 @@ namespace IdentityServer.ViewModels.Administration
 
         public string RoleName { get; set; }
 
+        public string RoleDescription { get; set; }
+
         public List<string> Users { get; set; }
 
         public string returnUrl { get; set; }

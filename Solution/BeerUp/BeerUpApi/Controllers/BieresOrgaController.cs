@@ -24,10 +24,10 @@ namespace BeerUpApi.Controllers
 
         // GET: api/BieresOrga/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Biere>>> GetBieresOrganisations(Guid id)
+        public  ActionResult<List<Biere>> GetBieresOrganisations(Guid id)
         {
             var param = new SqlParameter("@OrgId", id);
-            var biere = _context.Bieres.FromSqlRaw("GetBieresOrganistion @OrgId", param).ToList();
+            List<Biere> biere =(List<Biere>) _context.Bieres.FromSqlRaw("GetBieresOrganistion @OrgId", param).ToList();
 
             if (biere == null)
             {

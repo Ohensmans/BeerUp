@@ -20,17 +20,40 @@
     <div class="form-group row">
         @Html.Label("", Model.RoleName, new { @class = "col-sm-2 col-form-label" })
         <div class="col-sm-10">
-            @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control" })
+            @if (User.IsInRole("Administrateur"))
+            {
+                @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.TextBoxFor(model => model.RoleName, new { @disabled = "disabled", @class = "form-control" })
+            }
         </div>
         @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
     </div>
+
+    <div class="form-group row">
+        @Html.Label("", "Description", new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @if (User.IsInRole("Administrateur"))
+            {
+                @Html.TextBoxFor(model => model.RoleDescription, new {  @class = "form-control" })
+            }
+            else
+            {
+                @Html.TextBoxFor(model => model.RoleDescription, new { @disabled = "disabled", @class = "form-control" })
+            }
+        </div>
+        @Html.ValidationMessageFor(model => model.RoleDescription, "", new { @class = "text-danger" })
+    </div>
+
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
     <div class="form-group row">
         <div class="col-sm-10">
             @if (User.IsInRole("Administrateur"))
             {
-                <button type="submit" class="btn btn-primary">Modifier le nom du rôle</button>
+                <button type="submit" class="btn btn-primary">Modifier le rôle</button>
             }
             @Html.ActionLink("Retour à la liste des rôles", "ListeRoles", "AdministrationUsers", null, new { @class = "btn btn-danger" })
         </div>

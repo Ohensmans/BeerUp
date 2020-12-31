@@ -18,6 +18,7 @@ using IdentityServer.Validator;
 using IdentityServer.ViewModels.Account;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using IdentityServer.ViewModels.Administration;
 
 namespace IdentityServer
 {
@@ -80,6 +81,7 @@ namespace IdentityServer
             services.AddScoped<IUserClaimsPrincipalFactory<Utilisateur>, MyUserClaimsPrincipalFactory>();
 
             services.AddScoped<IValidator<Utilisateur>, UtilisateurValidator>();
+            services.AddTransient<IValidator<EditRoleViewModel>, EditRoleValidator>();
             services.AddTransient<IValidator<RegisterViewModel>, RegisterValidator>();
             services.AddTransient<IValidator<LoginInputViewModel>, LoginValidator>();
 

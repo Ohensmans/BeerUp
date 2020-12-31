@@ -17,7 +17,7 @@ namespace IdentityServer.ExternalApiCall.BeerUp
 
         public EtabsOrgaService(IOptions<BaseUrl> url, HttpClient client)
         {
-            this.baseUrl = url.Value.BeerUpApiBieresOrga;
+            this.baseUrl = url.Value.BeerUpApiEtabsOrga;
             this.client = client;
         }
 

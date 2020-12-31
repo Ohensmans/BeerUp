@@ -68,6 +68,7 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
+        [HttpGet]
         private List<string> GetListeUsers(Guid userOrgId)
         {
             try
@@ -88,6 +89,7 @@ namespace IdentityServer.Controllers.Web
             }
         }
 
+        [HttpGet]
         private List<string> GetListeRoles(Guid userOrgId)
         {
             try
@@ -323,6 +325,7 @@ namespace IdentityServer.Controllers.Web
                 {
                     Id = role.Id,
                     RoleName = role.Name,
+                    RoleDescription = role.Description,
                     returnUrl = returnUrl
                 };
 
@@ -362,6 +365,7 @@ namespace IdentityServer.Controllers.Web
                 else
                 {
                     role.Name = model.RoleName;
+                    role.Description = model.RoleDescription;
                     var result = await roleManager.UpdateAsync(role);
 
                     if (result.Succeeded)
@@ -603,7 +607,8 @@ namespace IdentityServer.Controllers.Web
                         var rolesUserViewModel = new RolesUserViewModel
                         {
                             RoleId = role.Id,
-                            RoleName = role.Name
+                            RoleName = role.Name,
+                            RoleDescription = role.Description
                         };
                         rolesUserViewModel.isSelected = await userManager.IsInRoleAsync(user, role.Name);
                        
@@ -688,16 +693,15 @@ namespace IdentityServer.Controllers.Web
                 EditAccessUser vm = new EditAccessUser();
 
                 vm.UserId = userId;
-                
-                
+   
                 Utilisateur user = userManager.Users.FirstOrDefault(u => u.Id == userId);
                 
                 Guid userOrgId = user.OrgId;
                 vm.NomUser = user.UserName;
                 vm.NomRole = roleManager.Roles.FirstOrDefault(u => u.Id == roleId).Name;
 
-                var lBieres = await bieresOrgaService.GetAllBieresOrgaAsync(userOrgId);
-                var lEtablissements = await etabsOrgaService.GetAllEtablissementsOrgaAsync(userOrgId);
+                List<Biere> lBieres = await bieresOrgaService.GetAllBieresOrgaAsync(userOrgId);
+                List<Etablissement> lEtablissements = await etabsOrgaService.GetAllEtablissementsOrgaAsync(userOrgId);
 
                 var claims = await userManager.GetClaimsAsync(user);
 
@@ -738,9 +742,9 @@ namespace IdentityServer.Controllers.Web
                         foreach (Etablissement etab in lEtablissements)
                         {
                             if (claims.Any(x => x.Type.ToString() == vm.NomRole && x.Value.Equals(etab.EtaId.ToString())))
-                                vm.lAccesBiere.Add(true);
+                                vm.lAccesEtab.Add(true);
                             else
-                                vm.lAccesBiere.Add(false);
+                                vm.lAccesEtab.Add(false);
                         }
                     }
                 }

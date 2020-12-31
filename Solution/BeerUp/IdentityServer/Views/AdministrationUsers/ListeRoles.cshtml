@@ -26,6 +26,7 @@
         <thead>
             <tr>
                 <th class="NomColonne" id="0">Nom</th>
+                <th>Description</th>
                 <th class="text-center">Modifier</th>
                 @if (User.IsInRole("Administrateur"))
                 {
@@ -40,6 +41,9 @@
 
             <tr>
                 <td>@Html.Label("", role.Name)</td>
+                <td>@if (role.Description != null)
+                        {@Html.Label("", role.Description)}
+                </td>
                 <td class="text-center">@Html.ActionLink("Modifier", "EditRole", "AdministrationUsers", new { id = role.Id, returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })</td>
                 @if (User.IsInRole("Administrateur"))
                 {

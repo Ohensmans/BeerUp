@@ -11,6 +11,8 @@ namespace IdentityServer.ViewModels.Administration
 
         public string RoleName { get; set; }
 
+        public string RoleDescription { get; set; }
+
         public bool isEditable { get; set; }
 
         public bool isSelected { get; set; }
