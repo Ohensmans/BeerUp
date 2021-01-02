@@ -7,14 +7,14 @@
 <h1>Liste des utilisateurs</h1>
 @Html.HiddenFor(model => model.returnUrl)
 <br />
-@Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "AccountWeb", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })
+@Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "Account", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-primary" })
 @Html.ActionLink("Retour au tableau de bord", "Index", "AdministrationUsers", new { returnUrl = Model.returnUrl }, new { @class = "btn btn-danger" })
 <br />
 <br />
 
 @if (Model.lUser.Any())
 {
-
+<div class="card">
     <table class="table table-striped" id="myTable">
         <thead>
             <tr>
@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i<Model.lUser.Count;i++)
+            @for (int i = 0; i < Model.lUser.Count; i++)
             {
                 <tr>
                     <td>@Html.Label("", Model.lUser[i].UserName)</td>
@@ -70,7 +70,12 @@
         <a id="" class="paginationButtonNum" href="#"></a>
         <a id="" class="paginationButtonNum" href="#"></a>
         <a id="paginationButtonNext" href="#">&raquo;</a>
+        <br />
     </div>
+    <br />
+</div>
+<br />
+<br />
 }
 else
 {

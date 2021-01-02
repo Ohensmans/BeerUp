@@ -12,83 +12,99 @@
     <div class="col-md-6">
         <br />
         <br />
-        <h2>Liste des utilisateurs existants</h2>
-        @if (Model.UserNames.Any())
-        {
-
-            <table class="table table-striped" id="myTable">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var user in Model.UserNames)
-                    {
-
-                        <tr>
-                            <td>@Html.Label("", user)</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <div id="centerAll" class="pagination">
-                <a id="paginationButtonPrevious" href="#">&laquo;</a>
-                <a id="" class="paginationButtonNum active" href="#"></a>
-                <a id="" class="paginationButtonNum" href="#"></a>
-                <a id="" class="paginationButtonNum" href="#"></a>
-                <a id="paginationButtonNext" href="#">&raquo;</a>
+        <div class="card">
+            <div class="card-header">
+                <h2>Liste des utilisateurs existants</h2>
             </div>
 
+            @if (Model.UserNames.Any())
+            {
 
-        }
-        else
-        {
-            <h3>Il n'y a pas encore d'utilisateurs</h3>
-        }
-        <div>
-            @Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "AccountWeb", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
+                <table class="table table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th class="NomColonne" id="0">Nom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.UserNames)
+                        {
+
+                            <tr>
+                                <td>@Html.Label("", user)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div id="centerAll" class="pagination">
+                    <a id="paginationButtonPrevious" href="#">&laquo;</a>
+                    <a id="" class="paginationButtonNum active" href="#"></a>
+                    <a id="" class="paginationButtonNum" href="#"></a>
+                    <a id="" class="paginationButtonNum" href="#"></a>
+                    <a id="paginationButtonNext" href="#">&raquo;</a>
+                </div>
+
+
+            }
+            else
+            {
+                <h3>Il n'y a pas encore d'utilisateurs</h3>
+            }
+            
+        <div id="centerAll">
+            <br />
+            @Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "Account", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
             @Html.ActionLink("Gérer les utilisateurs", "ListeUsers", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
         </div>
+        </div>
+
 
     </div>
 
     <div class="col-md-6">
         <br />
         <br />
-        <h2>Liste des rôles existants</h2>
-        @if (Model.RoleNames.Any())
-        {
+        <div class="card">
+            <div class="card-header">
+                <h2>Liste des rôles existants</h2>
+            </div>
 
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var role in Model.RoleNames)
-                    {
-
-                        <tr>
-                            <td>@Html.Label("", role)</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <h3>Il n'y a pas encore de rôles</h3>
-        }
-        <div>
-            @if (User.IsInRole("Administrateur"))
+            @if (Model.RoleNames.Any())
             {
-            @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
-            }
-            @Html.ActionLink("Gérer les rôles", "ListeRoles", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
-        </div>
 
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model.RoleNames)
+                        {
+
+                            <tr>
+                                <td>@Html.Label("", role)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h3>Il n'y a pas encore de rôles</h3>
+            }
+
+            <div id="centerAll">
+                <br>
+                @if (User.IsInRole("Administrateur"))
+                {
+                    @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
+                }
+                @Html.ActionLink("Gérer les rôles", "ListeRoles", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
+            </div>
+
+
+        </div>
     </div>
 </div>
 <br />
