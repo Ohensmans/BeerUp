@@ -1,12 +1,19 @@
+import { Injectable } from '@angular/core';
 import { UserManager, User, UserManagerSettings, WebStorageStateStore} from 'oidc-client';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 export class AuthentificationService {
   private isAuth:boolean
   private manager:UserManager;
+  helper = new JwtHelperService();
 
   private user = null as any;
 
-  constructor() { 
+  constructor(private jwtSrv : JwtHelperService) { 
     this.isAuth = false;    
     this.manager = new UserManager(this.getClientSettings());
     this.manager.getUser()
@@ -60,4 +67,14 @@ export class AuthentificationService {
   signOut() {
     return this.manager.signoutRedirect();
   }
+
+  getToken(){
+    let token = localStorage.getItem("oidc.user:http://localhost:5000:BeerUpWeb") as any;
+    return token;
+  }
+
+  getClaims(){
+    return this.helper.decodeToken(this.getUser()["id_token"]);
+  }
+
 }

@@ -9,13 +9,39 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Home</a></li>
-                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Administration</a></li>
+                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Home</a></li>          
+
+                        <li class="btn-group" dropdown>
+                            <div id="button-animated nav-item" dropdownToggle type="button" class="nav-link dropdown-toggle" aria-controls="dropdown-animated">
+                                Administration <span class="caret"></span>
+                            </div>
+                            <div id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="PlansTarifaires">Plans tarifaires</a></div>
+                                <div class="divider dropdown-divider"></div>
+                                <div role="menuitem"><a class="dropdown-item" routerLink="Achats">Achats</a></div>
+                                <div class="divider dropdown-divider"></div>
+                                <div role="menuitem"><a class="dropdown-item" routerLink="Etablissements">Etablissements</a></div>
+                                <div class="divider dropdown-divider"></div>
+                                <div role="menuitem"><a class="dropdown-item" routerLink="Bieres">Bières</a></div>
+                                <div class="divider dropdown-divider"></div>
+                                <div role="menuitem"><a class="dropdown-item" routerLink="Utilisateurs">Utilisateurs</a></div>
+                            </div>
+                        </li>
+
+
+                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="contact">Contact</a></li>
 
                         <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link" routerLink="login">S'identifier</a></li>     
                         <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item"><a class="nav-link" href="{{registerUrl}}">S'enregistrer</a></li>  
 
-                        <li *ngIf="isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link" routerLink="login">Se déconnecter</a></li>  
+                        <li *ngIf="isAuth()"class="btn-group nav-item ml-auto" dropdown>
+                            <div id="button-animated nav-item" dropdownToggle type="button" class="nav-link dropdown-toggle" aria-controls="dropdown-animated">
+                                User@user.be <span class="caret"></span>
+                            </div>
+                            <div  id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="login">Se déconnecter</a></div>
+                            </div>
+                        </li>
 
                     </ul>
                 </div>
@@ -29,7 +55,7 @@
 
     <footer class="border-top footer text-muted bg-white">
         <div class="container">
-            &copy; 2020 - BeerUp - Privacy
+            &copy; 2021 - BeerUp - <span class="text-dark" routerLink="privacy">Privacy</span>
         </div>
     </footer>
 </body>
