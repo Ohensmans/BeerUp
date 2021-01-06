@@ -8,16 +8,15 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
 })
 
 export class PrivacyComponent implements OnInit {
-  name: string[] = [];
+  name: Array<string>;
 
   
   constructor(private authSrv:AuthentificationService) {
+    this.name = this.authSrv.getUserRoles();
    }
 
   ngOnInit(): void {
-    console.log(this.authSrv.getUser());
-    console.log(this.authSrv.getClaims());
-    this.name = this.authSrv.getClaims().role;
+    this.name = this.authSrv.getUserRoles();
   }
 
 }

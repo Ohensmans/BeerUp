@@ -12,22 +12,21 @@
                         <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Home</a></li>          
 
                         <li class="btn-group" dropdown>
-                            <div id="button-animated nav-item" dropdownToggle type="button" class="nav-link dropdown-toggle" aria-controls="dropdown-animated">
+                            <div *ngIf="isAuth()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link dropdown-toggle" aria-controls="dropdown-animated">
                                 Administration <span class="caret"></span>
                             </div>
                             <div id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
-                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="PlansTarifaires">Plans tarifaires</a></div>
-                                <div class="divider dropdown-divider"></div>
-                                <div role="menuitem"><a class="dropdown-item" routerLink="Achats">Achats</a></div>
-                                <div class="divider dropdown-divider"></div>
-                                <div role="menuitem"><a class="dropdown-item" routerLink="Etablissements">Etablissements</a></div>
-                                <div class="divider dropdown-divider"></div>
-                                <div role="menuitem"><a class="dropdown-item" routerLink="Bieres">Bières</a></div>
-                                <div class="divider dropdown-divider"></div>
-                                <div role="menuitem"><a class="dropdown-item" routerLink="Utilisateurs">Utilisateurs</a></div>
+                                <div *ngIf="isAuth() && isAdmin()" role="menuitem"><a class="dropdown-item text-dark" routerLink="PlansTarifaires">Plans tarifaires</a></div>
+                                <div *ngIf="isAuth() && isAdmin()" class="divider dropdown-divider"></div>
+                                <div *ngIf="isAuth() && hasAchatAdminAccess()" role="menuitem"><a class="dropdown-item" routerLink="Achats">Achats</a></div>
+                                <div *ngIf="isAuth() && hasEtablissementAdminAccess() && hasAchatAdminAccess()" class="divider dropdown-divider"></div>
+                                <div *ngIf="isAuth() && hasEtablissementAdminAccess()"role="menuitem"><a class="dropdown-item" routerLink="Etablissements">Etablissements</a></div>
+                                <div *ngIf="isAuth() && hasEtablissementAdminAccess() && hasBiereAdminAccess()"class="divider dropdown-divider"></div>
+                                <div *ngIf="isAuth() && hasBiereAdminAccess()"role="menuitem"><a class="dropdown-item" routerLink="Bieres">Bières</a></div>
+                                <div *ngIf="isAuth() && hasUserAdminAccess()" class="divider dropdown-divider"></div>
+                                <div *ngIf="isAuth() && hasUserAdminAccess()" role="menuitem"><a class="dropdown-item" href="{{adminUserUrl}}">Utilisateurs</a></div>
                             </div>
                         </li>
-
 
                         <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="contact">Contact</a></li>
 
@@ -36,7 +35,7 @@
 
                         <li *ngIf="isAuth()"class="btn-group nav-item ml-auto" dropdown>
                             <div id="button-animated nav-item" dropdownToggle type="button" class="nav-link dropdown-toggle" aria-controls="dropdown-animated">
-                                User@user.be <span class="caret"></span>
+                                {{getUserName()}} <span class="caret"></span>
                             </div>
                             <div  id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
                                 <div role="menuitem"><a class="dropdown-item text-dark" routerLink="login">Se déconnecter</a></div>

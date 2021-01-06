@@ -17,12 +17,20 @@ namespace IdentityServer.Controllers.Web
 
         //Adresse de retour sur le site
         private readonly string BeerUpWebUrl;
+        private readonly string BeerUpWebUrlPlansTarifaires;
+        private readonly string BeerUpWebUrlAchats;
+        private readonly string BeerUpWebUrlEtablissements;
+        private readonly string BeerUpWebUrlBieres;
 
         public HomeController(IIdentityServerInteractionService interaction, IWebHostEnvironment environment, IOptions<Models.BaseUrl> url)
         {
             _interaction = interaction;
             _environment = environment;
             this.BeerUpWebUrl = url.Value.BeerUpWebUrl;
+            this.BeerUpWebUrlAchats = url.Value.BeerUpWebUrlAchats;
+            this.BeerUpWebUrlBieres = url.Value.BeerUpWebUrlBieres;
+            this.BeerUpWebUrlEtablissements = url.Value.BeerUpWebUrlEtablissements;
+            this.BeerUpWebUrlPlansTarifaires = url.Value.BeerUpWebUrlPlansTarifaires;
         }
 
         public IActionResult Index()
@@ -32,6 +40,23 @@ namespace IdentityServer.Controllers.Web
         public IActionResult Back()
         {
             return Redirect(BeerUpWebUrl);
+        }
+
+        public IActionResult PlansTarifaires()
+        {
+            return Redirect(BeerUpWebUrlPlansTarifaires);
+        }
+        public IActionResult Achats()
+        {
+            return Redirect(BeerUpWebUrlAchats);
+        }
+        public IActionResult Etablissements()
+        {
+            return Redirect(BeerUpWebUrlEtablissements);
+        }
+        public IActionResult Bieres()
+        {
+            return Redirect(BeerUpWebUrlBieres);
         }
 
         public async Task<IActionResult> Error(string errorId)

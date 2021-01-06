@@ -22,12 +22,51 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Back">Accueil</a>
                         </li>
-                        @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin")) 
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                @Html.ActionLink("Administration", "Index", "AdministrationUsers", null, new { @class = "nav-link text-dark" })
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Administration
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @if (User.IsInRole("Administrateur"))
+                                    {
+                                        @Html.ActionLink("Plans tarifaires", "PlansTarifaires", "Home", null, new { @class = "dropdown-item" })
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupAchat"))
+                                    {
+                                        @Html.ActionLink("Achats", "Achats", "Home", null, new { @class = "dropdown-item" })
+                                    }
+                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || (User.IsInRole("GroupAchat") && User.IsInRole("GroupEtablissement")))
+                                    {
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupEtablissement"))
+                                    {
+                                        @Html.ActionLink("Etablissements", "Etablissements", "Home", null, new { @class = "dropdown-item" })
+                                    }
+                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || (User.IsInRole("GroupBiere") && User.IsInRole("GroupEtablissement")))
+                                    {
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupBiere"))
+                                    {
+                                        @Html.ActionLink("Bières", "Bieres", "Home", null, new { @class = "dropdown-item" })
+                                    }
+                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin"))
+                                    {
+                                        <div class="dropdown-divider"></div>
+                                        @Html.ActionLink("Utilisateurs", "Index", "AdministrationUsers", null, new { @class = "dropdown-item" })
+                                    }
+                                </div>
                             </li>
                         }
+
+                        <li class="nav-item">
+                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link text-dark" })
+                        </li>
+
                         @if (User?.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown ml-auto">

@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthentificationService {
   private isAuth:boolean
   private manager:UserManager;
-  helper = new JwtHelperService();
+  helper = new JwtHelperService(); 
 
   private user = null as any;
 
@@ -23,6 +23,7 @@ export class AuthentificationService {
       }
     
     );
+
   }
 
   public getUser() {
@@ -69,12 +70,65 @@ export class AuthentificationService {
   }
 
   getToken(){
-    let token = localStorage.getItem("oidc.user:http://localhost:5000:BeerUpWeb") as any;
-    return token;
+    if(this.isAuthenticate())
+      return this.helper.decodeToken(this.getUser()["id_token"]);
+    else
+      return null;
   }
 
-  getClaims(){
-    return this.helper.decodeToken(this.getUser()["id_token"]);
+  getUserName(){
+    return this.getToken().name;
   }
+
+  getUserRoles(){
+    return this.getToken().role;
+  }
+
+  isAdmin(){
+    if(this.getUserRoles()!=null)
+    {
+      return (this.getUserRoles().includes("Administrateur"));
+    }
+    return false;
+  }
+
+
+  isAdminOrGroupAdmin(){
+    if(this.getUserRoles()!=null)
+    {
+      return (this.isAdmin() || this.getUserRoles().includes("GroupAdmin"));
+    }
+    return false;
+  }
+
+  hasUserAdminAccess(){
+    return this.isAdminOrGroupAdmin();
+  }
+
+  hasBiereAdminAccess(){
+    if(this.getUserRoles()!=null)
+    {
+      return (this.isAdminOrGroupAdmin() || this.getUserRoles().includes("GroupBiere"));
+    }
+    return false;
+  }
+
+  hasEtablissementAdminAccess(){
+    if(this.getUserRoles()!=null)
+    {
+      return (this.isAdminOrGroupAdmin() || this.getUserRoles().includes("GroupEtablissement"));
+    }
+    return false;
+  }
+
+  hasAchatAdminAccess(){
+    if(this.getUserRoles()!=null)
+    {
+      return (this.isAdminOrGroupAdmin() || this.getUserRoles().includes("GroupAchat"));
+    }
+    return false;
+  }
+
+
 
 }

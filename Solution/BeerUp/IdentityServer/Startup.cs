@@ -77,7 +77,6 @@ namespace IdentityServer
                 .AddAspNetIdentity<Utilisateur>()
                 .AddProfileService<Configs.IdentityProfileService>();
 
-
             services.AddScoped<IUserClaimsPrincipalFactory<Utilisateur>, MyUserClaimsPrincipalFactory>();
 
             services.AddScoped<IValidator<Utilisateur>, UtilisateurValidator>();

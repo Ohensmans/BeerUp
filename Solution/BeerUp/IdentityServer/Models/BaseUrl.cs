@@ -8,6 +8,11 @@ namespace IdentityServer.Models
     public class BaseUrl
     {
         public string BeerUpWebUrl { get; set; }
+        public string BeerUpWebUrlPlansTarifaires { get; set; }
+        public string BeerUpWebUrlAchats { get; set; }
+        public string BeerUpWebUrlEtablissements { get; set; }
+        public string BeerUpWebUrlBieres { get; set; }
+
 
         public string BeerUpApiOrga { get; set; }
 
