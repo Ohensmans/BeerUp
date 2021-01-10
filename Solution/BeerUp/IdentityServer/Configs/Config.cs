@@ -30,10 +30,22 @@ namespace IdentityServer
 
             };
 
+
+        public static IEnumerable<ApiScope> ApiScopes => new List<ApiScope>
+        {
+        new ApiScope(name: "read",   displayName: "Read data"),
+        new ApiScope(name: "write",  displayName: "Write data"),
+        new ApiScope(name: "delete", displayName: "Delete data"),
+        new ApiScope(name: "ApiBeerUp.all",    displayName: "All access")
+        };
+
         public static IEnumerable<ApiResource> Apis =>
         new List<ApiResource>
         {
-            new ApiResource("ApiBeerUp", "Api BeerUp"),
+            new ApiResource("ApiBeerUp", "Api BeerUp")
+            {
+                Scopes = {"ApiBeerUp.all"}
+            },
         };
 
         public static IEnumerable<Client> Clients =>
@@ -63,7 +75,7 @@ namespace IdentityServer
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "ApiBeerUp",
+                    "ApiBeerUp.all",
                     "role",
                     "orgId"
 
@@ -97,10 +109,42 @@ namespace IdentityServer
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "ApiBeerUp",
+                    "ApiBeerUp.all",
                     "role",
                     "orgId"
                 },
+
+            },
+                new Client
+            {
+                ClientId = "IdentityBeerUp",
+                ClientName = "IdentityBeerUp",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+                RequireConsent = false,
+                RequirePkce = true,
+
+                AllowAccessTokensViaBrowser = true,
+                AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+
+                // where to redirect to after login
+                RedirectUris = { "http://localhost:5000/signin-oidc" },
+
+                // where to redirect to after logout
+                PostLogoutRedirectUris = { "http://localhost:5000/signout-callback-oidc" },
+
+
+                AlwaysIncludeUserClaimsInIdToken = true,
+
+                AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "ApiBeerUp.all",
+                    "role",
+                    "orgId"
+
+                },
+                AllowOfflineAccess = true
             }
 
         };

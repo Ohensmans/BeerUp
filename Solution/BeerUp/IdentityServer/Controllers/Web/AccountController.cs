@@ -70,6 +70,7 @@ namespace IdentityServer.Controllers.Web
 
         }
 
+
         [HttpPost]
         public async Task<IActionResult> RegisterWeb(RegisterViewModel model, string button)
         {
@@ -87,6 +88,7 @@ namespace IdentityServer.Controllers.Web
                             var signInResult = await _signInManager.PasswordSignInAsync(model.User, model.Password, false, false);
 
                             string role;
+                           
                             if (model.OrgExiste)
                             {
                                 List<Organisation> lOrganisations = await organisationService.GetAllOrganisationsAsync();
@@ -134,11 +136,10 @@ namespace IdentityServer.Controllers.Web
         private async Task<Guid> AddOrganisation (Organisation organisation)
         {
 
-            //crée l'organisation
-            var idToken = await HttpContext.GetTokenAsync("access_token");
+           
             try
             {
-                Organisation orga = await organisationService.CreateOrganisationAsync(organisation, idToken);
+                Organisation orga = await organisationService.CreateOrganisationAsync(organisation);
                 return orga.OrgId;
             }
             catch (Exception)

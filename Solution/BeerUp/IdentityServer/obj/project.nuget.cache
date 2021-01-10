@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MGGxm9X3MXqJv9TP9o4jx+o/1UqN4A0E2eSfY5Ln97jTNSf0t2YMGVn2P4fGbJGCidx6oHE+BzSpx6Y3/KcSWQ==",
+  "dgSpecHash": "N/5xvCQs4G2ZCH9RWDVRYw0tlOS51kzbIJpo2XP6fpV8VDPrTcGx2ZTs77i7+WKsSBB5l4U0zZ9hBhs/nPiacA==",
   "success": true,
   "projectFilePath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,7 @@
     "C:\\Users\\Olivier\\.nuget\\packages\\fluentvalidation.aspnetcore\\9.3.0\\fluentvalidation.aspnetcore.9.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\9.3.0\\fluentvalidation.dependencyinjectionextensions.9.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\Olivier\\.nuget\\packages\\identitymodel\\4.4.0\\identitymodel.4.4.0.nupkg.sha512",
+    "C:\\Users\\Olivier\\.nuget\\packages\\identitymodel\\4.6.0\\identitymodel.4.6.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\identityserver4\\4.1.1\\identityserver4.4.1.1.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\identityserver4.aspnetidentity\\4.1.1\\identityserver4.aspnetidentity.4.1.1.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\identityserver4.entityframework\\4.1.1\\identityserver4.entityframework.4.1.1.nupkg.sha512",
@@ -127,7 +127,7 @@
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
-    "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encodings.web\\4.7.0\\system.text.encodings.web.4.7.0.nupkg.sha512",
+    "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encodings.web\\5.0.0\\system.text.encodings.web.5.0.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",

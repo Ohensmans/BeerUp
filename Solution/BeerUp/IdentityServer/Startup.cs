@@ -77,6 +77,30 @@ namespace IdentityServer
                 .AddAspNetIdentity<Utilisateur>()
                 .AddProfileService<Configs.IdentityProfileService>();
 
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            })
+             .AddCookie("Cookies")
+             .AddOpenIdConnect("oidc", options =>
+             {
+                 options.Authority = "http://localhost:5000";
+                 options.RequireHttpsMetadata = false;
+                 
+                 options.ClientId = "IdentityBeerUp";
+                 options.ClientSecret = "secret";
+                 options.ResponseType = "code id_token";
+                 
+                 options.SaveTokens = true;
+                 options.GetClaimsFromUserInfoEndpoint = true;
+
+                 options.Scope.Add("ApiBeerUp.all");
+             });
+
             services.AddScoped<IUserClaimsPrincipalFactory<Utilisateur>, MyUserClaimsPrincipalFactory>();
 
             services.AddScoped<IValidator<Utilisateur>, UtilisateurValidator>();
@@ -106,8 +130,7 @@ namespace IdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
-            InitializeDatabase(app);
-            
+            //InitializeDatabase(app);
 
             app.UseStaticFiles();
 
@@ -134,11 +157,6 @@ namespace IdentityServer
                 context.Database.Migrate();
 
 
-                foreach (var client in Config.Clients)
-                {
-                    if (!context.Clients.Any(x => x.ClientName == client.ClientName))
-                        context.Clients.Add(client.ToEntity());
-                }
 
                 foreach (var resource in Config.Ids)
                 {
@@ -146,11 +164,24 @@ namespace IdentityServer
                         context.IdentityResources.Add(resource.ToEntity());
                 }
 
+                foreach (var resource in Config.ApiScopes)
+                {
+                    if (!context.ApiScopes.Any(x => x.Name == resource.Name))
+                        context.ApiScopes.Add(resource.ToEntity());
+                }
+
                 foreach (var resource in Config.Apis)
                 {
                     if (!context.ApiResources.Any(x => x.Name == resource.Name))
                         context.ApiResources.Add(resource.ToEntity());
                 }
+
+                foreach (var client in Config.Clients)
+                {
+                    if (!context.Clients.Any(x => x.ClientName == client.ClientName))
+                        context.Clients.Add(client.ToEntity());
+                }
+
                 context.SaveChanges();
                 
             }

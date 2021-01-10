@@ -1,4 +1,5 @@
-﻿using IdentityServer.Models;
+﻿using IdentityModel.Client;
+using IdentityServer.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Repo.Modeles.ModelesBeerUp;
@@ -22,8 +23,24 @@ namespace IdentityServer.ExternalApiCall.BeerUp
             this.client = client;
         }
 
-        public async Task<Organisation> CreateOrganisationAsync(Organisation organisation, string idToken)
+        public async Task<Organisation> CreateOrganisationAsync(Organisation organisation)
         {
+            var client = new HttpClient();
+
+            var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = "http://localhost:5000/connect/token",
+
+                ClientId = "IdentityBeerUp",
+                ClientSecret = "secret",
+                Scope = "ApiBeerUp.all"
+            });
+            if (response.IsError) 
+                throw new Exception(response.Error);
+
+            var token = response.AccessToken;
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var content = JsonConvert.SerializeObject(organisation);
             var httpResponse = await client.PostAsync(baseUrl, new StringContent(content, Encoding.Default, "application/json"));
 

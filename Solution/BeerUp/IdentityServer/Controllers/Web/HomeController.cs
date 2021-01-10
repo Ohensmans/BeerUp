@@ -1,4 +1,5 @@
-﻿using IdentityServer.ViewModels;
+﻿using IdentityModel.Client;
+using IdentityServer.ViewModels;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Controllers.Web
@@ -97,8 +100,22 @@ namespace IdentityServer.Controllers.Web
         [Authorize]
         public async Task<IActionResult> Privacy()
         {
-            var idToken = await HttpContext.GetTokenAsync("access_token");
+            
+            var client = new HttpClient();
+
+            var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = "http://localhost:5000/connect/token",
+
+                ClientId = "IdentityBeerUp",
+                ClientSecret = "secret",
+                Scope = "ApiBeerUp.all"
+            });
+
             var user = User;
+
+            var idToken = await HttpContext.GetTokenAsync("id_token");
+            
             return View();
         }
     }
