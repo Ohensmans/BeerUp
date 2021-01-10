@@ -22,6 +22,10 @@ import { AuthCallbackComponent } from './components/auth-callback/auth-callback.
 import { LoginComponent } from './components/login/login.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
+import { TabBordPlanTarifComponent } from './components/plansTarifaires/tab-bord-plan-tarif/tab-bord-plan-tarif.component';
+import { TarifsBieresComponent } from './components/plansTarifaires/tarifs-bieres/tarifs-bieres.component';
+import { TarifsEtabsComponent } from './components/plansTarifaires/tarifs-etabs/tarifs-etabs.component';
+import { TarifComponent } from './components/plansTarifaires/tarif/tarif.component';
 
 
 @NgModule({
@@ -33,6 +37,10 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
     LoginComponent,
     ContactComponent,
     PrivacyComponent,
+    TabBordPlanTarifComponent,
+    TarifsBieresComponent,
+    TarifsEtabsComponent,
+    TarifComponent,
   ],
   imports: [
     BrowserModule,

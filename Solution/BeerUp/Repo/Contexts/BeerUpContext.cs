@@ -246,8 +246,7 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.EtaActif)
-                    .HasColumnName("Eta.Actif")
-                    .HasComputedColumnSql("((1))", false);
+                    .HasColumnName("Eta.Actif");
 
                 entity.Property(e => e.EtaCoord)
                     .HasMaxLength(100)
@@ -419,21 +418,24 @@ namespace Repo.Modeles.ModelesBeerUp
             {
                 entity.ToTable("TarifsVueBie");
 
-                entity.Property(e => e.TarifsVueBieId)
+                entity.Property(e => e.Id)
                     .HasColumnName("TarifsVueBie.Id")
                     .HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.TarifsVueBieActif)
-                    .HasColumnName("TarifsVueBie.Actif")
-                    .HasComputedColumnSql("((1))", false);
+                entity.Property(e => e.Actif)
+                    .HasColumnName("TarifsVueBie.Actif");
 
-                entity.Property(e => e.TarifsVueBieDateCre)
+                entity.Property(e => e.DateDebut)
                     .HasColumnType("datetime")
-                    .HasColumnName("TarifsVueBie.DateCre");
+                    .HasColumnName("TarifsVueBie.DateDebut");
 
-                entity.Property(e => e.TarifsVueBieNbVue).HasColumnName("TarifsVueBie.NbVue");
+                entity.Property(e => e.DateFin)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TarifsVueBie.DateFin");
 
-                entity.Property(e => e.TarifsVueBiePrix)
+                entity.Property(e => e.NbVue).HasColumnName("TarifsVueBie.NbVue");
+
+                entity.Property(e => e.Prix)
                     .HasColumnType("decimal(8, 2)")
                     .HasColumnName("TarifsVueBie.Prix");
             });
@@ -442,19 +444,23 @@ namespace Repo.Modeles.ModelesBeerUp
             {
                 entity.ToTable("TarifsVueEtab");
 
-                entity.Property(e => e.TarifsVueEtabId)
+                entity.Property(e => e.Id)
                     .HasColumnName("TarifsVueEtab.Id")
                     .HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.TarifsVueEtabActif).HasColumnName("TarifsVueEtab.Actif");
+                entity.Property(e => e.Actif).HasColumnName("TarifsVueEtab.Actif");
 
-                entity.Property(e => e.TarifsVueEtabDateCre)
+                entity.Property(e => e.DateDebut)
                     .HasColumnType("datetime")
-                    .HasColumnName("TarifsVueEtab.DateCre");
+                    .HasColumnName("TarifsVueEtab.DateDebut");
 
-                entity.Property(e => e.TarifsVueEtabNbVue).HasColumnName("TarifsVueEtab.NbVue");
+                entity.Property(e => e.DateFin)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TarifsVueEtab.DateFin");
 
-                entity.Property(e => e.TarifsVueEtabPrix)
+                entity.Property(e => e.NbVue).HasColumnName("TarifsVueEtab.NbVue");
+
+                entity.Property(e => e.Prix)
                     .HasColumnType("decimal(8, 2)")
                     .HasColumnName("TarifsVueEtab.Prix");
             });

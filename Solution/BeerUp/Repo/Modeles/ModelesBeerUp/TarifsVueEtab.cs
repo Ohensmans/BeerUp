@@ -12,11 +12,12 @@ namespace Repo.Modeles.ModelesBeerUp
             AchatsVues = new HashSet<AchatsVue>();
         }
 
-        public Guid TarifsVueEtabId { get; set; }
-        public long TarifsVueEtabNbVue { get; set; }
-        public decimal TarifsVueEtabPrix { get; set; }
-        public DateTime TarifsVueEtabDateCre { get; set; }
-        public bool TarifsVueEtabActif { get; set; }
+        public Guid Id { get; set; }
+        public long NbVue { get; set; }
+        public decimal Prix { get; set; }
+        public DateTime DateDebut { get; set; }
+        public DateTime DateFin { get; set; }
+        public bool Actif { get; set; }
 
         public virtual ICollection<AchatsVue> AchatsVues { get; set; }
     }

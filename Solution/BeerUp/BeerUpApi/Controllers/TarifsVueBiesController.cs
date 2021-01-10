@@ -12,7 +12,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Administrateur")]
     public class TarifsVueBiesController : ControllerBase
     {
         private readonly BeerUpContext _context;
@@ -48,7 +48,7 @@ namespace BeerUpApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTarifsVueBie(Guid id, TarifsVueBie tarifsVueBie)
         {
-            if (id != tarifsVueBie.TarifsVueBieId)
+            if (id != tarifsVueBie.Id)
             {
                 return BadRequest();
             }
@@ -82,7 +82,7 @@ namespace BeerUpApi.Controllers
             _context.TarifsVueBies.Add(tarifsVueBie);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTarifsVueBie", new { id = tarifsVueBie.TarifsVueBieId }, tarifsVueBie);
+            return CreatedAtAction("GetTarifsVueBie", new { id = tarifsVueBie.Id }, tarifsVueBie);
         }
 
         // DELETE: api/TarifsVueBies/5
@@ -103,7 +103,7 @@ namespace BeerUpApi.Controllers
 
         private bool TarifsVueBieExists(Guid id)
         {
-            return _context.TarifsVueBies.Any(e => e.TarifsVueBieId == id);
+            return _context.TarifsVueBies.Any(e => e.Id == id);
         }
     }
 }

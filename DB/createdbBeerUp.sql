@@ -1,7 +1,13 @@
 USE [master]
 GO
-/****** Object:  Database [BeerUp]    Script Date: 30-12-20 11:35:37 ******/
-CREATE DATABASE BeerUp
+/****** Object:  Database [BeerUp]    Script Date: 10-01-21 12:01:44 ******/
+CREATE DATABASE [BeerUp]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'BeerUp', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.LOCAL\MSSQL\DATA\BeerUp.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'BeerUp_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.LOCAL\MSSQL\DATA\BeerUp_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
 GO
 ALTER DATABASE [BeerUp] SET COMPATIBILITY_LEVEL = 130
 GO
@@ -74,7 +80,7 @@ ALTER DATABASE [BeerUp] SET QUERY_STORE = OFF
 GO
 USE [BeerUp]
 GO
-/****** Object:  Table [dbo].[AchatsVues]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[AchatsVues]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,7 +98,7 @@ CREATE TABLE [dbo].[AchatsVues](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AdressesFacturation]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[AdressesFacturation]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,7 +117,7 @@ CREATE TABLE [dbo].[AdressesFacturation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Avis]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[Avis]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +139,7 @@ CREATE TABLE [dbo].[Avis](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AvisBiereUser]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[AvisBiereUser]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +157,7 @@ CREATE TABLE [dbo].[AvisBiereUser](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Bieres]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[Bieres]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -175,7 +181,7 @@ CREATE TABLE [dbo].[Bieres](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Etablissements]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[Etablissements]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -195,14 +201,14 @@ CREATE TABLE [dbo].[Etablissements](
 	[Eta.Photo] [nvarchar](200) NULL,
 	[Eta.NbVu] [bigint] NULL,
 	[Eta.Coord] [nvarchar](100) NULL,
-	[Eta.Actif]  AS ((1)),
+	[Eta.Actif] [bit] NOT NULL,
  CONSTRAINT [PK_Etablissements] PRIMARY KEY CLUSTERED 
 (
 	[Eta.Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[FactureOrgaAdresse]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[FactureOrgaAdresse]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -219,7 +225,7 @@ CREATE TABLE [dbo].[FactureOrgaAdresse](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Factures]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[Factures]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -233,7 +239,7 @@ CREATE TABLE [dbo].[Factures](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LibrairieUserBieres]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[LibrairieUserBieres]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -248,7 +254,7 @@ CREATE TABLE [dbo].[LibrairieUserBieres](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Organisations]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[Organisations]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -271,7 +277,7 @@ CREATE TABLE [dbo].[Organisations](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TarifsVueBie]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[TarifsVueBie]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -280,15 +286,16 @@ CREATE TABLE [dbo].[TarifsVueBie](
 	[TarifsVueBie.Id] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
 	[TarifsVueBie.NbVue] [bigint] NOT NULL,
 	[TarifsVueBie.Prix] [decimal](8, 2) NOT NULL,
-	[TarifsVueBie.DateCre] [datetime] NOT NULL,
-	[TarifsVueBie.Actif]  AS ((1)),
+	[TarifsVueBie.DateDebut] [datetime] NOT NULL,
+  [TarifsVueBie.DateFin] [datetime] NOT NULL,
+	[TarifsVueBie.Actif] [bit] NOT NULL,
  CONSTRAINT [PK_TarifsVueBie] PRIMARY KEY CLUSTERED 
 (
 	[TarifsVueBie.Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TarifsVueEtab]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[TarifsVueEtab]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -297,7 +304,8 @@ CREATE TABLE [dbo].[TarifsVueEtab](
 	[TarifsVueEtab.Id] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
 	[TarifsVueEtab.NbVue] [bigint] NOT NULL,
 	[TarifsVueEtab.Prix] [decimal](8, 2) NOT NULL,
-	[TarifsVueEtab.DateCre] [datetime] NOT NULL,
+	[TarifsVueEtab.DateDebut] [datetime] NOT NULL,
+  [TarifsVueEtab.DateFin] [datetime] NOT NULL,
 	[TarifsVueEtab.Actif] [bit] NOT NULL,
  CONSTRAINT [PK_TarifsVueEtab] PRIMARY KEY CLUSTERED 
 (
@@ -305,7 +313,7 @@ CREATE TABLE [dbo].[TarifsVueEtab](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypesBiere]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[TypesBiere]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -319,7 +327,7 @@ CREATE TABLE [dbo].[TypesBiere](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypeServiceVenteBiere]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[TypeServiceVenteBiere]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -334,7 +342,7 @@ CREATE TABLE [dbo].[TypeServiceVenteBiere](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypesEtablissement]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[TypesEtablissement]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -348,7 +356,7 @@ CREATE TABLE [dbo].[TypesEtablissement](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypesServices]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[TypesServices]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -362,7 +370,7 @@ CREATE TABLE [dbo].[TypesServices](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[VenteBiereEta]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Table [dbo].[VenteBiereEta]    Script Date: 10-01-21 12:01:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -379,7 +387,7 @@ CREATE TABLE [dbo].[VenteBiereEta](
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_TypesBiere.Nom]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Index [IX_TypesBiere.Nom]    Script Date: 10-01-21 12:01:44 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_TypesBiere.Nom] ON [dbo].[TypesBiere]
 (
 	[TypBie.Nom] ASC
@@ -387,7 +395,7 @@ CREATE UNIQUE NONCLUSTERED INDEX [IX_TypesBiere.Nom] ON [dbo].[TypesBiere]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_TypEta.Nom]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Index [IX_TypEta.Nom]    Script Date: 10-01-21 12:01:44 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_TypEta.Nom] ON [dbo].[TypesEtablissement]
 (
 	[TypEta.Nom] ASC
@@ -395,7 +403,7 @@ CREATE UNIQUE NONCLUSTERED INDEX [IX_TypEta.Nom] ON [dbo].[TypesEtablissement]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_TypesServices.Nom]    Script Date: 30-12-20 11:35:37 ******/
+/****** Object:  Index [IX_TypesServices.Nom]    Script Date: 10-01-21 12:01:44 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_TypesServices.Nom] ON [dbo].[TypesServices]
 (
 	[TypSer.Libelle] ASC
@@ -519,6 +527,37 @@ ALTER TABLE [dbo].[VenteBiereEta]  WITH CHECK ADD  CONSTRAINT [FK_VenteBiereEta_
 REFERENCES [dbo].[Etablissements] ([Eta.Id])
 GO
 ALTER TABLE [dbo].[VenteBiereEta] CHECK CONSTRAINT [FK_VenteBiereEta_Etablissements]
+GO
+/****** Object:  StoredProcedure [dbo].[GetBieresOrganistion]    Script Date: 10-01-21 12:01:44 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetBieresOrganistion]
+	@OrgId uniqueidentifier
+AS
+BEGIN
+	SELECT bi.[Bie.Id], bi.[Eta.Id] ,bi.[TypBie.Id], bi.[Bie.Nom], bi.[Bie.Desc], bi.[Bie.Photo], bi.[Bie.NbVu], bi.[Bie.DateCre], bi.[Bie.Valide], bi.[User.Id],bi.[Bie.DegreAlcool]
+	FROM Bieres AS bi
+	INNER JOIN Etablissements AS etab ON bi.[Eta.Id] = etab.[Eta.Id]
+	WHERE etab.[Org.Id] = @OrgId;
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetEtablissementsOrganistion]    Script Date: 10-01-21 12:01:44 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetEtablissementsOrganistion]
+	@OrgId uniqueidentifier
+AS
+BEGIN
+	SELECT *
+	FROM Etablissements AS etab
+	WHERE etab.[Org.Id] = @OrgId;
+
+END
 GO
 USE [master]
 GO
