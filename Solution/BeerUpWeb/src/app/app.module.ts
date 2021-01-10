@@ -16,12 +16,12 @@ import { AuthGuardService} from 'src/app/services/authguard.service';
 import { UtilService} from 'src/app/services/util.service';
 
 
-import { HomeComponent } from './component/home/home.component';
-import { NotFoundComponent } from './component/not-found/not-found.component';
-import { AuthCallbackComponent } from './component/auth-callback/auth-callback.component';
-import { LoginComponent } from './component/login/login.component';
-import { ContactComponent } from './component/contact/contact.component';
-import { PrivacyComponent } from './component/privacy/privacy.component';
+import { HomeComponent } from './components/home/home.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { LoginComponent } from './components/login/login.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 
 @NgModule({
