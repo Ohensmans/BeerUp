@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TarifModele } from 'src/app/models/tarif-modele';
+import { AuthentificationService } from '../authentification.service';
 import { UtilService } from '../util.service';
 
 @Injectable({
@@ -8,19 +9,19 @@ import { UtilService } from '../util.service';
 })
 export class TarifsEtabsService {
 
-  constructor(private http:HttpClient, private util:UtilService) { }
+  constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService) { }
 
   getAll(){
-    const token = localStorage.getItem("jwt");
+    const token:string = this.authSrv.getUser().id_token;
 
     return this.http.get<TarifModele[]>(
-      this.util.apiTarifsBieresUrl,
+      this.util.apiTarifsEtabsUrl,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
   }
 
   addTarif(tarif:TarifModele){
-    const token = localStorage.getItem("jwt");
+    const token:string = this.authSrv.getUser().id_token;
 
     this.http.post<TarifModele>(
       this.util.apiTarifsEtabsUrl, tarif,
@@ -29,7 +30,7 @@ export class TarifsEtabsService {
   }
 
   deleteTarif(id:string){
-    const token = localStorage.getItem("jwt");
+    const token:string = this.authSrv.getUser().id_token;
 
     this.http.delete<string>(
       this.util.apiTarifsEtabsUrl+id,
@@ -38,7 +39,7 @@ export class TarifsEtabsService {
   }
 
   updateTarif(tarif:TarifModele, id:string){
-    const token = localStorage.getItem("jwt");
+    const token:string = this.authSrv.getUser().id_token;
 
     this.http.put<TarifModele>(
       this.util.apiTarifsEtabsUrl+id,tarif,

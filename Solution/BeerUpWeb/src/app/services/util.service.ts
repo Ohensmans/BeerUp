@@ -11,6 +11,9 @@ export class UtilService {
   registerUrl = 'http://localhost:5000/account/registerweb';
   adminUserUrl = 'http://localhost:5000/AdministrationUsers';
 
+  TypeTarifVueUn = "Etab";
+  TypeTarifVueDeux = "Biere";
+
   constructor() { }
 }
 

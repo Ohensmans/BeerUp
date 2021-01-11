@@ -41,7 +41,7 @@ export class AuthentificationService {
         // le type de réponse
         response_type:"code",
         // les scopes
-        scope:"openid profile",
+        scope:"openid profile ApiBeerUp.all",
         // url app Angular au retour d'IS après logout (attention AccountOptions à modifier dans IS)
         post_logout_redirect_uri:'http://localhost:4200/',
         // pour save le user dans localStorage

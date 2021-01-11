@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -23,8 +24,6 @@ import { LoginComponent } from './components/login/login.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { TabBordPlanTarifComponent } from './components/plansTarifaires/tab-bord-plan-tarif/tab-bord-plan-tarif.component';
-import { TarifsBieresComponent } from './components/plansTarifaires/tarifs-bieres/tarifs-bieres.component';
-import { TarifsEtabsComponent } from './components/plansTarifaires/tarifs-etabs/tarifs-etabs.component';
 import { TarifComponent } from './components/plansTarifaires/tarif/tarif.component';
 
 
@@ -38,8 +37,6 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
     ContactComponent,
     PrivacyComponent,
     TabBordPlanTarifComponent,
-    TarifsBieresComponent,
-    TarifsEtabsComponent,
     TarifComponent,
   ],
   imports: [
@@ -50,6 +47,7 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
     CarouselModule.forRoot(),
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
+    HttpClientModule,
     RouterModule.forRoot([
       { path:'',component:HomeComponent },
       { path:'home',component:HomeComponent },
@@ -59,6 +57,7 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
       { path: 'contact', component : ContactComponent},
       { path: 'privacy', component : PrivacyComponent},
       //{ path: 'call-api', canActivate:[AuthGuardService], component : CallApiComponent},
+      { path: 'PlansTarifaires', component : TabBordPlanTarifComponent},
       { path: 'not-found', component : NotFoundComponent},      
       { path: '**', redirectTo: 'not-found' }
     ]),

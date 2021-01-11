@@ -12,7 +12,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Administrateur")]
+    [Authorize]
     public class TarifsVueEtabsController : ControllerBase
     {
         private readonly BeerUpContext _context;

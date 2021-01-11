@@ -1,1 +1,60 @@
-<p>tab-bord-plan-tarif works!</p>
+<div class="card">
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre de vue</th>
+                <th>Prix</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th class="text-center">Activer le tarif</th>
+                <th class="text-center">Enregistrer le tarif</th>
+                <th class="text-center">Supprimer le tarif</th>
+            </tr>  
+        </thead>
+        <tbody>
+                <app-tarif style="display: contents" *ngFor="let tarif of lTarifsEtabs"
+                    [tarif]="tarif"
+                    [type]="TypeTarifVueUn">   
+                </app-tarif>  
+            </tbody>
+        </table>
+    <div *ngIf="!lTarifsEtabs.length" class="card-header">
+        Il n'existe pas encore de tarifs pour les établissements
+    </div>
+    <br>
+    <br>
+    <button class="btn btn-primary" (click)="addTarifEtab()">Ajouter un tarif</button>
+
+</div>
+<br>
+<br>
+
+<div class="card">
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre de vue</th>
+                <th>Prix</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th class="text-center">Activer le tarif</th>
+                <th class="text-center">Enregistrer le tarif</th>
+                <th class="text-center">Supprimer le tarif</th>
+            </tr>
+        </thead>
+        <tbody >
+                <app-tarif style="display: contents" *ngFor="let tar of lTarifsBiere"
+                [tarif]="tar"
+                [type]="TypeTarifVueDeux">   
+                </app-tarif>
+        </tbody>
+    </table>
+    <div *ngIf="!lTarifsBiere.length" class="card-header">
+        Il n'existe pas encore de tarifs pour les établissements
+    </div>
+    <br>
+    <br>
+
+    <button class="btn btn-primary" (click)="addTarifBiere()">Ajouter un tarif</button>
+
+</div>

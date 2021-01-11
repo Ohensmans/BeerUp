@@ -1,3 +1,33 @@
 <tr>
-    <td></td>
+    <td>
+        <input type="text" class="form-control" value="{{tarif.NbVue}}">
+    </td>
+
+    <td>
+        <input type="text" class="form-control" value="{{tarif.Prix}}">
+    </td>
+
+    <td>
+        <input type="date" class="form-control" value="{{tarif.DateDebut}}">
+    </td>
+
+    <td>
+        <input type="date" class="form-control" value="{{tarif.DateFin}}">
+    </td>
+
+    <td>
+        <button *ngIf="tarif.Actif" class="btn btn-info" (click)="activation()">Désactiver</button>
+        <button *ngIf="!tarif.Actif" [disabled]="tarif.Id!=''" class="btn btn-secondary" (click)="activation()">Activer</button>
+    </td>
+
+    <td>
+        <button *ngIf="tarif.Id!=''" class="btn btn-primary" (click)="sauvegarder()">Sauvegarder les modifications</button>
+        <button *ngIf="tarif.Id==''" class="btn btn-primary" (click)="creer()">Créer le tarif</button>
+    </td>
+
+    <td>
+        <button *ngIf="tarif.Id!=''" class="btn btn-danger" (click)="supprimer()">Supprimer</button>
+    </td>
 </tr>
+
+
