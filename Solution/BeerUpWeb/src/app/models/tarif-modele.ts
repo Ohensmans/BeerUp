@@ -1,19 +1,22 @@
+import { Guid } from "guid-typescript";
+
+
 export class TarifModele {
-    Id:string;
-    NbVue:number;
-    Prix:number;
-    DateDebut:string;
-    DateFin:string;
-    Actif:boolean;
+    id:Guid;
+    nbVue:number;
+    prix:number;
+    dateDebut:Date;
+    dateFin:Date;
+    actif:boolean;
 
     constructor()
     {
-        this.Id="";
-        this.Prix =0;
-        this.NbVue= 0;
-        this.DateDebut = Date.now().toString();
-        this.DateFin ="";
-        this.Actif = false;
+        this.id=Guid.createEmpty();
+        this.prix =0;
+        this.nbVue= 0;
+        this.dateDebut = new Date();
+        this.dateFin = new Date();
+        this.actif = false;
     }
 }
 

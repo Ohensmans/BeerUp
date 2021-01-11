@@ -103,3 +103,9 @@ body {
     .pagination a:hover:not(.active) {
         background-color: #ddd;
     }
+  
+/* Forms components
+-------------------------------------------------- */
+.innerForm {
+  display: contents;
+}

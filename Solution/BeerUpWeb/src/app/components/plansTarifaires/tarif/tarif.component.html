@@ -1,33 +1,38 @@
+<form class="innerForm" [formGroup]="tarifForm" (ngSubmit)="onSubmitForm()">
 <tr>
+
     <td>
-        <input type="text" class="form-control" value="{{tarif.NbVue}}">
+        <input type="text"  class="form-control" id="nbVue" formControlName="nbVue">
     </td>
 
     <td>
-        <input type="text" class="form-control" value="{{tarif.Prix}}">
+        <input type="text" class="form-control" id="prix" formControlName="prix">
     </td>
 
     <td>
-        <input type="date" class="form-control" value="{{tarif.DateDebut}}">
+        <input type="date" class="form-control" id="dateDebut" formControlName="dateDebut">
     </td>
 
     <td>
-        <input type="date" class="form-control" value="{{tarif.DateFin}}">
+        <input type="date" class="form-control" id="dateFin" formControlName="dateFin">
+    </td>
+    
+    <td>
+        <button *ngIf="tarif.actif" class="btn btn-info text-center" (click)="activation()">Désactiver</button>
+        <button *ngIf="!tarif.actif" [disabled]="!getIsNew()" class="btn btn-secondary text-center" (click)="activation()">Activer</button>
     </td>
 
     <td>
-        <button *ngIf="tarif.Actif" class="btn btn-info" (click)="activation()">Désactiver</button>
-        <button *ngIf="!tarif.Actif" [disabled]="tarif.Id!=''" class="btn btn-secondary" (click)="activation()">Activer</button>
+        <button *ngIf="getIsNew()" class="btn btn-primary text-center" type="submit">Sauvegarder</button>
+        <button *ngIf="!getIsNew()" class="btn btn-primary text-center" type="submit">Créer</button>
     </td>
 
     <td>
-        <button *ngIf="tarif.Id!=''" class="btn btn-primary" (click)="sauvegarder()">Sauvegarder les modifications</button>
-        <button *ngIf="tarif.Id==''" class="btn btn-primary" (click)="creer()">Créer le tarif</button>
+        <button *ngIf="getIsNew()" class="btn btn-danger text-center" (click)="supprimer()">Supprimer</button>
     </td>
 
-    <td>
-        <button *ngIf="tarif.Id!=''" class="btn btn-danger" (click)="supprimer()">Supprimer</button>
-    </td>
 </tr>
+</form>
+
 
 

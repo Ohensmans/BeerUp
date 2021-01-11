@@ -23,7 +23,7 @@ export class TarifsEtabsService {
   addTarif(tarif:TarifModele){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.post<TarifModele>(
+    return this.http.post<TarifModele>(
       this.util.apiTarifsEtabsUrl, tarif,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
@@ -32,7 +32,7 @@ export class TarifsEtabsService {
   deleteTarif(id:string){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.delete<string>(
+    return this.http.delete<string>(
       this.util.apiTarifsEtabsUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     )
@@ -41,7 +41,7 @@ export class TarifsEtabsService {
   updateTarif(tarif:TarifModele, id:string){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.put<TarifModele>(
+    return this.http.put<TarifModele>(
       this.util.apiTarifsEtabsUrl+id,tarif,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     )

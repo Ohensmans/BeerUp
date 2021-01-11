@@ -13,7 +13,7 @@ export class TarifsBieresService {
   constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService) { }
 
   getAll(){
-    const token:string = this.authSrv.getUser().id_token;
+    const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<TarifModele[]>(
       this.util.apiTarifsBieresUrl,
@@ -25,7 +25,7 @@ export class TarifsBieresService {
   addTarif(tarif:TarifModele){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.post<TarifModele>(
+    return this.http.post<TarifModele>(
       this.util.apiTarifsBieresUrl, tarif,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
@@ -34,7 +34,7 @@ export class TarifsBieresService {
   deleteTarif(id:string){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.delete<string>(
+    return this.http.delete<string>(
       this.util.apiTarifsBieresUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     )
@@ -43,7 +43,7 @@ export class TarifsBieresService {
   updateTarif(tarif:TarifModele, id:string){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.put<TarifModele>(
+    return this.http.put<TarifModele>(
       this.util.apiTarifsBieresUrl+id,tarif,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     )

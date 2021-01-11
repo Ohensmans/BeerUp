@@ -79,6 +79,7 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<TarifsVueEtab>> PostTarifsVueEtab(TarifsVueEtab tarifsVueEtab)
         {
+            tarifsVueEtab.Id = Guid.NewGuid();
             _context.TarifsVueEtabs.Add(tarifsVueEtab);
             await _context.SaveChangesAsync();
 
