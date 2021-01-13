@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { setTheme } from 'ngx-bootstrap/utils';
@@ -9,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 
 import { AuthentificationService } from './services/authentification.service';
@@ -28,6 +29,7 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
 
 
 @NgModule({
+  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     HomeComponent,
@@ -40,12 +42,14 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
     TarifComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     CarouselModule.forRoot(),
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     BsDropdownModule.forRoot(),
     HttpClientModule,
     RouterModule.forRoot([
@@ -72,7 +76,8 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
   providers: [
     AuthentificationService
   ],
-  bootstrap: [AppComponent]
+  
+
 })
 export class AppModule { 
   constructor(){

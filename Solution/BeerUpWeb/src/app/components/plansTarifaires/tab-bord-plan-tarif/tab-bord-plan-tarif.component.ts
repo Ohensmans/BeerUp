@@ -1,7 +1,6 @@
-import { ThisReceiver, ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Guid } from 'guid-typescript';
-import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { TarifModele } from 'src/app/models/tarif-modele';
 import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.service';
 import { TarifsEtabsService } from 'src/app/services/CallApi/tarifs-etabs.service';
@@ -19,7 +18,7 @@ export class TabBordPlanTarifComponent implements OnInit {
   TypeTarifVueEtab:string;
   TypeTarifVueBiere:string;
 
-  constructor(private tarifBiereSrv:TarifsBieresService, private tarifEtabSrv:TarifsEtabsService, private util:UtilService) {
+  constructor(private tarifBiereSrv:TarifsBieresService, private tarifEtabSrv:TarifsEtabsService, private util:UtilService, private toastr:ToastrService) {
     this.lTarifsBiere = Array(0);
     this.lTarifsEtabs = Array(0);
 
@@ -48,13 +47,25 @@ export class TabBordPlanTarifComponent implements OnInit {
     if (this.lTarifsBiere.find(x => x.id == Guid.createEmpty().toString())==undefined){
       this.tarifBiereSrv.addNewTarif();
     }
-    
+    else
+    {
+      this.infoToastr();
+    }   
   }
 
   addTarifEtab(){
     if (this.lTarifsEtabs.find(x => x.id == Guid.createEmpty().toString())==undefined){
       this.tarifEtabSrv.addNewTarif();
     }
+    else
+    {
+      this.infoToastr();
+    }
+  }
+
+  infoToastr()
+  {
+    this.toastr.info("Veuillez créer le nouveau tarif avant d'en faire un nouveau", "Information");
   }
 
 
