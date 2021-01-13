@@ -1,5 +1,6 @@
-import { ThrowStmt } from '@angular/compiler';
+import { ThisReceiver, ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { Guid } from 'guid-typescript';
 import { Subscription } from 'rxjs';
 import { TarifModele } from 'src/app/models/tarif-modele';
 import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.service';
@@ -15,38 +16,45 @@ export class TabBordPlanTarifComponent implements OnInit {
 
   lTarifsBiere: Array<TarifModele>;
   lTarifsEtabs: Array<TarifModele>;
-  subscr : Subscription;
-  TypeTarifVueUn:string;
-  TypeTarifVueDeux:string;
+  TypeTarifVueEtab:string;
+  TypeTarifVueBiere:string;
 
-  constructor(private tarifBiere:TarifsBieresService, private tarifEtab:TarifsEtabsService, private util:UtilService) {
-    this.lTarifsBiere = [];
-    this.lTarifsEtabs = [];
-    this.subscr = new Subscription();
+  constructor(private tarifBiereSrv:TarifsBieresService, private tarifEtabSrv:TarifsEtabsService, private util:UtilService) {
+    this.lTarifsBiere = Array(0);
+    this.lTarifsEtabs = Array(0);
 
-    this.TypeTarifVueUn = this.util.TypeTarifVueUn;
-    this.TypeTarifVueDeux = this.util.TypeTarifVueDeux;
+    this.TypeTarifVueEtab = this.util.TypeTarifVueEtab;
+    this.TypeTarifVueBiere = this.util.TypeTarifVueBiere;
    }
 
   ngOnInit(): void {
-    this.subscr.add(this.tarifBiere.getAll().subscribe(
-      (value)=> this.lTarifsBiere = value
-    ))
-    this.subscr.add(this.tarifEtab.getAll().subscribe(
-      (value)=> this.lTarifsEtabs = value
-    ))
+
+    this.tarifBiereSrv.lTarifsBiere$.subscribe(
+      value => {
+        this.lTarifsBiere = value;
+      }
+    );
+    this.tarifEtabSrv.lTarifsEtabs$.subscribe(
+      (value) => {
+        this.lTarifsEtabs = value;
+      }
+    )  
+    this.tarifBiereSrv.getAll();
+    this.tarifEtabSrv.getAll();
   }
 
-  ngOnDestroy(){
-    this.subscr.unsubscribe();
-  }
 
   addTarifBiere(){
-    this.lTarifsBiere.push(new TarifModele())
+    if (this.lTarifsBiere.find(x => x.id == Guid.createEmpty().toString())==undefined){
+      this.tarifBiereSrv.addNewTarif();
+    }
+    
   }
 
   addTarifEtab(){
-    this.lTarifsEtabs.push(new TarifModele())
+    if (this.lTarifsEtabs.find(x => x.id == Guid.createEmpty().toString())==undefined){
+      this.tarifEtabSrv.addNewTarif();
+    }
   }
 
 

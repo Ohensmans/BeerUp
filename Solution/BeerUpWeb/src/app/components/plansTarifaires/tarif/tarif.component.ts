@@ -17,19 +17,19 @@ import { Guid } from "guid-typescript";
 
 export class TarifComponent implements OnInit {
   
-  @Input() tarif!:TarifModele;
-  @Input() type!:string;
+  @Input() tarif:TarifModele;
+  @Input() type:string;
 
   tarifForm: FormGroup;
-  TypeTarifVueUn:string;
-  TypeTarifVueDeux:string;
-  emptyGuid:Guid;
+  TypeTarifVueEtab:string;
+  TypeTarifVueBiere:string;
+  emptyGuid:string;
   isNew:boolean;
 
   constructor(private tarifBiere:TarifsBieresService, private tarifEtab:TarifsEtabsService, private util:UtilService, private formBuilder:FormBuilder, private router:Router) { 
 
-    this.TypeTarifVueUn = this.util.TypeTarifVueUn;
-    this.TypeTarifVueDeux = this.util.TypeTarifVueDeux;
+    this.TypeTarifVueEtab = this.util.TypeTarifVueEtab;
+    this.TypeTarifVueBiere = this.util.TypeTarifVueBiere;
     this.tarif = new TarifModele();
     this.type = "";
     this.tarifForm = new FormGroup({
@@ -38,7 +38,7 @@ export class TarifComponent implements OnInit {
       dateDebut: new FormControl(''),
       dateFin: new FormControl(''),
     })
-    this.emptyGuid = Guid.createEmpty();
+    this.emptyGuid = Guid.createEmpty().toString();
     this.isNew = true;
 
   }
@@ -51,7 +51,7 @@ export class TarifComponent implements OnInit {
       dateDebut: [formatDate(this.tarif.dateDebut, 'yyyy-MM-dd', 'en')],
       dateFin: [formatDate(this.tarif.dateFin, 'yyyy-MM-dd', 'en')]
       });
-    if(this.tarif.id.equals(this.emptyGuid)){
+    if(this.tarif.id!=this.emptyGuid){
       this.isNew = false;
     }
   }
@@ -63,7 +63,7 @@ export class TarifComponent implements OnInit {
 
   activation(){
     //n'enregistre la modification que si il s'agit d'un tarif déjà créé
-    if(this.tarif.id.equals(this.emptyGuid)){
+    if(!this.getIsNew()){
       //intervertit la valeur "Actif" du tarif
       this.tarif.actif = !this.tarif.actif;
       this.sauvegarder(this.tarif);
@@ -71,78 +71,54 @@ export class TarifComponent implements OnInit {
   }
 
   onSubmitForm(){
-    let tar = new TarifModele();
-    tar.nbVue = +this.tarifForm.value.nbVue;
-    tar.prix = +this.tarifForm.value.prix;
-    tar.dateDebut = this.tarifForm.value.dateDebut;
-    tar.dateFin = this.tarifForm.value.dateFin;
-    tar.id = this.tarif.id;
+    
+    this.tarif.nbVue = +this.tarifForm.value.nbVue;
+    this.tarif.prix = +this.tarifForm.value.prix;
+    this.tarif.dateDebut = this.tarifForm.value.dateDebut;
+    this.tarif.dateFin = this.tarifForm.value.dateFin;
 
-    if(!this.tarif.id.equals(this.emptyGuid))
+    if(this.getIsNew())
     {
-      this.sauvegarder(tar);
+      this.creer(this.tarif);      
     }
     else
     {
-      this.creer(tar);
+      this.sauvegarder(this.tarif);     
     }
   }
 
+
   sauvegarder(tarif:TarifModele){
     //enregistre les modifications selon le "type" de tarif
-    if(this.type == this.TypeTarifVueDeux){
-      this.tarifBiere.updateTarif(tarif,tarif.id.toString()).subscribe(
-        () => {
-          this.router.navigate(['/PlansTarifaires']);
-        }
-      );
+    if(this.type == this.TypeTarifVueBiere){
+      this.tarifBiere.updateTarif(tarif,tarif.id);
     }
 
-    if(this.type == this.TypeTarifVueUn){
-      this.tarifEtab.updateTarif(tarif, tarif.id.toString()).subscribe(
-        () => {
-          this.router.navigate(['/PlansTarifaires']);
-        }
-      );
+    if(this.type == this.TypeTarifVueEtab){
+      this.tarifEtab.updateTarif(tarif, tarif.id);
     }
   }
 
   creer(tarif:TarifModele){
     //ajoute le tarif selon son "type"
-    if(this.type == this.TypeTarifVueDeux){
-      this.tarifBiere.addTarif(tarif).subscribe(
-        () => {
-          this.router.navigate(['/PlansTarifaires']);
-        }
-      );
+    if(this.type == this.TypeTarifVueBiere){
+      this.tarifBiere.addTarif(tarif);
     }
 
-    if(this.type == this.TypeTarifVueUn){
-      this.tarifEtab.addTarif(tarif).subscribe(
-        () => {
-          this.router.navigate(['/PlansTarifaires']);
-        }
-      );
+    if(this.type == this.TypeTarifVueEtab){
+      this.tarifEtab.addTarif(tarif);
     }
   }
 
   supprimer()
   {
     //suppprime le tarif selon son "type"
-    if(this.type == this.TypeTarifVueDeux){
-      this.tarifBiere.deleteTarif(this.tarif.id.toString()).subscribe(
-        () => {
-          this.router.navigate(['/PlansTarifaires']);
-        }
-      );
+    if(this.type == this.TypeTarifVueBiere){
+      this.tarifBiere.deleteTarif(this.tarif.id);
     }
 
-    if(this.type == this.TypeTarifVueUn){
-      this.tarifEtab.deleteTarif(this.tarif.id.toString()).subscribe(
-        () => {
-          this.router.navigate(['/PlansTarifaires']);
-        }
-      );
+    if(this.type == this.TypeTarifVueEtab){
+      this.tarifEtab.deleteTarif(this.tarif.id);
     }
   }
 

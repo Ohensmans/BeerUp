@@ -2,7 +2,7 @@ import { Guid } from "guid-typescript";
 
 
 export class TarifModele {
-    id:Guid;
+    id:string;
     nbVue:number;
     prix:number;
     dateDebut:Date;
@@ -11,7 +11,7 @@ export class TarifModele {
 
     constructor()
     {
-        this.id=Guid.createEmpty();
+        this.id=Guid.createEmpty().toString();
         this.prix =0;
         this.nbVue= 0;
         this.dateDebut = new Date();
