@@ -16,7 +16,6 @@ import { AppComponent } from './app.component';
 
 import { AuthentificationService } from './services/authentification.service';
 import { AuthGuardService} from 'src/app/services/authguard.service';
-import { UtilService} from 'src/app/services/util.service';
 
 
 import { HomeComponent } from './components/home/home.component';

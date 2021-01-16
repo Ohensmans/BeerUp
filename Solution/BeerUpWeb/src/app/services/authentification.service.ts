@@ -7,23 +7,19 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 
 export class AuthentificationService {
-  private isAuth:boolean
   private manager:UserManager;
   helper = new JwtHelperService(); 
 
   private user = null as any;
 
   constructor(private jwtSrv : JwtHelperService) { 
-    this.isAuth = false;    
     this.manager = new UserManager(this.getClientSettings());
     this.manager.getUser()
     .then(
       user => {
           this.user = user;   
       }
-    
     );
-
   }
 
   public getUser() {

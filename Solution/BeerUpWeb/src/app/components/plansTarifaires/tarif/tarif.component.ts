@@ -3,12 +3,16 @@ import { TarifModele } from 'src/app/models/tarif-modele';
 import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.service';
 import { TarifsEtabsService } from 'src/app/services/CallApi/tarifs-etabs.service';
 import { UtilService } from 'src/app/services/util.service';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { Guid } from "guid-typescript";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ConfirmComponent } from '../../confirm/confirm.component';
+import { IsIntegerAndPositiveDirective } from 'src/app/directives/validators/is-integer-and-positive.directive';
+import { DateDebutIsOlderDirective } from 'src/app/directives/validators/date-debut-is-older.directive';
+import { ToastrService } from 'ngx-toastr';
+import { IsPositiveDirective } from 'src/app/directives/validators/is-positive.directive';
 
 
 @Component({
@@ -31,7 +35,8 @@ export class TarifComponent implements OnInit {
   emptyGuid:string;
   isNew:boolean;
 
-  constructor(private tarifBiere:TarifsBieresService, private tarifEtab:TarifsEtabsService, private util:UtilService, private formBuilder:FormBuilder, private router:Router, private modalService:BsModalService) { 
+  constructor(private tarifBiere:TarifsBieresService, private tarifEtab:TarifsEtabsService, private util:UtilService, private formBuilder:FormBuilder, 
+    private router:Router, private modalService:BsModalService, private toastr:ToastrService) { 
 
     this.TypeTarifVueEtab = this.util.TypeTarifVueEtab;
     this.TypeTarifVueBiere = this.util.TypeTarifVueBiere;
@@ -51,11 +56,11 @@ export class TarifComponent implements OnInit {
   ngOnInit():void{
 
     this.tarifForm = this.formBuilder.group({
-      nbVue: [this.tarif.nbVue],
-      prix: [this.tarif.prix],
-      dateDebut: [formatDate(this.tarif.dateDebut, 'yyyy-MM-dd', 'en')],
-      dateFin: [formatDate(this.tarif.dateFin, 'yyyy-MM-dd', 'en')]
-      });
+      nbVue: [this.tarif.nbVue,[Validators.required, IsIntegerAndPositiveDirective(), IsIntegerAndPositiveDirective()]],
+      prix: [this.tarif.prix, [Validators.required, IsPositiveDirective()]],
+      dateDebut: [formatDate(this.tarif.dateDebut, 'yyyy-MM-dd', 'en'), [Validators.required]],
+      dateFin: [formatDate(this.tarif.dateFin, 'yyyy-MM-dd', 'en'), [Validators.required]]
+      }, { validators: DateDebutIsOlderDirective() });
     if(this.tarif.id!=this.emptyGuid){
       this.isNew = false;
     }
@@ -64,6 +69,11 @@ export class TarifComponent implements OnInit {
   getIsNew()
   {
     return this.isNew;
+  }
+
+  getClass() {
+    if (this.tarifForm.invalid) return "bg-danger text-white";
+    else return "";
   }
 
   activation(){
@@ -76,21 +86,52 @@ export class TarifComponent implements OnInit {
   }
 
   onSubmitForm(){
-    
-    this.tarif.nbVue = +this.tarifForm.value.nbVue;
-    this.tarif.prix = +this.tarifForm.value.prix;
-    this.tarif.dateDebut = this.tarifForm.value.dateDebut;
-    this.tarif.dateFin = this.tarifForm.value.dateFin;
+    if(this.tarifForm.valid && this.tarifForm.dirty)
+    {
+      this.tarif.nbVue = +this.tarifForm.value.nbVue;
+      this.tarif.prix = +this.tarifForm.value.prix;
+      this.tarif.dateDebut = this.tarifForm.value.dateDebut;
+      this.tarif.dateFin = this.tarifForm.value.dateFin;
 
-    if(this.getIsNew())
-    {
-      this.creer(this.tarif);      
+      if(this.getIsNew())
+      {
+        this.creer(this.tarif);      
+      }
+      else
+      {
+        this.sauvegarder(this.tarif);     
+      }
     }
-    else
+    if(this.tarifForm.invalid)
     {
-      this.sauvegarder(this.tarif);     
+      this.toastrInvalid();
     }
   }
+
+  toastrInvalid(){
+    let message="";
+
+    if (this.tarifForm.get("nbVue")?.invalid){
+      message = "Le nombre de vue doit être un entier positif et supérieur à zéro";
+      this.dangerToastr(message);
+    }
+    if (this.tarifForm.get("prix")?.invalid){
+      message ="Le prix doit être positif et supérieur à zéro";
+      this.dangerToastr(message);
+    }
+    if(this.tarifForm.errors!=null && this.tarifForm.errors.dateDebutIsOlder.value==true){
+      message ="La date début doit être antérieure à la date de fin";
+      this.dangerToastr(message);
+    }
+    
+  }
+
+
+  dangerToastr(message:string)
+  {
+    this.toastr.error(message, "Non-valide");
+  }
+
 
 
   sauvegarder(tarif:TarifModele){

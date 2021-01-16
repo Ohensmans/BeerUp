@@ -1,8 +1,8 @@
 <form class="innerForm" [formGroup]="tarifForm" (ngSubmit)="onSubmitForm()">
-<tr>
-
+<tr [ngClass]="getClass()">
     <td>
         <input type="text"  class="form-control" id="nbVue" formControlName="nbVue">
+       
     </td>
 
     <td>
@@ -33,6 +33,5 @@
 
 </tr>
 </form>
-
 
 
