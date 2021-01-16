@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Liste des tarifs pour les bières</h3>
+    </div>
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom de l'établissement </th>
+                <th class="text-center">Modifier l'établissement</th>
+                <th class="text-center">Modifier les bières vendues</th>
+                <th class="text-center">Activer</th>
+                <th class="text-center">Supprimer</th>
+            </tr>
+        </thead>
+            <tbody>
+                <app-element-liste-etab class="innerForm" *ngFor="let etab of lEtabsOrga"
+                [etab]="etab">
+                </app-element-liste-etab>
+            </tbody>
+
+    </table>
+    <div *ngIf="!lEtabsOrga.length" class="card-header">
+        Il n'existe pas encore d'établissement pour l'organisation
+    </div>
+    <br>
+    <br>
+
+    <button class="btn btn-primary" (click)="addEtablissement()">Ajouter un établissement</button>
+
+</div>

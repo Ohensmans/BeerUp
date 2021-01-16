@@ -28,7 +28,7 @@ namespace Repo.Modeles.ModelesBeerUp
         public string EtaPhoto { get; set; }
         public long? EtaNbVu { get; set; }
         public string EtaCoord { get; set; }
-        public int EtaActif { get; set; }
+        public Boolean EtaActif { get; set; }
 
         public virtual Organisation Org { get; set; }
         public virtual TypesEtablissement TypEta { get; set; }

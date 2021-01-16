@@ -80,6 +80,10 @@ export class AuthentificationService {
     return this.getToken().role;
   }
 
+  getUserOrgId(){
+    return this.getToken().OrgId;
+  }
+
   isAdmin(){
     if(this.getUserRoles()!=null)
     {

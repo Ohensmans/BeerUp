@@ -1,0 +1,24 @@
+<tr>
+    <td>
+        {{etab.EtaNom}}
+    </td>
+    
+    <td>
+        <button class="btn btn-secondary text-center" type="button" (click)="modifEtab()">Modifier établissement</button>
+    </td>
+
+    <td>
+        <button  class="btn btn-secondary text-center" type="button" (click)="modifBieresEtab()">Modifier bières de l'établissement</button>
+    </td>
+
+    <td>
+        <button *ngIf="etab.EtaActif" class="btn btn-info text-center" type="button" (click)="activation()">Désactiver</button>
+        <button *ngIf="!etab.EtaActif" class="btn btn-primary text-center" type="button" (click)="activation()">Activer</button>
+    </td>
+
+    <td>
+        <button class="btn btn-danger text-center" type="button" (click)="supprimer()">Supprimer</button>
+    </td>
+
+</tr>
+    
