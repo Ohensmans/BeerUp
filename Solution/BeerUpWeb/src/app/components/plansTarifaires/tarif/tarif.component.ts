@@ -7,6 +7,9 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { Guid } from "guid-typescript";
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ConfirmComponent } from '../../confirm/confirm.component';
+
 
 @Component({
   selector: 'app-tarif',
@@ -20,13 +23,15 @@ export class TarifComponent implements OnInit {
   @Input() tarif:TarifModele;
   @Input() type:string;
 
+  modalRef!: BsModalRef;
+
   tarifForm: FormGroup;
   TypeTarifVueEtab:string;
   TypeTarifVueBiere:string;
   emptyGuid:string;
   isNew:boolean;
 
-  constructor(private tarifBiere:TarifsBieresService, private tarifEtab:TarifsEtabsService, private util:UtilService, private formBuilder:FormBuilder, private router:Router) { 
+  constructor(private tarifBiere:TarifsBieresService, private tarifEtab:TarifsEtabsService, private util:UtilService, private formBuilder:FormBuilder, private router:Router, private modalService:BsModalService) { 
 
     this.TypeTarifVueEtab = this.util.TypeTarifVueEtab;
     this.TypeTarifVueBiere = this.util.TypeTarifVueBiere;
@@ -112,15 +117,27 @@ export class TarifComponent implements OnInit {
 
   supprimer()
   {
-    //suppprime le tarif selon son "type"
-    if(this.type == this.TypeTarifVueBiere){
-      this.tarifBiere.deleteTarif(this.tarif.id);
-    }
+    //lance le module de confirmation
+    this.modalRef = this.modalService.show(ConfirmComponent, {
+      initialState:{prompt: 'Etes-vous sûr de vouloir supprimer ce tarif ?'}});
 
-    if(this.type == this.TypeTarifVueEtab){
-      this.tarifEtab.deleteTarif(this.tarif.id);
-    }
+    this.modalRef.content.onClose$.subscribe(
+      (value: boolean) =>{
+      if(value){
+        {
+          //suppprime le tarif selon son "type"
+          if(this.type == this.TypeTarifVueBiere){
+            this.tarifBiere.deleteTarif(this.tarif.id);
+          }
+    
+          if(this.type == this.TypeTarifVueEtab){
+            this.tarifEtab.deleteTarif(this.tarif.id);
+          }
+        }
+      }
+    });   
   }
+
 
 
 }

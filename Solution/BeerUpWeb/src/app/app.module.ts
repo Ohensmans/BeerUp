@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 
@@ -26,6 +27,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { TabBordPlanTarifComponent } from './components/plansTarifaires/tab-bord-plan-tarif/tab-bord-plan-tarif.component';
 import { TarifComponent } from './components/plansTarifaires/tarif/tarif.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 
 @NgModule({
@@ -40,6 +42,7 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
     PrivacyComponent,
     TabBordPlanTarifComponent,
     TarifComponent,
+    ConfirmComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +54,7 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     HttpClientModule,
     RouterModule.forRoot([
       { path:'',component:HomeComponent },
