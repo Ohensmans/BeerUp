@@ -1,8 +1,7 @@
 <form class="innerForm" [formGroup]="tarifForm" (ngSubmit)="onSubmitForm()">
 <tr [ngClass]="getClass()">
     <td>
-        <input type="text"  class="form-control" id="nbVue" formControlName="nbVue">
-       
+        <input type="text"  class="form-control" id="nbVue" formControlName="nbVue">      
     </td>
 
     <td>
@@ -18,17 +17,17 @@
     </td>
     
     <td>
-        <button *ngIf="tarif.actif" class="btn btn-info text-center" type="button" (click)="activation()">Désactiver</button>
-        <button *ngIf="!tarif.actif" [disabled]="getIsNew()" class="btn btn-secondary text-center" type="button" (click)="activation()">Activer</button>
+        <button *ngIf="tarif.actif" class="text-center btn btn-info" type="button" (click)="activation()">Désactiver</button>
+        <button *ngIf="!tarif.actif" [disabled]="getIsNew()" class="text-center btn btn-secondary" type="button" (click)="activation()">Activer</button>
     </td>
 
     <td>
-        <button *ngIf="!getIsNew()" class="btn btn-primary text-center" type="submit">Sauvegarder</button>
-        <button *ngIf="getIsNew()" class="btn btn-primary text-center" type="submit">Créer</button>
+        <button *ngIf="!getIsNew()" class="text-center btn btn-primary" type="submit">Sauvegarder</button>
+        <button *ngIf="getIsNew()" class="text-center btn btn-primary" type="submit">Créer</button>
     </td>
 
     <td>
-        <button *ngIf="!getIsNew()" class="btn btn-danger text-center" type="button" (click)="supprimer()">Supprimer</button>
+        <button *ngIf="!getIsNew()" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
     </td>
 
 </tr>

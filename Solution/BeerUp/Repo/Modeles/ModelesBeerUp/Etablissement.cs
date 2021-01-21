@@ -23,6 +23,7 @@ namespace Repo.Modeles.ModelesBeerUp
         public string EtaNum { get; set; }
         public string EtaCp { get; set; }
         public string EtaVille { get; set; }
+        public string EtaPays { get; set; }
         public string EtaEmail { get; set; }
         public string EtaWeb { get; set; }
         public string EtaPhoto { get; set; }

@@ -1,36 +1,47 @@
 import { Guid } from "guid-typescript";
 
 export class EtablissementModele {
-    EtaId:string;
-    OrgId:string;
-    TypEtaId:string;
-    EtaNom:string;
-    EtaTva:string;
-    EtaRue:string;
-    EtaNum:number;
-    EtaCp:number;
-    EtaVille:string;
-    EtaWeb:string;
-    EtaPhoto:string;
-    EtaNbVue:number;
-    EtaCoord:string;
-    EtaActif: boolean;
+    etaId:string;
+    orgId:string;
+    typEtaId:string;
+    etaNom:string;
+    etaTva:string;
+    etaRue:string;
+    etaNum:string;
+    etaCp:string;
+    etaVille:string;
+    etaPays:string;
+    etaWeb:string;
+    etaMail:string;
+    etaPhoto:string;
+    etaNbVue:number;
+    etaCoord:string;
+    etaActif: boolean;
 
     constructor(){
-    this.EtaId = Guid.createEmpty().toString();
-    this.OrgId= Guid.createEmpty().toString();
-    this.TypEtaId= Guid.createEmpty().toString();
-    this.EtaNom="";
-    this.EtaTva="";
-    this.EtaRue="";
-    this.EtaNum=0;
-    this.EtaCp=0;
-    this.EtaVille="";
-    this.EtaWeb="";
-    this.EtaPhoto="";
-    this.EtaNbVue=0;
-    this.EtaCoord="";
-    this.EtaActif= false;
+    this.etaId = Guid.createEmpty().toString();
+    this.orgId= Guid.createEmpty().toString();
+    this.typEtaId= Guid.createEmpty().toString();
+    this.etaNom="";
+    this.etaTva="";
+    this.etaRue="";
+    this.etaNum="";
+    this.etaCp="";
+    this.etaVille="";
+    this.etaPays="";
+    this.etaMail="";
+    this.etaWeb="";
+    this.etaPhoto="";
+    this.etaNbVue=0;
+    this.etaCoord="";
+    this.etaActif= false;
+    }
+
+    isNew(){
+        if(this.etaId==Guid.createEmpty().toString()){
+            return true;
+        }
+        return false;
     }
 }
 

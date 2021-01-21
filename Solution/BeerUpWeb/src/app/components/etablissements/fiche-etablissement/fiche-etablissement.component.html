@@ -1,0 +1,91 @@
+<div class="card">
+    <div *ngIf="etab.isNew()" class="card-header">Nouvel établissement</div>
+    <div *ngIf="!etab.isNew()" class="card-header">Détails de l'établissement</div>
+
+    <div class="card-body">
+        <form [formGroup]="etabForm" (ngSubmit)="onSubmitForm()">  
+            
+            <div class="col-md-12 row">
+                <!--Nom-->
+                <div class="form-group col-md-12">
+                    <label class="control-label">Nom</label>
+                    <input type="text"  class="form-control" id="nomEta" formControlName="nomEta">   
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Type-->
+                <div class="form-group col-md-6">
+                    <label class="control-label">Type</label>
+                    <select formControlName="typEta">
+                        <option *ngFor="let type of lTypeEtab" [ngValue]="type.typEtaId">
+                            {{type.typEtaNom}}
+                        </option>
+                    </select>
+                </div>
+
+                <!--TVA-->
+                <div class="form-group col-md-6">
+                    <label class="control-label">TVA</label>
+                    <input type="text"  class="form-control" id="etaTva" formControlName="etaTva">   
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Rue-->
+                <div class="form-group col-md-8">
+                    <label class="control-label">Rue</label>
+                    <input type="text"  class="form-control" id="etaRue" formControlName="etaRue">   
+                </div>
+
+                <!--TVA-->
+                <div class="form-group col-md-4">
+                    <label class="control-label">Numéro</label>
+                    <input type="text"  class="form-control" id="etaNum" formControlName="etaNum">   
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Code Postal-->
+                <div class="form-group col-md-2">
+                    <label class="control-label">Code Postal</label>
+                    <input type="text"  class="form-control" id="etaCp" formControlName="etaCp">   
+                </div>
+
+                <!--Rue-->
+                <div class="form-group col-md-6">
+                    <label class="control-label">Ville</label>
+                    <input type="text"  class="form-control" id="etaVille" formControlName="etaVille">   
+                </div>
+                
+                <!--TVA-->
+                <div class="form-group col-md-4">
+                    <label class="control-label">Pays</label>
+                    <input type="text"  class="form-control" id="etaPays" formControlName="etaPays">   
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Adresse mail-->
+                <div class="form-group col-md-12">
+                    <label class="control-label">Email</label>
+                    <input type="text"  class="form-control" id="etaMail" formControlName="etaMail">   
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Adresse web-->
+                <div class="form-group col-md-12">
+                    <label class="control-label">Site Web</label>
+                    <input type="text"  class="form-control" id="etaWeb" formControlName="etaWeb">   
+                </div>
+            </div>
+
+
+            
+        </form>
+
+
+    </div>
+
+</div>

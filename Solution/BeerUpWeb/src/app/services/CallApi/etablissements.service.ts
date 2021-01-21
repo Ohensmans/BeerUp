@@ -37,14 +37,14 @@ import { UtilService } from "../util.service";
     getOne(id:string){
       const token = this.authSrv.getUser().id_token;
   
-      let result = this.http.get<EtablissementModele[]>(
+      let result = this.http.get<EtablissementModele>(
         this.util.apiEtablissementsUrl+id,
         { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
       );
       return result;
     }
   
-    addTarif(etab:EtablissementModele){
+    addEtab(etab:EtablissementModele){
       const token:string = this.authSrv.getUser().id_token;
   
       this.http.post<EtablissementModele>(
@@ -58,7 +58,7 @@ import { UtilService } from "../util.service";
       );
     }
   
-    deleteTarif(id:string){
+    deleteEtab(id:string){
       const token:string = this.authSrv.getUser().id_token;
   
     this.http.delete<string>(
@@ -66,14 +66,14 @@ import { UtilService } from "../util.service";
         { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
       ).subscribe(
         () => {
-          let index = this.lEtablissement.findIndex(x => x.EtaId == id)
+          let index = this.lEtablissement.findIndex(x => x.etaId == id)
           this.lEtablissement.splice(index,1);
           this.lEtablissement$.next(this.lEtablissement);
         }
       )
     }
   
-    updateTarif(etab:EtablissementModele, id:string){
+    updateEtab(etab:EtablissementModele, id:string){
       const token:string = this.authSrv.getUser().id_token;
   
       this.http.put<EtablissementModele>(

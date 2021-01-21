@@ -10,6 +10,7 @@ export class UtilService {
   apiTarifsEtabsUrl = 'http://localhost:5001/api/TarifsVueEtabs/';
   apiEtabsOrgaUrl = 'http://localhost:5001/api/EtabOrga/';
   apiEtablissementsUrl = 'http://localhost:5001/api/Etablissements/';
+  apiTypesEtabUrl = 'http://localhost:5001/api/TypesEtab/';
   registerUrl = 'http://localhost:5000/account/registerweb';
   adminUserUrl = 'http://localhost:5000/AdministrationUsers';
 

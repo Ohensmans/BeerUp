@@ -29,6 +29,7 @@ import { TarifComponent } from './components/plansTarifaires/tarif/tarif.compone
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { TabBordEtabsComponent } from './components/etablissements/tab-bord-etabs/tab-bord-etabs.component';
 import { ElementListeEtabComponent } from './components/etablissements/element-liste-etab/element-liste-etab.component';
+import { FicheEtablissementComponent } from './components/etablissements/fiche-etablissement/fiche-etablissement.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { ElementListeEtabComponent } from './components/etablissements/element-l
     ConfirmComponent,
     TabBordEtabsComponent,
     ElementListeEtabComponent,
+    FicheEtablissementComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +72,7 @@ import { ElementListeEtabComponent } from './components/etablissements/element-l
       //{ path: 'call-api', canActivate:[AuthGuardService], component : CallApiComponent},
       { path: 'PlansTarifaires', component : TabBordPlanTarifComponent},
       { path: 'Etablissements', component : TabBordEtabsComponent},
+      { path: 'FicheEtablissement/:id', component : FicheEtablissementComponent},
       { path: 'not-found', component : NotFoundComponent},      
       { path: '**', redirectTo: 'not-found' }
     ]),

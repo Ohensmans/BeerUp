@@ -1,10 +1,10 @@
 <tr>
     <td>
-        {{etab.EtaNom}}
+        <div>{{ etab.etaNom }}</div>
     </td>
     
     <td>
-        <button class="btn btn-secondary text-center" type="button" (click)="modifEtab()">Modifier établissement</button>
+        <button class="btn btn-secondary text-center" routerLink="/FicheEtablissement/{{ etab.etaId }}">Modifier établissement</button>
     </td>
 
     <td>
@@ -12,8 +12,8 @@
     </td>
 
     <td>
-        <button *ngIf="etab.EtaActif" class="btn btn-info text-center" type="button" (click)="activation()">Désactiver</button>
-        <button *ngIf="!etab.EtaActif" class="btn btn-primary text-center" type="button" (click)="activation()">Activer</button>
+        <button *ngIf="etab.etaActif" class="btn btn-info text-center" type="button" (click)="activation()">Désactiver</button>
+        <button *ngIf="!etab.etaActif" class="btn btn-primary text-center" type="button" (click)="activation()">Activer</button>
     </td>
 
     <td>

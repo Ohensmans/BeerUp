@@ -287,6 +287,10 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasMaxLength(100)
                     .HasColumnName("Eta.Ville");
 
+                entity.Property(e => e.EtaPays)
+                    .HasMaxLength(100)
+                    .HasColumnName("Eta.Pays");
+
                 entity.Property(e => e.EtaWeb)
                     .HasMaxLength(100)
                     .HasColumnName("Eta.Web");

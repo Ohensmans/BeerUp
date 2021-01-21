@@ -162,3 +162,4 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Microsoft.As
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
