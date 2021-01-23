@@ -44,7 +44,6 @@ namespace BeerUpApi.Controllers
             {
                 return NotFound();
             }
-
             return etablissement;
         }
 

@@ -11,11 +11,14 @@ export class UtilService {
   apiEtabsOrgaUrl = 'http://localhost:5001/api/EtabOrga/';
   apiEtablissementsUrl = 'http://localhost:5001/api/Etablissements/';
   apiTypesEtabUrl = 'http://localhost:5001/api/TypesEtab/';
+  apiImagesEtab = 'http://localhost:5001/api/ImagesEtab/';
   registerUrl = 'http://localhost:5000/account/registerweb';
   adminUserUrl = 'http://localhost:5000/AdministrationUsers';
 
   TypeTarifVueEtab = "Etab";
   TypeTarifVueBiere = "Biere";
+
+  noImageAvailableUrl = 'http://localhost:5001/resources/images/no_image_available.png';
 
   constructor() { }
 }

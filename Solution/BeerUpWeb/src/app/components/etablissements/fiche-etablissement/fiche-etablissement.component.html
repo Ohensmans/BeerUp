@@ -1,6 +1,6 @@
 <div class="card">
-    <div *ngIf="etab.isNew()" class="card-header">Nouvel établissement</div>
-    <div *ngIf="!etab.isNew()" class="card-header">Détails de l'établissement</div>
+    <div *ngIf="etab.isNew" class="card-header">Nouvel établissement</div>
+    <div *ngIf="!etab.isNew" class="card-header">Détails de l'établissement</div>
 
     <div class="card-body">
         <form [formGroup]="etabForm" (ngSubmit)="onSubmitForm()">  
@@ -9,7 +9,7 @@
                 <!--Nom-->
                 <div class="form-group col-md-12">
                     <label class="control-label">Nom</label>
-                    <input type="text"  class="form-control" id="nomEta" formControlName="nomEta">   
+                    <input type="text"  class="form-control" id="etaNom" formControlName="etaNom">   
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                 <!--Type-->
                 <div class="form-group col-md-6">
                     <label class="control-label">Type</label>
-                    <select formControlName="typEta">
+                    <select formControlName="typEta" class="form-control">
                         <option *ngFor="let type of lTypeEtab" [ngValue]="type.typEtaId">
                             {{type.typEtaNom}}
                         </option>
@@ -81,8 +81,36 @@
                 </div>
             </div>
 
+            <div class="col-md-12 row">
+                <!--Photo-->
+                <div class="photos">
+                    <label class="control-label">Photo</label>
+                    <div *ngIf="etab.etaPhoto!=null && etab.etaPhoto!=''" class="photo">
+                        <img [src]="createImgPath(etab.etaPhoto)" style="width:60px; height:60px;">
+                    </div>
+                    <div *ngIf="etab.etaPhoto==null || etab.etaPhoto==''" class="photo">
+                        <img [src]="noImageAvailableUrl" style="width:60px; height:60px;">
+                    </div>
+                </div>
+            </div>
 
-            
+            <div class="col-md-12 row">
+                <!--Upload Photo-->
+                <div class="col-md-3">
+                    <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+                    <button type="button" class="btn btn-success" (click)="file.click()">Charger une image</button>
+                </div>
+                <div class="col-md-4">
+                    <span class="upload" *ngIf="progressUpload > 0">
+                      {{progressUpload}}%
+                    </span>
+                    <span class="upload" *ngIf="messageUpload">
+                      {{messageUpload}}
+                    </span>
+                </div>
+            </div>
+
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
         </form>
 
 
