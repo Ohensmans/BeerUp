@@ -83,7 +83,18 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Etablissement>> PostEtablissement(Etablissement etablissement)
         {
-            _context.Etablissements.Add(etablissement);
+            List<Etablissement> lEtab = _context.Etablissements.ToList();
+
+            if(lEtab.Exists(etab => etab.EtaNom == etablissement.EtaNom && etab.OrgId == Guid.Empty))
+            {
+                etablissement.EtaId = lEtab.First(etab => etab.EtaNom == etablissement.EtaNom).EtaId;
+                _context.Entry(etablissement).State = EntityState.Modified;
+            }
+            else
+            {
+                _context.Etablissements.Add(etablissement);
+            }
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEtablissement", new { id = etablissement.EtaId }, etablissement);

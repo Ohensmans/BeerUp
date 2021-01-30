@@ -35,6 +35,10 @@ namespace Repo.Modeles.ModelesBeerUp
         public virtual DbSet<TypesService> TypesServices { get; set; }
         public virtual DbSet<VenteBiereEtum> VenteBiereEta { get; set; }
 
+        public virtual DbSet<Horaire> Horaires { get; set; }
+
+        public virtual DbSet<JourFermeture> JoursFermeture { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
@@ -571,6 +575,59 @@ namespace Repo.Modeles.ModelesBeerUp
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VenteBiereEta_Etablissements");
             });
+
+            modelBuilder.Entity<Horaire>(entity =>
+            {
+                entity.HasKey(e => e.HorId);
+
+                entity.Property(e => e.HorId)
+                    .HasColumnName("Hor.Id")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.EtaId).HasColumnName("Eta.Id");
+
+                entity.Property(e => e.HorJour)
+                    .HasColumnName("Hor.Jour")
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.HorDebut)
+                    .HasColumnName("Hor.Debut")
+                    .HasColumnType("time");
+
+                entity.Property(e => e.HorFin)
+                    .HasColumnName("Hor.Fin")
+                    .HasColumnType("time");
+
+                entity.HasOne(d => d.Eta)
+                    .WithMany(p => p.Horaires)
+                    .HasForeignKey(d => d.EtaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Horaires_Etablissements");
+            });
+
+            modelBuilder.Entity<JourFermeture>(entity =>
+            {
+                entity.HasKey(e => e.JouId);
+
+                entity.Property(e => e.JouId)
+                    .HasColumnName("Jou.Id")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.EtaId).HasColumnName("Eta.Id");
+
+
+                entity.Property(e => e.JouDate)
+                    .HasColumnName("Jou.Date")
+                    .HasColumnType("datetime");
+
+                entity.HasOne(d => d.Eta)
+                    .WithMany(p => p.JoursFermeture)
+                    .HasForeignKey(d => d.EtaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_JoursFermeture_Etablissements");
+            });
+
 
             OnModelCreatingPartial(modelBuilder);
         }

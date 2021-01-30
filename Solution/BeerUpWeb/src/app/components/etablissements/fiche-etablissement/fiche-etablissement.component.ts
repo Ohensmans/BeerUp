@@ -3,12 +3,15 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { EtablissementModele } from 'src/app/models/etablissement-modele';
+import { OrganisationModele } from 'src/app/models/organisation-modele';
 import { TypesEtabModele } from 'src/app/models/types-etab-modele';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { EtablissementsService } from 'src/app/services/CallApi/etablissements.service';
+import { OrganisationsService } from 'src/app/services/CallApi/organisations.service';
 import { TypesEtabService } from 'src/app/services/CallApi/types-etab.service';
 import { UploadImagesService } from 'src/app/services/CallApi/upload-images.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -24,6 +27,7 @@ export class FicheEtablissementComponent implements OnInit {
   etab:EtablissementModele;
   subsr:Subscription;
   lTypeEtab:TypesEtabModele[];
+  lOrganisations:OrganisationModele[];
   etabForm: FormGroup;
   noImageAvailableUrl = "";
   response!: { dbPath: ''; };
@@ -34,10 +38,13 @@ export class FicheEtablissementComponent implements OnInit {
   modalRef!: BsModalRef;
 
   constructor(private EtablissementsSrv: EtablissementsService, private route:ActivatedRoute, private TypesEtabSrv : TypesEtabService, private formBuilder:FormBuilder,
-    private upImageSrv: UploadImagesService, private util:UtilService, private modalService:BsModalService, private authSrv : AuthentificationService) {
+    private upImageSrv: UploadImagesService, private util:UtilService, private modalService:BsModalService, private authSrv : AuthentificationService, 
+    private orgSrv:OrganisationsService) {
+
     this.etab = new EtablissementModele();
     this.subsr = new Subscription();
     this.lTypeEtab = new Array<TypesEtabModele>(0);
+    this.lOrganisations = new Array<OrganisationModele>(0);
     this.messageUpload ="";
     this.progressUpload =0;
     this.noImageAvailableUrl = this.util.noImageAvailableUrl;
@@ -55,11 +62,14 @@ export class FicheEtablissementComponent implements OnInit {
       etaWeb:new FormControl(''),
       etaPhoto:new FormControl(''),
       typEta:new FormControl(''),
+      orgId:new FormControl(''),
     })
    }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
+    this.TypesEtabSrv.getAll();
+    this.orgSrv.getAll();
 
     //récupère l'établissement si il n'est pas nouveau
     if(id!="new")
@@ -74,11 +84,20 @@ export class FicheEtablissementComponent implements OnInit {
 
     //obtient la liste de type d'établissements
     this.subsr.add(this.TypesEtabSrv.lTypesEtab$.subscribe(
-      (value) => {this.lTypeEtab = value}
+      (value) => {this.lTypeEtab = value;}
     ));
-    this.TypesEtabSrv.getAll();
-    this.etab;
+    
+    
+   
+    //obtient la liste des organisations
+    this.subsr.add(this.orgSrv.lOrganisation$.subscribe(
+      (value) =>{this.lOrganisations = value;}
+    ));
 
+  }
+
+  isAdmin(){
+    return this.authSrv.isAdmin();
   }
 
   fillInForm()
@@ -94,7 +113,8 @@ export class FicheEtablissementComponent implements OnInit {
       etaMail:[this.etab.etaMail],
       etaWeb:[this.etab.etaWeb],
       etaPhoto:[this.etab.etaPhoto],
-      typEta:[this.etab.typEtaId]
+      typEta:[this.etab.typEtaId],
+      orgId:[this.etab.orgId]
     })
   }
 
@@ -170,9 +190,15 @@ export class FicheEtablissementComponent implements OnInit {
       this.etab.etaMail = this.etabForm.value.etaMail;
       this.etab.etaWeb = this.etabForm.value.etaWeb;
       this.etab.typEtaId = this.etabForm.value.typEta;
+      if (this.isAdmin()){
+        this.etab.orgId = this.etabForm.value.orgId;
+      }
 
       if(this.etab.isNew())
       {
+        if(this.etab.orgId==""){
+          this.etab.orgId = Guid.create().toString();
+        } 
         this.creer();      
       }
       else

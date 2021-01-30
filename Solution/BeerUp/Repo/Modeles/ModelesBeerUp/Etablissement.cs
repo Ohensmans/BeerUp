@@ -36,5 +36,8 @@ namespace Repo.Modeles.ModelesBeerUp
         public virtual ICollection<AchatsVue> AchatsVues { get; set; }
         public virtual ICollection<Biere> Bieres { get; set; }
         public virtual ICollection<VenteBiereEtum> VenteBiereEta { get; set; }
+        public virtual ICollection<Horaire> Horaires { get; set; }
+
+        public virtual ICollection<JourFermeture> JoursFermeture { get; set; }
     }
 }

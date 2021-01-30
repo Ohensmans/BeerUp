@@ -30,6 +30,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
 import { TabBordEtabsComponent } from './components/etablissements/tab-bord-etabs/tab-bord-etabs.component';
 import { ElementListeEtabComponent } from './components/etablissements/element-liste-etab/element-liste-etab.component';
 import { FicheEtablissementComponent } from './components/etablissements/fiche-etablissement/fiche-etablissement.component';
+import { HoraireComponent } from './components/etablissements/horaire/horaire.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { FicheEtablissementComponent } from './components/etablissements/fiche-e
     TabBordEtabsComponent,
     ElementListeEtabComponent,
     FicheEtablissementComponent,
+    HoraireComponent,
   ],
   imports: [
     CommonModule,
