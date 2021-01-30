@@ -19,8 +19,8 @@ export class EtablissementModele {
     etaActif: boolean;
 
     constructor(){
-    this.etaId = Guid.createEmpty().toString();
-    this.orgId= Guid.createEmpty().toString();
+    this.etaId = Guid.create().toString();
+    this.orgId= "";
     this.typEtaId= Guid.createEmpty().toString();
     this.etaNom="";
     this.etaTva="";
@@ -38,7 +38,7 @@ export class EtablissementModele {
     }
 
     isNew(){
-        if(this.etaId==Guid.createEmpty().toString()){
+        if(this.orgId==""){
             return true;
         }
         return false;

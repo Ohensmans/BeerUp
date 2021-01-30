@@ -86,10 +86,10 @@
                 <div class="photos">
                     <label class="control-label">Photo</label>
                     <div *ngIf="etab.etaPhoto!=null && etab.etaPhoto!=''" class="photo">
-                        <img [src]="createImgPath(etab.etaPhoto)" style="width:60px; height:60px;">
+                        <img [src]="createImgPath(etab.etaPhoto)" style="height:60px;">
                     </div>
                     <div *ngIf="etab.etaPhoto==null || etab.etaPhoto==''" class="photo">
-                        <img [src]="noImageAvailableUrl" style="width:60px; height:60px;">
+                        <img [src]="noImageAvailableUrl" style="height:60px;">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
             <div class="col-md-12 row">
                 <!--Upload Photo-->
                 <div class="col-md-3">
-                    <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+                    <input type="file" #file placeholder="Choose file" (change)="uploadFileCheck(file.files)" style="display:none;">
                     <button type="button" class="btn btn-success" (click)="file.click()">Charger une image</button>
                 </div>
                 <div class="col-md-4">

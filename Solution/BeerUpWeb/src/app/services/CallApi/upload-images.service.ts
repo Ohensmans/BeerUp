@@ -22,10 +22,17 @@ export class UploadImagesService {
     return result;
   }
 
-  downloadEtab(){
-    let result = this.http.get<FormData>(this.util.apiImagesEtab);
-      return result;
+  deleteEtab(path:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+    let result = this.http.delete(
+      this.util.apiImagesEtab+path,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    )
+    return result;
   }
+
+
 
   
 }

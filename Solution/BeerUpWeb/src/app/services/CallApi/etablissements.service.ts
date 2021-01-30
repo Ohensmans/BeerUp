@@ -66,7 +66,7 @@ import { UtilService } from "../util.service";
         { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
       ).subscribe(
         () => {
-          let index = this.lEtablissement.findIndex(x => x.etaId == id)
+          let index = this.lEtablissement.findIndex(x => x.etaId == id);
           this.lEtablissement.splice(index,1);
           this.lEtablissement$.next(this.lEtablissement);
         }
@@ -79,6 +79,12 @@ import { UtilService } from "../util.service";
       this.http.put<EtablissementModele>(
         this.util.apiEtablissementsUrl+id,etab,
         { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+      ).subscribe(
+        () => {
+          let index = this.lEtablissement.findIndex(x => x.etaId == id);
+          this.lEtablissement[index] = etab;
+          this.lEtablissement$.next(this.lEtablissement);
+        }
       )
     }
   }
