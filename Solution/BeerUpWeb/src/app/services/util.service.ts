@@ -12,6 +12,12 @@ export class UtilService {
   apiEtablissementsUrl = 'http://localhost:5001/api/Etablissements/';
   apiTypesEtabUrl = 'http://localhost:5001/api/TypesEtab/';
   apiImagesEtab = 'http://localhost:5001/api/ImagesEtab/';
+  apiGetDeletablesBieres = 'http://localhost:5001/api/GetDeletablesBieres/';
+  apiGetDeletablesEtabs = 'http://localhost:5001/api/GetDeletablesEtabs/';
+  apiGetDeletablesTarifsBiere = 'http://localhost:5001/api/GetDeletablesTarifsBiere/';
+  apiGetDeletablesTarifsEtab = 'http://localhost:5001/api/GetDeletablesTarifsEtab/';
+
+
   registerUrl = 'http://localhost:5000/account/registerweb';
   adminUserUrl = 'http://localhost:5000/AdministrationUsers';
 

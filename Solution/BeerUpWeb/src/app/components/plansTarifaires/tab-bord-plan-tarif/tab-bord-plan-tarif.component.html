@@ -48,13 +48,12 @@
                 <th class="text-center">Supprimer</th>
             </tr>
         </thead>
-            <tbody>
-                <app-tarif class="innerForm" *ngFor="let tar of lTarifsBiere"
-                [tarif]="tar"
-                [type]="TypeTarifVueBiere">   
-                </app-tarif>
-            </tbody>
-
+        <tbody>
+            <app-tarif class="innerForm" *ngFor="let tar of lTarifsBiere"
+            [tarif]="tar"
+            [type]="TypeTarifVueBiere">   
+            </app-tarif>
+        </tbody>
     </table>
     <div *ngIf="!lTarifsBiere.length" class="card-header">
         Il n'existe pas encore de tarifs pour les établissements

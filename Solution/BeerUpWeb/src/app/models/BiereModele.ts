@@ -1,27 +1,32 @@
+import { DomSanitizer } from "@angular/platform-browser";
+import { Guid } from "guid-typescript";
 import { StringifyOptions } from "querystring";
 
-/*export class BiereModele {
-    BieId: string;
-    EtaId: string;
+export class BiereModele {
+    bieId: string;
+    etaId: string;
+    typBieId:string;
+    bieNom:string;
+    bieDesc:string;
+    biePhoto:string;
+    bieNbVu:number;
+    bieDateCre:Date;
+    bieValide:boolean;
+    bieActif:boolean;
+    userId:string;
+
+    constructor(){
+        this.bieId = Guid.create().toString();
+        this.etaId ="";
+        this.typBieId="";
+        this.bieNom= "";
+        this.bieDesc="";
+        this.biePhoto="";
+        this.bieNbVu=0;
+        this.bieDateCre = new Date();
+        this.bieValide = false;
+        this.bieActif = false;
+        this.userId = "";
+    }
 
 }
-
-
-public Guid BieId { get; set; }
-public Guid EtaId { get; set; }
-public Guid TypBieId { get; set; }
-public string BieNom { get; set; }
-public string BieDesc { get; set; }
-public string BiePhoto { get; set; }
-public long BieNbVu { get; set; }
-public DateTime BieDateCre { get; set; }
-public bool BieValide { get; set; }
-public bool BieActif { get; set; }
-public Guid UserId { get; set; }
-
-public virtual Etablissement Eta { get; set; }
-public virtual TypesBiere TypBie { get; set; }
-public virtual ICollection<AchatsVue> AchatsVues { get; set; }
-public virtual ICollection<AvisBiereUser> AvisBiereUsers { get; set; }
-public virtual ICollection<LibrairieUserBiere> LibrairieUserBieres { get; set; }
-public virtual ICollection<VenteBiereEtum> VenteBiereEta { get; set; }*/

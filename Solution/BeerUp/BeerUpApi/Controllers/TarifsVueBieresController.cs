@@ -13,11 +13,11 @@ namespace BeerUpApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class TarifsVueBiesController : ControllerBase
+    public class TarifsVueBieresController : ControllerBase
     {
         private readonly BeerUpContext _context;
 
-        public TarifsVueBiesController(BeerUpContext context)
+        public TarifsVueBieresController(BeerUpContext context)
         {
             _context = context;
         }
