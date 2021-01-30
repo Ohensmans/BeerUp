@@ -25,11 +25,6 @@ export class GetDeletablesTarifsEtabService {
       this.util.apiGetDeletablesTarifsEtab,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
-    result.subscribe(
-      (value) => {
-        this.lDeletablesTarifsEtab = value;
-        this.lDeletablesTarifsEtab$.next(this.lDeletablesTarifsEtab);
-      }
-    )
+      return result;
   }
 }

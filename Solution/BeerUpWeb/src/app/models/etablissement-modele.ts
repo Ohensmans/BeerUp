@@ -17,6 +17,7 @@ export class EtablissementModele {
     etaNbVue:number;
     etaCoord:string;
     etaActif: boolean;
+    isDeletable:boolean;
 
     constructor(){
     this.etaId = Guid.create().toString();
@@ -35,6 +36,7 @@ export class EtablissementModele {
     this.etaNbVue=0;
     this.etaCoord="";
     this.etaActif= false;
+    this.isDeletable = false;
     }
 
     isNew(){

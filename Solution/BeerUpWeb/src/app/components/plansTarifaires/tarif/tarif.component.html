@@ -27,7 +27,7 @@
     </td>
 
     <td>
-        <button *ngIf="!getIsNew()" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
+        <button *ngIf="tarif.isDeletable" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
     </td>
 
 </tr>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { TarifModele } from 'src/app/models/tarif-modele';
 import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.service';
 import { TarifsEtabsService } from 'src/app/services/CallApi/tarifs-etabs.service';
@@ -13,12 +14,17 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class TabBordPlanTarifComponent implements OnInit {
 
+  subscr : Subscription;
+
   lTarifsBiere: Array<TarifModele>;
   lTarifsEtabs: Array<TarifModele>;
+
   TypeTarifVueEtab:string;
   TypeTarifVueBiere:string;
 
   constructor(private tarifBiereSrv:TarifsBieresService, private tarifEtabSrv:TarifsEtabsService, private util:UtilService, private toastr:ToastrService) {
+    this.subscr = new Subscription();
+    
     this.lTarifsBiere = Array(0);
     this.lTarifsEtabs = Array(0);
 
@@ -28,16 +34,16 @@ export class TabBordPlanTarifComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.tarifBiereSrv.lTarifsBiere$.subscribe(
-      value => {
+    this.subscr.add(this.tarifBiereSrv.lTarifsBiere$.subscribe(
+      (value) => {
         this.lTarifsBiere = value;
       }
-    );
-    this.tarifEtabSrv.lTarifsEtabs$.subscribe(
+    ));
+    this.subscr.add(this.tarifEtabSrv.lTarifsEtabs$.subscribe(
       (value) => {
         this.lTarifsEtabs = value;
-      }
-    )  
+          }
+        ));
     this.tarifBiereSrv.getAll();
     this.tarifEtabSrv.getAll();
   }
@@ -66,6 +72,10 @@ export class TabBordPlanTarifComponent implements OnInit {
   infoToastr()
   {
     this.toastr.info("Veuillez créer le nouveau tarif avant d'en faire un nouveau", "Information");
+  }
+
+  ngOnDestroy(){
+    this.subscr.unsubscribe();
   }
 
 

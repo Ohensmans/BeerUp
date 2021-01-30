@@ -26,12 +26,7 @@ export class GetDeletablesBieresService {
       this.util.apiGetDeletablesBieres+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
-    result.subscribe(
-      (value) => {
-        this.lDeletablesBieres = value;
-        this.lDeletablesBieres$.next(this.lDeletablesBieres);
-      }
-    )
+    return result;
   }
 
   getAll(){
@@ -41,11 +36,6 @@ export class GetDeletablesBieresService {
       this.util.apiGetDeletablesBieres,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
-    result.subscribe(
-      (value) => {
-        this.lDeletablesBieres = value;
-        this.lDeletablesBieres$.next(this.lDeletablesBieres);
-      }
-    )
+    return result;
   }
 }

@@ -8,6 +8,7 @@ export class TarifModele {
     dateDebut:Date;
     dateFin:Date;
     actif:boolean;
+    isDeletable:boolean;
 
     constructor()
     {
@@ -17,6 +18,7 @@ export class TarifModele {
         this.dateDebut = new Date();
         this.dateFin = new Date();
         this.actif = false;
+        this.isDeletable = false;
     }
 }
 

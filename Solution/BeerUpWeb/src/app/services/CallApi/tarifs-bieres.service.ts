@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TarifModele } from 'src/app/models/tarif-modele';
 import { AuthentificationService } from '../authentification.service';
 import { UtilService } from '../util.service';
+import { GetDeletablesTarifsBiereService } from './get-deletables-tarifs-biere.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,28 @@ export class TarifsBieresService {
 
   lTarifsBiere: Array<TarifModele>;
   lTarifsBiere$: BehaviorSubject<Array<TarifModele>>;
+ 
   
-  constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService) { 
+  constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService, 
+    private DelTarifBiereSrv: GetDeletablesTarifsBiereService) { 
     this.lTarifsBiere = Array(0);
     this.lTarifsBiere$ = new BehaviorSubject<Array<TarifModele>>(this.lTarifsBiere);
+  }
+
+  getDeletablesTarifs(){
+
+    let result = this.DelTarifBiereSrv.getAll().subscribe(
+      (value) =>{
+        //assigne true aux éléments de la liste tarifs qui sont dans la liste des deletables
+        value.forEach(element =>{
+          let index = this.lTarifsBiere.findIndex(x => x.id == element.id)
+          if (index!=-1){
+            this.lTarifsBiere[index].isDeletable = true;
+          }
+        });
+        this.lTarifsBiere$.next(this.lTarifsBiere);
+      }
+    );  
   }
 
   getAll(){
@@ -29,7 +48,7 @@ export class TarifsBieresService {
     result.subscribe(
       (value) => {
         this.lTarifsBiere = value;
-        this.lTarifsBiere$.next(this.lTarifsBiere);
+        this.getDeletablesTarifs();
       }
     )
   }

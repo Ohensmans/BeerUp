@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class UtilService {
 
   apiUrl = 'http://localhost:5001';
-  apiTarifsBieresUrl = 'http://localhost:5001/api/TarifsVueBies/';
+  apiTarifsBieresUrl = 'http://localhost:5001/api/TarifsVueBieres/';
   apiTarifsEtabsUrl = 'http://localhost:5001/api/TarifsVueEtabs/';
   apiEtabsOrgaUrl = 'http://localhost:5001/api/EtabOrga/';
   apiEtablissementsUrl = 'http://localhost:5001/api/Etablissements/';

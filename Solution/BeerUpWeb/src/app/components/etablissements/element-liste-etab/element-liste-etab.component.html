@@ -17,7 +17,7 @@
     </td>
 
     <td>
-        <button class="btn btn-danger text-center" type="button" (click)="supprimer()">Supprimer</button>
+        <button *ngIf="etab.isDeletable" class="btn btn-danger text-center" type="button" (click)="supprimer()">Supprimer</button>
     </td>
 
 </tr>

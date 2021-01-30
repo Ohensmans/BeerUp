@@ -50,7 +50,6 @@ export class TarifComponent implements OnInit {
     })
     this.emptyGuid = Guid.createEmpty().toString();
     this.isNew = true;
-
   }
 
   ngOnInit():void{

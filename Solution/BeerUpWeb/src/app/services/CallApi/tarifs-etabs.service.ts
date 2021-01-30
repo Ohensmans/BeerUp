@@ -5,6 +5,7 @@ import { AuthentificationService } from '../authentification.service';
 import { UtilService } from '../util.service';
 import { BehaviorSubject } from 'rxjs';
 import { Guid } from 'guid-typescript';
+import { GetDeletablesTarifsEtabService } from './get-deletables-tarifs-etab.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,29 @@ export class TarifsEtabsService {
   lTarifsEtabs: Array<TarifModele>;
   lTarifsEtabs$: BehaviorSubject<Array<TarifModele>>;
 
-  constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService) {
+  constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService, 
+   private DelTarifEtabSrv: GetDeletablesTarifsEtabService) {
     this.lTarifsEtabs = Array(0);
     this.lTarifsEtabs$ = new BehaviorSubject<Array<TarifModele>>(this.lTarifsEtabs);
    }
+
+
+   getDeletablesTarifs(){
+
+    let result = this.DelTarifEtabSrv.getAll().subscribe(
+      (value) =>{
+        //assigne true aux éléments de la liste tarifs qui sont dans la liste des deletables
+        value.forEach(element =>{
+          let index = this.lTarifsEtabs.findIndex(x => x.id == element.id)
+          if (index!=-1){
+            this.lTarifsEtabs[index].isDeletable = true;
+          }
+        });
+        this.lTarifsEtabs$.next(this.lTarifsEtabs);
+      }
+    );
+    
+  }
 
   getAll(){
     const token:string = this.authSrv.getUser().id_token;
@@ -29,7 +49,7 @@ export class TarifsEtabsService {
     result.subscribe(
       (value)=>{
         this.lTarifsEtabs = value;
-        this.lTarifsEtabs$.next(this.lTarifsEtabs);
+        this.getDeletablesTarifs();
       }
     )
   }

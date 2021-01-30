@@ -26,11 +26,6 @@ export class GetDeletablesTarifsBiereService {
       this.util.apiGetDeletablesTarifsBiere,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
-    result.subscribe(
-      (value) => {
-        this.lDeletablesTarifsBiere = value;
-        this.lDeletablesTarifsBiere$.next(this.lDeletablesTarifsBiere);
-      }
-    )
+    return result;
   }
 }

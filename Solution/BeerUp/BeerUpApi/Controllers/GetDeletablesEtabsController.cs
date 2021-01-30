@@ -13,12 +13,12 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GetDeletablesEtabController : ControllerBase
+    public class GetDeletablesEtabsController : ControllerBase
     {
 
         private readonly BeerUpContext _context;
 
-        public GetDeletablesEtabController(BeerUpContext context)
+        public GetDeletablesEtabsController(BeerUpContext context)
         {
             this._context = context;
         }
