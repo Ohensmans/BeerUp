@@ -31,6 +31,7 @@ import { TabBordEtabsComponent } from './components/etablissements/tab-bord-etab
 import { ElementListeEtabComponent } from './components/etablissements/element-liste-etab/element-liste-etab.component';
 import { FicheEtablissementComponent } from './components/etablissements/fiche-etablissement/fiche-etablissement.component';
 import { HoraireComponent } from './components/etablissements/horaire/horaire.component';
+import { JourFermeturesComponent } from './components/etablissements/jour-fermetures/jour-fermetures.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { HoraireComponent } from './components/etablissements/horaire/horaire.co
     ElementListeEtabComponent,
     FicheEtablissementComponent,
     HoraireComponent,
+    JourFermeturesComponent,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,29 @@
-<p>horaire works!</p>
+<form class="innerForm" [formGroup]="horaireForm" (ngSubmit)="onSubmitForm()">
+    <tr [ngClass]="getClass()">
+        <td>
+            <select formControlName="horJour" class="form-control">
+                <option *ngFor="let jour of lJoursSemaine" [ngValue]="jour">
+                    {{jour}}
+                </option>
+            </select>    
+        </td>
+    
+        <td>
+            <input type="time" class="form-control" id="horDebut" formControlName="horDebut">
+        </td>
+    
+        <td>
+            <input type="time" class="form-control" id="horFin" formControlName="horDebut">
+        </td>
+
+        <td>
+            <button *ngIf="!isNew()" class="text-center btn btn-primary" type="submit">Sauvegarder</button>
+            <button *ngIf="isNew()" class="text-center btn btn-primary" type="submit">Créer</button>
+        </td>
+    
+        <td>
+            <button *ngIf="!isNew()" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
+        </td>
+    
+    </tr>
+    </form>

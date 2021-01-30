@@ -1,0 +1,17 @@
+<form class="innerForm" [formGroup]="jourForm" (ngSubmit)="onSubmitForm()">
+    <tr [ngClass]="getClass()">
+        <td>
+            <input type="date" class="form-control" id="jouDate" formControlName="jouDate">
+        </td>
+
+        <td>
+            <button *ngIf="!isNew()" class="text-center btn btn-primary" type="submit">Sauvegarder</button>
+            <button *ngIf="isNew()" class="text-center btn btn-primary" type="submit">Créer</button>
+        </td>
+    
+        <td>
+            <button *ngIf="!isNew()" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
+        </td>
+    
+    </tr>
+    </form>

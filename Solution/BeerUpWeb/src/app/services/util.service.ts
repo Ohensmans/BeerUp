@@ -17,6 +17,8 @@ export class UtilService {
   apiGetDeletablesTarifsBiere = 'http://localhost:5001/api/GetDeletablesTarifsBiere/';
   apiGetDeletablesTarifsEtab = 'http://localhost:5001/api/GetDeletablesTarifsEtab/';
   apiOrganisations = 'http://localhost:5001/api/Organisations/';
+  apiHoraires = 'http://localhost:5001/api/Horaires/';
+  apiJoursFermeture = 'http://localhost:5001/api/JoursFermeture/';
 
 
   registerUrl = 'http://localhost:5000/account/registerweb';
@@ -26,6 +28,8 @@ export class UtilService {
   TypeTarifVueBiere = "Biere";
 
   noImageAvailableUrl = 'http://localhost:5001/resources/images/no_image_available.png';
+
+  joursSemaine = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
   constructor() { }
 }

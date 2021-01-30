@@ -5,12 +5,17 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { EtablissementModele } from 'src/app/models/etablissement-modele';
+import { HoraireModele } from 'src/app/models/horaire-modele';
+import { JourFermetureModele } from 'src/app/models/jour-fermeture-modele';
 import { OrganisationModele } from 'src/app/models/organisation-modele';
 import { TypesEtabModele } from 'src/app/models/types-etab-modele';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { EtablissementsService } from 'src/app/services/CallApi/etablissements.service';
+import { HorairesService } from 'src/app/services/CallApi/horaires.service';
+import { JoursFermetureService } from 'src/app/services/CallApi/jours-fermeture.service';
 import { OrganisationsService } from 'src/app/services/CallApi/organisations.service';
 import { TypesEtabService } from 'src/app/services/CallApi/types-etab.service';
 import { UploadImagesService } from 'src/app/services/CallApi/upload-images.service';
@@ -28,6 +33,8 @@ export class FicheEtablissementComponent implements OnInit {
   subsr:Subscription;
   lTypeEtab:TypesEtabModele[];
   lOrganisations:OrganisationModele[];
+  lHoraires:HoraireModele[];
+  lJours:JourFermetureModele[];
   etabForm: FormGroup;
   noImageAvailableUrl = "";
   response!: { dbPath: ''; };
@@ -39,12 +46,14 @@ export class FicheEtablissementComponent implements OnInit {
 
   constructor(private EtablissementsSrv: EtablissementsService, private route:ActivatedRoute, private TypesEtabSrv : TypesEtabService, private formBuilder:FormBuilder,
     private upImageSrv: UploadImagesService, private util:UtilService, private modalService:BsModalService, private authSrv : AuthentificationService, 
-    private orgSrv:OrganisationsService) {
+    private orgSrv:OrganisationsService, private horaireSrv : HorairesService, private joursSrv:JoursFermetureService, private toastr:ToastrService) {
 
     this.etab = new EtablissementModele();
     this.subsr = new Subscription();
     this.lTypeEtab = new Array<TypesEtabModele>(0);
     this.lOrganisations = new Array<OrganisationModele>(0);
+    this.lHoraires = new Array(0);
+    this.lJours = new Array(0);
     this.messageUpload ="";
     this.progressUpload =0;
     this.noImageAvailableUrl = this.util.noImageAvailableUrl;
@@ -70,6 +79,8 @@ export class FicheEtablissementComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.TypesEtabSrv.getAll();
     this.orgSrv.getAll();
+    this.horaireSrv.getAllHorairesEtab(this.etab.etaId);
+    this.joursSrv.getAllJoursEtab(this.etab.etaId);
 
     //récupère l'établissement si il n'est pas nouveau
     if(id!="new")
@@ -87,13 +98,41 @@ export class FicheEtablissementComponent implements OnInit {
       (value) => {this.lTypeEtab = value;}
     ));
     
-    
-   
     //obtient la liste des organisations
     this.subsr.add(this.orgSrv.lOrganisation$.subscribe(
       (value) =>{this.lOrganisations = value;}
     ));
 
+     //obtient la liste de type des horaires
+     this.subsr.add(this.horaireSrv.lHoraire$.subscribe(
+      (value) => {this.lHoraires = value;}
+    ));
+
+    //obtient la liste de type des jours de fermeture
+    this.subsr.add(this.joursSrv.lJours$.subscribe(
+      (value) => {this.lJours = value;}
+    ));
+  
+  }
+
+  addHoraire(){
+    if (this.lHoraires.find(x => x.horId == "")==undefined){
+      this.horaireSrv.addNewHoraire();
+    }
+    else
+    {
+      this.infoToastr("Veuillez créer le nouvel horaire avant d'en faire un nouveau");
+    } 
+  }
+
+  addJour(){
+    if (this.lJours.find(x => x.jouId == Guid.createEmpty().toString())==undefined){
+      this.joursSrv.addNewJour();
+    }
+    else
+    {
+      this.infoToastr("Veuillez créer le nouveau jour de fermeture avant d'en faire un nouveau");
+    } 
   }
 
   isAdmin(){
@@ -220,6 +259,11 @@ export class FicheEtablissementComponent implements OnInit {
 
   sauvegarder(){
     this.EtablissementsSrv.updateEtab(this.etab, this.etab.etaId)
+  }
+
+  infoToastr(message:string)
+  {
+    this.toastr.info(message, "Information");
   }
 
 

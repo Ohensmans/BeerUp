@@ -96,7 +96,7 @@
 
             <div class="col-md-12 row">
                 <!--Photo-->
-                <div class="photo col-md-12">
+                <div class="photo col-md-6" style="text-align:center;">
                     <label class="control-label">Photo</label>
                     <div *ngIf="etab.etaPhoto!=null && etab.etaPhoto!=''" class="photo">
                         <img [src]="createImgPath(etab.etaPhoto)" style="height:120px;">
@@ -104,30 +104,97 @@
                     <div *ngIf="etab.etaPhoto==null || etab.etaPhoto==''" class="photo">
                         <img [src]="noImageAvailableUrl" style="height:120px;">
                     </div>
+
+                    <br>
+                    <br>
+                    <!--Upload Photo-->
+                    <div>
+                        <input type="file" #file placeholder="Choose file" (change)="uploadFileCheck(file.files)" style="display:none;">
+                        <button type="button" class="btn btn-success" (click)="file.click()">Charger une image</button>
+                    </div>
+                    
+                    <div>
+                        <span class="upload" *ngIf="progressUpload > 0">
+                        {{progressUpload}}%
+                        </span>
+                        <span class="upload" *ngIf="messageUpload">
+                        {{messageUpload}}
+                        </span>
+                    </div>
+                </div>
+
+                 <!--Jours Fermetures-->
+                <div class="card col-md-6">
+                    <div class="card-header">
+                        <h3>Jours de fermetures</h3>
+                    </div>
+                    <table  class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Jour</th>
+                                <th class="text-center">Enregistrer</th>
+                                <th class="text-center">Supprimer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <app-jour-fermetures class="innerForm" *ngFor="let jo of lJours"
+                            [jour]="jo">
+                            </app-jour-fermetures>
+                        </tbody>
+                    </table>
+                    <div *ngIf="!lJours.length" class="card-header">
+                        Il n'existe pas encore de jour de fermeture pour cet établissement
+                    </div>
+                    <br>
+                    <br>
+                
+                    <button class="btn btn-primary" (click)="addJour()">Ajouter un jour</button>
+                
                 </div>
             </div>
 
-            <div class="col-md-12 row">
-                <!--Upload Photo-->
-                <div class="col-md-4">
-                    <input type="file" #file placeholder="Choose file" (change)="uploadFileCheck(file.files)" style="display:none;">
-                    <button type="button" class="btn btn-success" (click)="file.click()">Charger une image</button>
+            <br>
+            <br>
+
+
+        <div class="col-md-12">
+            <!--Horaires-->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Horaires d'ouvertures</h3>
                 </div>
-                
-                <div class="col-md-4">
-                    <span class="upload" *ngIf="progressUpload > 0">
-                      {{progressUpload}}%
-                    </span>
-                    <span class="upload" *ngIf="messageUpload">
-                      {{messageUpload}}
-                    </span>
+                <table  class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Jour</th>
+                            <th class="text-center">Ouverture</th>
+                            <th class="text-center">Fermeture</th>
+                            <th class="text-center">Enregistrer</th>
+                            <th class="text-center">Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <app-horaire class="innerForm" *ngFor="let hor of lHoraires"
+                        [horaire]="hor">
+                        </app-horaire>
+                    </tbody>
+                </table>
+                <div *ngIf="!lHoraires.length" class="card-header">
+                    Il n'existe pas encore d'horaire pour cet établissement
                 </div>
+                <br>
+                <br>
+            
+                <button class="btn btn-primary" (click)="addHoraire()">Ajouter un horaire</button>
+            
             </div>
+        </div>
+
+        <br>
+        <br>
 
         <button class="btn btn-primary" type="submit">Enregistrer</button>
         </form>
-
-
     </div>
 
 </div>

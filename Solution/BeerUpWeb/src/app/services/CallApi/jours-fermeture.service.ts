@@ -1,37 +1,40 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { OrganisationModele } from 'src/app/models/organisation-modele';
+import { JourFermetureModele } from 'src/app/models/jour-fermeture-modele';
 import { AuthentificationService } from '../authentification.service';
 import { UtilService } from '../util.service';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class OrganisationsService {
-  lOrganisation: Array<OrganisationModele>;
-  lOrganisation$: BehaviorSubject<Array<OrganisationModele>>;
+export class JoursFermetureService {
+  
+  lJours: Array<JourFermetureModele>;
+  lJours$: BehaviorSubject<Array<JourFermetureModele>>;
   
   constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService) { 
-    this.lOrganisation = Array(0);
-    this.lOrganisation$ = new BehaviorSubject<Array<OrganisationModele>>(this.lOrganisation);
+    this.lJours = Array(0);
+    this.lJours$ = new BehaviorSubject<Array<JourFermetureModele>>(this.lJours);
   }
 
 
-  getAll(){
+  getAllJoursEtab(id:string){
     const token = this.authSrv.getUser().id_token;
 
-    var result = this.http.get<OrganisationModele[]>(
-      this.util.apiOrganisations,
+    var result = this.http.get<JourFermetureModele[]>(
+      this.util.apiHoraires+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(
       (value) => {
-        this.lOrganisation = value;
-        this.lOrganisation$.next(this.lOrganisation);
+        this.lJours = value;
+        this.lJours$.next(this.lJours);
       }
     )
   }
 
+  addNewJour(){
+    
+  }
 }
