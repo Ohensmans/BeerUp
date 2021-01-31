@@ -79,7 +79,7 @@ namespace BeerUpApi.Controllers
 
         // POST: api/Horaires
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
+        
         [HttpPost]
         public async Task<ActionResult<Horaire>> PostHoraire(Horaire horaire)
         {

@@ -111,3 +111,4 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\V
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Account\RegisterWeb.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\EditScopeRole.cshtml.g.cs
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\Macross.Json.Extensions.dll

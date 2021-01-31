@@ -12,13 +12,13 @@ export class TarifModele {
 
     constructor()
     {
-        this.id=Guid.createEmpty().toString();
+        this.id="";
         this.prix =0;
         this.nbVue= 0;
         this.dateDebut = new Date();
         this.dateFin = new Date();
         this.actif = false;
-        this.isDeletable = false;
+        this.isDeletable = true;
     }
 }
 

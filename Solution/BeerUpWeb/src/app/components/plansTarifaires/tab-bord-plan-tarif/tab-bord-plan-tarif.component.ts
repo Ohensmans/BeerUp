@@ -50,7 +50,7 @@ export class TabBordPlanTarifComponent implements OnInit {
 
 
   addTarifBiere(){
-    if (this.lTarifsBiere.find(x => x.id == Guid.createEmpty().toString())==undefined){
+    if (this.lTarifsBiere.find(x => x.id =="")==undefined){
       this.tarifBiereSrv.addNewTarif();
     }
     else
@@ -60,7 +60,7 @@ export class TabBordPlanTarifComponent implements OnInit {
   }
 
   addTarifEtab(){
-    if (this.lTarifsEtabs.find(x => x.id == Guid.createEmpty().toString())==undefined){
+    if (this.lTarifsEtabs.find(x => x.id == "")==undefined){
       this.tarifEtabSrv.addNewTarif();
     }
     else

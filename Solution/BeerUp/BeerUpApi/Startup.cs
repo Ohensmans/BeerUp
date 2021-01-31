@@ -40,7 +40,7 @@ namespace BeerUpApi
             });
 
             services.AddControllers();
-            
+
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<BeerUpContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbBeerUp"), sql => sql.MigrationsAssembly(migrationsAssembly)));

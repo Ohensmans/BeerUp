@@ -19,6 +19,7 @@ export class HorairesService {
   }
 
 
+
   getAllHorairesEtab(id:string){
     const token = this.authSrv.getUser().id_token;
 
@@ -34,6 +35,57 @@ export class HorairesService {
     )
   }
 
-  addNewHoraire(){}
+  addNewHoraire(){
+    this.lHoraire.push(new HoraireModele());
+    this.lHoraire$.next(this.lHoraire);
+  }
+
+  addHoraire(horaire:HoraireModele){
+    const token:string = this.authSrv.getUser().id_token;
+
+    this.http.post<HoraireModele>(
+      this.util.apiHoraires, horaire,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      (value) => {
+        let index = this.lHoraire.findIndex(x => x.horId == "")
+        this.lHoraire[index] =  value;
+        this.lHoraire$.next(this.lHoraire);
+      }
+    );
+  }
+
+  deleteHoraire(id:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+    this.http.delete<string>(
+      this.util.apiHoraires+id,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        this.deleteHoraireObs(id);
+      });
+  }
+
+  deleteHoraireObs(id:string){
+    let index = this.lHoraire.findIndex(x => x.horId == id)
+    this.lHoraire.splice(index,1);
+    this.lHoraire$.next(this.lHoraire);
+  }
+
+  updateHoraire(horaire:HoraireModele, id:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+    this.http.put<HoraireModele>(
+      this.util.apiHoraires+id,horaire,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        let index = this.lHoraire.findIndex(x => x.horId == id);
+        this.lHoraire[index] = horaire;
+        this.lHoraire$.next(this.lHoraire);
+      }
+    )
+  }
    
 }

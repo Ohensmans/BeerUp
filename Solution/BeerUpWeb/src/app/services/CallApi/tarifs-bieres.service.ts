@@ -22,6 +22,12 @@ export class TarifsBieresService {
     this.lTarifsBiere$ = new BehaviorSubject<Array<TarifModele>>(this.lTarifsBiere);
   }
 
+  deleteTarifObs(id:string){
+    let index = this.lTarifsBiere.findIndex(x => x.id == id)
+    this.lTarifsBiere.splice(index,1);
+    this.lTarifsBiere$.next(this.lTarifsBiere);
+  }
+
   getDeletablesTarifs(){
 
     let result = this.DelTarifBiereSrv.getAll().subscribe(
@@ -76,7 +82,7 @@ export class TarifsBieresService {
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       (value) => {
-        let index = this.lTarifsBiere.findIndex(x => x.id == Guid.createEmpty().toString())
+        let index = this.lTarifsBiere.findIndex(x => x.id == "")
         this.lTarifsBiere[index] =  value;
         this.lTarifsBiere$.next(this.lTarifsBiere);
       }
@@ -91,9 +97,7 @@ export class TarifsBieresService {
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {
-        let index = this.lTarifsBiere.findIndex(x => x.id == id)
-        this.lTarifsBiere.splice(index,1);
-        this.lTarifsBiere$.next(this.lTarifsBiere);
+        this.deleteTarifObs(id);
       }
     )
   }
@@ -104,6 +108,12 @@ export class TarifsBieresService {
     this.http.put<TarifModele>(
       this.util.apiTarifsBieresUrl+id,tarif,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        let index = this.lTarifsBiere.findIndex(x => x.id == id);
+        this.lTarifsBiere[index] = tarif;
+        this.lTarifsBiere$.next(this.lTarifsBiere);
+      }
     )
   }
 }

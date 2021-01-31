@@ -60,7 +60,8 @@ export class TarifComponent implements OnInit {
       dateDebut: [formatDate(this.tarif.dateDebut, 'yyyy-MM-dd', 'en'), [Validators.required]],
       dateFin: [formatDate(this.tarif.dateFin, 'yyyy-MM-dd', 'en'), [Validators.required]]
       }, { validators: DateDebutIsOlderDirective() });
-    if(this.tarif.id!=this.emptyGuid){
+    //assigne la valuer isNew selon la valeur id du tarif (à la création l'id = "")
+      if(this.tarif.id!=""){
       this.isNew = false;
     }
   }
@@ -157,25 +158,36 @@ export class TarifComponent implements OnInit {
 
   supprimer()
   {
-    //lance le module de confirmation
-    this.modalRef = this.modalService.show(ConfirmComponent, {
-      initialState:{prompt: 'Etes-vous sûr de vouloir supprimer ce tarif ?'}});
+      //lance le module de confirmation
+      this.modalRef = this.modalService.show(ConfirmComponent, {
+        initialState:{prompt: 'Etes-vous sûr de vouloir supprimer ce tarif ?'}});
 
-    this.modalRef.content.onClose$.subscribe(
-      (value: boolean) =>{
-      if(value){
-        {
-          //suppprime le tarif selon son "type"
-          if(this.type == this.TypeTarifVueBiere){
-            this.tarifBiere.deleteTarif(this.tarif.id);
-          }
-    
-          if(this.type == this.TypeTarifVueEtab){
-            this.tarifEtab.deleteTarif(this.tarif.id);
+      this.modalRef.content.onClose$.subscribe(
+        (value: boolean) =>{
+        if(value){
+          {
+            //suppprime le tarif selon son "type"
+            if(this.type == this.TypeTarifVueBiere){
+              if(this.isNew){
+                this.tarifBiere.deleteTarifObs(this.tarif.id);
+              }
+              else{
+                this.tarifBiere.deleteTarif(this.tarif.id);
+              }
+              
+            }
+      
+            if(this.type == this.TypeTarifVueEtab){
+              if(this.isNew){
+                this.tarifEtab.deleteTarifObs(this.tarif.id);
+              }
+              else{
+                this.tarifEtab.deleteTarif(this.tarif.id);
+              }
+            }
           }
         }
-      }
-    });   
+      });   
   }
 
 

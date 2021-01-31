@@ -12,6 +12,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { AppComponent } from './app.component';
 
 import { AuthentificationService } from './services/authentification.service';
@@ -32,6 +33,7 @@ import { ElementListeEtabComponent } from './components/etablissements/element-l
 import { FicheEtablissementComponent } from './components/etablissements/fiche-etablissement/fiche-etablissement.component';
 import { HoraireComponent } from './components/etablissements/horaire/horaire.component';
 import { JourFermeturesComponent } from './components/etablissements/jour-fermetures/jour-fermetures.component';
+import { TimeDebEqualTimeFinDirective } from './directives/validators/time-deb-equal-time-fin.directive';
 
 
 @NgModule({
@@ -61,6 +63,7 @@ import { JourFermeturesComponent } from './components/etablissements/jour-fermet
     ReactiveFormsModule,
     CarouselModule.forRoot(),
     BrowserAnimationsModule,
+    TimepickerModule.forRoot(),
     ToastrModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),

@@ -1,6 +1,6 @@
 <form class="innerForm" [formGroup]="horaireForm" (ngSubmit)="onSubmitForm()">
     <tr [ngClass]="getClass()">
-        <td>
+        <td style="text-align: center;">
             <select formControlName="horJour" class="form-control">
                 <option *ngFor="let jour of lJoursSemaine" [ngValue]="jour">
                     {{jour}}
@@ -9,19 +9,19 @@
         </td>
     
         <td>
-            <input type="time" class="form-control" id="horDebut" formControlName="horDebut">
+            <input style="text-align: center;" type="time" class="form-control" id="horDebut" formControlName="horDebut">
         </td>
     
-        <td>
-            <input type="time" class="form-control" id="horFin" formControlName="horDebut">
+        <td style="text-align: center;">
+            <input style="text-align: center;" type="time" class="form-control" id="horFin" formControlName="horFin">
         </td>
 
-        <td>
+        <td style="text-align: center;">
             <button *ngIf="!isNew()" class="text-center btn btn-primary" type="submit">Sauvegarder</button>
             <button *ngIf="isNew()" class="text-center btn btn-primary" type="submit">Créer</button>
         </td>
     
-        <td>
+        <td style="text-align: center;">
             <button *ngIf="!isNew()" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
         </td>
     

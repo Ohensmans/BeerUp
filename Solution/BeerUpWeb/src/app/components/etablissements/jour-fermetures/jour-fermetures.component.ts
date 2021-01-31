@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { EtablissementModele } from 'src/app/models/etablissement-modele';
 import { JourFermetureModele } from 'src/app/models/jour-fermeture-modele';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -13,12 +14,14 @@ import { UtilService } from 'src/app/services/util.service';
 export class JourFermeturesComponent implements OnInit {
 
   @Input() jour:JourFermetureModele;
+  @Input() eta:EtablissementModele;
 
   modalRef!: BsModalRef;
   jourForm: FormGroup;
 
   constructor(private util:UtilService, private formBuilder:FormBuilder, private modalService:BsModalService, private toastr:ToastrService) { 
     this.jour = new JourFermetureModele();
+    this.eta = new EtablissementModele();
     this.jourForm = new FormGroup({
       horJour: new FormControl(''),
       horDebut: new FormControl(''),
@@ -30,6 +33,7 @@ export class JourFermeturesComponent implements OnInit {
     this.jourForm = this.formBuilder.group({
       jouDate: [this.jour.jouDate]
     });
+    this.jour.etaId = this.eta.etaId;
   }
 
   isNew(){
@@ -55,5 +59,7 @@ export class JourFermeturesComponent implements OnInit {
     if (this.jourForm.invalid) return "bg-danger text-white";
     else return "";
   }
+
+  onSubmitForm(){}
 
 }

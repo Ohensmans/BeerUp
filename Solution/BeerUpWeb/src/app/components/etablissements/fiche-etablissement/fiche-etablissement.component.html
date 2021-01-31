@@ -126,7 +126,7 @@
                  <!--Jours Fermetures-->
                 <div class="card col-md-6">
                     <div class="card-header">
-                        <h3>Jours de fermetures</h3>
+                        Jours de fermetures
                     </div>
                     <table  class="table table-striped">
                         <thead>
@@ -138,7 +138,8 @@
                         </thead>
                         <tbody>
                             <app-jour-fermetures class="innerForm" *ngFor="let jo of lJours"
-                            [jour]="jo">
+                            [jour]="jo"
+                            [eta]="etab">
                             </app-jour-fermetures>
                         </tbody>
                     </table>
@@ -161,7 +162,7 @@
             <!--Horaires-->
             <div class="card">
                 <div class="card-header">
-                    <h3>Horaires d'ouvertures</h3>
+                    Horaires d'ouvertures
                 </div>
                 <table  class="table table-striped">
                     <thead>
@@ -175,7 +176,8 @@
                     </thead>
                     <tbody>
                         <app-horaire class="innerForm" *ngFor="let hor of lHoraires"
-                        [horaire]="hor">
+                        [horaire]="hor"
+                        [eta]="etab">
                         </app-horaire>
                     </tbody>
                 </table>

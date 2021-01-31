@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Repo.Modeles.ModelesBeerUp
 {
@@ -13,8 +13,14 @@ namespace Repo.Modeles.ModelesBeerUp
 
         public string HorJour { get; set; }
 
+        [JsonConverter(typeof(JsonTimeSpanConverter))]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
         public TimeSpan HorDebut { get; set; }
 
+        [JsonConverter(typeof(JsonTimeSpanConverter))]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
         public TimeSpan HorFin { get; set; }
 
         public virtual Etablissement Eta { get; set; }

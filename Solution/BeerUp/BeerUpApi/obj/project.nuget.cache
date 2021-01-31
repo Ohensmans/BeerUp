@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "RHefScBd9zPG/NElpiu6eXXEglXhfl2+NhrcQfNiZGsdooiaxr/EskLN1Wdy045nk1XNgkHTirH7+aWyiZeAOA==",
+  "dgSpecHash": "f1TnX5yD/KqY6pqcDQ/eCM2wwFFj/a6uUY51CBRyOYR0BlVN3XHa3dt+yIrIl+vPcB5BOeKfkptRTNnBt7GPNw==",
   "success": true,
   "projectFilePath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Olivier\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Olivier\\.nuget\\packages\\macross.json.extensions\\1.5.0\\macross.json.extensions.1.5.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.1\\microsoft.aspnetcore.authentication.jwtbearer.5.0.1.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\5.0.1\\microsoft.aspnetcore.authentication.openidconnect.5.0.1.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.1\\microsoft.aspnetcore.cryptography.internal.5.0.1.nupkg.sha512",
@@ -141,6 +142,7 @@
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\Olivier\\.nuget\\packages\\system.text.json\\4.7.0\\system.text.json.4.7.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",

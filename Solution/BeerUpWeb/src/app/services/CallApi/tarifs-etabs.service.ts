@@ -21,6 +21,11 @@ export class TarifsEtabsService {
     this.lTarifsEtabs$ = new BehaviorSubject<Array<TarifModele>>(this.lTarifsEtabs);
    }
 
+   deleteTarifObs(id:string){
+    let index = this.lTarifsEtabs.findIndex(x => x.id == id)
+    this.lTarifsEtabs.splice(index,1);
+    this.lTarifsEtabs$.next(this.lTarifsEtabs);
+  }
 
    getDeletablesTarifs(){
 
@@ -77,7 +82,7 @@ export class TarifsEtabsService {
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       (value) => {
-        let index = this.lTarifsEtabs.findIndex(x => x.id == Guid.createEmpty().toString())
+        let index = this.lTarifsEtabs.findIndex(x => x.id == "")
         this.lTarifsEtabs[index] =  value;
         this.lTarifsEtabs$.next(this.lTarifsEtabs);
       }
@@ -92,9 +97,7 @@ export class TarifsEtabsService {
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {
-        let index = this.lTarifsEtabs.findIndex(x => x.id == id)
-        this.lTarifsEtabs.splice(index,1);
-        this.lTarifsEtabs$.next(this.lTarifsEtabs);
+        this.deleteTarifObs(id);
       });
   }
 
@@ -104,6 +107,12 @@ export class TarifsEtabsService {
     this.http.put<TarifModele>(
       this.util.apiTarifsEtabsUrl+id,tarif,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        let index = this.lTarifsEtabs.findIndex(x => x.id == id);
+        this.lTarifsEtabs[index] = tarif;
+        this.lTarifsEtabs$.next(this.lTarifsEtabs);
+      }
     )
   }
 

@@ -23,7 +23,7 @@ export class JoursFermetureService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<JourFermetureModele[]>(
-      this.util.apiHoraires+id,
+      this.util.apiJoursFermeture+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(
@@ -35,6 +35,55 @@ export class JoursFermetureService {
   }
 
   addNewJour(){
-    
+      this.lJours.push(new JourFermetureModele());
+      this.lJours$.next(this.lJours);
+  }
+
+  addJour(jour:JourFermetureModele){
+    const token:string = this.authSrv.getUser().id_token;
+
+    this.http.post<JourFermetureModele>(
+      this.util.apiJoursFermeture, jour,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      (value) => {
+        let index = this.lJours.findIndex(x => x.etaId == "")
+        this.lJours[index] =  value;
+        this.lJours$.next(this.lJours);
+      }
+    );
+  }
+
+  deleteJour(id:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+    this.http.delete<string>(
+      this.util.apiJoursFermeture+id,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        this.deleteJourObs(id);
+      });
+  }
+
+  deleteJourObs(id:string){
+    let index = this.lJours.findIndex(x => x.jouId == id)
+    this.lJours.splice(index,1);
+    this.lJours$.next(this.lJours);
+  }
+
+  updateJour(jour:JourFermetureModele, id:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+    this.http.put<JourFermetureModele>(
+      this.util.apiJoursFermeture+id,jour,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        let index = this.lJours.findIndex(x => x.jouId == id);
+        this.lJours[index] = jour;
+        this.lJours$.next(this.lJours);
+      }
+    )
   }
 }

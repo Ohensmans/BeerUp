@@ -79,8 +79,7 @@ export class FicheEtablissementComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.TypesEtabSrv.getAll();
     this.orgSrv.getAll();
-    this.horaireSrv.getAllHorairesEtab(this.etab.etaId);
-    this.joursSrv.getAllJoursEtab(this.etab.etaId);
+    
 
     //récupère l'établissement si il n'est pas nouveau
     if(id!="new")
@@ -91,7 +90,11 @@ export class FicheEtablissementComponent implements OnInit {
           this.fillInForm();
         }
       ));
+      this.horaireSrv.getAllHorairesEtab(id);
+      this.joursSrv.getAllJoursEtab(id);
     }
+
+    
 
     //obtient la liste de type d'établissements
     this.subsr.add(this.TypesEtabSrv.lTypesEtab$.subscribe(
@@ -126,7 +129,7 @@ export class FicheEtablissementComponent implements OnInit {
   }
 
   addJour(){
-    if (this.lJours.find(x => x.jouId == Guid.createEmpty().toString())==undefined){
+    if (this.lJours.find(x => x.jouId == "")==undefined){
       this.joursSrv.addNewJour();
     }
     else
