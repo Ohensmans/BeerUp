@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  VatKey: "?access_key=e69175a478f42ba9c0dff7a8285c4d1b",
+  VatKey: "",
+  MapQuest: "",
 };
 
 /*

@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UtilService {
 
+  //Api BeerUp
   apiUrl = 'http://localhost:5001';
   apiTarifsBieresUrl = 'http://localhost:5001/api/TarifsVueBieres/';
   apiTarifsEtabsUrl = 'http://localhost:5001/api/TarifsVueEtabs/';
@@ -19,11 +20,15 @@ export class UtilService {
   apiOrganisations = 'http://localhost:5001/api/Organisations/';
   apiHoraires = 'http://localhost:5001/api/Horaires/';
   apiJoursFermeture = 'http://localhost:5001/api/JoursFermeture/';
+  
+  //External Api
+  VAT = "http://apilayer.net/api/validate";
 
-
+  //IdentityServer
   registerUrl = 'http://localhost:5000/account/registerweb';
   adminUserUrl = 'http://localhost:5000/AdministrationUsers';
 
+  //Parameter
   TypeTarifVueEtab = "Etab";
   TypeTarifVueBiere = "Biere";
 

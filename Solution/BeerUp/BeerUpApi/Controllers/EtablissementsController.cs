@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BeerUpApi.External_Api_Call;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
+using Repo.Modeles.POC;
 
 namespace BeerUpApi.Controllers
 {
@@ -15,10 +17,12 @@ namespace BeerUpApi.Controllers
     public class EtablissementsController : ControllerBase
     {
         private readonly BeerUpContext _context;
+        private readonly IMapService mapService;
 
-        public EtablissementsController(BeerUpContext context)
+        public EtablissementsController(BeerUpContext context, IMapService mapService)
         {
             _context = context;
+            this.mapService = mapService;
         }
 
         // GET: api/Etablissements
@@ -52,15 +56,23 @@ namespace BeerUpApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEtablissement(Guid id, Etablissement etablissement)
         {
-            if (id != etablissement.EtaId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(etablissement).State = EntityState.Modified;
-
             try
             {
+                if (id != etablissement.EtaId)
+                {
+                    return BadRequest();
+                }
+
+                List<Etablissement> lEtab = _context.Etablissements.ToList();
+
+                if (lEtab.Exists(e => e.EtaId == etablissement.EtaId && (e.EtaRue != etablissement.EtaRue || e.EtaVille != etablissement.EtaVille)))
+                {
+                    etablissement = await GetCoordinatesAsync(etablissement);
+                }
+
+                _context.Entry(etablissement).State = EntityState.Modified;
+
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -74,6 +86,10 @@ namespace BeerUpApi.Controllers
                     throw;
                 }
             }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return NoContent();
         }
@@ -83,21 +99,30 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Etablissement>> PostEtablissement(Etablissement etablissement)
         {
-            List<Etablissement> lEtab = _context.Etablissements.ToList();
-
-            if(lEtab.Exists(etab => etab.EtaNom == etablissement.EtaNom && etab.OrgId == Guid.Empty))
+            try
             {
-                etablissement.EtaId = lEtab.First(etab => etab.EtaNom == etablissement.EtaNom).EtaId;
-                _context.Entry(etablissement).State = EntityState.Modified;
+                List<Etablissement> lEtab = _context.Etablissements.ToList();
+
+                etablissement = await GetCoordinatesAsync(etablissement);
+
+                if (lEtab.Exists(etab => etab.EtaNom == etablissement.EtaNom && etab.OrgId == Guid.Empty))
+                {
+                    etablissement.EtaId = lEtab.First(etab => etab.EtaNom == etablissement.EtaNom).EtaId;
+                    _context.Entry(etablissement).State = EntityState.Modified;
+                }
+                else
+                {
+                    _context.Etablissements.Add(etablissement);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetEtablissement", new { id = etablissement.EtaId }, etablissement);
             }
-            else
+            catch (Exception)
             {
-                _context.Etablissements.Add(etablissement);
+                throw;
             }
-
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetEtablissement", new { id = etablissement.EtaId }, etablissement);
         }
 
         // DELETE: api/Etablissements/5
@@ -119,6 +144,17 @@ namespace BeerUpApi.Controllers
         private bool EtablissementExists(Guid id)
         {
             return _context.Etablissements.Any(e => e.EtaId == id);
+        }
+
+        private async Task<Etablissement> GetCoordinatesAsync(Etablissement etablissement)
+        {
+            string adresse = etablissement.EtaNum + "+" + etablissement.EtaRue + ",+" + etablissement.EtaCp + ",+" + etablissement.EtaVille + ",+" + etablissement.EtaPays;
+            Coordonne coord = await mapService.GetCoordinates(adresse);
+
+            etablissement.EtaCoordLat = coord.Latitude;
+            etablissement.EtaCoordLong = coord.Longitude;
+
+            return etablissement;
         }
     }
 }

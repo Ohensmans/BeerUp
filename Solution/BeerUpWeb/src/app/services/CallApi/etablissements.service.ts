@@ -70,7 +70,7 @@ import { GetDeletablesEtabsService } from "./get-deletables-etabs.service";
       ).subscribe(
         (value) => {
           this.lEtablissement.push(value);
-          this.lEtablissement$.next(this.lEtablissement);
+          this.lEtablissement$.next(this.lEtablissement)
         }
       );
     }

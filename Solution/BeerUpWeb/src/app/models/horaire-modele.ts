@@ -12,8 +12,8 @@ export class HoraireModele {
         this.horId="";
         this.etaId="";
         this.horJour= "";
-        this.horDebut= "00:00";
-        this.horFin = "00:00";
+        this.horDebut= "00:00:00";
+        this.horFin = "00:00:00";
     }
 
 }

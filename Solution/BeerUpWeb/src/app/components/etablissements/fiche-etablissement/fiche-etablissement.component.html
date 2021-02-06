@@ -22,7 +22,11 @@
                 <!--Nom-->
                 <div class="form-group col-md-12">
                     <label class="control-label">Nom</label>
-                    <input type="text"  class="form-control" id="etaNom" formControlName="etaNom">   
+                    <input type="text"  class="form-control" id="etaNom" formControlName="etaNom">  
+                    <div *ngIf="submitted && form.etaNom.invalid">
+                        <div *ngIf="form.etaNom.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.etaNom.errors?.maxlength" class="text-danger" >*maximum 200 caractères </div>
+                    </div>   
                 </div>
             </div>
 
@@ -39,8 +43,14 @@
 
                 <!--TVA-->
                 <div class="form-group col-md-6">
-                    <label class="control-label">TVA</label>
-                    <input type="text"  class="form-control" id="etaTva" formControlName="etaTva">   
+                    <label class="control-label">Tva</label>
+                    <input type="text"  class="form-control" id="etaTva" formControlName="etaTva"> 
+                    <div *ngIf="submitted && (form.etaTva.invalid || !validVat)">
+                        <div *ngIf="form.etaTva.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="!validVat" class="text-danger" >*Le numéro de TVA doit être valide, 
+                            n'oubliez pas le code pays par exemple : BE0409.458.972 
+                            Il faut renvoyer le formulaire pour actualiser la validation</div>                          
+                    </div>     
                 </div>
             </div>
 
@@ -48,13 +58,21 @@
                 <!--Rue-->
                 <div class="form-group col-md-8">
                     <label class="control-label">Rue</label>
-                    <input type="text"  class="form-control" id="etaRue" formControlName="etaRue">   
+                    <input type="text"  class="form-control" id="etaRue" formControlName="etaRue">
+                    <div *ngIf="submitted && form.etaRue.invalid">
+                        <div *ngIf="form.etaRue.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.etaRue.errors?.maxlength" class="text-danger" >*maximum 200 caractères </div>
+                    </div>      
                 </div>
 
-                <!--TVA-->
+                <!--Numéro-->
                 <div class="form-group col-md-4">
                     <label class="control-label">Numéro</label>
                     <input type="text"  class="form-control" id="etaNum" formControlName="etaNum">   
+                    <div *ngIf="submitted && form.etaNum.invalid">
+                        <div *ngIf="form.etaNum.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.etaNum.errors?.maxlength" class="text-danger" >*maximum 50 caractères </div>
+                    </div>  
                 </div>
             </div>
 
@@ -62,19 +80,31 @@
                 <!--Code Postal-->
                 <div class="form-group col-md-2">
                     <label class="control-label">Code Postal</label>
-                    <input type="text"  class="form-control" id="etaCp" formControlName="etaCp">   
+                    <input type="text"  class="form-control" id="etaCp" formControlName="etaCp">
+                    <div *ngIf="submitted && form.etaCp.invalid">
+                        <div *ngIf="form.etaCp.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.etaCp.errors?.maxlength" class="text-danger" >*maximum 50 caractères </div>
+                    </div>    
                 </div>
 
-                <!--Rue-->
+                <!--Ville-->
                 <div class="form-group col-md-6">
                     <label class="control-label">Ville</label>
-                    <input type="text"  class="form-control" id="etaVille" formControlName="etaVille">   
+                    <input type="text"  class="form-control" id="etaVille" formControlName="etaVille"> 
+                    <div *ngIf="submitted && form.etaVille.invalid">
+                        <div *ngIf="form.etaVille.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.etaVille.errors?.maxlength" class="text-danger" >*maximum 100 caractères </div>
+                    </div>     
                 </div>
                 
-                <!--TVA-->
+                <!--Pays-->
                 <div class="form-group col-md-4">
                     <label class="control-label">Pays</label>
-                    <input type="text"  class="form-control" id="etaPays" formControlName="etaPays">   
+                    <input type="text"  class="form-control" id="etaPays" formControlName="etaPays"> 
+                    <div *ngIf="submitted && form.etaPays.invalid">
+                        <div *ngIf="form.etaPays.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.etaPays.errors?.maxlength" class="text-danger" >*maximum 50 caractères </div>
+                    </div>     
                 </div>
             </div>
 
@@ -83,6 +113,10 @@
                 <div class="form-group col-md-12">
                     <label class="control-label">Email</label>
                     <input type="text"  class="form-control" id="etaMail" formControlName="etaMail">   
+                    <div *ngIf="submitted && form.etaMail.invalid">
+                        <div *ngIf="form.etaMail.errors?.Email" class="text-danger" >*l'adresse mail doit être valide</div>
+                        <div *ngIf="form.etaMail.errors?.maxlength" class="text-danger" >*maximum 100 caractères </div>
+                    </div>   
                 </div>
             </div>
 
@@ -91,6 +125,10 @@
                 <div class="form-group col-md-12">
                     <label class="control-label">Site Web</label>
                     <input type="text"  class="form-control" id="etaWeb" formControlName="etaWeb">   
+                    <div *ngIf="submitted && form.etaWeb.invalid">
+                        <div *ngIf="form.etaWeb.errors?.pattern" class="text-danger" >*L'adresse url doit être valide par ex : www.youplaboom.be/index</div>
+                        <div *ngIf="form.etaWeb.errors?.maxlength" class="text-danger" >*maximum 100 caractères </div>
+                    </div>  
                 </div>
             </div>
 

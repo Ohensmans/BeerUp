@@ -15,9 +15,11 @@ export class EtablissementModele {
     etaMail:string;
     etaPhoto:string;
     etaNbVue:number;
-    etaCoord:string;
+    etaCoordLong:string;
+    etaCoordLat:string;
     etaActif: boolean;
     isDeletable:boolean;
+
 
     constructor(){
     this.etaId = Guid.create().toString();
@@ -34,7 +36,8 @@ export class EtablissementModele {
     this.etaWeb="";
     this.etaPhoto="";
     this.etaNbVue=0;
-    this.etaCoord="";
+    this.etaCoordLong="";
+    this.etaCoordLat="";
     this.etaActif= false;
     this.isDeletable = false;
     }

@@ -26,7 +26,15 @@ namespace IdentityServer
                     Name = "orgId",
                     UserClaims = new[] {"OrgId"},
                     DisplayName = "User Organisation Id"
+                },
+                new IdentityResource
+                {
+                    Name = "valide",
+                    UserClaims = new[] {"valide"},
+                    DisplayName = "Valide"
                 }
+
+
 
             };
 
@@ -111,7 +119,8 @@ namespace IdentityServer
                     IdentityServerConstants.StandardScopes.Profile,
                     "ApiBeerUp.all",
                     "role",
-                    "orgId"
+                    "orgId",
+                    "Valide"
                 },
 
             },
@@ -141,7 +150,8 @@ namespace IdentityServer
                     IdentityServerConstants.StandardScopes.Profile,
                     "ApiBeerUp.all",
                     "role",
-                    "orgId"
+                    "orgId",
+                    "Valide"
 
                 },
                 AllowOfflineAccess = true

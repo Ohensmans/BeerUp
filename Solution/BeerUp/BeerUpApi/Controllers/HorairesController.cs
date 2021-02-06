@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
+using Repo.Modeles.POC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,11 @@ namespace BeerUpApi.Controllers
             if (horaires == null)
             {
                 horaires = new List<Horaire>();
+            }
+            else
+            {
+                List<string> lJours = new JoursSemaine().lJours;
+                horaires = horaires.OrderBy(h => lJours.IndexOf(h.HorJour)).ThenBy(h => h.HorDebut).ToList();
             }
 
             return horaires;

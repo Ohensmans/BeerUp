@@ -1,8 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +18,7 @@ import { JoursFermetureService } from 'src/app/services/CallApi/jours-fermeture.
 import { OrganisationsService } from 'src/app/services/CallApi/organisations.service';
 import { TypesEtabService } from 'src/app/services/CallApi/types-etab.service';
 import { UploadImagesService } from 'src/app/services/CallApi/upload-images.service';
+import { VatLayerService } from 'src/app/services/CallApi/vat-layer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmComponent } from '../../confirm/confirm.component';
 
@@ -39,14 +39,17 @@ export class FicheEtablissementComponent implements OnInit {
   noImageAvailableUrl = "";
   response!: { dbPath: ''; };
 
+  submitted:boolean;
   messageUpload:string;
   progressUpload:number;
+  validVat:boolean;
 
   modalRef!: BsModalRef;
 
   constructor(private EtablissementsSrv: EtablissementsService, private route:ActivatedRoute, private TypesEtabSrv : TypesEtabService, private formBuilder:FormBuilder,
     private upImageSrv: UploadImagesService, private util:UtilService, private modalService:BsModalService, private authSrv : AuthentificationService, 
-    private orgSrv:OrganisationsService, private horaireSrv : HorairesService, private joursSrv:JoursFermetureService, private toastr:ToastrService) {
+    private orgSrv:OrganisationsService, private horaireSrv : HorairesService, private joursSrv:JoursFermetureService, private toastr:ToastrService, 
+   private router : Router, private vatSrv:VatLayerService ) {
 
     this.etab = new EtablissementModele();
     this.subsr = new Subscription();
@@ -57,6 +60,8 @@ export class FicheEtablissementComponent implements OnInit {
     this.messageUpload ="";
     this.progressUpload =0;
     this.noImageAvailableUrl = this.util.noImageAvailableUrl;
+    this.submitted = false;
+    this.validVat = false;
     
 
     this.etabForm = new FormGroup({
@@ -71,7 +76,7 @@ export class FicheEtablissementComponent implements OnInit {
       etaWeb:new FormControl(''),
       etaPhoto:new FormControl(''),
       typEta:new FormControl(''),
-      orgId:new FormControl(''),
+      orgId:new FormControl('')
     })
    }
 
@@ -79,7 +84,6 @@ export class FicheEtablissementComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.TypesEtabSrv.getAll();
     this.orgSrv.getAll();
-    
 
     //récupère l'établissement si il n'est pas nouveau
     if(id!="new")
@@ -145,17 +149,17 @@ export class FicheEtablissementComponent implements OnInit {
   fillInForm()
   {
     this.etabForm = this.formBuilder.group({
-      etaNom:[this.etab.etaNom],
-      etaTva:[this.etab.etaTva],
-      etaRue:[this.etab.etaRue],
-      etaNum:[this.etab.etaNum],
-      etaCp:[this.etab.etaCp],
-      etaVille:[this.etab.etaVille],
-      etaPays:[this.etab.etaPays],
-      etaMail:[this.etab.etaMail],
-      etaWeb:[this.etab.etaWeb],
+      etaNom:[this.etab.etaNom, [Validators.required, Validators.maxLength(200)]],
+      etaTva:[this.etab.etaTva, [Validators.maxLength(50)]],
+      etaRue:[this.etab.etaRue, [Validators.required, Validators.maxLength(200)]],
+      etaNum:[this.etab.etaNum, [Validators.required, Validators.maxLength(50)]],
+      etaCp:[this.etab.etaCp, [Validators.required, Validators.maxLength(50)]],
+      etaVille:[this.etab.etaVille, [Validators.required, Validators.maxLength(100)]],
+      etaPays:[this.etab.etaPays, [Validators.required, Validators.maxLength(50)]],
+      etaMail:[this.etab.etaMail, [Validators.email ,Validators.maxLength(100)]],
+      etaWeb:[this.etab.etaWeb, [Validators.pattern("^(www).([\w]+).[\w\.//]*$"), Validators.maxLength(100)]],
       etaPhoto:[this.etab.etaPhoto],
-      typEta:[this.etab.typEtaId],
+      typEta:[this.etab.typEtaId, [Validators.required]],
       orgId:[this.etab.orgId]
     })
   }
@@ -220,34 +224,58 @@ export class FicheEtablissementComponent implements OnInit {
   }
 
   onSubmitForm(){
-    if(this.etabForm.valid && this.etabForm.dirty)
-    {
-      this.etab.etaNom = this.etabForm.value.etaNom;
-      this.etab.etaTva = this.etabForm.value.etaTva;
-      this.etab.etaRue = this.etabForm.value.etaRue;
-      this.etab.etaNum = this.etabForm.value.etaNum;
-      this.etab.etaCp = this.etabForm.value.etaCp;
-      this.etab.etaVille = this.etabForm.value.etaVille;
-      this.etab.etaPays = this.etabForm.value.etaPays;
-      this.etab.etaMail = this.etabForm.value.etaMail;
-      this.etab.etaWeb = this.etabForm.value.etaWeb;
-      this.etab.typEtaId = this.etabForm.value.typEta;
-      if (this.isAdmin()){
-        this.etab.orgId = this.etabForm.value.orgId;
-      }
 
-      if(this.etab.isNew())
-      {
-        if(this.etab.orgId==""){
-          this.etab.orgId = Guid.create().toString();
-        } 
-        this.creer();      
-      }
-      else
-      {
-        this.sauvegarder();     
+    this.modalRef = this.modalService.show(ConfirmComponent, {
+      initialState:{prompt: "Si vous n'avez pas sauvegardé les horaires et les jours de fermeture exceptionnelle, ceux-ci ne seront pas sauvés. Souhaitez-vous continuer?"}});
+
+    this.modalRef.content.onClose$.subscribe(
+      (value: boolean) =>{
+      if(value){
+        this.subsr.add(this.vatSrv.validateTva(this.etabForm.value.etaTva).subscribe(
+          (value) =>{
+            this.validVat = value.valid;
+            if(this.etabForm.valid && this.etabForm.dirty && this.validVat)
+            {
+              this.etab.etaNom = this.etabForm.value.etaNom;
+              this.etab.etaTva = this.etabForm.value.etaTva;
+              this.etab.etaRue = this.etabForm.value.etaRue;
+              this.etab.etaNum = this.etabForm.value.etaNum;
+              this.etab.etaCp = this.etabForm.value.etaCp;
+              this.etab.etaVille = this.etabForm.value.etaVille;
+              this.etab.etaPays = this.etabForm.value.etaPays;
+              this.etab.etaMail = this.etabForm.value.etaMail;
+              this.etab.etaWeb = this.etabForm.value.etaWeb;
+              this.etab.typEtaId = this.etabForm.value.typEta;
+              if (this.isAdmin()){
+                this.etab.orgId = this.etabForm.value.orgId;
+              }
+        
+              if(this.etab.isNew())
+              {
+                if(this.etab.orgId==""){
+                  this.etab.orgId = Guid.create().toString();
+                } 
+                this.creer();      
+              }
+              else
+              {
+                this.sauvegarder();     
+              }
+              //redirige l'utilisateur lorsque la liste d'établissement est modifiée
+              this.subsr.add(this.EtablissementsSrv.lEtablissement$.subscribe(
+                (value)=>{
+                  this.router.navigate(['Etablissements']);
+                }
+              ));
+            }
+            else{
+              this.submitted = true;
+            }
+          }
+        ));
       }
     }
+    );
   }
 
   creer(){
@@ -256,17 +284,24 @@ export class FicheEtablissementComponent implements OnInit {
     //l'organisation des administrateurs est un guid empty
     //lorsqu'un utilisateur de l'App mobile crée une brasserie - ce même guid empty est donnée à la brasserie
     this.etab.orgId = this.authSrv.getUserOrgId.toString();
-
     this.EtablissementsSrv.addEtab(this.etab);
   }
 
   sauvegarder(){
-    this.EtablissementsSrv.updateEtab(this.etab, this.etab.etaId)
+    this.EtablissementsSrv.updateEtab(this.etab, this.etab.etaId);
   }
 
   infoToastr(message:string)
   {
     this.toastr.info(message, "Information");
+  }
+
+  get form() {
+    return this.etabForm.controls;
+  }
+
+  get f(){
+    return this.etabForm;
   }
 
 

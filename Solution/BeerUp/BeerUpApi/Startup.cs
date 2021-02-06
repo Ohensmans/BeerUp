@@ -1,4 +1,5 @@
 
+using BeerUpApi.ParamAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -68,6 +69,12 @@ namespace BeerUpApi
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
+
+            services.UseServicesMap();
+
+            services.Configure<BaseUrl>(Configuration.GetSection("BaseUrl"));
+            services.Configure<BaseKey>(Configuration.GetSection("ApiKey"));
+            services.Configure<BaseParam>(Configuration.GetSection("ParamsApi"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

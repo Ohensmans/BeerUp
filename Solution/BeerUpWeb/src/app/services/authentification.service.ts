@@ -84,8 +84,13 @@ export class AuthentificationService {
     return this.getToken().OrgId;
   }
 
+  userIsValide(){
+    let result = this.getToken();
+    return this.getToken().Valide;
+  }
+
   isAdmin(){
-    if(this.getUserRoles()!=null)
+    if(this.getUserRoles()!=null && this.userIsValide())
     {
       return (this.getUserRoles().includes("Administrateur"));
     }
@@ -96,7 +101,7 @@ export class AuthentificationService {
   isAdminOrGroupAdmin(){
     if(this.getUserRoles()!=null)
     {
-      return (this.isAdmin() || this.getUserRoles().includes("GroupAdmin"));
+      return (this.isAdmin() || (this.getUserRoles().includes("GroupAdmin")) && this.userIsValide());
     }
     return false;
   }
@@ -108,7 +113,7 @@ export class AuthentificationService {
   hasBiereAdminAccess(){
     if(this.getUserRoles()!=null)
     {
-      return (this.isAdminOrGroupAdmin() || this.getUserRoles().includes("GroupBiere"));
+      return (this.isAdminOrGroupAdmin() || (this.getUserRoles().includes("GroupBiere"))&& this.userIsValide());
     }
     return false;
   }
@@ -116,7 +121,7 @@ export class AuthentificationService {
   hasEtablissementAdminAccess(){
     if(this.getUserRoles()!=null)
     {
-      return (this.isAdminOrGroupAdmin() || this.getUserRoles().includes("GroupEtablissement"));
+      return (this.isAdminOrGroupAdmin() || (this.getUserRoles().includes("GroupEtablissement")&& this.userIsValide()));
     }
     return false;
   }
@@ -124,7 +129,7 @@ export class AuthentificationService {
   hasAchatAdminAccess(){
     if(this.getUserRoles()!=null)
     {
-      return (this.isAdminOrGroupAdmin() || this.getUserRoles().includes("GroupAchat"));
+      return (this.isAdminOrGroupAdmin() || (this.getUserRoles().includes("GroupAchat")&& this.userIsValide()));
     }
     return false;
   }

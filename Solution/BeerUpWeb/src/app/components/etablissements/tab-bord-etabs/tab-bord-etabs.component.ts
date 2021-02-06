@@ -40,8 +40,5 @@ export class TabBordEtabsComponent implements OnInit {
     }
   }
 
-  addEtablissement(){
-
-  }
 
 }

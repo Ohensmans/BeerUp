@@ -252,9 +252,13 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.Property(e => e.EtaActif)
                     .HasColumnName("Eta.Actif");
 
-                entity.Property(e => e.EtaCoord)
+                entity.Property(e => e.EtaCoordLong)
                     .HasMaxLength(100)
-                    .HasColumnName("Eta.Coord");
+                    .HasColumnName("Eta.CoordLong");
+
+                entity.Property(e => e.EtaCoordLat)
+                    .HasMaxLength(100)
+                    .HasColumnName("Eta.CoordLat");
 
                 entity.Property(e => e.EtaCp)
                     .HasMaxLength(50)

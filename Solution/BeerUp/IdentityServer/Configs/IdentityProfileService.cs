@@ -34,6 +34,7 @@ namespace IdentityServer.Configs
             var principal = await _claimsFactory.CreateAsync(user);
             var claims = principal.Claims.ToList();
             claims.Add(new Claim("OrgId", user.OrgId.ToString() ?? ""));
+            claims.Add(new Claim("Valide", user.Valide.ToString() ?? ""));
 
             //claims.Add(new System.Security.Claims.Claim("OrgId", user.OrgId));
             //Add more claims like this

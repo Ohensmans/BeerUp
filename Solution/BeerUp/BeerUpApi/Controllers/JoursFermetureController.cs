@@ -36,9 +36,17 @@ namespace BeerUpApi.Controllers
             var param = new SqlParameter("@EtaId", id);
             List<JourFermeture> jours = (List<JourFermeture>)_context.JoursFermeture.FromSqlRaw("GetJoursFermetureEtab @EtaId", param).ToList();
 
+          
             if (jours == null)
             {
                 jours = new List<JourFermeture>();
+            }
+            else
+            {
+               jours = jours
+              .Where(h => h.JouDate >= DateTime.Today)
+              .OrderBy(h => h.JouDate).ToList();
+
             }
 
             return jours;

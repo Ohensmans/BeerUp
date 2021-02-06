@@ -28,7 +28,8 @@ namespace Repo.Modeles.ModelesBeerUp
         public string EtaWeb { get; set; }
         public string EtaPhoto { get; set; }
         public long? EtaNbVu { get; set; }
-        public string EtaCoord { get; set; }
+        public string EtaCoordLong { get; set; }
+        public string EtaCoordLat { get; set; }
         public Boolean EtaActif { get; set; }
 
         public virtual Organisation Org { get; set; }

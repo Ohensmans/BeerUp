@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { setTheme } from 'ngx-bootstrap/utils';
@@ -33,7 +33,7 @@ import { ElementListeEtabComponent } from './components/etablissements/element-l
 import { FicheEtablissementComponent } from './components/etablissements/fiche-etablissement/fiche-etablissement.component';
 import { HoraireComponent } from './components/etablissements/horaire/horaire.component';
 import { JourFermeturesComponent } from './components/etablissements/jour-fermetures/jour-fermetures.component';
-import { TimeDebEqualTimeFinDirective } from './directives/validators/time-deb-equal-time-fin.directive';
+
 
 
 @NgModule({
@@ -92,7 +92,7 @@ import { TimeDebEqualTimeFinDirective } from './directives/validators/time-deb-e
 })  
   ],
   providers: [
-    AuthentificationService
+    AuthentificationService, DatePipe
   ],
   
 
