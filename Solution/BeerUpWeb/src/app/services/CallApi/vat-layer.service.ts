@@ -17,7 +17,7 @@ export class VatLayerService {
     let tvaRequest = "&vat_number=" + tva;
 
       let result = this.http.get<any>(
-        this.util.VAT+key+tvaRequest
+        this.util.VATUrl+key+tvaRequest
       )
       return result;
 

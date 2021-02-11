@@ -12,12 +12,19 @@ import { GetDeletablesEtabsService } from './get-deletables-etabs.service';
 })
 export class EtabsOrgaService {
 
-  lEtabsOrga: Array<EtablissementModele>;
-  lEtabsOrga$: BehaviorSubject<Array<EtablissementModele>>;
+  lAllEtabsOrga: Array<EtablissementModele>;
+  lAllEtabsOrga$: BehaviorSubject<Array<EtablissementModele>>;
   
+  lAllowedEtabsOrga: Array<EtablissementModele>;
+  lAllowedEtabsOrga$: BehaviorSubject<Array<EtablissementModele>>;
+
+
   constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService, private DelEtasSrv:GetDeletablesEtabsService) { 
-    this.lEtabsOrga = Array(0);
-    this.lEtabsOrga$ = new BehaviorSubject<Array<EtablissementModele>>(this.lEtabsOrga);
+    this.lAllEtabsOrga = Array(0);
+    this.lAllEtabsOrga$ = new BehaviorSubject<Array<EtablissementModele>>(this.lAllEtabsOrga);
+
+    this.lAllowedEtabsOrga = Array(0);
+    this.lAllowedEtabsOrga$ = new BehaviorSubject<Array<EtablissementModele>>(this.lAllowedEtabsOrga);
   }
 
   getDeletablesEtab(){
@@ -26,16 +33,40 @@ export class EtabsOrgaService {
       (value) =>{
         //assigne true aux éléments de la liste tarifs qui sont dans la liste des deletables
         value.forEach(element =>{
-          let index = this.lEtabsOrga.findIndex(x => x.etaId == element.etaId)
+          let index = this.lAllEtabsOrga.findIndex(x => x.etaId == element.etaId)
           if (index!=-1){
-            this.lEtabsOrga[index].isDeletable = true;
+            this.lAllEtabsOrga[index].isDeletable = true;
+          }
+
+          index = this.lAllowedEtabsOrga.findIndex(x => x.etaId == element.etaId)
+          if (index!=-1){
+            this.lAllowedEtabsOrga[index].isDeletable = true;
           }
         });
-        this.lEtabsOrga$.next(this.lEtabsOrga);
+        this.lAllEtabsOrga$.next(this.lAllEtabsOrga);
+        this.lAllowedEtabsOrga$.next(this.lAllowedEtabsOrga);
       }
     );  
   }
 
+  getAllowedEtab(lEtab : Array<EtablissementModele>){
+    let lAllowEtab : Array<string>;
+    lAllowEtab = this.authSrv.getUserGroupEtabEtab();
+
+    if(this.authSrv.isAdminOrGroupAdmin()){
+      this.lAllowedEtabsOrga = lEtab;
+    }
+    
+    else if(lAllowEtab!=null && lAllowEtab[0]!="All"){
+      lAllowEtab.forEach(element => {
+        let index = lEtab.findIndex(x => x.etaId == element)
+        if (index!=-1){
+         this.lAllowedEtabsOrga.push(lEtab[index]);
+        }
+      });
+    }
+    
+  }
 
   getAll(){
     const token = this.authSrv.getUser().id_token;
@@ -47,7 +78,8 @@ export class EtabsOrgaService {
     );
     result.subscribe(
       (value) => {
-        this.lEtabsOrga = value;
+        this.lAllEtabsOrga = value;
+        this.getAllowedEtab(value);
         this.getDeletablesEtab();
       }
     )

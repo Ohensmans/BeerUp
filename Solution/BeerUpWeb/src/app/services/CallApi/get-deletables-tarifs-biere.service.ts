@@ -23,7 +23,7 @@ export class GetDeletablesTarifsBiereService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<TarifModele[]>(
-      this.util.apiGetDeletablesTarifsBiere,
+      this.util.apiGetDeletablesTarifsBiereUrl,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     return result;

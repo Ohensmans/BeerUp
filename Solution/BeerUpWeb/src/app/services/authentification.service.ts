@@ -84,6 +84,14 @@ export class AuthentificationService {
     return this.getToken().OrgId;
   }
 
+  getUserGroupEtabEtab(){
+    return this.getToken().GroupEtablissementEtablissements;
+  }
+
+  getUserGroupBiereBieres(){
+    return this.getToken().GroupBiereBieres;
+  }
+
   userIsValide(){
     let result = this.getToken();
     return this.getToken().Valide;

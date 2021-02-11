@@ -9,12 +9,12 @@ namespace Repo.Modeles.ModelesBeerUp
     {
         public TypesService()
         {
-            TypeServiceVenteBieres = new HashSet<TypeServiceVenteBiere>();
+            VenteBiereEta = new HashSet<VenteBiereEtum>();
         }
 
         public Guid TypServId { get; set; }
         public string TypSerLibelle { get; set; }
 
-        public virtual ICollection<TypeServiceVenteBiere> TypeServiceVenteBieres { get; set; }
+        public virtual ICollection<VenteBiereEtum> VenteBiereEta { get; set; }
     }
 }

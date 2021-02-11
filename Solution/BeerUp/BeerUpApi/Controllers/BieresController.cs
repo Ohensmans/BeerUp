@@ -25,7 +25,10 @@ namespace BeerUpApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Biere>>> GetBieres()
         {
-            return await _context.Bieres.ToListAsync();
+            List<Biere> lBiere = await _context.Bieres.ToListAsync();
+            lBiere = lBiere.OrderBy(b => b.BieNom).ToList();
+            return lBiere;
+
         }
 
         // GET: api/Bieres/5

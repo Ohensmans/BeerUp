@@ -1,6 +1,4 @@
-import { DomSanitizer } from "@angular/platform-browser";
 import { Guid } from "guid-typescript";
-import { StringifyOptions } from "querystring";
 
 export class BiereModele {
     bieId: string;
@@ -14,9 +12,10 @@ export class BiereModele {
     bieValide:boolean;
     bieActif:boolean;
     userId:string;
+    isDeletable:boolean;
 
     constructor(){
-        this.bieId = Guid.create().toString();
+        this.bieId = "";
         this.etaId ="";
         this.typBieId="";
         this.bieNom= "";
@@ -24,9 +23,10 @@ export class BiereModele {
         this.biePhoto="";
         this.bieNbVu=0;
         this.bieDateCre = new Date();
-        this.bieValide = false;
-        this.bieActif = false;
+        this.bieValide = true;
+        this.bieActif = true;
         this.userId = "";
+        this.isDeletable = true;
     }
 
 }

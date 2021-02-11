@@ -13,11 +13,11 @@ namespace IdentityServer
         {
         }
 
-        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(Utilisateur user)
+        /*protected override async Task<ClaimsIdentity> GenerateClaimsAsync(Utilisateur user)
         {
             var identity = await base.GenerateClaimsAsync(user);
             identity.AddClaim(new Claim("Valide", user.Valide.ToString() ?? ""));
             return identity;
-        }
+        }*/
     }
 }

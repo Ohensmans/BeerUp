@@ -31,7 +31,7 @@ export class TabBordEtabsComponent implements OnInit {
     }
     else
     {
-      this.EtabsOrgaSrv.lEtabsOrga$.subscribe(
+      this.EtabsOrgaSrv.lAllowedEtabsOrga$.subscribe(
         value => {
           this.lEtabsOrga = value;
         }

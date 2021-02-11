@@ -12,17 +12,22 @@ export class UtilService {
   apiEtabsOrgaUrl = 'http://localhost:5001/api/EtabOrga/';
   apiEtablissementsUrl = 'http://localhost:5001/api/Etablissements/';
   apiTypesEtabUrl = 'http://localhost:5001/api/TypesEtab/';
-  apiImagesEtab = 'http://localhost:5001/api/ImagesEtab/';
-  apiGetDeletablesBieres = 'http://localhost:5001/api/GetDeletablesBieres/';
-  apiGetDeletablesEtabs = 'http://localhost:5001/api/GetDeletablesEtabs/';
-  apiGetDeletablesTarifsBiere = 'http://localhost:5001/api/GetDeletablesTarifsBiere/';
-  apiGetDeletablesTarifsEtab = 'http://localhost:5001/api/GetDeletablesTarifsEtab/';
-  apiOrganisations = 'http://localhost:5001/api/Organisations/';
-  apiHoraires = 'http://localhost:5001/api/Horaires/';
-  apiJoursFermeture = 'http://localhost:5001/api/JoursFermeture/';
-  
+  apiImagesEtabUrl = 'http://localhost:5001/api/ImagesEtab/';
+  apiGetDeletablesBieresUrl = 'http://localhost:5001/api/GetDeletablesBieres/';
+  apiGetDeletablesEtabsUrl = 'http://localhost:5001/api/GetDeletablesEtabs/';
+  apiGetDeletablesTarifsBiereUrl = 'http://localhost:5001/api/GetDeletablesTarifsBiere/';
+  apiGetDeletablesTarifsEtabUrl = 'http://localhost:5001/api/GetDeletablesTarifsEtab/';
+  apiOrganisationsUrl = 'http://localhost:5001/api/Organisations/';
+  apiHorairesUrl = 'http://localhost:5001/api/Horaires/';
+  apiJoursFermetureUrl = 'http://localhost:5001/api/JoursFermeture/';
+  apiBieresUrl = 'http://localhost:5001/api/Bieres/';
+  apiBieresEtabUrl = 'http://localhost:5001/api/BieresEtab/';
+  apiBieresOrgaUrl = 'http://localhost:5001/api/BieresOrga/';
+  apiTypesServicesUrl = 'http://localhost:5001/api/TypesServices/';
+  apiVentesBieresEtaUrl = 'http://localhost:5001/api/VentesBieresEta/';
+
   //External Api
-  VAT = "http://apilayer.net/api/validate";
+  VATUrl = "http://apilayer.net/api/validate";
 
   //IdentityServer
   registerUrl = 'http://localhost:5000/account/registerweb';

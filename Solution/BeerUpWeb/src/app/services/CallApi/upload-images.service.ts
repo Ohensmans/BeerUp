@@ -15,7 +15,7 @@ export class UploadImagesService {
     const token:string = this.authSrv.getUser().id_token;
 
     let result = this.http.post(
-      this.util.apiImagesEtab, formData,
+      this.util.apiImagesEtabUrl, formData,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token }), reportProgress:true, observe:'events'},
     );
 
@@ -26,7 +26,7 @@ export class UploadImagesService {
     const token:string = this.authSrv.getUser().id_token;
 
     let result = this.http.delete(
-      this.util.apiImagesEtab+path,
+      this.util.apiImagesEtabUrl+path,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     )
     return result;

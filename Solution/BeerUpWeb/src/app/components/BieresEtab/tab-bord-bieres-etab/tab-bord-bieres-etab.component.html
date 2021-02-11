@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Liste de bières pour l'établissement : {{etab.etaNom}}</h3>
+    </div>
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom de la bière </th>
+                <th>Type de service </th>
+                <th class="text-center">Créer/Modifier</th>
+                <th class="text-center">Supprimer</th>
+            </tr>
+        </thead>
+            <tbody>
+                <app-element-liste-biere class="innerForm" *ngFor="let vente of lVenteBiere"
+                [vente]="vente"
+                [etaId]="etab.etaId">
+                </app-element-liste-biere>
+            </tbody>
+
+    </table>
+    <div *ngIf="!lAllBieresServies.length" class="card-header">
+        Il n'y a pas encore de bière servies par l'établissement
+    </div>
+
+    <div class="row card-footer">
+        <button class="btn btn-primary" (click)="addNewVente()">Ajouter une bière</button>
+        <br>
+        <button class="btn btn-danger" routerLink="/Etablissements/">Retour au menu</button>
+    </div>
+
+</div>

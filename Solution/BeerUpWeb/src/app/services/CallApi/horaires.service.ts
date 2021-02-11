@@ -24,7 +24,7 @@ export class HorairesService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<HoraireModele[]>(
-      this.util.apiHoraires+id,
+      this.util.apiHorairesUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(
@@ -44,7 +44,7 @@ export class HorairesService {
     const token:string = this.authSrv.getUser().id_token;
 
     this.http.post<HoraireModele>(
-      this.util.apiHoraires, horaire,
+      this.util.apiHorairesUrl, horaire,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       (value) => {
@@ -59,7 +59,7 @@ export class HorairesService {
     const token:string = this.authSrv.getUser().id_token;
 
     this.http.delete<string>(
-      this.util.apiHoraires+id,
+      this.util.apiHorairesUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {
@@ -77,7 +77,7 @@ export class HorairesService {
     const token:string = this.authSrv.getUser().id_token;
 
     this.http.put<HoraireModele>(
-      this.util.apiHoraires+id,horaire,
+      this.util.apiHorairesUrl+id,horaire,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {

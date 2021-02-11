@@ -29,7 +29,6 @@ namespace Repo.Modeles.ModelesBeerUp
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<TarifsVueBie> TarifsVueBies { get; set; }
         public virtual DbSet<TarifsVueEtab> TarifsVueEtabs { get; set; }
-        public virtual DbSet<TypeServiceVenteBiere> TypeServiceVenteBieres { get; set; }
         public virtual DbSet<TypesBiere> TypesBieres { get; set; }
         public virtual DbSet<TypesEtablissement> TypesEtablissements { get; set; }
         public virtual DbSet<TypesService> TypesServices { get; set; }
@@ -477,28 +476,6 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasColumnName("TarifsVueEtab.Prix");
             });
 
-            modelBuilder.Entity<TypeServiceVenteBiere>(entity =>
-            {
-                entity.HasKey(e => new { e.VenteBiereEtaId, e.TypServiceId });
-
-                entity.ToTable("TypeServiceVenteBiere");
-
-                entity.Property(e => e.VenteBiereEtaId).HasColumnName("VenteBiereEta.Id");
-
-                entity.Property(e => e.TypServiceId).HasColumnName("TypService.Id");
-
-                entity.HasOne(d => d.TypService)
-                    .WithMany(p => p.TypeServiceVenteBieres)
-                    .HasForeignKey(d => d.TypServiceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TypeServiceVenteBiere_TypesServices");
-
-                entity.HasOne(d => d.VenteBiereEta)
-                    .WithMany(p => p.TypeServiceVenteBieres)
-                    .HasForeignKey(d => d.VenteBiereEtaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TypeServiceVenteBiere_VenteBiereEta");
-            });
 
             modelBuilder.Entity<TypesBiere>(entity =>
             {
@@ -567,6 +544,8 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.EtaId).HasColumnName("Eta.Id");
 
+                entity.Property(e => e.TypServId).HasColumnName("TypServ.Id");
+
                 entity.HasOne(d => d.Bie)
                     .WithMany(p => p.VenteBiereEta)
                     .HasForeignKey(d => d.BieId)
@@ -578,6 +557,12 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasForeignKey(d => d.EtaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VenteBiereEta_Etablissements");
+
+                entity.HasOne(d => d.TypServ)
+                    .WithMany(p => p.VenteBiereEta)
+                    .HasForeignKey(d => d.TypServId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VenteBiereEta_TypesServices");
             });
 
             modelBuilder.Entity<Horaire>(entity =>

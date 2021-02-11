@@ -23,7 +23,7 @@ export class JoursFermetureService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<JourFermetureModele[]>(
-      this.util.apiJoursFermeture+id,
+      this.util.apiJoursFermetureUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(
@@ -43,7 +43,7 @@ export class JoursFermetureService {
     const token:string = this.authSrv.getUser().id_token;
 
     this.http.post<JourFermetureModele>(
-      this.util.apiJoursFermeture, jour,
+      this.util.apiJoursFermetureUrl, jour,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       (value) => {
@@ -58,7 +58,7 @@ export class JoursFermetureService {
     const token:string = this.authSrv.getUser().id_token;
 
     this.http.delete<string>(
-      this.util.apiJoursFermeture+id,
+      this.util.apiJoursFermetureUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {
@@ -76,7 +76,7 @@ export class JoursFermetureService {
     const token:string = this.authSrv.getUser().id_token;
 
     this.http.put<JourFermetureModele>(
-      this.util.apiJoursFermeture+id,jour,
+      this.util.apiJoursFermetureUrl+id,jour,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {

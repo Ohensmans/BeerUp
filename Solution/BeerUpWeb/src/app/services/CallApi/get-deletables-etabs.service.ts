@@ -23,7 +23,7 @@ export class GetDeletablesEtabsService {
     const id = this.authSrv.getUserOrgId();
 
     var result = this.http.get<EtablissementModele[]>(
-      this.util.apiGetDeletablesEtabs+id,
+      this.util.apiGetDeletablesEtabsUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     return result;
@@ -33,7 +33,7 @@ export class GetDeletablesEtabsService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<EtablissementModele[]>(
-      this.util.apiGetDeletablesEtabs,
+      this.util.apiGetDeletablesEtabsUrl,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     return result;

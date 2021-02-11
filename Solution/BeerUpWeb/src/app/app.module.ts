@@ -33,6 +33,8 @@ import { ElementListeEtabComponent } from './components/etablissements/element-l
 import { FicheEtablissementComponent } from './components/etablissements/fiche-etablissement/fiche-etablissement.component';
 import { HoraireComponent } from './components/etablissements/horaire/horaire.component';
 import { JourFermeturesComponent } from './components/etablissements/jour-fermetures/jour-fermetures.component';
+import { TabBordBieresEtabComponent } from './components/BieresEtab/tab-bord-bieres-etab/tab-bord-bieres-etab.component';
+import { ElementListeBiereComponent } from './components/BieresEtab/element-liste-biere/element-liste-biere.component';
 
 
 
@@ -54,6 +56,8 @@ import { JourFermeturesComponent } from './components/etablissements/jour-fermet
     FicheEtablissementComponent,
     HoraireComponent,
     JourFermeturesComponent,
+    TabBordBieresEtabComponent,
+    ElementListeBiereComponent,
   ],
   imports: [
     CommonModule,
@@ -80,6 +84,7 @@ import { JourFermeturesComponent } from './components/etablissements/jour-fermet
       { path: 'PlansTarifaires', component : TabBordPlanTarifComponent},
       { path: 'Etablissements', component : TabBordEtabsComponent},
       { path: 'FicheEtablissement/:id', component : FicheEtablissementComponent},
+      { path: 'TabBordBieresEtab/:id', component : TabBordBieresEtabComponent},
       { path: 'not-found', component : NotFoundComponent},      
       { path: '**', redirectTo: 'not-found' }
     ]),

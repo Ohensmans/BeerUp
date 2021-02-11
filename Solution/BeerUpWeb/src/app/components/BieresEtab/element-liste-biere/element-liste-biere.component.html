@@ -1,0 +1,30 @@
+<form class="innerForm" [formGroup]="bieresEtabForm" (ngSubmit)="onSubmitForm()">
+    <tr [ngClass]="getClass()">
+        
+        <td style="text-align: center;">
+            <select formControlName="biere" class="form-control">
+                <option *ngFor="let bier of lAllBi" [ngValue]="bier.bieId" [ngClass]="getStyleBiere()">
+                    {{bier.bieNom}}
+                </option>
+            </select>    
+        </td>
+    
+        <td style="text-align: center;">
+            <select formControlName="typeSrv" class="form-control">
+                <option *ngFor="let type of lTypesSrv" [ngValue]="type.typServId">
+                    {{type.typSerLibelle}}
+                </option>
+            </select>    
+        </td>
+
+        <td style="text-align: center;">
+            <button *ngIf="!isNew()" class="text-center btn btn-primary" type="submit">Modifier</button>
+            <button *ngIf="isNew()" class="text-center btn btn-primary" type="submit">Créer</button>
+        </td>
+    
+        <td style="text-align: center;">
+            <button *ngIf="!isNew()" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
+        </td>
+    
+    </tr>
+</form>

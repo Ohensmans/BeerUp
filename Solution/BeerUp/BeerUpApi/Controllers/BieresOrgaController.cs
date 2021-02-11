@@ -33,6 +33,10 @@ namespace BeerUpApi.Controllers
             {
                 biere = new List<Biere>();
             }
+            else
+            {
+                biere = biere.OrderBy(b => b.BieNom).ToList();
+            }
 
             return biere;
         }
