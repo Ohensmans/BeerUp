@@ -12,7 +12,7 @@ import { ConfirmComponent } from '../../confirm/confirm.component';
 })
 
 
-export class ElementListeEtabComponent implements OnInit {
+export class ElementListeEtabComponent implements OnInit{
   
   @Input() etab:EtablissementModele;
   modalRef!: BsModalRef;
@@ -24,14 +24,6 @@ export class ElementListeEtabComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  modifEtab(){
-
-  }
-
-  modifBieresEtab(){
-
-  }
-
   activation(){
     this.etab.etaActif = !this.etab.etaActif;
     this.EtablissementsSrv.updateEtab(this.etab,this.etab.etaId);
@@ -40,7 +32,7 @@ export class ElementListeEtabComponent implements OnInit {
   supprimer(){
         //lance le module de confirmation
         this.modalRef = this.modalService.show(ConfirmComponent, {
-          initialState:{prompt: 'Etes-vous sûr de vouloir supprimer ce tarif ?'}});
+          initialState:{prompt: 'Etes-vous sûr de vouloir supprimer cet établissement ?'}});
     
         this.modalRef.content.onClose$.subscribe(
           (value: boolean) =>{

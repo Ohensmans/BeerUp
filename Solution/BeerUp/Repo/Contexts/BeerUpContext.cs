@@ -19,7 +19,6 @@ namespace Repo.Modeles.ModelesBeerUp
 
         public virtual DbSet<AchatsVue> AchatsVues { get; set; }
         public virtual DbSet<AdressesFacturation> AdressesFacturations { get; set; }
-        public virtual DbSet<Avis> Avis { get; set; }
         public virtual DbSet<AvisBiereUser> AvisBiereUsers { get; set; }
         public virtual DbSet<Biere> Bieres { get; set; }
         public virtual DbSet<Etablissement> Etablissements { get; set; }
@@ -122,34 +121,6 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasColumnName("AdrFac.Vil");
             });
 
-            modelBuilder.Entity<Avis>(entity =>
-            {
-                entity.HasKey(e => e.AvisId);
-
-                entity.Property(e => e.AvisId)
-                    .HasColumnName("Avis.Id")
-                    .HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.AvisAcid).HasColumnName("Avis.Acid");
-
-                entity.Property(e => e.AvisCafe).HasColumnName("Avis.Cafe");
-
-                entity.Property(e => e.AvisCara).HasColumnName("Avis.Cara");
-
-                entity.Property(e => e.AvisDateAvis)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Avis.DateAvis");
-
-                entity.Property(e => e.AvisFruit).HasColumnName("Avis.Fruit");
-
-                entity.Property(e => e.AvisHoub).HasColumnName("Avis.Houb");
-
-                entity.Property(e => e.AvisMalt).HasColumnName("Avis.Malt");
-
-                entity.Property(e => e.AvisNoteGlob).HasColumnName("Avis.NoteGlob");
-
-                entity.Property(e => e.AvisSucr).HasColumnName("Avis.Sucr");
-            });
 
             modelBuilder.Entity<AvisBiereUser>(entity =>
             {
@@ -167,17 +138,25 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasColumnType("datetime")
                     .HasColumnName("AviBieUser.DateAvis");
 
-                entity.Property(e => e.AvisId).HasColumnName("Avis.Id");
-
                 entity.Property(e => e.BieId).HasColumnName("Bie.Id");
 
                 entity.Property(e => e.UserId).HasColumnName("User.Id");
 
-                entity.HasOne(d => d.Avis)
-                    .WithMany(p => p.AvisBiereUsers)
-                    .HasForeignKey(d => d.AvisId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvisBiereUser_Avis");
+                entity.Property(e => e.AvisAcid).HasColumnName("Avis.Acid");
+
+                entity.Property(e => e.AvisCafe).HasColumnName("Avis.Cafe");
+
+                entity.Property(e => e.AvisCara).HasColumnName("Avis.Cara");
+
+                entity.Property(e => e.AvisFruit).HasColumnName("Avis.Fruit");
+
+                entity.Property(e => e.AvisHoub).HasColumnName("Avis.Houb");
+
+                entity.Property(e => e.AvisMalt).HasColumnName("Avis.Malt");
+
+                entity.Property(e => e.AvisNoteGlob).HasColumnName("Avis.NoteGlob");
+
+                entity.Property(e => e.AvisSucr).HasColumnName("Avis.Sucr");
 
                 entity.HasOne(d => d.Bie)
                     .WithMany(p => p.AvisBiereUsers)

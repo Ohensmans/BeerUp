@@ -8,7 +8,6 @@ import { TimeDebEqualTimeFinDirective } from 'src/app/directives/validators/time
 import { TimeDebutIsOlderDirective } from 'src/app/directives/validators/time-debut-is-older.directive';
 import { EtablissementModele } from 'src/app/models/etablissement-modele';
 import { HoraireModele } from 'src/app/models/horaire-modele';
-import { TimeSpan } from 'src/app/models/time-span';
 import { HorairesService } from 'src/app/services/CallApi/horaires.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmComponent } from '../../confirm/confirm.component';

@@ -24,11 +24,11 @@ export class BieresOrgaService {
     this.lAllowedBieresOrga$ = new BehaviorSubject<Array<BiereModele>>(this.lAllowedBieresOrga);
   }
 
-  getDeletablesEtab(){
+  getDeletablesBieres(){
 
     let result = this.delBiereSrv.getOneOrga().subscribe(
       (value) =>{
-        //assigne true aux éléments de la liste tarifs qui sont dans la liste des deletables
+        //assigne true aux éléments de la liste bières qui sont dans la liste des deletables
         value.forEach(element =>{
 
           let index = this.lAllBieresOrga.findIndex(x => x.bieId== element.bieId)
@@ -67,9 +67,15 @@ export class BieresOrgaService {
     
   }
 
-  getAll(){
+  getAll(OrgId:string){
     const token = this.authSrv.getUser().id_token;
-    const id = this.authSrv.getUserOrgId();
+    let id;
+    if(this.authSrv.isAdmin()){
+      id = OrgId;
+     }
+     else{
+      id = this.authSrv.getUserOrgId();
+     }
 
     var result = this.http.get<BiereModele[]>(
       this.util.apiBieresOrgaUrl+id,
@@ -79,7 +85,7 @@ export class BieresOrgaService {
       (value) => {
         this.lAllBieresOrga = value;
         this.getAllowedBiere(value);
-        this.getDeletablesEtab();
+        this.getDeletablesBieres();
       }
     )
   }

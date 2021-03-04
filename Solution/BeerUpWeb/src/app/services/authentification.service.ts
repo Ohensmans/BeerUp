@@ -76,6 +76,10 @@ export class AuthentificationService {
     return this.getToken().name;
   }
 
+  getUserId(){
+    return this.getToken().sub;
+  }
+
   getUserRoles(){
     return this.getToken().role;
   }

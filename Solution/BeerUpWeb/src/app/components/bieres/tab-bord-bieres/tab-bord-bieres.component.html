@@ -1,0 +1,33 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Liste des bières</h3>
+    </div>
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom de la bière </th>
+                <th>Brasserie </th>
+                <th class="text-center">Modifier la bière</th>
+                <th class="text-center">Valider</th>
+                <th class="text-center">Activer</th>
+                <th class="text-center">Supprimer</th>
+            </tr>
+        </thead>
+            <tbody>
+                <app-element-biere class="innerForm" *ngFor="let biere of lBieresOrga" 
+                [biere]="biere"
+                [lEtabs]="lEtabsOrga" >
+                </app-element-biere>
+
+            </tbody>
+
+    </table>
+    <div *ngIf="!lBieresOrga.length" class="card-header">
+        Il n'existe pas encore de bière pour l'organisation
+    </div>
+    <br>
+    <br>
+
+    <button class="btn btn-primary" routerLink="/FicheBiere/new">Créer une bière</button>
+
+</div>

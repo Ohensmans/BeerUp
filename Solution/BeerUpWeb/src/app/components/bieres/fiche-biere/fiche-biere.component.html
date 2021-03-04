@@ -1,0 +1,209 @@
+<div class="card">
+    <div *ngIf="biere.isNew()" class="card-header">Nouvelle bière</div>
+    <div *ngIf="!biere.isNew()" class="card-header">Détails de la bière</div>
+
+    <div class="card-body">
+        <form [formGroup]="biereForm" (ngSubmit)="onSubmitForm()">  
+
+            <div class="col-md-12 row">
+                <!--Nom-->
+                <div class="form-group col-md-12">
+                    <label class="control-label">Nom de la bière</label>
+                    <input type="text"  class="form-control" id="etaNom" formControlName="bieNom">  
+                    <div *ngIf="submitted && form.bieNom.invalid">
+                        <div *ngIf="form.bieNom.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.bieNom.errors?.maxlength" class="text-danger" >*maximum 100 caractères </div>
+                    </div>   
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Brasserie-->
+                <div class="form-group col-md-12">
+                    <label class="control-label">Brasserie</label>
+                    <select formControlName="etaId" class="form-control">
+                        <option *ngFor="let etab of lEtabOrga" [ngValue]="etab.etaId">
+                            {{etab.etaNom}}
+                        </option>
+                    </select>
+                    <div *ngIf="submitted && form.etaId.invalid">
+                      <div *ngIf="form.etaId.errors?.required" class="text-danger" >*obligatoire</div>
+                    </div>  
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Type de bière-->
+                <div class="form-group col-md-8">
+                    <label class="control-label">Type de bière</label>
+                    <select formControlName="typBieId" class="form-control">
+                        <option *ngFor="let type of lTypeBiere" [ngValue]="type.typBieId">
+                            {{type.typBieNom}}
+                        </option>
+                    </select>
+                    <div *ngIf="submitted && form.typBieId.invalid">
+                      <div *ngIf="form.typBieId.errors?.required" class="text-danger" >*obligatoire</div>
+                    </div>     
+                </div>
+
+                <!--Degré d'alcool-->
+                <div class="form-group col-md-4">
+                    <label class="control-label">Degré d'alcool</label>
+                    <input type="text"  class="form-control" id="bieDegreAlcool" formControlName="bieDegreAlcool">  
+                    <div *ngIf="submitted && form.bieDegreAlcool.invalid">
+                        <div *ngIf="form.bieDegreAlcool.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.bieDegreAlcool.errors?.min" class="text-danger" >*la valeur ne peut pas être négative </div>
+                    </div>   
+                </div>
+
+
+            </div>
+
+            <h2>Saveurs</h2>
+            <div>(Uniquement l'avis de votre organisation - les utilisateurs verront la moyenne des avis)</div>  
+            
+            <br>
+            <div class="col-md-12 row">
+                <!--Acide-->
+                <div class="col-md-6">
+                  <div class="control-label"> Acidité: {{form.avisAcid.value}} </div>
+                  <rating [max]="noteMax" formControlName="avisAcid" [customTemplate]="tAcide"></rating>
+                  <ng-template #tAcide let-i="index" let-v="value">
+                    <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                      {{i < v ? '&#9733;' : '&#9734;'}}
+                    </div>
+                  </ng-template>
+                </div>
+            
+                <!--Cafe-->
+                <div class="col-md-6">
+                    <div class="control-label"> Café: {{form.avisCafe.value}} </div>
+                    <rating [max]="noteMax" formControlName="avisCafe" [customTemplate]="tCafe"></rating>
+                    <ng-template #tCafe let-i="index" let-v="value">
+                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                        {{i < v ? '&#9733;' : '&#9734;'}}
+                      </div>
+                    </ng-template>
+                  </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Caramel-->
+                <div class="col-md-6">
+                    <div class="control-label"> Caramel: {{form.avisCara.value}} </div>
+                    <rating [max]="noteMax" formControlName="avisCara" [customTemplate]="tCara"></rating>
+                    <ng-template #tCara let-i="index" let-v="value">
+                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                        {{i < v ? '&#9733;' : '&#9734;'}}
+                      </div>
+                    </ng-template>
+                  </div>
+
+                <!--Fruité-->
+                <div class="col-md-6">
+                    <div class="control-label"> Fruitée: {{form.avisFruit.value}} </div>
+                    <rating [max]="noteMax" formControlName="avisFruit" [customTemplate]="tFruit"></rating>
+                    <ng-template #tFruit let-i="index" let-v="value">
+                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                        {{i < v ? '&#9733;' : '&#9734;'}}
+                      </div>
+                    </ng-template>
+                  </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Houblonnée-->
+                <div class="col-md-6">
+                    <div class="control-label"> Houblonnée: {{form.avisHoub.value}} </div>
+                    <rating [max]="noteMax" formControlName="avisHoub" [customTemplate]="tHoub"></rating>
+                    <ng-template #tHoub let-i="index" let-v="value">
+                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                        {{i < v ? '&#9733;' : '&#9734;'}}
+                      </div>
+                    </ng-template>
+                  </div>
+
+                <!--Maltée-->
+                <div class="col-md-6">
+                    <div class="control-label"> Maltée: {{form.avisMalt.value}} </div>
+                    <rating [max]="noteMax" formControlName="avisMalt" [customTemplate]="tMalt"></rating>
+                    <ng-template #tMalt let-i="index" let-v="value">
+                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                        {{i < v ? '&#9733;' : '&#9734;'}}
+                      </div>
+                    </ng-template>
+                  </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Sucrée-->
+                  <div class="col-md-6">
+                    <div class="control-label"> Sucrée: {{form.avisSucr.value}} </div>
+                    <rating [max]="noteMax" formControlName="avisSucr" [customTemplate]="tSucr"></rating>
+                    <ng-template #tSucr let-i="index" let-v="value">
+                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                        {{i < v ? '&#9733;' : '&#9734;'}}
+                      </div>
+                    </ng-template>
+                  </div>
+            </div>
+            <br>
+
+            <div style="text-align:center;">
+              <div class="btn btn-info" (click)="resetAvis()">Remettre les saveurs à 0</div>
+            </div>
+
+            <div><br></div>
+
+            <div class="col-md-12 row">
+                <!--Description-->
+                <div class="form-group col-md-12">
+                    <label class="control-label">Description</label>
+                    <input type="text"  class="form-control boxDescription" id="bieDesc" formControlName="bieDesc">
+                    <div *ngIf="submitted && form.bieDesc.invalid">
+                        <div *ngIf="form.bieDesc.errors?.maxlength" class="text-danger" >*maximum 1000 caractères </div>
+                    </div>    
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Photo-->
+                <div class="photo col-md-12" style="text-align:center;">
+                    <label class="control-label">Photo</label>
+                    <div *ngIf="biere.biePhoto!=null && biere.biePhoto!=''" class="photo">
+                        <img [src]="createImgPath(biere.biePhoto)" style="height:120px;">
+                    </div>
+                    <div *ngIf="biere.biePhoto==null || biere.biePhoto==''" class="photo">
+                        <img [src]="noImageAvailableUrl" style="height:120px;">
+                    </div>
+
+                    <br>
+                    <br>
+                    <!--Upload Photo-->
+                    <div>
+                        <input type="file" #file placeholder="Choose file" (change)="uploadFileCheck(file.files)" style="display:none;">
+                        <button type="button" class="btn btn-success" (click)="file.click()">Charger une image</button>
+                    </div>
+                    
+                    <div>
+                        <span class="upload" *ngIf="progressUpload > 0">
+                        {{progressUpload}}%
+                        </span>
+                        <span class="upload" *ngIf="messageUpload">
+                        {{messageUpload}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+      <div class="col-md-12 row">
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <div class="btn btn-danger" routerLink="/Bieres/">Retour au tableau de bord des bières</div>
+      </div>
+        </form>
+    </div>
+
+</div>
+

@@ -19,11 +19,11 @@ export class BieresService {
     this.lBiere$ = new BehaviorSubject<Array<BiereModele>>(this.lBiere);
   }
 
-  getDeletablesEtab(){
+  getDeletablesBieres(){
 
     let result = this.delBiere.getAll().subscribe(
       (value) =>{
-        //assigne true aux éléments de la liste tarifs qui sont dans la liste des deletables
+        //assigne true aux éléments de la liste biere qui sont dans la liste des deletables
         value.forEach(element =>{
           let index = this.lBiere.findIndex(x => x.bieId == element.bieId)
           if (index!=-1){
@@ -45,7 +45,7 @@ export class BieresService {
     result.subscribe(
       (value) => {
         this.lBiere = value;
-        this.getDeletablesEtab();
+        this.getDeletablesBieres();
       }
     )
   }
@@ -63,15 +63,11 @@ export class BieresService {
   addBiere(biere:BiereModele){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.post<BiereModele>(
+    let result = this.http.post<BiereModele>(
       this.util.apiBieresUrl, biere,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
-    ).subscribe(
-      (value) => {
-        this.lBiere.push(value);
-        this.lBiere$.next(this.lBiere)
-      }
     );
+    return result;
   }
 
   deleteBiere(id:string){
@@ -92,7 +88,7 @@ export class BieresService {
   updateBiere(biere:BiereModele, id:string){
     const token:string = this.authSrv.getUser().id_token;
 
-    this.http.put<BiereModele>(
+    let result = this.http.put<BiereModele>(
       this.util.apiEtablissementsUrl+id,biere,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
@@ -101,6 +97,6 @@ export class BieresService {
         this.lBiere[index] = biere;
         this.lBiere$.next(this.lBiere);
       }
-    )
+    );
   }
 }

@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { RatingModule } from 'ngx-bootstrap/rating';
 import { AppComponent } from './app.component';
 
 import { AuthentificationService } from './services/authentification.service';
@@ -35,6 +36,9 @@ import { HoraireComponent } from './components/etablissements/horaire/horaire.co
 import { JourFermeturesComponent } from './components/etablissements/jour-fermetures/jour-fermetures.component';
 import { TabBordBieresEtabComponent } from './components/BieresEtab/tab-bord-bieres-etab/tab-bord-bieres-etab.component';
 import { ElementListeBiereComponent } from './components/BieresEtab/element-liste-biere/element-liste-biere.component';
+import { TabBordBieresComponent } from './components/bieres/tab-bord-bieres/tab-bord-bieres.component';
+import { ElementBiereComponent } from './components/bieres/element-biere/element-biere.component';
+import { FicheBiereComponent } from './components/bieres/fiche-biere/fiche-biere.component';
 
 
 
@@ -58,6 +62,9 @@ import { ElementListeBiereComponent } from './components/BieresEtab/element-list
     JourFermeturesComponent,
     TabBordBieresEtabComponent,
     ElementListeBiereComponent,
+    TabBordBieresComponent,
+    ElementBiereComponent,
+    FicheBiereComponent
   ],
   imports: [
     CommonModule,
@@ -70,6 +77,7 @@ import { ElementListeBiereComponent } from './components/BieresEtab/element-list
     TimepickerModule.forRoot(),
     ToastrModule.forRoot(),
     BsDropdownModule.forRoot(),
+    RatingModule.forRoot(),
     ModalModule.forRoot(),
     HttpClientModule,
     RouterModule.forRoot([
@@ -83,6 +91,8 @@ import { ElementListeBiereComponent } from './components/BieresEtab/element-list
       //{ path: 'call-api', canActivate:[AuthGuardService], component : CallApiComponent},
       { path: 'PlansTarifaires', component : TabBordPlanTarifComponent},
       { path: 'Etablissements', component : TabBordEtabsComponent},
+      { path: 'Bieres', component : TabBordBieresComponent},
+      { path: 'FicheBiere/:id', component : FicheBiereComponent},
       { path: 'FicheEtablissement/:id', component : FicheEtablissementComponent},
       { path: 'TabBordBieresEtab/:id', component : TabBordBieresEtabComponent},
       { path: 'not-found', component : NotFoundComponent},      

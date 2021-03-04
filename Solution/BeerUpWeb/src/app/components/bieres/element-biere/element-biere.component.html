@@ -1,0 +1,29 @@
+<tr>
+    <td>
+        <div>{{ biere.bieNom }}</div>
+    </td>
+
+    <td>
+        <div>{{ etabNom }}</div>
+    </td>
+    
+    <td>
+        <button class="btn btn-secondary text-center" routerLink="/FicheBiere/{{ biere.bieId }}">Modifier</button>
+    </td>
+
+    <td>
+        <button *ngIf="biere.bieValide" class="btn btn-info text-center" type="button" (click)="validation()">Dévalider</button>
+        <button *ngIf="!biere.bieValide" class="btn btn-primary text-center" type="button" (click)="validation()">Valider</button>
+    </td>
+
+    <td>
+        <button *ngIf="biere.bieActif" class="btn btn-info text-center" type="button" (click)="activation()">Désactiver</button>
+        <button *ngIf="!biere.bieActif" class="btn btn-primary text-center" type="button" (click)="activation()">Activer</button>
+    </td>
+
+    <td>
+        <button *ngIf="biere.isDeletable" class="btn btn-danger text-center" type="button" (click)="supprimer()">Supprimer</button>
+    </td>
+
+</tr>
+    

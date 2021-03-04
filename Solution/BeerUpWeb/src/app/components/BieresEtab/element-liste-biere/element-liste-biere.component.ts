@@ -52,21 +52,14 @@ export class ElementListeBiereComponent implements OnInit {
 
   ngOnInit(): void {
     
+    
     this.subscr.add(this.biereOrgaSrv.lAllBieresOrga$.subscribe(
       (value)=> {
         this.lAllBiOrga = value;
         
         this.subscr.add(this.biereSrv.lBiere$.subscribe(
           (value)=>{
-            if(this.lAllBiOrga.length!=0){
-              this.lAllBiOrga.forEach(element => {
-                if(this.lVenteEtab.findIndex(b => b.bieId == element.bieId)==-1)
-                  this.lAllBi.push(element);
-              })
-            }
-            else{
               this.lAllBi = value;
-              }
           } 
         ));
       }
@@ -75,13 +68,6 @@ export class ElementListeBiereComponent implements OnInit {
     this.subscr.add(this.venteBiereSrv.lVentesBieresEtab$.subscribe(
       (value)=> {
         this.lVenteEtab = value;
-        this.lVenteEtab.forEach(element =>{
-          let index = this.lAllBi.findIndex(b => b.bieId == element.bieId)
-          if(index!=-1)
-          {
-            this.lAllBi.slice(index,1);
-          }
-        })
       }
     ));
 
@@ -99,6 +85,15 @@ export class ElementListeBiereComponent implements OnInit {
     });
     
     
+  }
+
+  isAlreadyServed(id:string){     
+    let index = this.lVenteEtab.findIndex(v => v.bieId == this.vente.bieId);
+    let index2 = this.lVenteEtab.findIndex(v => v.bieId == id);
+    if((index!=-1 && this.vente.bieId!="")||(index2!=-1))
+      return true;
+    
+    return null;
   }
 
   isNew(){
@@ -139,8 +134,9 @@ export class ElementListeBiereComponent implements OnInit {
     else return "";
   }
 
-  getStyleBiere(){
-    if (this.lAllBiOrga.includes(this.bieresEtabForm.value.biere)) 
+  getStyleBiere(id:string){
+    let index = this.lAllBiOrga.findIndex(v => v.bieId == id);
+    if (index!=-1) 
       return "text-primary";
     else 
       return "";

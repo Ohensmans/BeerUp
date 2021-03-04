@@ -186,7 +186,7 @@ export class FicheEtablissementComponent implements OnInit {
           (value: boolean) =>{
             if(value){
               let path = this.etab.etaPhoto.split("\\",4)[3];
-              this.upImageSrv.deleteEtab(path).subscribe(
+              this.upImageSrv.deleteImage(path, true).subscribe(
                 () => {
                   this.upload(files);
                 }
@@ -198,7 +198,7 @@ export class FicheEtablissementComponent implements OnInit {
     let fileToUpload = <File>files[0];
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    this.upImageSrv.uploadEtab(formData)
+    this.upImageSrv.uploadImage(formData, true)
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress){
           if(event.total!=undefined)

@@ -3,7 +3,7 @@
         
         <td style="text-align: center;">
             <select formControlName="biere" class="form-control">
-                <option *ngFor="let bier of lAllBi" [ngValue]="bier.bieId" [ngClass]="getStyleBiere()">
+                <option  [attr.disabled]="isAlreadyServed(bier.bieId)" *ngFor="let bier of lAllBi" [ngValue]="bier.bieId" [ngClass]="getStyleBiere(bier.bieId)">
                     {{bier.bieNom}}
                 </option>
             </select>    

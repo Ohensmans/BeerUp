@@ -25,6 +25,9 @@ export class UtilService {
   apiBieresOrgaUrl = 'http://localhost:5001/api/BieresOrga/';
   apiTypesServicesUrl = 'http://localhost:5001/api/TypesServices/';
   apiVentesBieresEtaUrl = 'http://localhost:5001/api/VentesBieresEta/';
+  apiTypesBiereUrl = 'http://localhost:5001/api/TypesBiere/';
+  apiImagesBiereUrl = 'http://localhost:5001/api/ImagesEtab/';
+  apiAvisBiereUserUrl = 'http://localhost:5001/api/AvisBiereUser/';
 
   //External Api
   VATUrl = "http://apilayer.net/api/validate";
@@ -36,6 +39,8 @@ export class UtilService {
   //Parameter
   TypeTarifVueEtab = "Etab";
   TypeTarifVueBiere = "Biere";
+  NoteMAX = 5;
+  nombreMiniNotesAvis = 3;
 
   noImageAvailableUrl = 'http://localhost:5001/resources/images/no_image_available.png';
 

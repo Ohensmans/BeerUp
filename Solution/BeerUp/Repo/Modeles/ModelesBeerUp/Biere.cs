@@ -22,7 +22,7 @@ namespace Repo.Modeles.ModelesBeerUp
         public string BieDesc { get; set; }
         public string BiePhoto { get; set; }
         public long BieNbVu { get; set; }
-        public DateTime BieDateCre { get; set; }
+        public DateTime? BieDateCre { get; set; }
         public bool BieValide { get; set; }
         public bool BieActif { get; set; }
         public decimal BieDegreAlcool { get; set; }

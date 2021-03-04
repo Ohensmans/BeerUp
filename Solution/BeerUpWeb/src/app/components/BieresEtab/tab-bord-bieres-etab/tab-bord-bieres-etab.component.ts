@@ -43,25 +43,25 @@ export class TabBordBieresEtabComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params.id;
 
     this.subscr.add(this.etabSrv.getOne(id).subscribe(
       (value) =>{
         this.etab = value;
+        this.biereOrgaSrv.getAll(this.etab.orgId);
       },
       (error) => {
         this.router.navigate(['Etablissements']);
       }
     ))
 
-    if(!this.AuthSrv.isAdmin()){
-      this.subscr.add(this.biereOrgaSrv.lAllBieresOrga$.subscribe(
-        (value)=> {
-          this.lAllBieresOrga = value;
-        }
-      ));
-      this.biereOrgaSrv.getAll();
-    }
+    this.subscr.add(this.biereOrgaSrv.lAllBieresOrga$.subscribe(
+      (value)=> {
+        this.lAllBieresOrga = value;
+      }
+    ));
+    
+    
 
     this.subscr.add(this.bieresEtabSrv.lBieresServies$.subscribe(
       (value)=>{

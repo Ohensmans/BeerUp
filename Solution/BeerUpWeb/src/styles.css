@@ -113,3 +113,9 @@ body {
 .innerForm {
   display: contents;
 }
+
+/* Description text box height
+-------------------------------------------------- */
+.boxDescription {
+  height: 150px;
+}

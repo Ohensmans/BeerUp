@@ -13,6 +13,7 @@ export class BiereModele {
     bieActif:boolean;
     userId:string;
     isDeletable:boolean;
+    bieDegreAlcool:number;
 
     constructor(){
         this.bieId = "";
@@ -27,6 +28,14 @@ export class BiereModele {
         this.bieActif = true;
         this.userId = "";
         this.isDeletable = true;
+        this.bieDegreAlcool = 0;
+    }
+
+    isNew(){
+        if(this.bieId==""){
+            return true;
+        }
+        return false;
     }
 
 }

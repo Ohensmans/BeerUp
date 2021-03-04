@@ -11,26 +11,29 @@ export class UploadImagesService {
   constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService) { 
   }
 
-  uploadEtab(formData:FormData){
+  uploadImage(formData:FormData, isEtab:boolean){
     const token:string = this.authSrv.getUser().id_token;
 
     let result = this.http.post(
-      this.util.apiImagesEtabUrl, formData,
+      isEtab? this.util.apiImagesEtabUrl : this.util.apiImagesBiereUrl
+      , formData,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token }), reportProgress:true, observe:'events'},
     );
 
     return result;
   }
 
-  deleteEtab(path:string){
+  deleteImage(path:string, isEtab:boolean){
     const token:string = this.authSrv.getUser().id_token;
 
     let result = this.http.delete(
-      this.util.apiImagesEtabUrl+path,
+      isEtab? this.util.apiImagesEtabUrl : this.util.apiImagesBiereUrl
+      +path,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     )
     return result;
   }
+
 
 
 
