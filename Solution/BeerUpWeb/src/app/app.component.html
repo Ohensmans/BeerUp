@@ -1,6 +1,17 @@
 
 <header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow bd-navbar mb-3">
+    <img  src="assets/images/home/biere3.jpg" style="
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: -2px;
+    margin-top: -4px; 
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    vertical-align: top;">
+   
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow bd-navbar mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Back">BeerUp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -9,10 +20,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="home">Home</a></li>          
+                        <li routerLinkActive="active" class="nav-item"><a class="nav-link text-light" routerLink="home">Acceuil</a></li>          
 
                         <li class="btn-group" dropdown>
-                            <div *ngIf="isAuth()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link dropdown-toggle" aria-controls="dropdown-animated">
+                            <div *ngIf="isAuth()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link text-light dropdown-toggle" aria-controls="dropdown-animated">
                                 Administration <span class="caret"></span>
                             </div>
                             <div id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
@@ -28,13 +39,13 @@
                             </div>
                         </li>
 
-                        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="contact">Contact</a></li>
+                        <li routerLinkActive="active" class="nav-item "><a class="nav-link text-light" routerLink="contact">Contact</a></li>
 
-                        <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link" routerLink="login">S'identifier</a></li>     
-                        <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item"><a class="nav-link" href="{{registerUrl}}">S'enregistrer</a></li>  
+                        <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link text-light" routerLink="login">S'identifier</a></li>     
+                        <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item"><a class="nav-link text-light" href="{{registerUrl}}">S'enregistrer</a></li>  
 
                         <li *ngIf="isAuth()"class="btn-group nav-item ml-auto" dropdown>
-                            <div id="button-animated nav-item" dropdownToggle type="button" class="nav-link dropdown-toggle" aria-controls="dropdown-animated">
+                            <div id="button-animated nav-item " dropdownToggle type="button" class="nav-link dropdown-toggle text-white" aria-controls="dropdown-animated">
                                 {{getUserName()}} <span class="caret"></span>
                             </div>
                             <div  id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
@@ -52,9 +63,9 @@
         <router-outlet></router-outlet>
     </div>
 
-    <footer class="border-top footer text-muted bg-white">
-        <div class="container">
-            &copy; 2021 - BeerUp - <span class="text-dark" routerLink="privacy">Privacy</span>
+    <footer class="border-top footer text-muted bg-dark">
+        <div class="container text-white">
+            &copy; 2021 - BeerUp - <span class="text-white" routerLink="privacy">Privacy</span>
         </div>
     </footer>
 </body>

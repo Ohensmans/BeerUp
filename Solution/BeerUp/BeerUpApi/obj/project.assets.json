@@ -7923,19 +7923,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Olivier\\.nuget\\packages\\": {}
+    "C:\\Users\\ho2175\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
+      "projectUniqueName": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
       "projectName": "BeerUpApi",
-      "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
-      "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
-      "outputPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\obj\\",
+      "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
+      "packagesPath": "C:\\Users\\ho2175\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ho2175\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7949,8 +7949,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
-              "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
+            "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+              "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
             }
           }
         }

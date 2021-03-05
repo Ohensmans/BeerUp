@@ -42,6 +42,7 @@ import { FicheBiereComponent } from './components/bieres/fiche-biere/fiche-biere
 
 
 
+
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
@@ -64,7 +65,7 @@ import { FicheBiereComponent } from './components/bieres/fiche-biere/fiche-biere
     ElementListeBiereComponent,
     TabBordBieresComponent,
     ElementBiereComponent,
-    FicheBiereComponent
+    FicheBiereComponent,
   ],
   imports: [
     CommonModule,

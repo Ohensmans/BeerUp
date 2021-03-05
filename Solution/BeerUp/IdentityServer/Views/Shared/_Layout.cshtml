@@ -10,7 +10,17 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <img src="~/img/biere3.jpg" style="
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: -2px;
+            margin-top: -4px;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            vertical-align: top;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Back">BeerUp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,12 +30,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Back">Accueil</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Back">Accueil</a>
                         </li>
                         @if (User?.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link text-light dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Administration
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -64,7 +74,7 @@
                         }
 
                         <li class="nav-item">
-                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link text-dark" })
+                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link text-light" })
                         </li>
 
                         @if (User?.Identity != null && User.Identity.IsAuthenticated)
@@ -81,10 +91,10 @@
                         else
                         {
                             <li class="nav-item ml-auto">
-                                @Html.ActionLink("S'identifier", "login", "account", null, new { @class = "nav-link text-dark" })
+                                @Html.ActionLink("S'identifier", "login", "account", null, new { @class = "nav-link text-light" })
                             </li>
                             <li class="nav-item ">
-                                @Html.ActionLink("S'enregistrer", "registerweb", "account", null, new { @class = "nav-link text-dark" })
+                                @Html.ActionLink("S'enregistrer", "registerweb", "account", null, new { @class = "nav-link text-light" })
                             </li>
                         }
 
@@ -99,9 +109,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - BeerUp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer bg-dark text-muted">
+        <div class="container text-white">
+            &copy; 2021 - BeerUp - <a asp-area="" class="text-white" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
