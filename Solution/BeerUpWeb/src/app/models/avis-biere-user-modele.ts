@@ -3,7 +3,7 @@ export class AvisBiereUserModele {
     aviBieUserId:string;
     bieId:string;
     userId:string;
-    aviBieUserDateAvis: string;
+    aviBieUserDateAvis: Date;
     aviBieUserActif:boolean;
     avisAcid:number;
     avisCafe:number;
@@ -18,7 +18,7 @@ export class AvisBiereUserModele {
         this.aviBieUserId="";
         this.bieId="";
         this.userId="";
-        this.aviBieUserDateAvis =new Date().toISOString();
+        this.aviBieUserDateAvis =new Date();
         this.aviBieUserActif = true;
         this.avisAcid = 0;
         this.avisCafe = 0;

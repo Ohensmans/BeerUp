@@ -25,7 +25,7 @@ namespace BeerUpApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Organisation>>> GetOrganisations()
         {
-            return await _context.Organisations.ToListAsync();
+            return await _context.Organisations.OrderBy(o => o.OrgNom).ToListAsync();
         }
 
         // GET: api/Organisations/5

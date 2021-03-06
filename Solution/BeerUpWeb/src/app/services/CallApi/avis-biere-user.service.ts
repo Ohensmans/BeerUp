@@ -16,14 +16,10 @@ export class AvisBiereUserService {
 
    getOne(biereId:string){
     const token = this.authSrv.getUser().id_token;
-    let orgId = this.authSrv.getUserOrgId();
-
-    let params = new HttpParams()
-      .set('userId', orgId)
-      .set('biereId', biereId);
+    let orgId = this.authSrv.getUserOrgId().toString();
 
     let result = this.http.get<AvisBiereUserModele>(
-      this.util.apiAvisBiereUserUrl+{params},
+      this.util.apiAvisBiereUserUrl+orgId+","+biereId,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     return result;
@@ -33,7 +29,7 @@ export class AvisBiereUserService {
     const token:string = this.authSrv.getUser().id_token;
 
     let result = this.http.post<AvisBiereUserModele>(
-      this.util.apiBieresUrl, avis,
+      this.util.apiAvisBiereUserUrl, avis,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     return result;

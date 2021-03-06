@@ -10,6 +10,7 @@ namespace Repo.Modeles.ModelesBeerUp
         public Guid AviBieUserId { get; set; }
         public Guid BieId { get; set; }
         public Guid UserId { get; set; }
+        public Guid OrgId { get; set; }
         public DateTime? AviBieUserDateAvis { get; set; }
         public bool AviBieUserActif { get; set; }
         public int AvisAcid { get; set; }

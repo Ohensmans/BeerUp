@@ -31,11 +31,5 @@ export class BiereModele {
         this.bieDegreAlcool = 0;
     }
 
-    isNew(){
-        if(this.bieId==""){
-            return true;
-        }
-        return false;
-    }
 
 }

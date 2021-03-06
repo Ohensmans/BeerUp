@@ -1,6 +1,6 @@
 <div class="card">
-    <div *ngIf="biere.isNew()" class="card-header">Nouvelle bière</div>
-    <div *ngIf="!biere.isNew()" class="card-header">Détails de la bière</div>
+    <div *ngIf="isNew()" class="card-header">Nouvelle bière</div>
+    <div *ngIf="!isNew()" class="card-header">Détails de la bière</div>
 
     <div class="card-body">
         <form [formGroup]="biereForm" (ngSubmit)="onSubmitForm()">  

@@ -35,7 +35,7 @@ namespace BeerUpApi.Controllers
                 return _context.Etablissements.FromSqlRaw("GetEtablissementsOrganistion @OrgId", param).ToList();
             }
             else
-            return await _context.Etablissements.ToListAsync();
+            return await _context.Etablissements.OrderBy(e => e.EtaNom).ToListAsync();
         }
 
         // GET: api/Etablissements/5

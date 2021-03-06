@@ -1,7 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -47,7 +47,7 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
   constructor(private route:ActivatedRoute, private authSrv: AuthentificationService, private biereSrv : BieresService, private etabSrv : EtablissementsService,
     private etabOrgaSrv : EtabsOrgaService, private typesBiereSrv : TypesBiereService, private formBuilder:FormBuilder, 
     private upImageSrv: UploadImagesService, private util:UtilService, private modalService:BsModalService, private AvisSrv : AvisBiereUserService,
-    private toastr:ToastrService) { 
+    private toastr:ToastrService, private router : Router) { 
     this.biere = new BiereModele();
     this.avis = new AvisBiereUserModele();
     this.lEtabOrga = new Array<EtablissementModele>();
@@ -148,7 +148,7 @@ uploadFileCheck = (files: FileList | null) =>{
   if(files==null || files.length===0){
     return;
   }
-  if(!this.biere.isNew && this.biere.biePhoto!="" && this.biere.biePhoto!=null){
+  if(!this.isNew() && this.biere.biePhoto!="" && this.biere.biePhoto!=null){
     this.confirmModifImage(files);
   }
   else{
@@ -205,25 +205,38 @@ ngOnDestroy(){
 
 creer(){
 
-  //assigne l'organisation de l'user à l'établissement
-  //l'organisation des administrateurs est un guid empty
-  //lorsqu'un utilisateur de l'App mobile crée une brasserie - ce même guid empty est donnée à la brasserie
-  this.biere.userId = this.authSrv.getUserId();
   this.biere.bieValide = true;
   this.biere.bieActif = true;
-  this.biereSrv.addBiere(this.biere).subscribe(
+  this.subscr.add(this.biereSrv.addBiere(this.biere).subscribe(
     (value) => {
       this.avis.bieId = this.biere.bieId;
-      this.AvisSrv.addAvis(this.avis).subscribe();
+      this.subscr.add(this.AvisSrv.addAvis(this.avis).subscribe(
+        (value) => {
+          this.router.navigate(['Bieres']);
+        }
+      ));
     }
-  );
+  ));
 }
 
 sauvegarder(){
   this.biereSrv.updateBiere(this.biere, this.biere.bieId);
   this.avis.bieId = this.biere.bieId;
-  this.AvisSrv.addAvis(this.avis).subscribe();
+  
+  this.subscr.add(this.AvisSrv.addAvis(this.avis).subscribe(
+    (value) => {
+      this.router.navigate(['Bieres']);
+    }
+  ));
 }
+
+isNew(){
+    if(this.biere.bieId==""){
+        return true;
+    }
+    return false;
+}
+
 
 onSubmitForm(){
   if(this.biereForm.valid && this.biereForm.dirty)
@@ -241,16 +254,19 @@ onSubmitForm(){
     this.avis.avisHoub = this.biereForm.value.avisHoub;
     this.avis.avisMalt = this.biereForm.value.avisMalt;
     this.avis.avisSucr = this.biereForm.value.avisSucr;
+    this.avis.aviBieUserDateAvis = new Date();
+    this.avis.userId = this.authSrv.getUserId().toString();
+    this.avis.aviBieUserId = Guid.create().toString();
+    this.avis.aviBieUserActif = true;
     
-
-    if(this.biere.isNew())
+    if(this.isNew())
     {
       this.biere.bieId = Guid.create().toString();
-      this.avis.userId = this.authSrv.getUserOrgId();
       this.creer();      
     }
     else
     {
+      //just for test environment
       this.sauvegarder();     
     }
   }

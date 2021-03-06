@@ -25,7 +25,7 @@ namespace BeerUpApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TypesBiere>>> GetTypeServices()
         {
-            return await _context.TypesBieres.ToListAsync();
+            return await _context.TypesBieres.OrderBy(t => t.TypBieNom).ToListAsync();
         }
     }
 }

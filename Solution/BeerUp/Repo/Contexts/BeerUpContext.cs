@@ -19,7 +19,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
         public virtual DbSet<AchatsVue> AchatsVues { get; set; }
         public virtual DbSet<AdressesFacturation> AdressesFacturations { get; set; }
-        public virtual DbSet<AvisBiereUser> AvisBiereUsers { get; set; }
+        public virtual DbSet<AvisBiereUser> AvisBiereUser { get; set; }
         public virtual DbSet<Biere> Bieres { get; set; }
         public virtual DbSet<Etablissement> Etablissements { get; set; }
         public virtual DbSet<Facture> Factures { get; set; }
@@ -141,6 +141,8 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.Property(e => e.BieId).HasColumnName("Bie.Id");
 
                 entity.Property(e => e.UserId).HasColumnName("User.Id");
+
+                entity.Property(e => e.OrgId).HasColumnName("Org.Id");
 
                 entity.Property(e => e.AvisAcid).HasColumnName("Avis.Acid");
 

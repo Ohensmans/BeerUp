@@ -74,7 +74,7 @@ export class BieresService {
     const token:string = this.authSrv.getUser().id_token;
 
   this.http.delete<string>(
-      this.util.apiEtablissementsUrl+id,
+      this.util.apiBieresUrl+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {
@@ -89,7 +89,7 @@ export class BieresService {
     const token:string = this.authSrv.getUser().id_token;
 
     let result = this.http.put<BiereModele>(
-      this.util.apiEtablissementsUrl+id,biere,
+      this.util.apiBieresUrl+id,biere,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       () => {

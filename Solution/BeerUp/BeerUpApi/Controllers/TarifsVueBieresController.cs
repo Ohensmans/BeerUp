@@ -26,7 +26,7 @@ namespace BeerUpApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TarifsVueBie>>> GetTarifsVueBies()
         {
-            return await _context.TarifsVueBies.ToListAsync();
+            return await _context.TarifsVueBies.OrderBy(t => t.Prix).ToListAsync();
         }
 
         // GET: api/TarifsVueBies/5

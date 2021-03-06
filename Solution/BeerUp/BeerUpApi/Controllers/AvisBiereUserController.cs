@@ -12,8 +12,7 @@ using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
 {
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/[controller]")]   
     [ApiController]
     public class AvisBiereUserController : ControllerBase
     {
@@ -25,14 +24,15 @@ namespace BeerUpApi.Controllers
             _context = context;
         }
 
-        // GET api/<AvisBiereUserController>/5
+        // GET api/<AvisBiereUserController>/5,5
         //return the last avis from the user for a beer
-        [HttpGet("{Userid, BieId}")]
-        public ActionResult<AvisBiereUser> GetAvis(Guid userId, Guid biereId)
+        [HttpGet("{orgId},{bieId}")]
+        [HttpGet("{orgId, bieId}")]
+        public ActionResult<AvisBiereUser> GetAvis(Guid orgId, Guid bieId)
         {
-            var paramOne = new SqlParameter("@UserId", userId);
-            var paramTwo = new SqlParameter("@BieId", biereId);
-            List<AvisBiereUser> avis = (List<AvisBiereUser>)_context.AvisBiereUsers.FromSqlRaw("GetDernierAvisBiereUser @UserId, @BieId", paramOne, paramTwo).ToList();
+            var paramOne = new SqlParameter("@OrgaId", orgId);
+            var paramTwo = new SqlParameter("@BieId", bieId);
+            List<AvisBiereUser> avis = (List<AvisBiereUser>)_context.AvisBiereUser.FromSqlRaw("GetDernierAvisBiereOrga @OrgaId, @BieId", paramOne, paramTwo).ToList();
 
             if (avis == null || avis.Count==0)
             {
@@ -46,13 +46,13 @@ namespace BeerUpApi.Controllers
         // POST: api/AvisBiereUserController
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AvisBiereUser>> PostBiere(AvisBiereUser avis)
+        public async Task<ActionResult<AvisBiereUser>> PostAvis(AvisBiereUser avis)
         {
-            _context.AvisBiereUsers.Add(avis);
+            _context.AvisBiereUser.Add(avis);
             try
             {
                 await _context.SaveChangesAsync();
-                await DesactivateOlderAvisAsync(avis.AviBieUserId, avis.BieId);
+                await DesactivateOlderAvisAsync(avis.OrgId, avis.BieId);
             }
             catch (DbUpdateException)
             {
@@ -70,14 +70,14 @@ namespace BeerUpApi.Controllers
                 throw;
             }
 
-            return CreatedAtAction("GetAvis", new { userId = avis.UserId, biereId = avis.BieId }, avis);
+            return CreatedAtAction("GetAvis", new { orgId = avis.OrgId, bieId = avis.BieId }, avis);
         }
 
-        private async Task DesactivateOlderAvisAsync (Guid userId, Guid biereId)
+        private async Task DesactivateOlderAvisAsync (Guid orgaId, Guid biereId)
         {
-            var paramOne = new SqlParameter("@UserId", userId);
+            var paramOne = new SqlParameter("@OrgaId", orgaId);
             var paramTwo = new SqlParameter("@BieId", biereId);
-            List<AvisBiereUser> lAvis = (List<AvisBiereUser>)_context.AvisBiereUsers.FromSqlRaw("GetAvisBiereUserToDesactivate @UserId @BieId", parameters: new[] { paramOne, paramTwo }).ToList();
+            List<AvisBiereUser> lAvis = (List<AvisBiereUser>)_context.AvisBiereUser.FromSqlRaw("GetAvisBiereOrgaToDesactivate @OrgaId, @BieId", parameters: new[] { paramOne, paramTwo }).ToList();
 
             if (lAvis.Any())
             {
@@ -124,7 +124,7 @@ namespace BeerUpApi.Controllers
 
         private bool AvisExists(Guid id)
         {
-            return _context.AvisBiereUsers.Any(e => e.AviBieUserId == id);
+            return _context.AvisBiereUser.Any(e => e.AviBieUserId == id);
         }
 
     }

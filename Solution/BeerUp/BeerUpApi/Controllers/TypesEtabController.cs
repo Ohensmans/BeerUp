@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -23,7 +24,7 @@ namespace BeerUpApi.Controllers
         [HttpGet]
         public async Task<IEnumerable<TypesEtablissement>> GetAsync()
         {
-            return await _context.TypesEtablissements.ToListAsync();
+            return await _context.TypesEtablissements.OrderBy(t => t.TypEtaNom).ToListAsync();
         }
 
         
