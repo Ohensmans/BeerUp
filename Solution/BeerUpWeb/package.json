@@ -20,7 +20,6 @@
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
     "@auth0/angular-jwt": "^5.0.2",
-    "@mollie/api-client": "^3.4.0",
     "@popperjs/core": "^2.6.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",

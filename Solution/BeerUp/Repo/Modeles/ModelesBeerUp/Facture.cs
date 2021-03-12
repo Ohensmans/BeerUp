@@ -16,6 +16,8 @@ namespace Repo.Modeles.ModelesBeerUp
         public int FacId { get; set; }
         public DateTime FacDate { get; set; }
 
+        public string FacStatus { get; set; }
+
         public virtual ICollection<AchatsVue> AchatsVues { get; set; }
         public virtual ICollection<FactureOrgaAdresse> FactureOrgaAdresses { get; set; }
     }

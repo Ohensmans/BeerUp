@@ -339,6 +339,9 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.FacId).HasColumnName("Fac.Id");
 
+                entity.Property(e => e.FacStatus).HasColumnName("Fac.Status")
+                    .IsRequired();
+
                 entity.Property(e => e.FacDate)
                     .HasColumnType("datetime")
                     .HasColumnName("Fac.Date");

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Guid } from 'guid-typescript';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AchatVuesModele } from 'src/app/models/achat-vues-modele';
@@ -15,6 +16,8 @@ import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.serv
 import { TarifsEtabsService } from 'src/app/services/CallApi/tarifs-etabs.service';
 import { VuesAchatBiereService } from 'src/app/services/CallApi/vues-achat-biere.service';
 import { VuesAchatEtabService } from 'src/app/services/CallApi/vues-achat-etab.service';
+import { UtilService } from 'src/app/services/util.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-new-achat',
@@ -36,7 +39,7 @@ export class NewAchatComponent implements OnInit {
   constructor(private biereSrv:BieresService, private biereOrgaSrv:BieresOrgaService, private etabSrv:EtablissementsService,
     private etabOrgaSrv:EtabsOrgaService, private tarifBiereSrv : TarifsBieresService, private tarifEtabSrv : TarifsEtabsService,
     private vueAchatBiereSrv : VuesAchatBiereService, private vueAchatEtabSrv : VuesAchatEtabService, 
-    private authSrv : AuthentificationService, private achatVueSrv:AchatVueService, private toastr:ToastrService) {
+    private authSrv : AuthentificationService, private achatVueSrv:AchatVueService, private toastr:ToastrService, private util : UtilService) {
       this.lBiere = Array(0);
       this.lEtab = Array(0);
       this.lTarifBiere = Array(0);
@@ -45,6 +48,8 @@ export class NewAchatComponent implements OnInit {
       this.lAchatBiere = Array(0);
       this.subscr = new Subscription();
       this.solde = 0;
+
+      
    }
 
   ngOnInit(): void {
@@ -217,6 +222,12 @@ export class NewAchatComponent implements OnInit {
 
 
 
-  preparePayment(){}
+  preparePayment(){
+    let facId = Guid.create();
+    
+
+  }
+
+
 
 }

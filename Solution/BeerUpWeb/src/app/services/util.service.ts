@@ -30,6 +30,7 @@ export class UtilService {
   apiAvisBiereUserUrl = this.apiUrl+'AvisBiereUser/';
   apiVuesAchatsBiere = this.apiUrl+'VuesAchatsBiere/';
   apiVuesAchatsEtab = this.apiUrl+'VuesAchatsEtab/';
+  
 
   //External Api
   VATUrl = "http://apilayer.net/api/validate";
@@ -43,6 +44,13 @@ export class UtilService {
   TypeTarifVueBiere = "Biere";
   NoteMAX = 5;
   nombreMiniNotesAvis = 3;
+
+  //Mollie Parameter
+  apiMollie = 'https://api.mollie.com/v2/payments/';
+  referencePayment = 'Achat de vues sponsorisées beerUp références :';
+  RedirectUrl = "http://localhost:4200/checkout";
+  WebhookUrl ="this.apiUrl/transaction";
+
 
   noImageAvailableUrl = 'http://localhost:5001/resources/images/no_image_available.png';
 
