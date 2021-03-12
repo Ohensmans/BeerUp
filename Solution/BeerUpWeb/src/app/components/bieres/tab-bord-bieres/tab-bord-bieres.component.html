@@ -1,3 +1,5 @@
+<br>
+<br>
 <div class="card">
     <div class="card-header">
         <h3>Liste des bières</h3>
@@ -14,7 +16,7 @@
             </tr>
         </thead>
             <tbody>
-                <app-element-biere class="innerForm" *ngFor="let biere of lBieresOrga" 
+                <app-element-biere class="innerForm" *ngFor="let biere of lBieresOrgaPagination" 
                 [biere]="biere"
                 [lEtabs]="lEtabsOrga" >
                 </app-element-biere>
@@ -25,6 +27,16 @@
     <div *ngIf="!lBieresOrga.length" class="card-header">
         Il n'existe pas encore de bière pour l'organisation
     </div>
+
+    <div>
+        <br>
+    </div>
+  
+    <div class="d-flex justify-content-center">
+        <pagination [totalItems]="lBieresOrga.length" (pageChanged)="pageChanged($event)" previousText="{{previousText}}"
+        nextText="{{nextText}}" [itemsPerPage]="itemsPerPage"></pagination>
+    </div>
+
     <br>
     <br>
 

@@ -2,153 +2,160 @@
 @{
     ViewData["Title"] = "Enregistrer un nouvel utilisateur";
 }
-
-<h1>Enregistrer un nouvel utilisateur</h1>
-
-
-
-@using (Html.BeginForm(FormMethod.Post, new { @class = "row" }))
-{
-    @Html.HiddenFor(model => model.ReturnUrl)
-
-    @for (int i = 0; i < Model.lOrgaNom.Count; i++)
-    {
-        @Html.HiddenFor(model => model.lOrgaNom[i])
-    }
-
-    <div class="col-md-12">
-
-        <fieldset>
-            <legend>Informations de connexion</legend>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.User.UserName, "Adresse mail / Login", new { @class = "control-label" })
-                <br />
-                @Html.TextBoxFor(model => model.User.UserName, new { @class = "form-control" })
-                <br />
-                @Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, "Mot de passe", new { @class = "control-label" })
-                <br />
-                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password" })
-                <br />
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ConfirmPassword, "Confirmation du mot de passe", new { @class = "control-label" })
-                <br />
-                @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", @type = "password" })
-                <br />
-                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend>Organisation</legend>
-
-            <div class="col-md-12 row">
-
-                <div class="col-md-6 form-group">
-                    @Html.EditorFor(model => model.OrgExiste, new { @class = "form-control", id = "OrgaExist" })
-                    @Html.LabelFor(model => model.OrgExiste, "Mon organisation est déjà enregistrée", new { @class = "control-label" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.OrgExiste, "", new { @class = "text-danger" })
-
-                </div>
-
-                <div class="col-md-6 form-group">
-                    @Html.DropDownListFor(model => model.NomOrganisation, new SelectList(Model.lOrgaNom), "Sélectionnez votre organisation", new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.NomOrganisation, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-12 form-group">
-                    @Html.EditorFor(model => model.OrgRegister, new { @class = "form-control", id = "OrgaRegister" })
-                    @Html.LabelFor(model => model.OrgRegister, "Je souhaite enregistrer mon organisation et la représenter", new { @class = "control-label" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.OrgRegister, "", new { @class = "text-danger" })
-                </div>
-
-            </div>
-
-            <div class="col-md-12 row" id="registerOrga">
-
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Organisation.OrgNom, "Nom de l'Organisation", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgNom, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgNom, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Organisation.OrgTva, "Numéro de TVA", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgTva, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgTva, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-8">
-                    @Html.LabelFor(model => model.Organisation.OrgRue, "Rue", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgRue, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgRue, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-4">
-                    @Html.LabelFor(model => model.Organisation.OrgNum, "Numéro", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgNum, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgNum, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-2">
-                    @Html.LabelFor(model => model.Organisation.OrgCp, "Code Postal", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgCp, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgCp, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Organisation.OrgVille, "Ville", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgVille, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgVille, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-4">
-                    @Html.LabelFor(model => model.Organisation.OrgPays, "Pays", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgPays, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgPays, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-12">
-                    @Html.LabelFor(model => model.Organisation.OrgEmail, "Adresse email", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgEmail, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgEmail, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-12">
-                    @Html.LabelFor(model => model.Organisation.OrgWeb, "Site Web", new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Organisation.OrgWeb, new { @class = "form-control" })
-                    <br />
-                    @Html.ValidationMessageFor(model => model.Organisation.OrgWeb, "", new { @class = "text-danger" })
-                </div>
-
-
-            </div>
-        </fieldset>
-
-        <button type="submit" class="btn btn-primary" name="button" value="register">Enregistrer</button>
-
-        <button type="submit" class="btn btn-danger" name="button" value="cancel">Retour</button>
+<div>
+    <br />
+    <br />
+</div>
+<div class="card">
+    <div class="card-header">
+        <h3>Enregistrer un nouvel utilisateur</h3>
     </div>
+    <div class="card-body">
 
-}
+        @using (Html.BeginForm(FormMethod.Post, new { @class = "row" }))
+        {
+            @Html.HiddenFor(model => model.ReturnUrl)
+
+            @for (int i = 0; i < Model.lOrgaNom.Count; i++)
+            {
+                @Html.HiddenFor(model => model.lOrgaNom[i])
+            }
+
+            <div class="col-md-12">
+
+                <fieldset>
+                    <legend>Informations de connexion</legend>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.UserName, "Adresse mail / Login", new { @class = "control-label" })
+                        <br />
+                        @Html.TextBoxFor(model => model.User.UserName, new { @class = "form-control" })
+                        <br />
+                        @Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, "Mot de passe", new { @class = "control-label" })
+                        <br />
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password" })
+                        <br />
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ConfirmPassword, "Confirmation du mot de passe", new { @class = "control-label" })
+                        <br />
+                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", @type = "password" })
+                        <br />
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Organisation</legend>
+
+                    <div class="col-md-12 row">
+
+                        <div class="col-md-6 form-group">
+                            @Html.EditorFor(model => model.OrgExiste, new { @class = "form-control", id = "OrgaExist" })
+                            @Html.LabelFor(model => model.OrgExiste, "Mon organisation est déjà enregistrée", new { @class = "control-label" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.OrgExiste, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            @Html.DropDownListFor(model => model.NomOrganisation, new SelectList(Model.lOrgaNom), "Sélectionnez votre organisation", new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.NomOrganisation, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            @Html.EditorFor(model => model.OrgRegister, new { @class = "form-control", id = "OrgaRegister" })
+                            @Html.LabelFor(model => model.OrgRegister, "Je souhaite enregistrer mon organisation et la représenter", new { @class = "control-label" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.OrgRegister, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 row" id="registerOrga">
+
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Organisation.OrgNom, "Nom de l'Organisation", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgNom, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgNom, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Organisation.OrgTva, "Numéro de TVA", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgTva, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgTva, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            @Html.LabelFor(model => model.Organisation.OrgRue, "Rue", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgRue, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgRue, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            @Html.LabelFor(model => model.Organisation.OrgNum, "Numéro", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgNum, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgNum, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            @Html.LabelFor(model => model.Organisation.OrgCp, "Code Postal", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgCp, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgCp, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Organisation.OrgVille, "Ville", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgVille, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgVille, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            @Html.LabelFor(model => model.Organisation.OrgPays, "Pays", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgPays, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgPays, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.Organisation.OrgEmail, "Adresse email", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgEmail, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgEmail, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.Organisation.OrgWeb, "Site Web", new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Organisation.OrgWeb, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Organisation.OrgWeb, "", new { @class = "text-danger" })
+                        </div>
+
+
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-primary" name="button" value="register">Enregistrer</button>
+
+                <button type="submit" class="btn btn-danger" name="button" value="cancel">Retour</button>
+            </div>
+
+        }
+    </div>
+</div>
 
 @section Scripts{
     <script src="~/js/RegisterWeb.js"></script>

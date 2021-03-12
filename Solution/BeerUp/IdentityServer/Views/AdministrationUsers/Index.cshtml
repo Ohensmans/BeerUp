@@ -2,120 +2,130 @@
 @{
     ViewData["Title"] = "Tableau de bord des utilisateurs";
 }
-
-<h1>Tableau de bord des utilisateurs</h1>
-
-<div class="col-md-12 row">
-    @Html.HiddenFor(model => model.ReturnUrl)
-    @Html.HiddenFor(model => model.NbreUserAValider, new { @id = "NbreUser" })
-
-    <div class="col-md-6">
-        <br />
-        <br />
-        <div class="card">
-            <div class="card-header">
-                <h2>Liste des utilisateurs existants</h2>
-            </div>
-
-            @if (Model.UserNames.Any())
-            {
-
-                <table class="table table-striped" id="myTable">
-                    <thead>
-                        <tr>
-                            <th class="NomColonne" id="0">Nom</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var user in Model.UserNames)
-                        {
-
-                            <tr>
-                                <td>@Html.Label("", user)</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div id="centerAll" class="pagination">
-                    <a id="paginationButtonPrevious" href="#">&laquo;</a>
-                    <a id="" class="paginationButtonNum active" href="#"></a>
-                    <a id="" class="paginationButtonNum" href="#"></a>
-                    <a id="" class="paginationButtonNum" href="#"></a>
-                    <a id="paginationButtonNext" href="#">&raquo;</a>
-                </div>
-
-
-            }
-            else
-            {
-                <h3>Il n'y a pas encore d'utilisateurs</h3>
-            }
-            
-        <div id="centerAll">
-            <br />
-            @Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "Account", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
-            @Html.ActionLink("Gérer les utilisateurs", "ListeUsers", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
-        </div>
-        </div>
-
-
-    </div>
-
-    <div class="col-md-6">
-        <br />
-        <br />
-        <div class="card">
-            <div class="card-header">
-                <h2>Liste des rôles existants</h2>
-            </div>
-
-            @if (Model.RoleNames.Any())
-            {
-
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var role in Model.RoleNames)
-                        {
-
-                            <tr>
-                                <td>@Html.Label("", role)</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <h3>Il n'y a pas encore de rôles</h3>
-            }
-
-            <div id="centerAll">
-                <br>
-                @if (User.IsInRole("Administrateur"))
-                {
-                    @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
-                }
-                @Html.ActionLink("Gérer les rôles", "ListeRoles", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
-            </div>
-
-
-        </div>
-    </div>
+<div>
+    <br />
+    <br />
 </div>
-<br />
-<br />
-
-@using (Html.BeginForm(FormMethod.Post))
-{
-    <div class="col-md-12 row">
-        <button style="width:auto" type="submit" name="button" value="back" class="btn btn-danger">Retour vers le site</button>
+<div class="card">
+    <div class="card-header">
+        <h3>Tableau de bord des utilisateurs</h3>
     </div>
-}
+    <div class="card-body">
+
+        <div class="col-md-12 row">
+            @Html.HiddenFor(model => model.ReturnUrl)
+            @Html.HiddenFor(model => model.NbreUserAValider, new { @id = "NbreUser" })
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Liste des utilisateurs existants</h5>
+                    </div>
+                    
+                    @if (Model.UserNames.Any())
+                    {
+                        <table class="table table-striped" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th class="NomColonne" id="0">Nom</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model.UserNames)
+                                {
+
+                                    <tr>
+                                        <td>@Html.Label("", user)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div id="centerAll" class="pagination">
+                            <a id="paginationButtonPrevious" href="#">&laquo;</a>
+                            <a id="" class="paginationButtonNum active" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="paginationButtonNext" href="#">&raquo;</a>
+                        </div>
+                        <div>
+                            <br />
+                        </div>
+
+
+                    }
+                    else
+                    {
+                        <h3>Il n'y a pas encore d'utilisateurs</h3>
+                    }
+                    <div class="card-footer">
+                        <div id="centerAll">
+                            @Html.ActionLink("Ajouter un nouvel utilisateur", "RegisterWeb", "Account", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Gérer les utilisateurs", "ListeUsers", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Liste des rôles existants</h5>
+                    </div>
+
+                    @if (Model.RoleNames.Any())
+                    {
+                        <table class="table table-striped" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th class="NomColonne" id="0">Nom</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var role in Model.RoleNames)
+                                {
+
+                                    <tr>
+                                        <td>@Html.Label("", role)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div id="centerAll" class="pagination">
+                            <a id="paginationButtonPrevious" href="#">&laquo;</a>
+                            <a id="" class="paginationButtonNum active" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="" class="paginationButtonNum" href="#"></a>
+                            <a id="paginationButtonNext" href="#">&raquo;</a>
+                        </div>
+                        <div>
+                            <br />
+                        </div>
+                    }
+                    else
+                    {
+                        <h3>Il n'y a pas encore de rôles</h3>
+                    }
+
+                    <div class="card-footer">
+                        <div id="centerAll">
+                            @if (User.IsInRole("Administrateur"))
+                            {
+                                @Html.ActionLink("Créer un nouveau rôle", "CreateRole", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-success" })
+                            }
+                            @Html.ActionLink("Gérer les rôles", "ListeRoles", "AdministrationUsers", new { returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+</div>
 
 @section Scripts{
     <script src="~/js/toastr.js"></script>

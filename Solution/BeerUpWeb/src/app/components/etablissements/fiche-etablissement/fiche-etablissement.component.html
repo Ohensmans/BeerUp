@@ -1,6 +1,8 @@
+<br>
+<br>
 <div class="card">
-    <div *ngIf="etab.isNew" class="card-header">Nouvel établissement</div>
-    <div *ngIf="!etab.isNew" class="card-header">Détails de l'établissement</div>
+    <h3 *ngIf="etab.isNew" class="card-header">Nouvel établissement</h3>
+    <h3 *ngIf="!etab.isNew" class="card-header">Détails de l'établissement</h3>
 
     <div class="card-body">
         <form [formGroup]="etabForm" (ngSubmit)="onSubmitForm()">  

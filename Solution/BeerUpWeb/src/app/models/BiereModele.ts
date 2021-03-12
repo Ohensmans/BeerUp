@@ -1,4 +1,3 @@
-import { Guid } from "guid-typescript";
 
 export class BiereModele {
     bieId: string;
@@ -14,6 +13,7 @@ export class BiereModele {
     userId:string;
     isDeletable:boolean;
     bieDegreAlcool:number;
+    bieNbVuesRestantes:number;
 
     constructor(){
         this.bieId = "";
@@ -29,6 +29,7 @@ export class BiereModele {
         this.userId = "";
         this.isDeletable = true;
         this.bieDegreAlcool = 0;
+        this.bieNbVuesRestantes =0;
     }
 
 

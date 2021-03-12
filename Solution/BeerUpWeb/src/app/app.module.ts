@@ -14,6 +14,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { AppComponent } from './app.component';
 
 import { AuthentificationService } from './services/authentification.service';
@@ -39,6 +40,13 @@ import { ElementListeBiereComponent } from './components/BieresEtab/element-list
 import { TabBordBieresComponent } from './components/bieres/tab-bord-bieres/tab-bord-bieres.component';
 import { ElementBiereComponent } from './components/bieres/element-biere/element-biere.component';
 import { FicheBiereComponent } from './components/bieres/fiche-biere/fiche-biere.component';
+import { TabBordAchatComponent } from './components/achats/tab-bord-achat/tab-bord-achat.component';
+import { ElementListeAchatComponent } from './components/achats/element-liste-achat/element-liste-achat.component';
+import { NewAchatComponent } from './components/achats/new-achat/new-achat.component';
+import { TabBordPlanTarifBiereComponent } from './components/plansTarifaires/tab-bord-plan-tarif-biere/tab-bord-plan-tarif-biere.component';
+import { TabBordAchatBiereComponent } from './components/achats/tab-bord-achat-biere/tab-bord-achat-biere.component';
+import { NewAchatEtabElementComponent } from './components/achats/new-achat-etab-element/new-achat-etab-element.component';
+import { NewAchatBiereElementComponent } from './components/achats/new-achat-biere-element/new-achat-biere-element.component';
 
 
 
@@ -66,6 +74,13 @@ import { FicheBiereComponent } from './components/bieres/fiche-biere/fiche-biere
     TabBordBieresComponent,
     ElementBiereComponent,
     FicheBiereComponent,
+    TabBordAchatComponent,
+    ElementListeAchatComponent,
+    NewAchatComponent,
+    TabBordPlanTarifBiereComponent,
+    TabBordAchatBiereComponent,
+    NewAchatEtabElementComponent,
+    NewAchatBiereElementComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +94,7 @@ import { FicheBiereComponent } from './components/bieres/fiche-biere/fiche-biere
     ToastrModule.forRoot(),
     BsDropdownModule.forRoot(),
     RatingModule.forRoot(),
+    PaginationModule.forRoot(),
     ModalModule.forRoot(),
     HttpClientModule,
     RouterModule.forRoot([
@@ -90,12 +106,16 @@ import { FicheBiereComponent } from './components/bieres/fiche-biere/fiche-biere
       { path: 'contact', component : ContactComponent},
       { path: 'privacy', component : PrivacyComponent},
       //{ path: 'call-api', canActivate:[AuthGuardService], component : CallApiComponent},
-      { path: 'PlansTarifaires', component : TabBordPlanTarifComponent},
+      { path: 'PlansTarifairesEtab', component : TabBordPlanTarifComponent},
+      { path: 'PlansTarifairesBiere', component : TabBordPlanTarifBiereComponent},
       { path: 'Etablissements', component : TabBordEtabsComponent},
       { path: 'Bieres', component : TabBordBieresComponent},
       { path: 'FicheBiere/:id', component : FicheBiereComponent},
       { path: 'FicheEtablissement/:id', component : FicheEtablissementComponent},
       { path: 'TabBordBieresEtab/:id', component : TabBordBieresEtabComponent},
+      { path: 'AchatsEtab', component : TabBordAchatComponent},
+      { path: 'AchatsBiere', component : TabBordAchatBiereComponent},
+      { path: 'NewAchat', component : NewAchatComponent},
       { path: 'not-found', component : NotFoundComponent},      
       { path: '**', redirectTo: 'not-found' }
     ]),

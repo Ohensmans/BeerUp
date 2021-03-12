@@ -47,9 +47,15 @@ export class BieresOrgaService {
     );  
   }
 
-  getAllowedBiere(lBiere : Array<BiereModele>){
+  getAllowedBiere(lBiere : Array<BiereModele>, achat : boolean){
     let lAllowBieres : Array<string>;
-    lAllowBieres = this.authSrv.getUserGroupBiereBieres();
+    if(achat){
+      lAllowBieres = this.authSrv.getUserGroupAchatBieres();
+    }
+    else{
+      lAllowBieres = this.authSrv.getUserGroupBiereBieres();
+    }
+    
 
     
     if(this.authSrv.isAdminOrGroupAdmin()){
@@ -67,7 +73,7 @@ export class BieresOrgaService {
     
   }
 
-  getAll(OrgId:string){
+  getAll(OrgId:string, achat :boolean){
     const token = this.authSrv.getUser().id_token;
     let id;
     if(this.authSrv.isAdmin()){
@@ -84,7 +90,7 @@ export class BieresOrgaService {
     result.subscribe(
       (value) => {
         this.lAllBieresOrga = value;
-        this.getAllowedBiere(value);
+        this.getAllowedBiere(value, achat);
         this.getDeletablesBieres();
       }
     )

@@ -3,21 +3,21 @@
         <div>{{ etab.etaNom }}</div>
     </td>
     
-    <td>
-        <button class="btn btn-secondary text-center" routerLink="/FicheEtablissement/{{ etab.etaId }}">Modifier établissement</button>
+    <td class="text-center">
+        <button class="btn btn-secondary" routerLink="/FicheEtablissement/{{ etab.etaId }}">Modifier établissement</button>
     </td>
 
-    <td>
-        <button  class="btn btn-secondary text-center" routerLink="/TabBordBieresEtab/{{ etab.etaId }}">Modifier bières de l'établissement</button>
+    <td class="text-center">
+        <button  class="btn btn-secondary" routerLink="/TabBordBieresEtab/{{ etab.etaId }}">Modifier bières de l'établissement</button>
     </td>
 
-    <td>
-        <button *ngIf="etab.etaActif" class="btn btn-info text-center" type="button" (click)="activation()">Désactiver</button>
-        <button *ngIf="!etab.etaActif" class="btn btn-primary text-center" type="button" (click)="activation()">Activer</button>
+    <td class="text-center">
+        <button *ngIf="etab.etaActif" class="btn btn-info" type="button" (click)="activation()">Désactiver</button>
+        <button *ngIf="!etab.etaActif" class="btn btn-primary" type="button" (click)="activation()">Activer</button>
     </td>
 
-    <td>
-        <button *ngIf="etab.isDeletable" class="btn btn-danger text-center" type="button" (click)="supprimer()">Supprimer</button>
+    <td class="text-center">
+        <button *ngIf="etab.isDeletable" class="btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
     </td>
 
 </tr>

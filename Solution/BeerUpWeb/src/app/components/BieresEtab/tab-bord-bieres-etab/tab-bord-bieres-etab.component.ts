@@ -48,7 +48,7 @@ export class TabBordBieresEtabComponent implements OnInit {
     this.subscr.add(this.etabSrv.getOne(id).subscribe(
       (value) =>{
         this.etab = value;
-        this.biereOrgaSrv.getAll(this.etab.orgId);
+        this.biereOrgaSrv.getAll(this.etab.orgId, false);
       },
       (error) => {
         this.router.navigate(['Etablissements']);

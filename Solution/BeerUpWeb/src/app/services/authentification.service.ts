@@ -96,6 +96,14 @@ export class AuthentificationService {
     return this.getToken().GroupBiereBieres;
   }
 
+  getUserGroupAchatBieres(){
+    return this.getToken().GroupAchatBieres;
+  }
+
+  getUserGroupAchatEtab(){
+    return this.getToken().GroupAchatEtablissements;
+  }
+
   userIsValide(){
     let result = this.getToken();
     return this.getToken().Valide;

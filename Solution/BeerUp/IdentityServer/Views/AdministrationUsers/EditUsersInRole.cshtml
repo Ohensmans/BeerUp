@@ -6,26 +6,32 @@
     ViewData["Title"] = "Modifier les utilisateurs ayant un rôle";
 }
 
-
-<form method="post">
-    <div class="card">
-        <div class="card-header">
-            <h3>Rajouter ou supprimer des utilisateurs au rôle : @roleName</h3>
-        </div>
-        <div class="card-body">
-            @for (int i = 0; i < Model.Count; i++)
-            {
-                <div class="form-check m-1">
-                    @Html.HiddenFor(model => model[i].UserId)
-                    @Html.HiddenFor(model => model[i].UserName)
-                    @Html.EditorFor(model => model[i].isSelected)
-                    @Html.Label("", Model[i].UserName)
-                </div>
-            }
-        </div>
-        <div class="card-footer">
-            <input type="submit" value="Mettre à jour" class="btn btn-primary" style="width:auto" />
-            @Html.ActionLink("Retour", "EditRole", "AdministrationUsers", new { id = roleId, ReturnUrl = returnUrl }, new { @class = "btn btn-danger" })
-        </div>
+<div>
+    <br />
+    <br />
+</div>
+<div class="card">
+    <div class="card-header">
+        <h5>Rajouter ou supprimer des utilisateurs au rôle : @roleName</h5>
     </div>
-</form>
+
+        <form method="post">
+                <div class="card-body">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <div class="form-check m-1">
+                            @Html.HiddenFor(model => model[i].UserId)
+                            @Html.HiddenFor(model => model[i].UserName)
+                            @Html.EditorFor(model => model[i].isSelected)
+                            @Html.Label("", Model[i].UserName)
+                        </div>
+                    }
+                </div>
+                <div class="card-footer">
+                    <input type="submit" value="Mettre à jour" class="btn btn-primary" style="width:auto" />
+                    @Html.ActionLink("Retour", "EditRole", "AdministrationUsers", new { id = roleId, ReturnUrl = returnUrl }, new { @class = "btn btn-danger" })
+                </div>
+            
+        </form>
+    </div>
+

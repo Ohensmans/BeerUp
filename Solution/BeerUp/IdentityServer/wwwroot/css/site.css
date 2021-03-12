@@ -103,3 +103,9 @@ body {
     .pagination a:hover:not(.active) {
         background-color: #ddd;
     }
+
+/* Center Align
+-------------------------------------------------- */
+#centerAll {
+    text-align:center;
+}

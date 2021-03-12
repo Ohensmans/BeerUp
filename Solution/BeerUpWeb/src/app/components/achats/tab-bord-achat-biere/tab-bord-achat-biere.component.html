@@ -1,0 +1,38 @@
+<br>
+<br>
+<div class="card">
+    <div class="card-header">
+        <h3>Liste des achats pour les bières</h3>
+    </div>
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Bière</th>
+                <th class="text-center">Vues achetées</th>
+                <th class="text-center">Vues réalisées</th>
+                <th class="text-center">Solde</th>
+            </tr>  
+        </thead>
+        <tbody>
+                <app-element-liste-achat  class="innerForm" *ngFor="let achat of lVuesAchatBierePagination"
+                    [achat]="achat">
+                </app-element-liste-achat>  
+            </tbody>
+        </table>
+        <div *ngIf="!lVuesAchatBiere.length" class="card-header">
+            Il n'y a pas encore de vues achetées pour les bières de l'organisation
+        </div>
+        <div>
+            <br>
+        </div>
+      
+        <div class="d-flex justify-content-center">
+            <pagination [totalItems]="lVuesAchatBiere.length" (pageChanged)="pageChanged($event)" previousText="{{previousText}}"
+            nextText="{{nextText}}" [itemsPerPage]="itemsPerPage"></pagination>
+        </div>
+    <br>
+    <br>
+    <button class="btn btn-primary" routerLink="/NewAchat">Acheter de nouvelles vues</button>
+
+</div>
+

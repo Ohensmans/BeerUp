@@ -1,12 +1,14 @@
+<br>
+<br>
 <div class="card">
     <div class="card-header">
-        Liste des tarifs pour les établissements
+        <h3>Liste des tarifs pour les établissements</h3>
     </div>
     <table  class="table table-striped">
         <thead>
             <tr>
-                <th class="text-center">Nombre de vue</th>
-                <th class="text-center">Prix</th>
+                <th>Nombre de vue</th>
+                <th>Prix</th>
                 <th class="text-center">Date de début</th>
                 <th class="text-center">Date de fin</th>
                 <th class="text-center">Activer</th>
@@ -15,7 +17,7 @@
             </tr>  
         </thead>
         <tbody>
-                <app-tarif  class="innerForm" *ngFor="let tar of lTarifsEtabs"
+                <app-tarif  class="innerForm" *ngFor="let tar of lTarifsEtabsPagination"
                     [tarif]="tar"
                     [type]="TypeTarifVueEtab">
                 </app-tarif>  
@@ -24,43 +26,18 @@
     <div *ngIf="!lTarifsEtabs.length" class="card-header">
         Il n'existe pas encore de tarifs pour les établissements
     </div>
+
+    <div>
+        <br>
+    </div>
+  
+    <div class="d-flex justify-content-center">
+        <pagination [totalItems]="lTarifsEtabs.length" (pageChanged)="pageChanged($event)" previousText="{{previousText}}"
+        nextText="{{nextText}}" [itemsPerPage]="itemsPerPage"></pagination>
+    </div>
     <br>
     <br>
     <button class="btn btn-primary" (click)="addTarifEtab()">Ajouter un tarif</button>
 
 </div>
-<br>
-<br>
 
-<div class="card">
-    <div class="card-header">
-        Liste des tarifs pour les bières
-    </div>
-    <table  class="table table-striped">
-        <thead>
-            <tr>
-                <th class="text-center">Nombre de vue</th>
-                <th class="text-center">Prix</th>
-                <th class="text-center">Date de début</th>
-                <th class="text-center">Date de fin</th>
-                <th class="text-center">Activer</th>
-                <th class="text-center">Enregistrer</th>
-                <th class="text-center">Supprimer</th>
-            </tr>
-        </thead>
-        <tbody>
-            <app-tarif class="innerForm" *ngFor="let tar of lTarifsBiere"
-            [tarif]="tar"
-            [type]="TypeTarifVueBiere"> 
-            </app-tarif>
-        </tbody>
-    </table>
-    <div *ngIf="!lTarifsBiere.length" class="card-header">
-        Il n'existe pas encore de tarifs pour les établissements
-    </div>
-    <br>
-    <br>
-
-    <button class="btn btn-primary" (click)="addTarifBiere()">Ajouter un tarif</button>
-
-</div>

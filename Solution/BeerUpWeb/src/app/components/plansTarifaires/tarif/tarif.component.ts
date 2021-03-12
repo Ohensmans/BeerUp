@@ -34,6 +34,7 @@ export class TarifComponent implements OnInit {
   TypeTarifVueBiere:string;
   emptyGuid:string;
   isNew:boolean;
+  isOld:boolean;
 
   constructor(private tarifBiere:TarifsBieresService, private tarifEtab:TarifsEtabsService, private util:UtilService, private formBuilder:FormBuilder, 
     private router:Router, private modalService:BsModalService, private toastr:ToastrService) { 
@@ -50,6 +51,7 @@ export class TarifComponent implements OnInit {
     })
     this.emptyGuid = Guid.createEmpty().toString();
     this.isNew = true;
+    this.isOld = false;
   }
 
   ngOnInit():void{
@@ -63,12 +65,18 @@ export class TarifComponent implements OnInit {
     //assigne la valuer isNew selon la valeur id du tarif (à la création l'id = "")
       if(this.tarif.id!=""){
       this.isNew = false;
+      this.isOld = true;
     }
   }
 
   getIsNew()
   {
     return this.isNew;
+  }
+
+  getIsOld()
+  {
+    return this.isOld;
   }
 
   getClass() {
@@ -88,13 +96,13 @@ export class TarifComponent implements OnInit {
   onSubmitForm(){
     if(this.tarifForm.valid && this.tarifForm.dirty)
     {
-      this.tarif.nbVue = +this.tarifForm.value.nbVue;
-      this.tarif.prix = +this.tarifForm.value.prix;
       this.tarif.dateDebut = this.tarifForm.value.dateDebut;
       this.tarif.dateFin = this.tarifForm.value.dateFin;
 
       if(this.getIsNew())
       {
+        this.tarif.nbVue = +this.tarifForm.value.nbVue;
+        this.tarif.prix = +this.tarifForm.value.prix;
         this.creer(this.tarif);      
       }
       else

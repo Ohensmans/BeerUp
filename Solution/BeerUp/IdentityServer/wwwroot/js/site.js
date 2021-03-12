@@ -17,7 +17,7 @@ function confirmDelete(uniqueId, isDeleteClicked) {
 // fonctions pour faire la pagination
 var table = table = document.getElementById("myTable");
 var nbRow = table.rows.length;
-const nbRowMaxParPage = 10;
+const nbRowMaxParPage = 7;
 var nbPage = Math.trunc((nbRow - 1) / nbRowMaxParPage);
 if ((nbRow - 1) % nbRowMaxParPage > 0) {
     nbPage++;

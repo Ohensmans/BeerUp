@@ -3,23 +3,33 @@
     ViewData["Title"] = "Créer un nouveau rôle";
 }
 
-<h1>Créer un nouveau rôle</h1>
-
-@using (Html.BeginForm(FormMethod.Post))
-{
-    <div>
-        <div class="col-md-12">
-            @Html.HiddenFor(model => model.ReturnUrl)
-            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.RoleName, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control" })
-            </div>
-
-            <button style="width:auto" type="submit" name="button" value="create" class="btn btn-primary">Créer le rôle</button>
-            <button style="width:auto" type="submit" name="button" value="back" class="btn btn-danger">Retour</button>
-
-        </div>
+<div>
+    <br />
+    <br />
+</div>
+<div class="card">
+    <div class="card-header">
+        <h3>Créer un nouveau rôle</h3>
     </div>
-}
+    <div class="card-body">
+
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <div>
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.ReturnUrl)
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RoleName, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control" })
+                    </div>
+
+                    <button style="width:auto" type="submit" name="button" value="create" class="btn btn-primary">Créer le rôle</button>
+                    <button style="width:auto" type="submit" name="button" value="back" class="btn btn-danger">Retour</button>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

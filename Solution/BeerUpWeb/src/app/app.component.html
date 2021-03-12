@@ -20,27 +20,39 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li routerLinkActive="active" class="nav-item"><a class="nav-link text-light" routerLink="home">Acceuil</a></li>          
+                        <li routerLinkActive="active" class="nav-item"><a class="nav-link text-light" routerLink="home">Acceuil</a></li>
+                        
+                        <li class="btn-group" dropdown>
+                            <div *ngIf="isAuth() && hasAchatAdminAccess()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link text-light dropdown-toggle" aria-controls="dropdown-animated">
+                                Achats <span class="caret"></span>
+                            </div>
+                            <div id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="AchatsBiere">Vues bières</a></div>
+                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="AchatsEtab">Vues établissements</a></div>
+                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="NewAchat">Achat de nouvelles vues</a></div>
+                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="Etablissements">Factures</a></div>
+                            </div>
+                        </li>
 
                         <li class="btn-group" dropdown>
                             <div *ngIf="isAuth()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link text-light dropdown-toggle" aria-controls="dropdown-animated">
                                 Administration <span class="caret"></span>
                             </div>
+
                             <div id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
-                                <div *ngIf="isAuth() && isAdmin()" role="menuitem"><a class="dropdown-item text-dark" routerLink="PlansTarifaires">Plans tarifaires</a></div>
-                                <div *ngIf="isAuth() && isAdmin()" class="divider dropdown-divider"></div>
-                                <div *ngIf="isAuth() && hasAchatAdminAccess()" role="menuitem"><a class="dropdown-item" routerLink="Achats">Achats</a></div>
-                                <div *ngIf="isAuth() && hasEtablissementAdminAccess() && hasAchatAdminAccess()" class="divider dropdown-divider"></div>
-                                <div *ngIf="isAuth() && hasEtablissementAdminAccess()"role="menuitem"><a class="dropdown-item" routerLink="Etablissements">Etablissements</a></div>
-                                <div *ngIf="isAuth() && hasEtablissementAdminAccess() && hasBiereAdminAccess()"class="divider dropdown-divider"></div>
-                                <div *ngIf="isAuth() && hasBiereAdminAccess()"role="menuitem"><a class="dropdown-item" routerLink="Bieres">Bières</a></div>
-                                <div *ngIf="isAuth() && hasUserAdminAccess()" class="divider dropdown-divider"></div>
+                                <div *ngIf="isAuth() && isAdmin()" role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
+                                    <a dropdownToggle class="dropdown-item dropdown-toggle"(click)="false">Plans Tarifaires <span class="caret"></span></a>
+                                            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                                <li role="menuitem"><a class="dropdown-item" routerLink="PlansTarifairesBiere">Tarifs bières</a></li>
+                                                <li role="menuitem"><a class="dropdown-item" routerLink="PlansTarifairesEtab">Tarifs établissements</a></li>
+                                            </ul>
+                                </div>
                                 <div *ngIf="isAuth() && hasUserAdminAccess()" role="menuitem"><a class="dropdown-item" href="{{adminUserUrl}}">Utilisateurs</a></div>
                             </div>
                         </li>
 
-                        <li routerLinkActive="active" class="nav-item "><a class="nav-link text-light" routerLink="contact">Contact</a></li>
-
+                        <li *ngIf="isAuth() && hasBiereAdminAccess()" routerLinkActive="active" class="nav-item "><a class="nav-link text-light" routerLink="Bieres">Bieres</a></li>
+                        <li *ngIf="isAuth() && hasEtablissementAdminAccess()" routerLinkActive="active" class="nav-item "><a class="nav-link text-light" routerLink="Etablissements">Etablissements</a></li>
                         <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link text-light" routerLink="login">S'identifier</a></li>     
                         <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item"><a class="nav-link text-light" href="{{registerUrl}}">S'enregistrer</a></li>  
 
@@ -65,7 +77,7 @@
 
     <footer class="border-top footer text-muted bg-dark">
         <div class="container text-white">
-            &copy; 2021 - BeerUp - <span class="text-white" routerLink="privacy">Privacy</span>
+            &copy; 2021 - BeerUp - <span class="text-white" routerLink="contact">Contact</span>
         </div>
     </footer>
 </body>

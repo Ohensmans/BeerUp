@@ -49,10 +49,14 @@ export class EtabsOrgaService {
     );  
   }
 
-  getAllowedEtab(lEtab : Array<EtablissementModele>){
+  getAllowedEtab(lEtab : Array<EtablissementModele>, achat : boolean){
     let lAllowEtab : Array<string>;
-    lAllowEtab = this.authSrv.getUserGroupEtabEtab();
-
+    if(achat){
+      lAllowEtab = this.authSrv.getUserGroupAchatEtab();
+    }
+    else{
+      lAllowEtab = this.authSrv.getUserGroupEtabEtab();
+    }
     if(this.authSrv.isAdminOrGroupAdmin()){
       this.lAllowedEtabsOrga = lEtab;
     }
@@ -68,7 +72,7 @@ export class EtabsOrgaService {
     
   }
 
-  getAll(){
+  getAll(achat:boolean){
     const token = this.authSrv.getUser().id_token;
     const id = this.authSrv.getUserOrgId();
 
@@ -79,7 +83,7 @@ export class EtabsOrgaService {
     result.subscribe(
       (value) => {
         this.lAllEtabsOrga = value;
-        this.getAllowedEtab(value);
+        this.getAllowedEtab(value, achat);
         this.getDeletablesEtab();
       }
     )

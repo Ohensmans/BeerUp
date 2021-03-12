@@ -33,6 +33,9 @@ namespace Repo.Modeles.ModelesBeerUp
         public virtual DbSet<TypesService> TypesServices { get; set; }
         public virtual DbSet<VenteBiereEtum> VenteBiereEta { get; set; }
 
+        public virtual DbSet<VueAchatsBiere> VueAchatsBiere { get; set; }
+        public virtual DbSet<VueAchatsEtab> VueAchatsEtab { get; set; }
+
         public virtual DbSet<Horaire> Horaires { get; set; }
 
         public virtual DbSet<JourFermeture> JoursFermeture { get; set; }
@@ -40,6 +43,36 @@ namespace Repo.Modeles.ModelesBeerUp
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
+
+            modelBuilder.Entity<VueAchatsEtab>(entity =>
+            {
+                entity.HasKey(v => v.Id);
+
+                entity.Property(v => v.Id)
+                   .HasColumnName("EtaId");
+
+                entity.Property(v => v.NbVu).HasColumnName("EtaNbVu");
+
+                entity.Property(v => v.Nom).HasColumnName("EtaNom");
+
+                entity.Property(v => v.NbVuesAch).HasColumnName("TVEVueAch");
+
+            });
+
+            modelBuilder.Entity<VueAchatsBiere>(entity =>
+            {
+                entity.HasKey(v => v.Id);
+
+                entity.Property(v => v.Id)
+                   .HasColumnName("BieId");
+
+                entity.Property(v => v.NbVu).HasColumnName("BieNbVu");
+
+                entity.Property(v => v.Nom).HasColumnName("BieNom");
+
+                entity.Property(v => v.NbVuesAch).HasColumnName("TVBVueAch");
+
+            });
 
             modelBuilder.Entity<AchatsVue>(entity =>
             {

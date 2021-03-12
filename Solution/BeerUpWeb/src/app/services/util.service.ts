@@ -6,28 +6,30 @@ import { Injectable } from '@angular/core';
 export class UtilService {
 
   //Api BeerUp
-  apiUrl = 'http://localhost:5001';
-  apiTarifsBieresUrl = 'http://localhost:5001/api/TarifsVueBieres/';
-  apiTarifsEtabsUrl = 'http://localhost:5001/api/TarifsVueEtabs/';
-  apiEtabsOrgaUrl = 'http://localhost:5001/api/EtabOrga/';
-  apiEtablissementsUrl = 'http://localhost:5001/api/Etablissements/';
-  apiTypesEtabUrl = 'http://localhost:5001/api/TypesEtab/';
-  apiImagesEtabUrl = 'http://localhost:5001/api/ImagesEtab/';
-  apiGetDeletablesBieresUrl = 'http://localhost:5001/api/GetDeletablesBieres/';
-  apiGetDeletablesEtabsUrl = 'http://localhost:5001/api/GetDeletablesEtabs/';
-  apiGetDeletablesTarifsBiereUrl = 'http://localhost:5001/api/GetDeletablesTarifsBiere/';
-  apiGetDeletablesTarifsEtabUrl = 'http://localhost:5001/api/GetDeletablesTarifsEtab/';
-  apiOrganisationsUrl = 'http://localhost:5001/api/Organisations/';
-  apiHorairesUrl = 'http://localhost:5001/api/Horaires/';
-  apiJoursFermetureUrl = 'http://localhost:5001/api/JoursFermeture/';
-  apiBieresUrl = 'http://localhost:5001/api/Bieres/';
-  apiBieresEtabUrl = 'http://localhost:5001/api/BieresEtab/';
-  apiBieresOrgaUrl = 'http://localhost:5001/api/BieresOrga/';
-  apiTypesServicesUrl = 'http://localhost:5001/api/TypesServices/';
-  apiVentesBieresEtaUrl = 'http://localhost:5001/api/VentesBieresEta/';
-  apiTypesBiereUrl = 'http://localhost:5001/api/TypesBiere/';
-  apiImagesBiereUrl = 'http://localhost:5001/api/ImagesEtab/';
-  apiAvisBiereUserUrl = 'http://localhost:5001/api/AvisBiereUser/';
+  apiUrl = 'http://localhost:5001/api/';
+  apiTarifsBieresUrl = this.apiUrl+'TarifsVueBieres/';
+  apiTarifsEtabsUrl = this.apiUrl+'TarifsVueEtabs/';
+  apiEtabsOrgaUrl = this.apiUrl+'EtabOrga/';
+  apiEtablissementsUrl = this.apiUrl+'Etablissements/';
+  apiTypesEtabUrl = this.apiUrl+'TypesEtab/';
+  apiImagesEtabUrl = this.apiUrl+'ImagesEtab/';
+  apiGetDeletablesBieresUrl = this.apiUrl+'GetDeletablesBieres/';
+  apiGetDeletablesEtabsUrl = this.apiUrl+'GetDeletablesEtabs/';
+  apiGetDeletablesTarifsBiereUrl = this.apiUrl+'GetDeletablesTarifsBiere/';
+  apiGetDeletablesTarifsEtabUrl = this.apiUrl+'GetDeletablesTarifsEtab/';
+  apiOrganisationsUrl = this.apiUrl+'Organisations/';
+  apiHorairesUrl = this.apiUrl+'Horaires/';
+  apiJoursFermetureUrl = this.apiUrl+'JoursFermeture/';
+  apiBieresUrl = this.apiUrl+'Bieres/';
+  apiBieresEtabUrl = this.apiUrl+'BieresEtab/';
+  apiBieresOrgaUrl = this.apiUrl+'BieresOrga/';
+  apiTypesServicesUrl = this.apiUrl+'TypesServices/';
+  apiVentesBieresEtaUrl = this.apiUrl+'VentesBieresEta/';
+  apiTypesBiereUrl = this.apiUrl+'TypesBiere/';
+  apiImagesBiereUrl = this.apiUrl+'ImagesEtab/';
+  apiAvisBiereUserUrl = this.apiUrl+'AvisBiereUser/';
+  apiVuesAchatsBiere = this.apiUrl+'VuesAchatsBiere/';
+  apiVuesAchatsEtab = this.apiUrl+'VuesAchatsEtab/';
 
   //External Api
   VATUrl = "http://apilayer.net/api/validate";
@@ -45,6 +47,11 @@ export class UtilService {
   noImageAvailableUrl = 'http://localhost:5001/resources/images/no_image_available.png';
 
   joursSemaine = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+
+  //Pagination Parameters
+  nextText="»";
+  previousText="«"
+  itemsPerPage = 7;
 
   constructor() { }
 }

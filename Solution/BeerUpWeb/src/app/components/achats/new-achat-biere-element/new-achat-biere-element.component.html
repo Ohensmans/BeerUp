@@ -1,0 +1,33 @@
+<form class="innerForm" [formGroup]="achatVueForm" (ngSubmit)="onSubmitForm()">
+    <tr [ngClass]="getClass()">
+        <td>
+            <select formControlName="bieId" class="form-control" (change)="onBiereSelected()" [attr.disabled]="!isNew() ? 'disabled' :null">
+                <option *ngFor="let biere of lAllowedBiere" [ngValue]="biere.bieId">
+                    {{biere.bieNom}}
+                </option>
+            </select>
+        </td>
+
+        <td class="text-center"> 
+            <div>{{ nombreVuesRestantes }}</div>
+        </td>
+
+        <td class="text-center">
+            <select formControlName="tarifBieId" class="form-control" (change)="onTarifSelected()" [attr.disabled]="!isNew() ? 'disabled' :null">
+                <option *ngFor="let tarif of lTarifsBiere" [ngValue]="tarif.id">
+                    {{tarif.nbVue}}
+                </option>
+            </select>
+        </td>
+        
+        <td class="text-center">
+            <div>{{ prix }} €</div>
+        </td>
+
+        <td class="text-center">
+            <button *ngIf="isNew()" class="text-center btn btn-primary" type="submit">Ajouter</button>
+            <button *ngIf="!isNew()" class="btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
+        </td>
+
+    </tr>
+</form>

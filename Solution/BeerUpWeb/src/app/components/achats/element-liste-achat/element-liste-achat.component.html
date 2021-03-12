@@ -1,0 +1,18 @@
+<tr>
+    <td>
+        <div>{{ achat.nom}}</div>   
+    </td>
+
+    <td>
+        <div class="text-center">{{ achat.nbVuesAch}}</div>   
+    </td>
+
+    <td>
+        <div class="text-center">{{ achat.nbVu}}</div>  
+    </td>
+
+    <td>
+        <div class="text-center" [ngClass]="getClass()" >{{ solde}}</div>  
+    </td>
+
+</tr>

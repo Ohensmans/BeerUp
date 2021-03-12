@@ -5,83 +5,89 @@
     var returnUrl = ViewBag.returnUrl;
 }
 
-<h1>Gérer les rôles de l'utilisateur</h1>
-<br />
-<br />
-
-@Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
-@using (Html.BeginForm(FormMethod.Post))
-{
-<div class="card">
-
-    @Html.HiddenFor(model => model.userId)
-
-    <table class="table table-striped" id="myTable">
-        <thead>
-            <tr>
-                <th class="text-center">Attribuer le rôle</th>
-                <th class="NomColonne" id="0">Nom du rôle</th>
-                <th>Description</th>
-                <th class="NomColonne text-center" id="1">Accès complet</th>
-                <th class="NomColonne text-center" id="2">Accès partiel</th>
-                <th class="text-center">Modifier l'accès de l'utilisateur</th>
-            </tr>
-        </thead>
-        <tbody>
-
-
-            @for (int i = 0; i < Model.lRoles.Count; i++)
-            {
-                <tr>
-                    <td class="text-center">@Html.EditorFor(model => model.lRoles[i].isSelected)</td>
-                    <td>@Html.Label("", Model.lRoles[i].RoleName)</td>
-                    <td>
-                        @if (Model.lRoles[i].RoleDescription != null)
-                        {@Html.Label("", Model.lRoles[i].RoleDescription)}
-                    </td>
-                    <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isFullAcces)</td>
-                    <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isPartialAccess)</td>
-                    <td class="text-center">
-                        @if (Model.lRoles[i].isEditable && Model.lRoles[i].isSelected)
-                        {
-                            @Html.ActionLink("Modifier", "EditScopeRole", "AdministrationUsers", new { userId = Model.userId, roleId = Model.lRoles[i].RoleId, returnUrl = returnUrl }, new { @class = "btn btn-primary" })
-                        }
-
-                    </td>
-                </tr>
-                @Html.HiddenFor(model => model.lRoles[i].RoleId)
-                @Html.HiddenFor(model => model.lRoles[i].RoleName)
-                @Html.HiddenFor(model => model.lRoles[i].RoleDescription)
-                @Html.HiddenFor(model => model.lRoles[i].isEditable)
-            }
-
-
-        </tbody>
-    </table>
-    <div id="centerAll" class="pagination">
-        <a id="paginationButtonPrevious" href="#">&laquo;</a>
-        <a id="" class="paginationButtonNum active" href="#"></a>
-        <a id="" class="paginationButtonNum" href="#"></a>
-        <a id="" class="paginationButtonNum" href="#"></a>
-        <a id="paginationButtonNext" href="#">&raquo;</a>
-        <br />
-    </div>
+<div>
+    <br />
     <br />
 </div>
+<div class="card">
+    <div class="card-header">
+        <h3>Gérer les rôles de l'utilisateur</h3>
+    </div>
+    <div>
+        <br />
+    </div>
 
-    <br />
-    <br />
-
-    <div class="card-footer" id="centerAll">
+    <div>
         <button style="width:auto" type="submit" name="button" value="update" class="btn btn-success">Mettre à jour l'utilisateur</button>
         @Html.ActionLink("Retour à la liste des utilisateurs", "ListeUsers", "AdministrationUsers", new { userId = userId, returnUrl = returnUrl }, new { @class = "btn btn-danger" })
     </div>
 
 
-}
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-@section Scripts{
-    <script src="~/js/site.js"></script>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <div class="card">
 
-}
+            @Html.HiddenFor(model => model.userId)
+
+            <table class="table table-striped" id="myTable">
+                <thead>
+                    <tr>
+                        <th class="text-center">Attribuer le rôle</th>
+                        <th class="NomColonne" id="0">Nom du rôle</th>
+                        <th>Description</th>
+                        <th class="NomColonne text-center" id="1">Accès complet</th>
+                        <th class="NomColonne text-center" id="2">Accès partiel</th>
+                        <th class="text-center">Modifier l'accès de l'utilisateur</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @for (int i = 0; i < Model.lRoles.Count; i++)
+                    {
+                        <tr>
+                            <td class="text-center">@Html.EditorFor(model => model.lRoles[i].isSelected)</td>
+                            <td>@Html.Label("", Model.lRoles[i].RoleName)</td>
+                            <td>
+                                @if (Model.lRoles[i].RoleDescription != null)
+                                {@Html.Label("", Model.lRoles[i].RoleDescription)}
+                            </td>
+                            <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isFullAcces)</td>
+                            <td class="text-center">@Html.DisplayFor(model => model.lRoles[i].isPartialAccess)</td>
+                            <td class="text-center">
+                                @if (Model.lRoles[i].isEditable && Model.lRoles[i].isSelected)
+                                {
+                                    @Html.ActionLink("Modifier", "EditScopeRole", "AdministrationUsers", new { userId = Model.userId, roleId = Model.lRoles[i].RoleId, returnUrl = returnUrl }, new { @class = "btn btn-primary" })
+                                }
+
+                            </td>
+                        </tr>
+                        @Html.HiddenFor(model => model.lRoles[i].RoleId)
+                        @Html.HiddenFor(model => model.lRoles[i].RoleName)
+                        @Html.HiddenFor(model => model.lRoles[i].RoleDescription)
+                        @Html.HiddenFor(model => model.lRoles[i].isEditable)
+                    }
+
+
+                </tbody>
+            </table>
+            <div id="centerAll" class="pagination">
+                <a id="paginationButtonPrevious" href="#">&laquo;</a>
+                <a id="" class="paginationButtonNum active" href="#"></a>
+                <a id="" class="paginationButtonNum" href="#"></a>
+                <a id="" class="paginationButtonNum" href="#"></a>
+                <a id="paginationButtonNext" href="#">&raquo;</a>
+            </div>
+            <div>
+                <br />
+            </div>
+        </div>
+    }
+</div>
+
+    @section Scripts{
+        <script src="~/js/site.js"></script>
+
+    }

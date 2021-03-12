@@ -1,0 +1,33 @@
+<form class="innerForm" [formGroup]="achatVueForm" (ngSubmit)="onSubmitForm()">
+    <tr [ngClass]="getClass()">
+        <td>
+            <select formControlName="etabId" class="form-control" (change)="onEtabSelected()" [attr.disabled]="!isNew() ? 'disabled' :null">
+                <option *ngFor="let etab of lAllowedEtab" [ngValue]="etab.etaId">
+                    {{etab.etaNom}}
+                </option>
+            </select>
+        </td>
+
+        <td class="text-center"> 
+            <div>{{ nombreVuesRestantes }}</div>
+        </td>
+
+        <td class="text-center">
+            <select formControlName="tarifEtabId" class="form-control" (change)="onTarifSelected()" [attr.disabled]="!isNew() ? 'disabled' :null">
+                <option *ngFor="let tarif of lTarifsEtab" [ngValue]="tarif.id">
+                    {{tarif.nbVue}}
+                </option>
+            </select>
+        </td>
+        
+        <td class="text-center">
+            <div>{{ prix }} €</div>
+        </td>
+
+        <td class="text-center">
+            <button *ngIf="isNew()" class="text-center btn btn-primary" type="submit">Ajouter</button>
+            <button *ngIf="!isNew()" class="btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
+        </td>
+
+    </tr>
+</form>

@@ -1,0 +1,38 @@
+<br>
+<br>
+<div class="card">
+    <div class="card-header">
+        <h3>Liste des achats pour les établissements</h3>
+    </div>
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Etablissement</th>
+                <th class="text-center">Vues achetées</th>
+                <th class="text-center">Vues réalisées</th>
+                <th class="text-center">Solde</th>
+            </tr>  
+        </thead>
+        <tbody>
+                <app-element-liste-achat class="innerForm" *ngFor="let achat of lVuesAchatEtabPagination"
+                    [achat]="achat">
+                </app-element-liste-achat>  
+            </tbody>
+        </table>
+        <div *ngIf="!lVuesAchatEtab.length" class="card-header">
+            Il n'y a pas encore de vues achetées pour les établissements de l'organisation
+        </div>
+        <div>
+            <br>
+        </div>
+      
+        <div class="d-flex justify-content-center">
+            <pagination [totalItems]="lVuesAchatEtab.length" (pageChanged)="pageChanged($event)" previousText="{{previousText}}"
+            nextText="{{nextText}}" [itemsPerPage]="itemsPerPage"></pagination>
+        </div>
+    
+    <br>
+    <br>
+    <button class="btn btn-primary" routerLink="/NewAchat">Acheter de nouvelles vues</button>
+
+</div>

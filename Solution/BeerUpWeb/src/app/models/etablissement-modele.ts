@@ -19,6 +19,7 @@ export class EtablissementModele {
     etaCoordLat:string;
     etaActif: boolean;
     isDeletable:boolean;
+    etaNbVuesRestantes:number;
 
 
     constructor(){
@@ -40,6 +41,7 @@ export class EtablissementModele {
     this.etaCoordLat="";
     this.etaActif= false;
     this.isDeletable = false;
+    this.etaNbVuesRestantes = 0;
     }
 
     isNew(){

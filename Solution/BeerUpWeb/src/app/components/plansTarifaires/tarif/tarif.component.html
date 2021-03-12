@@ -1,19 +1,19 @@
 <form class="innerForm" [formGroup]="tarifForm" (ngSubmit)="onSubmitForm()">
 <tr [ngClass]="getClass()">
     <td>
-        <input type="text"  class="form-control" id="nbVue" formControlName="nbVue">      
+        <input class="form-control"  id="nbVue" formControlName="nbVue" [readonly]="getIsOld()">
     </td>
 
     <td>
-        <input type="text" class="form-control" id="prix" formControlName="prix">
+        <input class="form-control"  id="prix" formControlName="prix" [readonly]="getIsOld()">
     </td>
 
     <td>
-        <input type="date" class="form-control" id="dateDebut" formControlName="dateDebut">
+        <input type="date" class="form-control datepicker" id="dateDebut" formControlName="dateDebut">
     </td>
 
     <td>
-        <input type="date" class="form-control" id="dateFin" formControlName="dateFin">
+        <input type="date" class="form-control datepicker" id="dateFin" formControlName="dateFin">
     </td>
     
     <td>
