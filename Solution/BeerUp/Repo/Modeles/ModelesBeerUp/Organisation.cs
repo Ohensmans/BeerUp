@@ -27,5 +27,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
         public virtual ICollection<Etablissement> Etablissements { get; set; }
         public virtual ICollection<FactureOrgaAdresse> FactureOrgaAdresses { get; set; }
+
+        public virtual ICollection<AdressesFacturation> AdressesFacturation { get; set; }
     }
 }

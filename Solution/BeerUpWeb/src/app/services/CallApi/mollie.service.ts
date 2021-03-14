@@ -1,42 +1,24 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { AuthentificationService } from '../authentification.service';
 import { UtilService } from '../util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MollieService {
-  http: any;
 
-  constructor(private util:UtilService) { }
+  constructor(private util:UtilService, private http:HttpClient, private authSrv :AuthentificationService) { }
 
-  createPayment(solde:number, transactionId:string){
-    const key = environment.MollieKey;
+  createPayment(solde:number, factureId:string){
+    const token:string = this.authSrv.getUser().id_token;
 
-    let payment = {
-      amount: {
-        currency : 'EUR',
-        value : solde,
-      },
-      description :this.util.referencePayment+transactionId,
-      redirectUrl:this.util.RedirectUrl,
-      webhookUrl:this.util.WebhookUrl,
-      metadata:{
-        transactionId:transactionId,
-      },
-    };
-
-    var result = this.http.post(
-      this.util.apiMollie, payment,
-      { headers: new HttpHeaders({ "Authorization": "Bearer " + key })}
+    let result = this.http.get<string>(
+      this.util.apiMollie+solde+","+factureId,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
-    result.observe(
-      (value: { _links: { checkout: string; }; }) =>{
-        return value._links.checkout;
-      }
-    )
-
+    return result;
   }
 
 }

@@ -84,7 +84,13 @@ import { GetDeletablesEtabsService } from "./get-deletables-etabs.service";
       ).subscribe(
         () => {
           let index = this.lEtablissement.findIndex(x => x.etaId == id);
-          this.lEtablissement.splice(index,1);
+          if(this.lEtablissement.length>1){
+            this.lEtablissement.splice(index,1);
+          }
+          else{
+            this.lEtablissement = new Array<EtablissementModele>();
+          }
+          
           this.lEtablissement$.next(this.lEtablissement);
         }
       )

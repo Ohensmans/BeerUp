@@ -95,7 +95,8 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
           this.lEtabOrga = value;
         }
       ));
-      this.etabOrgaSrv.getAll(false);
+      const id = this.authSrv.getUserOrgId();
+      this.etabOrgaSrv.getAll(false, id);
     }
 
     this.subscr.add(this.typesBiereSrv.lTypesBiere$.subscribe(

@@ -23,7 +23,12 @@ export class TarifsEtabsService {
 
    deleteTarifObs(id:string){
     let index = this.lTarifsEtabs.findIndex(x => x.id == id)
-    this.lTarifsEtabs.splice(index,1);
+    if(this.lTarifsEtabs.length>1){
+      this.lTarifsEtabs.splice(index,1);
+    }
+    else{
+      this.lTarifsEtabs = new Array<TarifModele>();
+    }
     this.lTarifsEtabs$.next(this.lTarifsEtabs);
   }
 

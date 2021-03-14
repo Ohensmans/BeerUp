@@ -20,6 +20,11 @@ namespace IdentityServer
             services.AddHttpClient<IOrganisationService, OrganisationService>();
         }
 
+        public static void UseServicesAdresses(this IServiceCollection services)
+        {
+            services.AddHttpClient<IAdresseFacturationService, AdresseFacturationService>();
+        }
+
         public static void UseServicesBiere(this IServiceCollection services)
         {
             services.AddHttpClient<IBiereService, BiereService>();

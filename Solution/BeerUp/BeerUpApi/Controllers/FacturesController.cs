@@ -45,37 +45,7 @@ namespace BeerUpApi.Controllers
             return fact;
         }
 
-        // PUT: api/Factures/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFacture(int id, Facture fact)
-        {
-            if (id != fact.FacId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(fact).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FactureExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
+ 
         // POST: api/Factures
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -99,22 +69,6 @@ namespace BeerUpApi.Controllers
             }
 
             return CreatedAtAction("GetFacture", new { id = fact.FacId }, fact);
-        }
-
-        // DELETE: api/Factures/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFacture(int id)
-        {
-            var fact = await _context.Factures.FindAsync(id);
-            if (fact == null)
-            {
-                return NotFound();
-            }
-
-            _context.Factures.Remove(fact);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool FactureExists(int id)

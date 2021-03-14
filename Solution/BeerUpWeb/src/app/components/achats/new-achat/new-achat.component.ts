@@ -1,17 +1,25 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AchatVuesModele } from 'src/app/models/achat-vues-modele';
+import { AdresseFacturationModele } from 'src/app/models/adresse-facturation-modele';
 import { BiereModele } from 'src/app/models/BiereModele';
 import { EtablissementModele } from 'src/app/models/etablissement-modele';
+import { FactureModele } from 'src/app/models/facture-modele';
+import { OrganisationModele } from 'src/app/models/organisation-modele';
 import { TarifModele } from 'src/app/models/tarif-modele';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { AchatVueService } from 'src/app/services/CallApi/achat-vue.service';
+import { AdressesFacturationService } from 'src/app/services/CallApi/adresses-facturation.service';
 import { BieresOrgaService } from 'src/app/services/CallApi/bieres-orga.service';
 import { BieresService } from 'src/app/services/CallApi/bieres.service';
 import { EtablissementsService } from 'src/app/services/CallApi/etablissements.service';
 import { EtabsOrgaService } from 'src/app/services/CallApi/etabs-orga.service';
+import { FacturesService } from 'src/app/services/CallApi/factures.service';
+import { MollieService } from 'src/app/services/CallApi/mollie.service';
+import { OrganisationsService } from 'src/app/services/CallApi/organisations.service';
 import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.service';
 import { TarifsEtabsService } from 'src/app/services/CallApi/tarifs-etabs.service';
 import { VuesAchatBiereService } from 'src/app/services/CallApi/vues-achat-biere.service';
@@ -32,22 +40,37 @@ export class NewAchatComponent implements OnInit {
   lTarifEtab:Array<TarifModele>;
   lAchatEtab:Array<AchatVuesModele>;
   lAchatBiere:Array<AchatVuesModele>;
+  lAdresses:Array<AdresseFacturationModele>;
+  lastAdresse:AdresseFacturationModele;
+  adresse:AdresseFacturationModele;
+  lOrganisations:Array<OrganisationModele>;
+  orgId:string;
   solde:number;
+  nextStep:boolean;
+  toConfirm:boolean;
 
   subscr:Subscription;
 
   constructor(private biereSrv:BieresService, private biereOrgaSrv:BieresOrgaService, private etabSrv:EtablissementsService,
     private etabOrgaSrv:EtabsOrgaService, private tarifBiereSrv : TarifsBieresService, private tarifEtabSrv : TarifsEtabsService,
     private vueAchatBiereSrv : VuesAchatBiereService, private vueAchatEtabSrv : VuesAchatEtabService, 
-    private authSrv : AuthentificationService, private achatVueSrv:AchatVueService, private toastr:ToastrService, private util : UtilService) {
+    private authSrv : AuthentificationService, private achatVueSrv:AchatVueService, private toastr:ToastrService, private util : UtilService,
+    private adrSrv : AdressesFacturationService, private orgSrv :OrganisationsService, private factSrv :FacturesService, private mollieSrv:MollieService) {
       this.lBiere = Array(0);
       this.lEtab = Array(0);
       this.lTarifBiere = Array(0);
       this.lTarifEtab = Array(0);
       this.lAchatEtab = Array(0);
       this.lAchatBiere = Array(0);
+      this.lOrganisations = Array(0);
+      this.lastAdresse = new AdresseFacturationModele();
+      this.adresse = new AdresseFacturationModele();
+      this.lAdresses = Array(0);
       this.subscr = new Subscription();
+      this.orgId = "";
       this.solde = 0;
+      this.nextStep = false;
+      this.toConfirm = false;
 
       
    }
@@ -72,50 +95,62 @@ export class NewAchatComponent implements OnInit {
       }
     ));
 
+    this.subscr.add(this.adrSrv.adresse$.subscribe(
+      (value)=> {
+        this.adresse = value;
+      }
+    ))
+
+    this.subscr.add(this.biereOrgaSrv.lAllowedBieresOrga$.subscribe(
+      (value) => {
+        this.lBiere = value;
+        this.getVuesRestantesBiere();
+        this.getTarifsBiere();
+      }
+    ));
+    
+    this.subscr.add(this.etabOrgaSrv.lAllowedEtabsOrga$.subscribe(
+      (value) => {
+        this.lEtab = value;
+        this.getVuesRestantesEtab();
+        this.getTarifsEtab();
+      }
+    ));
+
     //in case of Admin
     if(this.authSrv.isAdmin()){
-      this.subscr.add(this.biereSrv.lBiere$.subscribe(
+      this.subscr.add(this.orgSrv.lOrganisation$.subscribe(
         (value) => {
-          this.lBiere = value;
-          this.getVuesRestantesBiere();
-          this.getTarifsBiere();
+          this.lOrganisations = value;
         }
-      ));
-      this.subscr.add(this.etabSrv.lEtablissement$.subscribe(
-        (value) => {
-          this.lEtab = value;
-          this.getVuesRestantesEtab();
-          this.getTarifsEtab();
-        }
-      ));
-    this.biereSrv.getAll();
-    this.etabSrv.getAll();
+      ))
+    this.orgSrv.getAll();
     }
 
     //in case of customer
     else{
-      this.subscr.add(this.biereOrgaSrv.lAllowedBieresOrga$.subscribe(
-        (value) => {
-          this.lBiere = value;
-          this.getVuesRestantesBiere();
-          this.getTarifsBiere();
-        }
-      ));
-      
-      this.subscr.add(this.etabOrgaSrv.lAllowedEtabsOrga$.subscribe(
-        (value) => {
-          this.lEtab = value;
-          this.getVuesRestantesEtab();
-          this.getTarifsEtab();
-        }
-      ));
-      this.biereOrgaSrv.getAll(this.authSrv.getUserOrgId(), true);
-      this.etabOrgaSrv.getAll(true);
+
+      this.orgId = this.authSrv.getUserOrgId();
+      this.biereOrgaSrv.getAll(this.orgId, true);
+      this.etabOrgaSrv.getAll(true, this.orgId);
     }
 
-    
-    
+    this.getAdresses();
 
+  }
+
+  getAdresses(){
+    this.subscr.add(this.adrSrv.lAdresseOrga$.subscribe(
+      (value)=>{
+        this.lAdresses = value;
+      }
+    ));
+    this.subscr.add(this.adrSrv.lastAdresse$.subscribe(
+      (value)=>{
+        this.lastAdresse = value;
+      }
+    ));
+    this.adrSrv.getAll(this.authSrv.getUserOrgId());
   }
 
   getVuesRestantesBiere(){
@@ -156,8 +191,6 @@ export class NewAchatComponent implements OnInit {
     this.vueAchatEtabSrv.get();
   }
 
-  isAdmin(){}
-
   getTarifsBiere(){
     this.subscr.add(this.tarifBiereSrv.lTarifsBiere$.subscribe(
       (value) => {
@@ -190,6 +223,17 @@ export class NewAchatComponent implements OnInit {
     this.tarifEtabSrv.getAll();
   }
 
+  selectOrga(orgId:string){
+    this.orgId = orgId;
+    this.biereOrgaSrv.getAll(orgId, true);
+    this.etabOrgaSrv.getAll(true,orgId);
+    this.adrSrv.getAll(orgId);
+  }
+
+  isAdmin(){
+    return this.authSrv.isAdmin();
+  }
+
   ngOnDestroy(){
     this.subscr.unsubscribe();
   }
@@ -220,12 +264,105 @@ export class NewAchatComponent implements OnInit {
     this.toastr.info(message, "Information");
   }
 
+  changeToConfirm(){
+    this.toConfirm = !this.toConfirm;
+  }
 
+  changeStep(){
+    this.nextStep = !this.nextStep;
+  }
 
-  preparePayment(){
-    let facId = Guid.create();
-    
+  confirmOrder(){
+    this.toConfirm = true;
+  }
 
+  somethingOrdered(){
+    if(this.lAchatEtab.length!=0||this.lAchatBiere.length!=0){
+    let index = this.lAchatEtab.findIndex(a => a.isNew == false)
+    if(index !=-1){
+      return true;
+    }
+    index = this.lAchatBiere.findIndex(a => a.isNew == false)
+    if(index !=-1){
+      return true;
+    }
+  }
+    return false;
+  }
+
+  getNomBiere(bieId:string){
+    let index = this.lBiere.findIndex(b => b.bieId == bieId);
+    if(index!=-1){
+      return this.lBiere[index].bieNom;
+    }
+    return "";
+  }
+
+  getNomEtab(etaId:string){
+    let index = this.lEtab.findIndex(e => e.etaId == etaId);
+    if(index!=-1){
+      return this.lEtab[index].etaNom;
+    }
+    return "";
+  }
+
+  getNombreVueBiere(tarifId:string){
+    let index = this.lTarifBiere.findIndex(t => t.id == tarifId);
+    if(index!=-1){
+      return this.lTarifBiere[index].nbVue.toString();
+    }
+    return "";
+  }
+
+  getNombreVueEtab(tarifId:string){
+    let index = this.lTarifEtab.findIndex(t => t.id == tarifId);
+    if(index!=-1){
+      return this.lTarifEtab[index].nbVue.toString();
+    }
+    return "";
+  }
+
+  toPayment(){
+    try{
+      this.createFacture();
+    }
+    catch{
+      return;
+    }
+
+  }
+
+  createAchatOnDb(lAchat:Array<AchatVuesModele>, factId:string){
+    lAchat.forEach(element => {
+      element.facId = factId;
+      this.subscr.add(this.achatVueSrv.saveAchat(element).subscribe(
+        (error) =>{
+          throw error;
+        }
+      ))
+    });
+  }
+  
+
+  createFacture(){
+    try{
+    let fact = new FactureModele();
+    this.subscr.add(this.factSrv.addFacture(fact).subscribe(
+      (value) => {
+       this.createAchatOnDb(this.lAchatBiere, value.facId);
+      this.createAchatOnDb(this.lAchatEtab, value.facId);
+      this.subscr.add(this.mollieSrv.createPayment(this.solde, value.facId).subscribe(
+        (value) =>{
+          let url = value;
+          //window.location.href = url._links.checkout;
+        }
+      ))
+      }
+    ));
+    }
+    catch{
+      return;
+    }
   }
 
 

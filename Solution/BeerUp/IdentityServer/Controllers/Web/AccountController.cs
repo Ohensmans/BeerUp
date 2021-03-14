@@ -25,12 +25,13 @@ namespace IdentityServer.Controllers.Web
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
         private readonly IOrganisationService organisationService;
+        private readonly IAdresseFacturationService adresseService;
 
         //Adresse de retour sur le site
         private readonly string BeerUpWebUrl;
 
         public AccountController(UserManager<Utilisateur> userManager, SignInManager<Utilisateur> signInManager, IIdentityServerInteractionService interaction, IEventService events,
-            IOptions<Models.BaseUrl> url, IOrganisationService organisationService)
+            IOptions<Models.BaseUrl> url, IOrganisationService organisationService, IAdresseFacturationService adresseService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,6 +39,7 @@ namespace IdentityServer.Controllers.Web
             _events = events; 
             this.BeerUpWebUrl = url.Value.BeerUpWebUrl;
             this.organisationService = organisationService;
+            this.adresseService = adresseService;
         }
 
         [HttpGet]
@@ -140,6 +142,19 @@ namespace IdentityServer.Controllers.Web
             try
             {
                 Organisation orga = await organisationService.CreateOrganisationAsync(organisation);
+
+                AdressesFacturation adresse = new AdressesFacturation();
+                adresse.AdrFacCp = orga.OrgCp;
+                adresse.AdrFacNum = orga.OrgNum;
+                adresse.AdrFacPays = orga.OrgPays;
+                adresse.AdrFacRue = orga.OrgRue;
+                adresse.AdrFacVil = orga.OrgVille;
+                adresse.OrgId = orga.OrgId;
+                adresse.AdrFacDateAjout = DateTime.Now;
+                adresse.AdrFacId = Guid.NewGuid();
+
+                var result = await adresseService.CreateAdresseAsync(adresse);
+
                 return orga.OrgId;
             }
             catch (Exception)

@@ -1,0 +1,103 @@
+<div>
+<fieldset><h5 class="marginleft">Choisir l'adresse de facturation</h5></fieldset>
+<br>
+</div>
+
+<form class="innerForm" [formGroup]="adresseForm" (ngSubmit)="onSubmitForm()">
+    <div class="form-group">
+
+            <ul>
+            <li class="col-md-12" *ngIf="!noLastAdresse()">
+                <button class="btn btn-info" (click)="selectLastAdresse()"> La dernière adresse utilisée : {{lastAdresse.adrFacNum}}, {{lastAdresse.adrFacRue}} {{lastAdresse.adrFacVil}}</button>
+                <div>
+                    <br>
+                </div>
+            </li>
+
+            <li class="col-md-12" *ngIf="notEmptyAdresseListe()">
+            <div class="">
+                <div class="btn btn-info" (click)="showExistingSwitch()">Parmi une des adresses déjà encodée</div>
+                <div>
+                    <br>
+                    <ul *ngIf="showExisting">             
+                        <li>
+                            <select class="form-control form-group col-md-4" #t (change)="selectAmongExisting(t.value)">
+                                <option *ngFor="let adresse of lAdresses"  [value]="adresse.adrFacId">
+                                    {{adresse.adrFacNum}}, {{adresse.adrFacRue}} {{adresse.adrFacVil}}
+                                </option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </li>
+
+            <li  class="col-md-12">
+                <div class="btn btn-info" (click)="selectedNew()">Créer une nouvelle adresse</div>
+            </li>
+        </ul>
+
+        <div>
+            <div class="col-md-12 row">
+                <!--Rue-->
+                <div class="form-group col-md-8">
+                    <label class="control-label">Rue</label>
+                    <input type="text"  class="form-control" id="adrRue" formControlName="adrRue" [attr.disabled]="isOld() ? 'disabled' :null">
+                    <div *ngIf="submitted && form.adrRue.invalid">
+                        <div *ngIf="form.adrRue.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.adrRue.errors?.maxlength" class="text-danger" >*maximum 200 caractères </div>
+                    </div>      
+                </div>
+
+                <!--Numéro-->
+                <div class="form-group col-md-4">
+                    <label class="control-label">Numéro</label>
+                    <input type="text"  class="form-control" id="adrNum" formControlName="adrNum" [attr.disabled]="isOld() ? 'disabled' :null">   
+                    <div *ngIf="submitted && form.adrNum.invalid">
+                        <div *ngIf="form.adrNum.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.adrNum.errors?.maxlength" class="text-danger" >*maximum 50 caractères </div>
+                    </div>  
+                </div>
+            </div>
+
+            <div class="col-md-12 row">
+                <!--Code Postal-->
+                <div class="form-group col-md-2">
+                    <label class="control-label">Code Postal</label>
+                    <input type="text"  class="form-control" id="adrCp" formControlName="adrCp" [attr.disabled]="isOld() ? 'disabled' :null">
+                    <div *ngIf="submitted && form.adrCp.invalid">
+                        <div *ngIf="form.adrCp.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.adrCp.errors?.maxlength" class="text-danger" >*maximum 50 caractères </div>
+                    </div>    
+                </div>
+
+                <!--Ville-->
+                <div class="form-group col-md-6">
+                    <label class="control-label">Ville</label>
+                    <input type="text"  class="form-control" id="adrVille" formControlName="adrVille" [attr.disabled]="isOld() ? 'disabled' :null"> 
+                    <div *ngIf="submitted && form.adrVille.invalid">
+                        <div *ngIf="form.adrVille.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.adrVille.errors?.maxlength" class="text-danger" >*maximum 100 caractères </div>
+                    </div>     
+                </div>
+                
+                <!--Pays-->
+                <div class="form-group col-md-4">
+                    <label class="control-label">Pays</label>
+                    <input type="text"  class="form-control" id="adrPays" formControlName="adrPays" [attr.disabled]="isOld() ? 'disabled' :null"> 
+                    <div *ngIf="submitted && form.adrPays.invalid">
+                        <div *ngIf="form.adrPays.errors?.required" class="text-danger" >*obligatoire</div>
+                        <div *ngIf="form.adrPays.errors?.maxlength" class="text-danger" >*maximum 50 caractères </div>
+                    </div>     
+                </div>
+            </div>  
+        </div>
+        <div class="text-center">
+            <br>
+        <button *ngIf="!isOld()" class="btn btn-primary" type="submit">Enregistrer la nouvelle adresse</button>
+        </div>
+    </div>
+    </form>
+
+
+

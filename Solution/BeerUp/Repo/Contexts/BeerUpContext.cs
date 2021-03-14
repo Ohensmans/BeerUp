@@ -152,6 +152,14 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.Property(e => e.AdrFacVil)
                     .HasMaxLength(100)
                     .HasColumnName("AdrFac.Vil");
+
+                entity.Property(e => e.OrgId).HasColumnName("Org.Id");
+
+                entity.HasOne(d => d.Org)
+                    .WithMany(p => p.AdressesFacturation)
+                    .HasForeignKey(d => d.AdrFacId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AdressesFacturation_Organisations");
             });
 
 

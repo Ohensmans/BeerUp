@@ -1,31 +1,28 @@
 <br>
 <br>
+<div *ngIf="!nextStep">
+    <div class="card">
+        <div class="card-header">
+            <h3>Achats de vues</h3>
+        </div>
 
-<div class="card">
-    <div class="card-header">
-        <h3>Achats de vues</h3>
-    </div>
-        <table  class="table table-striped">
-            <thead>
-                <tr *ngIf="lAchatBiere.length">
-                    <th>Bière</th>
-                    <th class="text-center">Vues restantes</th>
-                    <th class="text-center">Vues à acheter</th>
-                    <th class="text-center">Prix</th>
-                    <th class="text-center">Ajou/Supp</th>
-                </tr>  
-            </thead>
-            <tbody>
-                <app-new-achat-biere-element  class="innerForm" *ngFor="let achatBiere of lAchatBiere"
-                [lAllowedBiere]="lBiere" [lTarifsBiere]="lTarifBiere" [achatBiere]="achatBiere">
-                </app-new-achat-biere-element>   
-            </tbody>
-
-            </table>
+        <div *ngIf="isAdmin()" class="col-md-12 row">
+            <!--Organisation-->
+            <div class="form-group col-md-6">
+                <br>
+                <h5 class="control-label">Organisation</h5>
+                <select class="form-control" #t (change)="selectOrga(t.value)" [attr.disabled]="somethingOrdered() ? 'disabled' :null">
+                    <option *ngFor="let orga of lOrganisations" [value]="orga.orgId">
+                        {{orga.orgNom}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        
             <table  class="table table-striped">
                 <thead>
-                    <tr *ngIf="lAchatEtab.length">
-                        <th>Etablissement</th>
+                    <tr *ngIf="lAchatBiere.length">
+                        <th>Bière</th>
                         <th class="text-center">Vues restantes</th>
                         <th class="text-center">Vues à acheter</th>
                         <th class="text-center">Prix</th>
@@ -33,30 +30,125 @@
                     </tr>  
                 </thead>
                 <tbody>
-                    <app-new-achat-etab-element  class="innerForm" *ngFor="let achatEtab of lAchatEtab"
-                    [lAllowedEtab]="lEtab" [lTarifsEtab]="lTarifEtab" [achatEtab]="achatEtab">
-                    </app-new-achat-etab-element>  
+                    <app-new-achat-biere-element  class="innerForm" *ngFor="let achatBiere of lAchatBiere"
+                    [lAllowedBiere]="lBiere" [lTarifsBiere]="lTarifBiere" [achatBiere]="achatBiere">
+                    </app-new-achat-biere-element>   
                 </tbody>
+
                 </table>
-        <br>
-        <br>
-        <div class="col-md-12 row">
-            <button class="btn btn-success" (click)="addVueBiere()">Ajouter des vues bière</button>
+                <table  class="table table-striped">
+                    <thead>
+                        <tr *ngIf="lAchatEtab.length">
+                            <th>Etablissement</th>
+                            <th class="text-center">Vues restantes</th>
+                            <th class="text-center">Vues à acheter</th>
+                            <th class="text-center">Prix</th>
+                            <th class="text-center">Ajou/Supp</th>
+                        </tr>  
+                    </thead>
+                    <tbody>
+                        <app-new-achat-etab-element  class="innerForm" *ngFor="let achatEtab of lAchatEtab"
+                        [lAllowedEtab]="lEtab" [lTarifsEtab]="lTarifEtab" [achatEtab]="achatEtab">
+                        </app-new-achat-etab-element>  
+                    </tbody>
+                    </table>
             <br>
-            <button class="btn btn-success" (click)="addVueEtab()">Ajouter des vues établissements</button>
+            <br>
+            <div class="col-md-12 row">
+                <button class="btn btn-success" (click)="addVueBiere()">Ajouter des vues bière</button>
+                <br>
+                <button class="btn btn-success" (click)="addVueEtab()">Ajouter des vues établissements</button>
+            </div>
+            <div>
+                <br>
+            </div>
+            
+        <div class="card-footer">
+            <div class="solde"><b>Prix total : {{solde}} €</b></div>
+        </div>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" (click)="changeStep()" [attr.disabled]="solde<=0 ? 'disabled' :null">Etape suivante</button>
+    </div>
+</div>
+
+<div *ngIf="nextStep&&!toConfirm">
+    
+    <div class="card">
+        <div class="card-header">
+            <button class="btn btn-danger" (click)="changeStep()">Etape précédente</button>
+            <div class="solde"><b>Prix total : {{solde}} €</b></div>
         </div>
         <div>
             <br>
+            <app-adresse-facturation  class="innerForm"
+                [lAdresses]="lAdresses" [lastAdresse]="lastAdresse" [orgId]="orgId">
+            </app-adresse-facturation>  
         </div>
-        
-    <div class="card-footer">
-        <div class="solde"><b>Prix total : {{solde}} €</b></div>
+    </div>
+
+    <div class="text-center">
+        <br>
+        <button class="btn btn-primary" (click)="confirmOrder()" [attr.disabled]="(solde<=0 || adresse.adrFacId=='')? 'disabled' :null">Vers la confirmation de commande</button>
     </div>
 </div>
-<div>
-    <br>
-</div>
-<div class="text-center">
-    <button class="btn btn-primary" (click)="preparePayment()" [attr.disabled]="solde<=0 ? 'disabled' :null">Passer au paiement</button>
-</div>
 
+<div *ngIf="nextStep&&toConfirm">
+    
+    <div class="card">
+        <div class="card-header">
+            <button class="btn btn-danger" (click)="changeToConfirm()">Etape précédente</button>
+            <div class="solde"><b>Prix total : {{solde}} €</b></div>
+        </div>
+    <table  class="table table-striped">
+        <thead>
+            <tr *ngIf="lAchatBiere.length">
+                <th class="col-md-6">Bière</th>
+                <th class="col-md-4">Vues achetées</th>
+                <th class="col-md-2">Prix</th>
+            </tr>  
+        </thead>
+        <tbody>
+            <div *ngFor="let achatBiere of lAchatBiere" class="innerForm">
+                <tr>
+                    <td>{{getNomBiere(achatBiere.bieId!)}}</td>
+                    <td>{{getNombreVueBiere(achatBiere.tarifsVueBieId!)}}</td>
+                    <td>{{achatBiere.prix}} €</td>
+                </tr>
+            </div>   
+        </tbody>
+        </table>
+
+        <table  class="table table-striped">
+            <thead>
+                <tr *ngIf="lAchatEtab.length">
+                    <th class="col-md-6">Etablissement</th>
+                    <th class="col-md-4">Vues achetées</th>
+                    <th class="col-md-2">Prix</th>
+                </tr>  
+            </thead>
+            <tbody>
+                <div *ngFor="let achatEtab of lAchatEtab" class="innerForm">
+                    <tr >
+                        <td>{{getNomEtab(achatEtab.etaId!)}}</td>
+                        <td>{{getNombreVueEtab(achatEtab.tarifsVueEtabId!)}}</td>
+                        <td>{{achatEtab.prix}} €</td>
+                    </tr>
+                </div>   
+            </tbody>
+        </table>
+
+        <div class="card-footer">
+            <div class="solde"><b>Prix total : {{solde}} €</b></div>
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <br>
+        <button class="btn btn-primary" (click)="toPayment()" [attr.disabled]="(solde<=0 || adresse.adrFacId=='')? 'disabled' :null">Passer au paiement</button>
+    </div>
+</div>

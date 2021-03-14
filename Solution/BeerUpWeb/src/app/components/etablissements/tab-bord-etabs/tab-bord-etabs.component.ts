@@ -48,7 +48,8 @@ export class TabBordEtabsComponent implements OnInit {
           this.lEtabsOrgaPagination = this.lEtabsOrga.slice(0, this.itemsPerPage);
         }
       );
-    this.EtabsOrgaSrv.getAll(false);
+    const id = this.AuthSrv.getUserOrgId();
+    this.EtabsOrgaSrv.getAll(false, id);
     }
   }
 

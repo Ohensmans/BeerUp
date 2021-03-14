@@ -79,7 +79,12 @@ export class BieresService {
     ).subscribe(
       () => {
         let index = this.lBiere.findIndex(x => x.bieId == id);
+        if(this.lBiere.length>1){
         this.lBiere.splice(index,1);
+        }
+        else{
+          this.lBiere = new Array<BiereModele>();
+        }
         this.lBiere$.next(this.lBiere);
       }
     )

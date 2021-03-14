@@ -71,9 +71,9 @@ export class TabBordBieresComponent implements OnInit, OnDestroy {
           this.lEtabsOrga = value;
         }
       ));
-  
-      this.EtabsOrgaSrv.getAll(false);
-      this.BieresOrgaSrv.getAll(this.AuthSrv.getUserOrgId(), false);
+      const id = this.AuthSrv.getUserOrgId();
+      this.EtabsOrgaSrv.getAll(false, id);
+      this.BieresOrgaSrv.getAll(id, false);
     }
 
 

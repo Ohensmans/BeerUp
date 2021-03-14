@@ -12,7 +12,7 @@ namespace IdentityServer.Models
         public string BeerUpWebUrlAchats { get; set; }
         public string BeerUpWebUrlEtablissements { get; set; }
         public string BeerUpWebUrlBieres { get; set; }
-
+        public string BeerUpApiAdresses { get; set; }
 
         public string BeerUpApiOrga { get; set; }
 

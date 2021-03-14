@@ -68,7 +68,12 @@ export class JoursFermetureService {
 
   deleteJourObs(id:string){
     let index = this.lJours.findIndex(x => x.jouId == id)
-    this.lJours.splice(index,1);
+    if(this.lJours.length>1){
+      this.lJours.splice(index,1);
+    }
+    else{
+      this.lJours = new Array<JourFermetureModele>();
+    }
     this.lJours$.next(this.lJours);
   }
 

@@ -47,6 +47,7 @@ import { TabBordPlanTarifBiereComponent } from './components/plansTarifaires/tab
 import { TabBordAchatBiereComponent } from './components/achats/tab-bord-achat-biere/tab-bord-achat-biere.component';
 import { NewAchatEtabElementComponent } from './components/achats/new-achat-etab-element/new-achat-etab-element.component';
 import { NewAchatBiereElementComponent } from './components/achats/new-achat-biere-element/new-achat-biere-element.component';
+import { AdresseFacturationComponent } from './components/achats/adresse-facturation/adresse-facturation.component';
 
 
 
@@ -81,6 +82,7 @@ import { NewAchatBiereElementComponent } from './components/achats/new-achat-bie
     TabBordAchatBiereComponent,
     NewAchatEtabElementComponent,
     NewAchatBiereElementComponent,
+    AdresseFacturationComponent,
   ],
   imports: [
     CommonModule,

@@ -23,8 +23,13 @@ export class TarifsBieresService {
   }
 
   deleteTarifObs(id:string){
-    let index = this.lTarifsBiere.findIndex(x => x.id == id)
-    this.lTarifsBiere.splice(index,1);
+    let index = this.lTarifsBiere.findIndex(x => x.id == id)   
+    if(this.lTarifsBiere.length>1){
+      this.lTarifsBiere.splice(index,1);
+    }
+    else{
+      this.lTarifsBiere = new Array<TarifModele>();
+    }
     this.lTarifsBiere$.next(this.lTarifsBiere);
   }
 

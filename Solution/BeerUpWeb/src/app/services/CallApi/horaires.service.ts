@@ -69,7 +69,12 @@ export class HorairesService {
 
   deleteHoraireObs(id:string){
     let index = this.lHoraire.findIndex(x => x.horId == id)
-    this.lHoraire.splice(index,1);
+    if(this.lHoraire.length>1){
+      this.lHoraire.splice(index,1);
+    }
+    else{
+      this.lHoraire = new Array<HoraireModele>();
+    }
     this.lHoraire$.next(this.lHoraire);
   }
 

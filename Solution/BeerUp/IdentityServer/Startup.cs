@@ -114,6 +114,7 @@ namespace IdentityServer
 
             services.UseServicesVAT();
             services.UseServicesOrganisation();
+            services.UseServicesAdresses();
             services.UseServicesBiere();
             services.UseServicesEtablissement();
             services.UseServicesBieresOrga();

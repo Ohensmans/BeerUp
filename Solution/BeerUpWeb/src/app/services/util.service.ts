@@ -9,7 +9,7 @@ export class UtilService {
   apiUrl = 'http://localhost:5001/api/';
   apiTarifsBieresUrl = this.apiUrl+'TarifsVueBieres/';
   apiTarifsEtabsUrl = this.apiUrl+'TarifsVueEtabs/';
-  apiEtabsOrgaUrl = this.apiUrl+'EtabOrga/';
+  apiEtabsOrgaUrl = this.apiUrl+'EtabsOrga/';
   apiEtablissementsUrl = this.apiUrl+'Etablissements/';
   apiTypesEtabUrl = this.apiUrl+'TypesEtab/';
   apiImagesEtabUrl = this.apiUrl+'ImagesEtab/';
@@ -30,6 +30,11 @@ export class UtilService {
   apiAvisBiereUserUrl = this.apiUrl+'AvisBiereUser/';
   apiVuesAchatsBiere = this.apiUrl+'VuesAchatsBiere/';
   apiVuesAchatsEtab = this.apiUrl+'VuesAchatsEtab/';
+  apiAdressesFacturation = this.apiUrl+'AdressesFacturation/';
+  apiAdressesFacturationOrga = this.apiUrl+'AdressesFacturationOrga/';
+  apiFactures = this.apiUrl+'Factures/';
+  apiAchatsVues = this.apiUrl+'AchatsVues/';
+  apiMollie = this.apiUrl+'Mollie/';
   
 
   //External Api
@@ -44,13 +49,6 @@ export class UtilService {
   TypeTarifVueBiere = "Biere";
   NoteMAX = 5;
   nombreMiniNotesAvis = 3;
-
-  //Mollie Parameter
-  apiMollie = 'https://api.mollie.com/v2/payments/';
-  referencePayment = 'Achat de vues sponsorisées beerUp références :';
-  RedirectUrl = "http://localhost:4200/checkout";
-  WebhookUrl ="this.apiUrl/transaction";
-
 
   noImageAvailableUrl = 'http://localhost:5001/resources/images/no_image_available.png';
 

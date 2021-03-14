@@ -19,6 +19,9 @@ namespace Repo.Modeles.ModelesBeerUp
         public string AdrFacVil { get; set; }
         public string AdrFacPays { get; set; }
         public DateTime? AdrFacDateAjout { get; set; }
+        public Guid OrgId { get; set; }
+        public virtual Organisation Org { get; set; }
+    
 
         public virtual ICollection<FactureOrgaAdresse> FactureOrgaAdresses { get; set; }
     }

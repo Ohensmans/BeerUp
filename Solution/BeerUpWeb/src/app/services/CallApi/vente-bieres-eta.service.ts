@@ -51,7 +51,12 @@ export class VenteBieresEtaService {
 
   deleteVenteBieresParEtabObs(id:string){
     let index = this.lVentesBieresEtab.findIndex(x => x.venteBiereEtaId == id)
-    this.lVentesBieresEtab.splice(index,1);
+    if(this.lVentesBieresEtab.length>1){
+      this.lVentesBieresEtab.splice(index,1);
+    }
+    else{
+      this.lVentesBieresEtab = new Array<VenteBiereEtaModele>();
+    }
     this.lVentesBieresEtab$.next(this.lVentesBieresEtab);
   }
 
@@ -64,7 +69,12 @@ export class VenteBieresEtaService {
     ).subscribe(
       () => {
         let index = this.lVentesBieresEtab.findIndex(x => x.typServId == id);
-        this.lVentesBieresEtab.splice(index,1);
+        if(this.lVentesBieresEtab.length>1){
+          this.lVentesBieresEtab.splice(index,1);
+        }
+        else{
+          this.lVentesBieresEtab = new Array<VenteBiereEtaModele>();
+        }
         this.lVentesBieresEtab$.next(this.lVentesBieresEtab);
       }
     )

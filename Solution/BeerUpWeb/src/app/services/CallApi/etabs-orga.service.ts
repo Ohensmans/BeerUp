@@ -72,12 +72,12 @@ export class EtabsOrgaService {
     
   }
 
-  getAll(achat:boolean){
+  getAll(achat:boolean, orgId:string){
     const token = this.authSrv.getUser().id_token;
-    const id = this.authSrv.getUserOrgId();
+    
 
     var result = this.http.get<EtablissementModele[]>(
-      this.util.apiEtabsOrgaUrl+id,
+      this.util.apiEtabsOrgaUrl+orgId,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(

@@ -330,3 +330,4 @@ C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\obj\Debug\net5
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\obj\Debug\net5.0\ref\BeerUpApi.dll
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\obj\Debug\net5.0\BeerUpApi.pdb
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\obj\Debug\net5.0\BeerUpApi.genruntimeconfig.cache
+F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Mollie.Api.dll
