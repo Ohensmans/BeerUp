@@ -16,7 +16,7 @@ namespace Repo.Modeles.ModelesBeerUp
             : base(options)
         {
         }
-
+        public virtual DbSet<AchatFacture> AchatsFacture { get; set; }
         public virtual DbSet<AchatsVue> AchatsVues { get; set; }
         public virtual DbSet<AdressesFacturation> AdressesFacturations { get; set; }
         public virtual DbSet<AvisBiereUser> AvisBiereUser { get; set; }
@@ -58,6 +58,32 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.Property(v => v.NbVuesAch).HasColumnName("TVEVueAch");
 
             });
+
+            modelBuilder.Entity<AchatFacture>(entity =>
+            {
+                entity.HasKey(a => a.AchId);
+
+                entity.Property(a => a.AchId).HasColumnName("Ach.Id");
+
+                entity.Property(a => a.OrgId).HasColumnName("Org.Id");
+
+                entity.Property(a => a.FacId).HasColumnName("Fac.Id");
+
+                entity.Property(a => a.BieNom).HasColumnName("Bie.Nom");
+
+                entity.Property(a => a.EtaNom).HasColumnName("Eta.Nom");
+
+                entity.Property(a => a.BieNbVuAch).HasColumnName("BieNbVuAch");
+
+                entity.Property(a => a.EtaNbVuAch).HasColumnName("EtaNbVuAch");
+
+                entity.Property(a => a.BiePrix).HasColumnName("BiePrix");
+
+                entity.Property(a => a.EtaPrix).HasColumnName("EtaPrix");
+
+            });
+
+
 
             modelBuilder.Entity<VueAchatsBiere>(entity =>
             {
@@ -349,6 +375,8 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.FacStatus).HasColumnName("Fac.Status")
                     .IsRequired();
+
+                entity.Property(e => e.FacMotif).HasColumnName("Fac.Motif");
 
                 entity.Property(e => e.FacDate)
                     .HasColumnType("datetime")

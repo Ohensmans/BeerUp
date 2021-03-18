@@ -24,6 +24,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "guid-typescript": "^1.0.9",
+    "jspdf": "^2.3.1",
     "ngx-bootstrap": "^6.2.0",
     "ngx-toastr": "^13.2.0",
     "oidc-client": "^1.10.1",

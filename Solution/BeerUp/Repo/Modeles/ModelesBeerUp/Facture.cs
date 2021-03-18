@@ -18,6 +18,8 @@ namespace Repo.Modeles.ModelesBeerUp
 
         public string FacStatus { get; set; }
 
+        public string FacMotif { get; set; }
+
         public virtual ICollection<AchatsVue> AchatsVues { get; set; }
         public virtual ICollection<FactureOrgaAdresse> FactureOrgaAdresses { get; set; }
     }

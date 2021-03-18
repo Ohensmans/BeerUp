@@ -33,8 +33,12 @@ export class UtilService {
   apiAdressesFacturation = this.apiUrl+'AdressesFacturation/';
   apiAdressesFacturationOrga = this.apiUrl+'AdressesFacturationOrga/';
   apiFactures = this.apiUrl+'Factures/';
+  apiFacturesOrga = this.apiUrl+'FacturesOrga/';
   apiAchatsVues = this.apiUrl+'AchatsVues/';
+  apiAchatsFacture = this.apiUrl+'AchatsFacture/';
   apiMollie = this.apiUrl+'Mollie/';
+  apiStripe= this.apiUrl+'Stripe/';
+  apiAchatFactureParFacture= this.apiUrl+'AchatFactureParFacture/';
   
 
   //External Api
@@ -58,6 +62,14 @@ export class UtilService {
   nextText="»";
   previousText="«"
   itemsPerPage = 7;
+
+  //BeerUp Properties
+  adresseNom = "BeerUp!";
+  adresseRue = "17, Rue de la bière";
+  adresseVille = "Bruxelles";
+  adressePays = "Belgique";
+  numeroTVA = "BE01 0203 0405 0607"
+  TVA = 21;
 
   constructor() { }
 }

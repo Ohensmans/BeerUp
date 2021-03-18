@@ -34,4 +34,14 @@ export class OrganisationsService {
     )
   }
 
+  getOne(orgId:string){
+    const token = this.authSrv.getUser().id_token;
+
+    var result = this.http.get<OrganisationModele>(
+      this.util.apiOrganisationsUrl+orgId,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    );
+    return result;
+  }
+
 }

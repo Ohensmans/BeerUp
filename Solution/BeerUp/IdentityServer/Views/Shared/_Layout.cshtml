@@ -32,50 +32,59 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Back">Accueil</a>
                         </li>
-                        @if (User?.Identity != null && User.Identity.IsAuthenticated)
+
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupAchat")))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Administration
+                                <a class="nav-link text-light dropdown-toggle " href="#" id="navbarDropdownAchat" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Achats
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @if (User.IsInRole("Administrateur"))
-                                    {
-                                        @Html.ActionLink("Plans tarifaires", "PlansTarifaires", "Home", null, new { @class = "dropdown-item" })
-                                        <div class="dropdown-divider"></div>
-                                    }
-                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupAchat"))
-                                    {
-                                        @Html.ActionLink("Achats", "Achats", "Home", null, new { @class = "dropdown-item" })
-                                    }
-                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || (User.IsInRole("GroupAchat") && User.IsInRole("GroupEtablissement")))
-                                    {
-                                        <div class="dropdown-divider"></div>
-                                    }
-                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupEtablissement"))
-                                    {
-                                        @Html.ActionLink("Etablissements", "Etablissements", "Home", null, new { @class = "dropdown-item" })
-                                    }
-                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || (User.IsInRole("GroupBiere") && User.IsInRole("GroupEtablissement")))
-                                    {
-                                        <div class="dropdown-divider"></div>
-                                    }
-                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupBiere"))
-                                    {
-                                        @Html.ActionLink("Bières", "Bieres", "Home", null, new { @class = "dropdown-item" })
-                                    }
-                                    @if (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin"))
-                                    {
-                                        <div class="dropdown-divider"></div>
-                                        @Html.ActionLink("Utilisateurs", "Index", "AdministrationUsers", null, new { @class = "dropdown-item" })
-                                    }
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownAchat">
+                                    @Html.ActionLink("Vues bières", "VuesBiere", "Home", null, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Vues établissement", "VuesEtablissement", "Home", null, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Achat de nouvelles vues", "AchatVues", "Home", null, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Factures", "Factures", "Home", null, new { @class = "dropdown-item" })
+
                                 </div>
                             </li>
                         }
 
-                        <li class="nav-item">
-                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link text-light" })
-                        </li>
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin")))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle " href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Administration
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                                    @if (User.IsInRole("Administrateur"))
+                                    {
+                                        <li class="nav-item">
+                                            
+                                             @Html.ActionLink("Tarifs bières", "TarifsBiere", "Home", null, new { @class = "dropdown-item" })
+                                             @Html.ActionLink("Tarifs établissements", "TarifsEtab", "Home", null, new { @class = "dropdown-item" })
+                                            
+                                        </li>
+                                    }
+                                    <li>
+                                        @Html.ActionLink("Utilisateurs", "Index", "AdministrationUsers", null, new { @class = "dropdown-item" })
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupBiere")))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Bières", "Bieres", "Home", null, new { @class = "nav-link text-light" })
+                            </li>
+                        }
+
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("Administrateur") || User.IsInRole("GroupAdmin") || User.IsInRole("GroupEtablissement")))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Etablissements", "Etablissements", "Home", null, new { @class = "nav-link text-light" })
+                            </li>
+                        }
+
 
                         @if (User?.Identity != null && User.Identity.IsAuthenticated)
                         {
@@ -111,7 +120,7 @@
 
     <footer class="border-top footer bg-dark text-muted">
         <div class="container text-white">
-            &copy; 2021 - BeerUp - <a asp-area="" class="text-white" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - BeerUp - <a asp-area="" class="text-white" asp-controller="Home" asp-action="Contact">Contact</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

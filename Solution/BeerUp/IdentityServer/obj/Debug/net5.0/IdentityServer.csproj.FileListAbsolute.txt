@@ -112,7 +112,6 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\V
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Account\RegisterWeb.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\AdministrationUsers\EditScopeRole.cshtml.g.cs
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\Macross.Json.Extensions.dll
-C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\appsettings.json
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\IdentityServer.exe
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\IdentityServer.deps.json
@@ -226,3 +225,4 @@ C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\ref\IdentityServer.dll
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.pdb
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.genruntimeconfig.cache
+C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\appsettings - Copier.json

@@ -1,0 +1,51 @@
+<br>
+<br>
+<div class="card">
+    <div class="card-header">
+        <h3>Liste des factures</h3>
+    </div>
+
+    <div *ngIf="isAdmin()" class="col-md-12 row">
+        <!--Organisation-->
+        <div class="form-group col-md-6">
+            <br>
+            <h5 class="control-label">Organisation</h5>
+            <select class="form-control" #t (change)="selectOrga(t.value)">
+                <option [value]="">Toutes les organisations</option>
+                <option *ngFor="let orga of lOrganisations" [value]="orga.orgId">
+                    {{orga.orgNom}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Numéro de facture</th>
+                <th>Date de la facture</th>
+                <th *ngIf="isAdmin()">Organisation</th>
+                <th>Total tvac</th>
+                <th>Voir</th>
+            </tr>  
+        </thead>
+        <tbody>
+                <app-element-facture  class="innerForm" *ngFor="let facture of lTotalParFacturePagination"
+                [factureContent]="facture" [lOrganisations]="lOrganisations">
+                </app-element-facture>  
+            </tbody>
+        </table>
+    <div *ngIf="!lTotalParFacture.length" class="card-header">
+        Il n'y a pas encore de factures pour votre organisation
+    </div>
+
+    <div>
+        <br>
+    </div>
+  
+    <div class="d-flex justify-content-center">
+        <pagination [totalItems]="lTotalParFacturePagination.length" (pageChanged)="pageChanged($event)" previousText="{{previousText}}"
+        nextText="{{nextText}}" [itemsPerPage]="itemsPerPage"></pagination>
+    </div>
+</div>
+

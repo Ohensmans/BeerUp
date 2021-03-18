@@ -2,6 +2,7 @@ export class FactureModele {
     facId:string;
     facDate:Date;
     facStatus:string;
+    facMotif:string;
     
 
     constructor(){
@@ -14,6 +15,7 @@ export class FactureModele {
         this.facId ="0";
         this.facDate = new Date();
         this.facStatus= Status.New;
+        this.facMotif="";
         
 }
 

@@ -20,20 +20,30 @@ namespace IdentityServer.Controllers.Web
 
         //Adresse de retour sur le site
         private readonly string BeerUpWebUrl;
-        private readonly string BeerUpWebUrlPlansTarifaires;
-        private readonly string BeerUpWebUrlAchats;
+        private readonly string BeerUpWebUrlVuesBiere;
+        private readonly string BeerUpWebUrlVuesEtablissement;
         private readonly string BeerUpWebUrlEtablissements;
         private readonly string BeerUpWebUrlBieres;
+        private readonly string BeerUpWebUrlAchatVues;
+        private readonly string BeerUpWebUrlFactures;
+        private readonly string BeerUpWebUrlTarifsBiere;
+        private readonly string BeerUpWebUrlTarifsEtab;
+        private readonly string BeerUpWebUrlContact;
 
         public HomeController(IIdentityServerInteractionService interaction, IWebHostEnvironment environment, IOptions<Models.BaseUrl> url)
         {
             _interaction = interaction;
             _environment = environment;
             this.BeerUpWebUrl = url.Value.BeerUpWebUrl;
-            this.BeerUpWebUrlAchats = url.Value.BeerUpWebUrlAchats;
+            this.BeerUpWebUrlVuesBiere = url.Value.BeerUpWebUrlVuesBiere;
             this.BeerUpWebUrlBieres = url.Value.BeerUpWebUrlBieres;
             this.BeerUpWebUrlEtablissements = url.Value.BeerUpWebUrlEtablissements;
-            this.BeerUpWebUrlPlansTarifaires = url.Value.BeerUpWebUrlPlansTarifaires;
+            this.BeerUpWebUrlVuesEtablissement = url.Value.BeerUpWebUrlVuesEtablissement;
+            this.BeerUpWebUrlAchatVues = url.Value.BeerUpWebUrlAchatVues;
+            this.BeerUpWebUrlFactures = url.Value.BeerUpWebUrlFactures;
+            this.BeerUpWebUrlTarifsBiere = url.Value.BeerUpWebUrlTarifsBiere;
+            this.BeerUpWebUrlTarifsEtab = url.Value.BeerUpWebUrlTarifsEtab;
+            this.BeerUpWebUrlContact = url.Value.BeerUpWebUrlContact;
         }
 
         public IActionResult Index()
@@ -45,14 +55,43 @@ namespace IdentityServer.Controllers.Web
             return Redirect(BeerUpWebUrl);
         }
 
-        public IActionResult PlansTarifaires()
+        public IActionResult VuesBiere()
         {
-            return Redirect(BeerUpWebUrlPlansTarifaires);
+            return Redirect(BeerUpWebUrlVuesBiere);
         }
-        public IActionResult Achats()
+        public IActionResult VuesEtablissement()
         {
-            return Redirect(BeerUpWebUrlAchats);
+            return Redirect(BeerUpWebUrlVuesEtablissement);
         }
+
+        public IActionResult AchatVues()
+        {
+            return Redirect(BeerUpWebUrlAchatVues);
+        }
+
+        public IActionResult Factures()
+        {
+            return Redirect(BeerUpWebUrlFactures);
+        }
+
+        public IActionResult TarifsBiere()
+        {
+            return Redirect(BeerUpWebUrlTarifsBiere);
+        }
+
+        public IActionResult TarifsEtab()
+        {
+            return Redirect(BeerUpWebUrlTarifsEtab);
+        }
+
+
+        public IActionResult Contact()
+        {
+            return Redirect(BeerUpWebUrlContact);
+        }
+
+
+
         public IActionResult Etablissements()
         {
             return Redirect(BeerUpWebUrlEtablissements);

@@ -48,6 +48,11 @@ import { TabBordAchatBiereComponent } from './components/achats/tab-bord-achat-b
 import { NewAchatEtabElementComponent } from './components/achats/new-achat-etab-element/new-achat-etab-element.component';
 import { NewAchatBiereElementComponent } from './components/achats/new-achat-biere-element/new-achat-biere-element.component';
 import { AdresseFacturationComponent } from './components/achats/adresse-facturation/adresse-facturation.component';
+import { SuccessComponent } from './components/achats/result/success/success.component';
+import { CanceledComponent } from './components/achats/result/canceled/canceled.component';
+import { TabBordFactComponent } from './components/facture/tab-bord-fact/tab-bord-fact.component';
+import { ElementFactureComponent } from './components/facture/element-facture/element-facture.component';
+import { FicheFactureComponent } from './components/facture/fiche-facture/fiche-facture.component';
 
 
 
@@ -83,6 +88,11 @@ import { AdresseFacturationComponent } from './components/achats/adresse-factura
     NewAchatEtabElementComponent,
     NewAchatBiereElementComponent,
     AdresseFacturationComponent,
+    SuccessComponent,
+    CanceledComponent,
+    TabBordFactComponent,
+    ElementFactureComponent,
+    FicheFactureComponent,
   ],
   imports: [
     CommonModule,
@@ -118,6 +128,10 @@ import { AdresseFacturationComponent } from './components/achats/adresse-factura
       { path: 'AchatsEtab', component : TabBordAchatComponent},
       { path: 'AchatsBiere', component : TabBordAchatBiereComponent},
       { path: 'NewAchat', component : NewAchatComponent},
+      { path: 'Success', component : SuccessComponent},
+      { path: 'Canceled', component : CanceledComponent},
+      { path: 'Factures', component : TabBordFactComponent},
+      { path: 'FicheFacture/:id', component : FicheFactureComponent},
       { path: 'not-found', component : NotFoundComponent},      
       { path: '**', redirectTo: 'not-found' }
     ]),

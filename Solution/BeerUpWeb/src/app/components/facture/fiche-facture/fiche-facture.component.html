@@ -1,0 +1,95 @@
+<br>
+<br>
+<div class="card">
+    <div class="card-header">
+        <h3>Facture n°{{id}}</h3>
+    </div>
+    <button class="text-center btn btn-success" type="button" (click)="createPdf()">Telecharger en pdf</button>
+
+    <div id="htmlData">
+        <div class="invoice-box">
+			<table>
+				<tr class="top">
+					<td colspan="2">
+						<table>
+							<tr>
+								<td class="title">
+									<img src="assets/images/home/logo_fond_blanc.png" alt="Company logo" style="width: 100%; max-width: 300px" />
+								</td>
+
+								<td>
+									Facture n°{{id}}<br />
+									Date: {{facture.facDate}}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr class="information">
+					<td colspan="2">
+						<table>
+							<tr>
+								<td>
+									{{adresseNom}}<br />
+									{{adresseRue}}<br />
+									{{adresseVille}} <br />
+									{{adressePays}} <br />
+									{{numeroTVA}}
+								</td>
+
+								<td>
+									{{organisation.orgNom}}<br />
+									{{adresseFact.adrFacNum}}, {{adresseFact.adrFacRue}}<br />
+									{{adresseFact.adrFacCp}} {{adresseFact.adrFacVil}} <br />
+                                    {{adresseFact.adrFacPays}} <br />
+									{{organisation.orgTva}}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr class="heading">
+					<td>Item</td>
+
+					<td>Prix</td>
+				</tr>
+
+				<tr class="item" *ngFor="let achatBiere of lAchatBiere">
+					<td>{{achatBiere.bieNom}} &#8208; {{achatBiere.bieNbVuAch}} vues</td>
+
+					<td>{{achatBiere.biePrix}} &euro ttc</td>
+				</tr>
+
+                <tr class="item" *ngFor="let achatEtab of lAchatEtab">
+					<td>{{achatEtab.etaNom}} &#8208; {{achatEtab.etaNbVuAch}} vues</td>
+
+					<td>{{achatEtab.etaPrix}} &euro ttc</td>
+				</tr>
+
+				<tr class="total">
+					<td></td>
+
+					<td>Total htva: {{soldeHtva}} &euro</td>
+				</tr>
+
+                <tr class="total">
+					<td></td>
+
+					<td>TVA ({{TVA}} &#8274;): {{soldeTva}} &euro</td>
+				</tr>
+
+                <tr class="total">
+					<td></td>
+
+					<td>Total tvac: {{solde}} &euro</td>
+				</tr>
+
+			</table>
+		</div>
+    </div>
+
+
+</div>
+

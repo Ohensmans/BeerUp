@@ -30,7 +30,7 @@
                                 <div role="menuitem"><a class="dropdown-item text-dark" routerLink="AchatsBiere">Vues bières</a></div>
                                 <div role="menuitem"><a class="dropdown-item text-dark" routerLink="AchatsEtab">Vues établissements</a></div>
                                 <div role="menuitem"><a class="dropdown-item text-dark" routerLink="NewAchat">Achat de nouvelles vues</a></div>
-                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="Etablissements">Factures</a></div>
+                                <div role="menuitem"><a class="dropdown-item text-dark" routerLink="Factures">Factures</a></div>
                             </div>
                         </li>
 
@@ -40,18 +40,13 @@
                             </div>
 
                             <div id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
-                                <div *ngIf="isAuth() && isAdmin()" role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
-                                    <a dropdownToggle class="dropdown-item dropdown-toggle"(click)="false">Plans Tarifaires <span class="caret"></span></a>
-                                            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                                <li role="menuitem"><a class="dropdown-item" routerLink="PlansTarifairesBiere">Tarifs bières</a></li>
-                                                <li role="menuitem"><a class="dropdown-item" routerLink="PlansTarifairesEtab">Tarifs établissements</a></li>
-                                            </ul>
-                                </div>
+                                <div *ngIf="isAuth() && isAdmin()" role="menuitem"><a class="dropdown-item" routerLink="PlansTarifairesBiere">Tarifs bières</a></div>
+                                <div *ngIf="isAuth() && isAdmin()" role="menuitem"><a class="dropdown-item" routerLink="PlansTarifairesEtab">Tarifs établissements</a></div>
                                 <div *ngIf="isAuth() && hasUserAdminAccess()" role="menuitem"><a class="dropdown-item" href="{{adminUserUrl}}">Utilisateurs</a></div>
                             </div>
                         </li>
 
-                        <li *ngIf="isAuth() && hasBiereAdminAccess()" routerLinkActive="active" class="nav-item "><a class="nav-link text-light" routerLink="Bieres">Bieres</a></li>
+                        <li *ngIf="isAuth() && hasBiereAdminAccess()" routerLinkActive="active" class="nav-item "><a class="nav-link text-light" routerLink="Bieres">Bières</a></li>
                         <li *ngIf="isAuth() && hasEtablissementAdminAccess()" routerLinkActive="active" class="nav-item "><a class="nav-link text-light" routerLink="Etablissements">Etablissements</a></li>
                         <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item ml-auto"><a class="nav-link text-light" routerLink="login">S'identifier</a></li>     
                         <li *ngIf="!isAuth()" routerLinkActive="active" class="nav-item"><a class="nav-link text-light" href="{{registerUrl}}">S'enregistrer</a></li>  

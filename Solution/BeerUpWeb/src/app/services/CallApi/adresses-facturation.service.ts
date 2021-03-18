@@ -65,5 +65,15 @@ export class AdressesFacturationService {
     this.adresse$.next(this.adresse);
   }
 
+  getOne(facId:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+    let result = this.http.get<AdresseFacturationModele>(
+      this.util.apiAdressesFacturation+facId,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    );
+    return result;
+  }
+
 
 }

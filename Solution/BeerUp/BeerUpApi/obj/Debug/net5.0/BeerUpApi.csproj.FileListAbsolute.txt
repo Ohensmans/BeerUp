@@ -164,7 +164,6 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Microsoft.Ex
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Macross.Json.Extensions.dll
-C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\appsettings.json
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\BeerUpApi.exe
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\BeerUpApi.deps.json
@@ -331,3 +330,6 @@ C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\obj\Debug\net5
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\obj\Debug\net5.0\BeerUpApi.pdb
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\obj\Debug\net5.0\BeerUpApi.genruntimeconfig.cache
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Mollie.Api.dll
+C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Mollie.Api.dll
+C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Stripe.net.dll
+C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\appsettings - Copier.json

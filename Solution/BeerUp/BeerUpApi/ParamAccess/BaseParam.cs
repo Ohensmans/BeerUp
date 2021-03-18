@@ -12,5 +12,9 @@ namespace BeerUpApi.ParamAccess
 
         public string redirectUrl { get; set; }
         public string webHookUrl { get; set; }
+
+        public string successUrl { get; set; }
+
+        public string canceledUrl { get; set; }
     }
 }

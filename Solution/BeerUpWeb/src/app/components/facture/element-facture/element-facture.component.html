@@ -1,0 +1,22 @@
+<tr [ngClass]="getClass()">
+    <td>
+        {{factureId}}
+    </td>
+
+    <td>
+        {{facture.facDate}}
+    </td>
+
+    <td *ngIf="isAdmin()">
+        {{orgNom}}
+    </td>
+
+    <td>
+        {{solde}}
+    </td>
+    
+    <td>
+        <button class="text-center btn btn-info" type="button" routerLink="/FicheFacture/{{ factureId }}">Voir</button>
+    </td>
+
+</tr>

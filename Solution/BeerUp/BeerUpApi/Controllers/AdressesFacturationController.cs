@@ -24,9 +24,11 @@ namespace BeerUpApi.Controllers
 
         // GET: api/AdressesFacturation/5
         [HttpGet("{id}")]
-        public ActionResult<AdressesFacturation> GetAdresse(Guid id)
+        public ActionResult<AdressesFacturation> GetAdresse(int id)
         {
-            var adresse = _context.AdressesFacturations.Find(id);
+
+            var param = new SqlParameter("@FacId", id);
+            AdressesFacturation adresse = (AdressesFacturation)_context.AdressesFacturations.FromSqlRaw("GetAdresseFact @FacId", param);
 
             if (adresse == null)
             {

@@ -20,6 +20,7 @@ import { EtabsOrgaService } from 'src/app/services/CallApi/etabs-orga.service';
 import { FacturesService } from 'src/app/services/CallApi/factures.service';
 import { MollieService } from 'src/app/services/CallApi/mollie.service';
 import { OrganisationsService } from 'src/app/services/CallApi/organisations.service';
+import { StripeService } from 'src/app/services/CallApi/stripe.service';
 import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.service';
 import { TarifsEtabsService } from 'src/app/services/CallApi/tarifs-etabs.service';
 import { VuesAchatBiereService } from 'src/app/services/CallApi/vues-achat-biere.service';
@@ -48,6 +49,8 @@ export class NewAchatComponent implements OnInit {
   solde:number;
   nextStep:boolean;
   toConfirm:boolean;
+  stripePublicKey:string;
+  sessionId:string;
 
   subscr:Subscription;
 
@@ -55,7 +58,8 @@ export class NewAchatComponent implements OnInit {
     private etabOrgaSrv:EtabsOrgaService, private tarifBiereSrv : TarifsBieresService, private tarifEtabSrv : TarifsEtabsService,
     private vueAchatBiereSrv : VuesAchatBiereService, private vueAchatEtabSrv : VuesAchatEtabService, 
     private authSrv : AuthentificationService, private achatVueSrv:AchatVueService, private toastr:ToastrService, private util : UtilService,
-    private adrSrv : AdressesFacturationService, private orgSrv :OrganisationsService, private factSrv :FacturesService, private mollieSrv:MollieService) {
+    private adrSrv : AdressesFacturationService, private orgSrv :OrganisationsService, private factSrv :FacturesService, private mollieSrv:MollieService,
+    private stripeSrv : StripeService) {
       this.lBiere = Array(0);
       this.lEtab = Array(0);
       this.lTarifBiere = Array(0);
@@ -71,8 +75,8 @@ export class NewAchatComponent implements OnInit {
       this.solde = 0;
       this.nextStep = false;
       this.toConfirm = false;
-
-      
+      this.stripePublicKey = environment.StripePublicKey;   
+      this.sessionId ="";
    }
 
   ngOnInit(): void {
@@ -324,7 +328,7 @@ export class NewAchatComponent implements OnInit {
 
   toPayment(){
     try{
-      this.createFacture();
+      this.createFactureStripe();
     }
     catch{
       return;
@@ -342,9 +346,31 @@ export class NewAchatComponent implements OnInit {
       ))
     });
   }
-  
 
-  createFacture(){
+
+  createFactureStripe(){
+    try{
+    let fact = new FactureModele();
+    this.subscr.add(this.factSrv.addFacture(fact).subscribe(
+      (value) => {
+        this.createAchatOnDb(this.lAchatBiere, value.facId);
+        this.createAchatOnDb(this.lAchatEtab, value.facId);
+        this.subscr.add(this.stripeSrv.createPayment(this.solde, value.facId).subscribe(
+        (value) =>{
+          this.sessionId = value;
+        }
+      ))
+      }
+    ));
+    }
+    catch{
+      return;
+    }
+  }
+
+
+  /*
+  createFactureMollie(){
     try{
     let fact = new FactureModele();
     this.subscr.add(this.factSrv.addFacture(fact).subscribe(
@@ -363,8 +389,7 @@ export class NewAchatComponent implements OnInit {
     catch{
       return;
     }
-  }
-
+  }*/
 
 
 }
