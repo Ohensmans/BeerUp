@@ -1,4 +1,3 @@
-F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\appsettings.Development.json
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\appsettings.json
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\BeerUpApi.exe
 F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\BeerUpApi.deps.json
@@ -333,3 +332,5 @@ F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Mollie.Api.d
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Mollie.Api.dll
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Stripe.net.dll
 C:\Users\ho2175\Desktop\TFE\repo\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\appsettings - Copier.json
+F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\appsettings - Copier.json
+F:\Projets GitHub\BeerUp\Solution\BeerUp\BeerUpApi\bin\Debug\net5.0\Stripe.net.dll

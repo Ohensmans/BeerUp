@@ -164,7 +164,7 @@
     var sessionId = document.getElementById("sessionId");
     var redirectId = sessionId.value().json();
     sessionId.addEventListener("change", function (redirectId) {
-          return stripe.redirectToCheckout({ sessionId: session.id });
+          return stripe.redirectToCheckout({ 'sessionId': session.id });
         })
         .then(function (result) {
           // If redirectToCheckout fails due to a browser or network

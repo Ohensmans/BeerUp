@@ -34,8 +34,8 @@ namespace BeerUpApi.Controllers
 
 
         // POST api/<StripeController>
-        [HttpPost("{solde},{factureId}")]
-        [HttpPost("{solde, factureId}")]
+        [HttpGet("{solde},{factureId}")]
+        [HttpGet("{solde, factureId}")]
         public ActionResult<string> CreateCheckoutSession(decimal solde, string factureId)
         {
             var options = new SessionCreateOptions
