@@ -39,6 +39,7 @@ export class UtilService {
   apiMollie = this.apiUrl+'Mollie/';
   apiStripe= this.apiUrl+'Stripe/';
   apiAchatFactureParFacture= this.apiUrl+'AchatFactureParFacture/';
+  apiTransactions= this.apiUrl+'Transactions/';
   
 
   //External Api

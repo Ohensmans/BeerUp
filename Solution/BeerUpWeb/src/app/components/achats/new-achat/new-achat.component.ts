@@ -1,15 +1,15 @@
-import { ThrowStmt } from '@angular/compiler';
+import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Guid } from 'guid-typescript';
+import { loadStripe } from '@stripe/stripe-js';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AchatVuesModele } from 'src/app/models/achat-vues-modele';
 import { AdresseFacturationModele } from 'src/app/models/adresse-facturation-modele';
 import { BiereModele } from 'src/app/models/BiereModele';
 import { EtablissementModele } from 'src/app/models/etablissement-modele';
-import { FactureModele } from 'src/app/models/facture-modele';
 import { OrganisationModele } from 'src/app/models/organisation-modele';
 import { TarifModele } from 'src/app/models/tarif-modele';
+import { TransactionModele } from 'src/app/models/transaction-modele';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { AchatVueService } from 'src/app/services/CallApi/achat-vue.service';
 import { AdressesFacturationService } from 'src/app/services/CallApi/adresses-facturation.service';
@@ -23,6 +23,7 @@ import { OrganisationsService } from 'src/app/services/CallApi/organisations.ser
 import { StripeService } from 'src/app/services/CallApi/stripe.service';
 import { TarifsBieresService } from 'src/app/services/CallApi/tarifs-bieres.service';
 import { TarifsEtabsService } from 'src/app/services/CallApi/tarifs-etabs.service';
+import { TransactionsService } from 'src/app/services/CallApi/transactions.service';
 import { VuesAchatBiereService } from 'src/app/services/CallApi/vues-achat-biere.service';
 import { VuesAchatEtabService } from 'src/app/services/CallApi/vues-achat-etab.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -51,6 +52,10 @@ export class NewAchatComponent implements OnInit {
   toConfirm:boolean;
   stripePublicKey:string;
   sessionId:string;
+  transId:string;
+  apiUrl:string;
+  myHeaders:HttpHeaders;
+  paymentHandler:any = null;
 
   subscr:Subscription;
 
@@ -59,7 +64,7 @@ export class NewAchatComponent implements OnInit {
     private vueAchatBiereSrv : VuesAchatBiereService, private vueAchatEtabSrv : VuesAchatEtabService, 
     private authSrv : AuthentificationService, private achatVueSrv:AchatVueService, private toastr:ToastrService, private util : UtilService,
     private adrSrv : AdressesFacturationService, private orgSrv :OrganisationsService, private factSrv :FacturesService, private mollieSrv:MollieService,
-    private stripeSrv : StripeService) {
+    private stripeSrv : StripeService, private transSrv : TransactionsService) {
       this.lBiere = Array(0);
       this.lEtab = Array(0);
       this.lTarifBiere = Array(0);
@@ -77,6 +82,9 @@ export class NewAchatComponent implements OnInit {
       this.toConfirm = false;
       this.stripePublicKey = environment.StripePublicKey;   
       this.sessionId ="";
+      this.transId ="";
+      this.apiUrl = this.util.apiStripe;
+      this.myHeaders = new HttpHeaders();
    }
 
   ngOnInit(): void {
@@ -336,9 +344,9 @@ export class NewAchatComponent implements OnInit {
 
   }
 
-  createAchatOnDb(lAchat:Array<AchatVuesModele>, factId:string){
+  createAchatOnDb(lAchat:Array<AchatVuesModele>, transId:string){
     lAchat.forEach(element => {
-      element.facId = factId;
+      element.transId = transId;
       this.subscr.add(this.achatVueSrv.saveAchat(element).subscribe(
         (error) =>{
           throw error;
@@ -348,25 +356,34 @@ export class NewAchatComponent implements OnInit {
   }
 
 
-  createFactureStripe(){
-    try{
-    let fact = new FactureModele();
-    this.subscr.add(this.factSrv.addFacture(fact).subscribe(
+createFactureStripe(){
+    let trans = new TransactionModele();
+    trans.orgId = this.orgId;
+    this.subscr.add(this.transSrv.addTransaction(trans).subscribe(
       (value) => {
-        this.createAchatOnDb(this.lAchatBiere, value.facId);
-        this.createAchatOnDb(this.lAchatEtab, value.facId);
-        this.subscr.add(this.stripeSrv.createPayment(this.solde, value.facId).subscribe(
-        (value) =>{
-          this.sessionId = value;
-        }
-      ))
+        this.createAchatOnDb(this.lAchatBiere, value.transId);
+        this.createAchatOnDb(this.lAchatEtab, value.transId);
+        this.subscr.add(this.stripeSrv.createPayment(this.solde, value.transId).subscribe(
+          (value) =>{
+            this.checkout(value);
+          }
+        ))
       }
     ));
-    }
-    catch{
-      return;
+  }
+
+  async checkout(id:string) {
+    let stripePromise = loadStripe(environment.StripePublicKey);
+    const stripe = await stripePromise;
+    if(stripe!=null){
+      let { error } = await stripe.redirectToCheckout({sessionId:id});
+      if (error) {
+        console.log(error);
     }
   }
+  }
+  }
+
 
 
   /*
@@ -392,4 +409,5 @@ export class NewAchatComponent implements OnInit {
   }*/
 
 
-}
+
+

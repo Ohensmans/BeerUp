@@ -4,7 +4,7 @@ export class AchatVuesModele {
     achId:string;
     bieId:string | undefined;
     etaId:string | undefined;
-    facId:string;
+    transId:string;
     tarifsVueEtabId:string | undefined;
     tarifsVueBieId:string | undefined;
     isNew:boolean;
@@ -12,7 +12,7 @@ export class AchatVuesModele {
 
     constructor(){
         this.achId =Guid.create().toString();
-        this.facId ="";
+        this.transId ="";
         this.isNew=true;
         this.prix = 0;
     }

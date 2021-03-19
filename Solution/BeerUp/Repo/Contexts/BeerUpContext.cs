@@ -23,11 +23,11 @@ namespace Repo.Modeles.ModelesBeerUp
         public virtual DbSet<Biere> Bieres { get; set; }
         public virtual DbSet<Etablissement> Etablissements { get; set; }
         public virtual DbSet<Facture> Factures { get; set; }
-        public virtual DbSet<FactureOrgaAdresse> FactureOrgaAdresses { get; set; }
         public virtual DbSet<LibrairieUserBiere> LibrairieUserBieres { get; set; }
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<TarifsVueBie> TarifsVueBies { get; set; }
         public virtual DbSet<TarifsVueEtab> TarifsVueEtabs { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TypesBiere> TypesBieres { get; set; }
         public virtual DbSet<TypesEtablissement> TypesEtablissements { get; set; }
         public virtual DbSet<TypesService> TypesServices { get; set; }
@@ -43,6 +43,30 @@ namespace Repo.Modeles.ModelesBeerUp
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
+
+            modelBuilder.Entity<Transaction>(entity =>
+            {
+                entity.HasKey(t => t.TransId);
+
+                entity.Property(t => t.TransId)
+                   .HasColumnName("Trans.Id")
+                   .HasDefaultValueSql("(newid())");
+
+                entity.Property(t => t.OrgId).HasColumnName("Org.Id")
+                    .IsRequired();
+
+                entity.Property(t => t.TransStatus).HasColumnName("Trans.Status")
+                    .IsRequired();
+
+                entity.Property(t => t.TransDate).HasColumnName("Trans.Date")
+                    .IsRequired();
+
+                entity.HasOne(d => d.Orga)
+                    .WithMany(p => p.Transactions)
+                    .HasForeignKey(d => d.OrgId)
+                    .HasConstraintName("FK_Transactions_Organisations");
+
+            });
 
             modelBuilder.Entity<VueAchatsEtab>(entity =>
             {
@@ -112,7 +136,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.EtaId).HasColumnName("Eta.Id");
 
-                entity.Property(e => e.FacId).HasColumnName("Fac.Id");
+                entity.Property(e => e.TransId).HasColumnName("Trans.Id");
 
                 entity.Property(e => e.TarifsVueBieId).HasColumnName("TarifsVueBie.Id");
 
@@ -128,11 +152,11 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasForeignKey(d => d.EtaId)
                     .HasConstraintName("FK_AchatsVues_Etablissements");
 
-                entity.HasOne(d => d.Fac)
+                entity.HasOne(d => d.Trans)
                     .WithMany(p => p.AchatsVues)
-                    .HasForeignKey(d => d.FacId)
+                    .HasForeignKey(d => d.TransId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AchatsVues_Factures");
+                    .HasConstraintName("FK_AchatsVues_Transactions");
 
                 entity.HasOne(d => d.TarifsVueBie)
                     .WithMany(p => p.AchatsVues)
@@ -184,7 +208,6 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.HasOne(d => d.Org)
                     .WithMany(p => p.AdressesFacturation)
                     .HasForeignKey(d => d.AdrFacId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AdressesFacturation_Organisations");
             });
 
@@ -373,7 +396,10 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.FacId).HasColumnName("Fac.Id");
 
-                entity.Property(e => e.FacStatus).HasColumnName("Fac.Status")
+                entity.Property(e => e.TransId).HasColumnName("Trans.Id")
+                    .IsRequired();
+
+                entity.Property(e => e.AdrFacId).HasColumnName("AdrFac.Id")
                     .IsRequired();
 
                 entity.Property(e => e.FacMotif).HasColumnName("Fac.Motif");
@@ -381,38 +407,15 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.Property(e => e.FacDate)
                     .HasColumnType("datetime")
                     .HasColumnName("Fac.Date");
-            });
 
-            modelBuilder.Entity<FactureOrgaAdresse>(entity =>
-            {
-                entity.HasKey(e => new { e.OrgId, e.FacId, e.AdrFacId });
-
-                entity.ToTable("FactureOrgaAdresse");
-
-                entity.Property(e => e.OrgId).HasColumnName("Org.Id");
-
-                entity.Property(e => e.FacId).HasColumnName("Fac.Id");
-
-                entity.Property(e => e.AdrFacId).HasColumnName("AdrFac.Id");
-
-                entity.HasOne(d => d.AdrFac)
-                    .WithMany(p => p.FactureOrgaAdresses)
+                entity.HasOne(d => d.Adresse)
+                    .WithMany(p => p.Factures)
                     .HasForeignKey(d => d.AdrFacId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AdrFacturation");
+                    .HasConstraintName("FK_Factures_AdressesFacturation");
 
-                entity.HasOne(d => d.Fac)
-                    .WithMany(p => p.FactureOrgaAdresses)
-                    .HasForeignKey(d => d.FacId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Factures");
-
-                entity.HasOne(d => d.Org)
-                    .WithMany(p => p.FactureOrgaAdresses)
-                    .HasForeignKey(d => d.OrgId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Organisations");
             });
+
+
 
             modelBuilder.Entity<LibrairieUserBiere>(entity =>
             {

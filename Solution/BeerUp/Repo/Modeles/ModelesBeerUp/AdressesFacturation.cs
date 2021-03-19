@@ -7,10 +7,6 @@ namespace Repo.Modeles.ModelesBeerUp
 {
     public partial class AdressesFacturation
     {
-        public AdressesFacturation()
-        {
-            FactureOrgaAdresses = new HashSet<FactureOrgaAdresse>();
-        }
 
         public Guid AdrFacId { get; set; }
         public string AdrFacRue { get; set; }
@@ -21,8 +17,7 @@ namespace Repo.Modeles.ModelesBeerUp
         public DateTime? AdrFacDateAjout { get; set; }
         public Guid OrgId { get; set; }
         public virtual Organisation Org { get; set; }
-    
 
-        public virtual ICollection<FactureOrgaAdresse> FactureOrgaAdresses { get; set; }
+        public virtual ICollection<Facture> Factures { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace Repo.Modeles.ModelesBeerUp
         public Organisation()
         {
             Etablissements = new HashSet<Etablissement>();
-            FactureOrgaAdresses = new HashSet<FactureOrgaAdresse>();
         }
 
         public Guid OrgId { get; set; }
@@ -26,7 +25,8 @@ namespace Repo.Modeles.ModelesBeerUp
         public string OrgPhoto { get; set; }
 
         public virtual ICollection<Etablissement> Etablissements { get; set; }
-        public virtual ICollection<FactureOrgaAdresse> FactureOrgaAdresses { get; set; }
+
+        public virtual ICollection<Transaction> Transactions { get; set; }
 
         public virtual ICollection<AdressesFacturation> AdressesFacturation { get; set; }
     }

@@ -33,7 +33,7 @@ namespace BeerUpApi.Controllers
         }
 
 
-        // POST api/<StripeController>
+        // GET api/<StripeController>
         [HttpGet("{solde},{factureId}")]
         [HttpGet("{solde, factureId}")]
         public ActionResult<string> CreateCheckoutSession(decimal solde, string factureId)

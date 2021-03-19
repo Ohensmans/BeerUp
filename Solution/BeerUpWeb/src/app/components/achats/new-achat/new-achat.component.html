@@ -1,4 +1,3 @@
-<script src="https://js.stripe.com/v3/"></script>
 <br>
 <br>
 <div *ngIf="!nextStep">
@@ -154,27 +153,3 @@
     </div>
 </div>
 
-<div id="publicKey" hidden>{{stripePublicKey}}</div>
-<div id="sessionId" hidden>{{sessionId}}</div>
-
-<script type="text/javascript">
-    // Create an instance of the Stripe object with your publishable API key
-    var key = document.getElementById("publicKey").value();
-    var stripe = Stripe(key);
-    var sessionId = document.getElementById("sessionId");
-    var redirectId = sessionId.value().json();
-    sessionId.addEventListener("change", function (redirectId) {
-          return stripe.redirectToCheckout({ 'sessionId': session.id });
-        })
-        .then(function (result) {
-          // If redirectToCheckout fails due to a browser or network
-          // error, you should display the localized error message to your
-          // customer using error.message.
-          if (result.error) {
-            alert(result.error.message);
-          }
-        })
-        .catch(function (error) {
-          console.error("Error:", error);
-        });
-  </script>

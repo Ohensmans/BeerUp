@@ -18,16 +18,6 @@ export class FacturesService {
     this.lFacture$ = new BehaviorSubject<Array<FactureModele>>(this.lFacture);
   }
 
-  addFacture(facture:FactureModele){
-    const token:string = this.authSrv.getUser().id_token;
-
-    let result = this.http.post<FactureModele>(
-      this.util.apiFactures, facture,
-      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
-    );
-    return result;
-  }
-
   getAllOrga(orgId:string){
     const token = this.authSrv.getUser().id_token;
 

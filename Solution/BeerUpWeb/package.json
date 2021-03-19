@@ -21,6 +21,7 @@
     "@angular/router": "~11.0.5",
     "@auth0/angular-jwt": "^5.0.2",
     "@popperjs/core": "^2.6.0",
+    "@stripe/stripe-js": "^1.13.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "guid-typescript": "^1.0.9",
