@@ -5,6 +5,10 @@ using Microsoft.Extensions.Options;
 using BeerUpApi.ParamAccess;
 using Stripe;
 using Newtonsoft.Json;
+using Repo.Modeles.ModelesBeerUp;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,62 +18,109 @@ namespace BeerUpApi.Controllers
     [ApiController]
     public class StripeController : ControllerBase
     {
-        private readonly string baseUrl;
-        private readonly string baseKey;
+
         private readonly string referencePayment;
         private readonly string successUrl;
         private readonly string canceledUrl;
-        private readonly string webHookUrl;
+        private readonly BeerUpContext _context;
 
-        public StripeController(IOptions<BaseUrl> url, IOptions<BaseKey> key, IOptions<BaseParam> param)
+
+        public StripeController(IOptions<BaseUrl> url, IOptions<BaseKey> key, IOptions<BaseParam> param, BeerUpContext context)
         {
-            this.baseUrl = url.Value.apiMollie;
-            //StripeConfiguration.ApiKey = key.Value.StripeKey;
-            StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";
+            StripeConfiguration.ApiKey = key.Value.StripeKey;
             this.referencePayment = param.Value.referencePayment;
             this.successUrl = param.Value.successUrl;
             this.canceledUrl = param.Value.canceledUrl;
-            this.webHookUrl = param.Value.webHookUrl;
+            _context = context;
         }
 
 
         // GET api/<StripeController>
-        [HttpGet("{solde},{factureId}")]
-        [HttpGet("{solde, factureId}")]
-        public ActionResult<string> CreateCheckoutSession(decimal solde, string factureId)
+        [HttpGet("{solde},{transId},{adresseId}")]
+        [HttpGet("{solde, transId, adresseId}")]
+        public async System.Threading.Tasks.Task<ActionResult<string>> CreateCheckoutSessionAsync(decimal solde, Guid transId, string adresseId)
         {
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string>
                 {
-                  "card",
+                    "card",
                 },
                 LineItems = new List<SessionLineItemOptions>
                 {
                     new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
                         {
-                            PriceData = new SessionLineItemPriceDataOptions
-                                {
-                                    UnitAmount = (long?)(solde*100),
-                                    Currency = "eur",
-                                    ProductData = new SessionLineItemPriceDataProductDataOptions
-                                      {
-                                        Name = (referencePayment + factureId),
-                                      },
-
-                                },
-                            Quantity = 1,
+                            UnitAmount = (long?)(solde * 100),
+                            Currency = "eur",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = (referencePayment + transId),
+                            }
                         },
+                        Quantity = 1,
+                    },
                 },
                 Mode = "payment",
                 SuccessUrl = successUrl,
                 CancelUrl = canceledUrl,
+                Metadata = new Dictionary<string, string>
+                {
+                    { "AdresseId", adresseId },
+                }
             };
 
             var service = new SessionService();
             Session session = service.Create(options);
+            try
+            {
+                await updateTransactionAsync(transId, session.Id);
+            }
+            catch
+            {
+                throw;
+            }
+            
 
             return JsonConvert.SerializeObject(new { id = session.Id });
+        }
+
+        private async System.Threading.Tasks.Task<ActionResult> updateTransactionAsync(Guid transId, string sessionId)
+        {
+            var transaction = await _context.Transactions.FindAsync(transId);
+
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+
+            transaction.StripeId = sessionId;
+
+            _context.Entry(transaction).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TransExists(transId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool TransExists(Guid id)
+        {
+            return _context.Transactions.Any(t=> t.TransId == id);
         }
 
     }

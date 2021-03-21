@@ -4,6 +4,12 @@ using System;
 using System.IO;
 using Stripe;
 using System.Threading.Tasks;
+using BeerUpApi.ParamAccess;
+using Microsoft.Extensions.Options;
+using Repo.Modeles.ModelesBeerUp;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace BeerUpApi.Controllers
 {
@@ -12,7 +18,15 @@ namespace BeerUpApi.Controllers
     public class StripeWebHook : Controller
     {
         // You can find your endpoint's secret in your webhook settings
-        const string secret = "whsec_...";
+        private readonly string secret;
+
+        private readonly BeerUpContext _context;
+
+        public StripeWebHook(IOptions<BaseKey> key, BeerUpContext context)
+        {
+            this.secret = key.Value.StripeWebHookKey;
+            _context = context;
+        }
 
 
 
@@ -37,7 +51,7 @@ namespace BeerUpApi.Controllers
                         session = stripeEvent.Data.Object as Stripe.Checkout.Session;
 
                         // Save an order in your database, marked as 'awaiting payment'
-                        CreateOrder(session);
+                        await CreateOrderAsync(session);
 
                         // Check if the order is paid (e.g., from a card payment)
                         //
@@ -45,11 +59,11 @@ namespace BeerUpApi.Controllers
                         // you're still waiting for funds to be transferred from the customer's
                         // account.
                         var orderPaid = session.PaymentStatus == "paid";
-        
+
                         if (orderPaid)
                         {
                             // Fulfill the purchase
-                            FulfillOrder(session);
+                            await FulfillOrderAsync(session);
                         }
 
                         break;
@@ -57,7 +71,7 @@ namespace BeerUpApi.Controllers
                         session = stripeEvent.Data.Object as Stripe.Checkout.Session;
 
                         // Fulfill the purchase
-                        FulfillOrder(session);
+                        await FulfillOrderAsync(session);
 
                         break;
                     case Events.CheckoutSessionAsyncPaymentFailed:
@@ -77,19 +91,93 @@ namespace BeerUpApi.Controllers
             }
         }
 
-        private void FulfillOrder(Stripe.Checkout.Session session)
+        private async Task FulfillOrderAsync(Stripe.Checkout.Session session)
         {
-            // TODO: fill me in
+            Guid transactionId = await getTransactionIdAsync(session.Id);
+            if (transactionId != Guid.Empty)
+            {
+                await updateTransStatutAsync(transactionId, Status.CONFIRMED);
+                if (session.Metadata.ContainsKey("AdresseId"))
+                {
+                    await createFactureAsync(transactionId, session.Id, session.Metadata["AdresseId"]);
+                }
+            }
+
+            
         }
 
-        private void CreateOrder(Stripe.Checkout.Session session)
+        private async Task CreateOrderAsync(Stripe.Checkout.Session session)
         {
-            // TODO: fill me in
+            Guid transactionId = await getTransactionIdAsync(session.Id);
+            if (transactionId != Guid.Empty)
+            {
+                await updateTransStatutAsync(transactionId, Status.AWAITING_PAYMENT);
+            }
         }
 
         private void EmailCustomerAboutFailedPayment(Stripe.Checkout.Session session)
         {
             // TODO: fill me in
         }
+
+        private async Task<Guid> getTransactionIdAsync(string sessionId)
+        {
+            var param = new SqlParameter("@StripeId", sessionId);
+            List<Transaction> transactions =  (List<Transaction>) await _context.Transactions.FromSqlRaw("GetTransactionWithStripeId @StripeId", param).ToListAsync();
+
+
+            if (transactions == null || transactions.Count !=1)
+            {
+                return Guid.Empty;
+            }
+
+            return transactions[0].TransId;
+        }
+
+        private async Task updateTransStatutAsync(Guid transId, Status statut)
+        {
+            if (transId != Guid.Empty)
+            {
+                var transaction = await _context.Transactions.FindAsync(transId);
+
+                if (transaction != null)
+                {
+                    transaction.TransStatus = statut.ToString();
+
+                    _context.Entry(transaction).State = EntityState.Modified;
+
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        throw;
+                    }
+
+                }
+            }
+        }
+
+
+        private async Task createFactureAsync(Guid transactionId, string sessionId, string adresseId)
+        {
+            Facture fact = new Facture();
+            fact.FacDate = DateTime.Today;
+            fact.AdrFacId = Guid.Parse(adresseId);
+            fact.TransId = transactionId;
+           
+            _context.Factures.Add(fact);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw;
+            }
+
+        }
+        private enum Status { NEW, CORRECTION, AWAITING_PAYMENT, CONFIRMED, CANCELED }
     }
 }

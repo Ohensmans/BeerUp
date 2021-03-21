@@ -363,9 +363,9 @@ createFactureStripe(){
       (value) => {
         this.createAchatOnDb(this.lAchatBiere, value.transId);
         this.createAchatOnDb(this.lAchatEtab, value.transId);
-        this.subscr.add(this.stripeSrv.createPayment(this.solde, value.transId).subscribe(
+        this.subscr.add(this.stripeSrv.createPayment(this.solde, value.transId, this.adresse.adrFacId).subscribe(
           (value) =>{
-            this.checkout(value);
+            this.checkout(value.id);
           }
         ))
       }

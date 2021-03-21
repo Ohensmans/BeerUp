@@ -9,6 +9,7 @@ namespace BeerUpApi.ParamAccess
     {
         public string MapQuest { get; set; }
         public string MollieKey { get; set; }
+        public string StripeWebHookKey { get; set; }
 
         public string StripeKey { get; set; }
     }

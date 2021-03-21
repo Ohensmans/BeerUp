@@ -6,6 +6,7 @@ export class TransactionModele {
     transStatus:string;
     orgId:string;
     
+    
 
     constructor(){
         enum Status {

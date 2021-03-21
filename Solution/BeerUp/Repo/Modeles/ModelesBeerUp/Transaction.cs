@@ -17,10 +17,14 @@ namespace Repo.Modeles.ModelesBeerUp
         public string TransStatus { get; set; }
         public DateTime TransDate { get; set; }
 
+        public string StripeId { get; set; }
+
         public virtual Organisation Orga { get; set; }
 
         public virtual Facture Fact { get; set; }
 
         public virtual ICollection<AchatsVue> AchatsVues { get; set; }
+
+        
     }
 }

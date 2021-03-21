@@ -55,6 +55,8 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.Property(t => t.OrgId).HasColumnName("Org.Id")
                     .IsRequired();
 
+                entity.Property(t => t.StripeId).HasColumnName("Stripe.Id");
+
                 entity.Property(t => t.TransStatus).HasColumnName("Trans.Status")
                     .IsRequired();
 

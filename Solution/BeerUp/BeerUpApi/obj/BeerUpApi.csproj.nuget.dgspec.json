@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {}
+    "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {
+    "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
+        "projectUniqueName": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
         "projectName": "BeerUpApi",
-        "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
-        "packagesPath": "C:\\Users\\ho2175\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\obj\\",
+        "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
+        "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
+        "outputPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ho2175\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
-                "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
+              "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+                "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
               }
             }
           }
@@ -117,21 +117,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+    "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
+        "projectUniqueName": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
         "projectName": "Repo",
-        "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
-        "packagesPath": "C:\\Users\\ho2175\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\obj\\",
+        "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
+        "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
+        "outputPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ho2175\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -201,7 +201,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
         }
       }
     }
