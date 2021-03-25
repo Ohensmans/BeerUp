@@ -79,11 +79,13 @@ export class TarifComponent implements OnInit {
     return this.isOld;
   }
 
+  //mise en couleur pour la validation
   getClass() {
     if (this.tarifForm.invalid) return "bg-danger text-white";
     else return "";
   }
 
+  //active un plan tarifaire
   activation(){
     //n'enregistre la modification que si il s'agit d'un tarif déjà créé
     if(!this.getIsNew()){
@@ -93,6 +95,7 @@ export class TarifComponent implements OnInit {
     }
   }
 
+  //sauvegarde ou crée un plan tarifaire
   onSubmitForm(){
     if(this.tarifForm.valid && this.tarifForm.dirty)
     {

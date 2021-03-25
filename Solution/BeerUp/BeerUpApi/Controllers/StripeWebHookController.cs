@@ -77,8 +77,8 @@ namespace BeerUpApi.Controllers
                     case Events.CheckoutSessionAsyncPaymentFailed:
                         session = stripeEvent.Data.Object as Stripe.Checkout.Session;
 
-                        // Send an email to the customer asking them to retry their order
-                        EmailCustomerAboutFailedPayment(session);
+                        // Cancel the purchase
+                        await CancelOrderAsync(session);
 
                         break;
                 }
@@ -115,9 +115,13 @@ namespace BeerUpApi.Controllers
             }
         }
 
-        private void EmailCustomerAboutFailedPayment(Stripe.Checkout.Session session)
+        private async Task CancelOrderAsync (Stripe.Checkout.Session session)
         {
-            // TODO: fill me in
+            Guid transactionId = await getTransactionIdAsync(session.Id);
+            if (transactionId != Guid.Empty)
+            {
+                await updateTransStatutAsync(transactionId, Status.CANCELED);
+            }
         }
 
         private async Task<Guid> getTransactionIdAsync(string sessionId)

@@ -78,6 +78,7 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
     });
   }
 
+  //initialise les abonnements aux observables, le formulaire et lance les requêtes get
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
 
@@ -126,6 +127,7 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
   }
 }
 
+//initialise le formulaire et les validators
 fillInForm()
 {
   this.biereForm = this.formBuilder.group({
@@ -157,6 +159,7 @@ uploadFileCheck = (files: FileList | null) =>{
   }
 }
 
+//demande de confirmation pour les images
 confirmModifImage(files:FileList)
 {
       //lance le module de confirmation
@@ -175,6 +178,7 @@ confirmModifImage(files:FileList)
       ); 
 }
 
+//chargement des photos
 upload(files:FileList){
   let fileToUpload = <File>files[0];
   const formData = new FormData();
@@ -257,6 +261,7 @@ onSubmitForm(){
     this.avis.avisSucr = this.biereForm.value.avisSucr;
     this.avis.aviBieUserDateAvis = new Date();
     this.avis.userId = this.authSrv.getUserId().toString();
+    this.avis.orgId = this.authSrv.getUserOrgId.toString();
     this.avis.aviBieUserId = Guid.create().toString();
     this.avis.aviBieUserActif = true;
     
@@ -267,7 +272,6 @@ onSubmitForm(){
     }
     else
     {
-      //just for test environment
       this.sauvegarder();     
     }
   }

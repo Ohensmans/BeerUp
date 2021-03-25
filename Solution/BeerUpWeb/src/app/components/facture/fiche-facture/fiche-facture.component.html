@@ -4,10 +4,15 @@
     <div class="card-header">
         <h3>Facture n°{{id}}</h3>
     </div>
-    <button class="text-center btn btn-success" type="button" (click)="createPdf()">Telecharger en pdf</button>
+    <button class="text-center btn btn-success" type="button" (click)="createPdf()">Télécharger en pdf</button>
+	<div>
+		<br>
+		<br>
+	</div>
 
-    <div id="htmlData">
-        <div class="invoice-box">
+    <div >
+        <div class="invoice-box" >
+			<div id="htmlData" class="boxpadding">
 			<table>
 				<tr class="top">
 					<td colspan="2">
@@ -19,7 +24,7 @@
 
 								<td>
 									Facture n°{{id}}<br />
-									Date: {{facture.facDate}}
+									Date: {{formattedDate}}
 								</td>
 							</tr>
 						</table>
@@ -51,42 +56,50 @@
 				</tr>
 
 				<tr class="heading">
-					<td>Item</td>
+					<td>Achat</td>
 
-					<td>Prix</td>
+					<td *ngIf="!isCorrection()">Prix</td>
+					<td *ngIf="isCorrection()">Valeur</td>
 				</tr>
 
 				<tr class="item" *ngFor="let achatBiere of lAchatBiere">
 					<td>{{achatBiere.bieNom}} &#8208; {{achatBiere.bieNbVuAch}} vues</td>
 
-					<td>{{achatBiere.biePrix}} &euro ttc</td>
+					<td>{{achatBiere.biePrix}} € tvac</td>
 				</tr>
 
                 <tr class="item" *ngFor="let achatEtab of lAchatEtab">
 					<td>{{achatEtab.etaNom}} &#8208; {{achatEtab.etaNbVuAch}} vues</td>
 
-					<td>{{achatEtab.etaPrix}} &euro ttc</td>
+					<td>{{achatEtab.etaPrix}} € tvac</td>
+				</tr>
+
+				<tr class="item" *ngIf="isCorrection()">
+					<td STYLE="padding:0 0 0 20px;">Raison : {{facture.facMotif}}</td>
+
+					<td></td>
 				</tr>
 
 				<tr class="total">
 					<td></td>
 
-					<td>Total htva: {{soldeHtva}} &euro</td>
+					<td>Total htva: {{soldeHtva}} €</td>
 				</tr>
 
                 <tr class="total">
 					<td></td>
 
-					<td>TVA ({{TVA}} &#8274;): {{soldeTva}} &euro</td>
+					<td>TVA ({{TVA}} &#8274;) : {{soldeTva}} €</td>
 				</tr>
 
                 <tr class="total">
 					<td></td>
 
-					<td>Total tvac: {{solde}} &euro</td>
+					<td>Total tvac: {{solde}} €</td>
 				</tr>
 
 			</table>
+		</div>
 		</div>
     </div>
 

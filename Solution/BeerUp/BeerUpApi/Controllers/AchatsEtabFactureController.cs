@@ -12,40 +12,40 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AchatsFactureController : ControllerBase
+    public class AchatsEtabFactureController : ControllerBase
     {
         private readonly BeerUpContext _context;
 
-        public AchatsFactureController(BeerUpContext context)
+        public AchatsEtabFactureController(BeerUpContext context)
         {
             this._context = context;
         }
 
-        // GET: api/AchatsFacture/
+        // GET: api/AchatsEtabFacture/
         [HttpGet]
-        public ActionResult<List<AchatFacture>> GetAchatsFactureOrga()
+        public ActionResult<List<AchatEtabFacture>> GetAchatsEtabFactureOrga()
         {
-            List<AchatFacture> achats = (List<AchatFacture>)_context.AchatsFacture.FromSqlRaw("GetAchatFactureAll").ToList();
+            List<AchatEtabFacture> achats = (List<AchatEtabFacture>)_context.AchatsEtabFacture.FromSqlRaw("GetAchatEtabFactureAll").ToList();
 
             if (achats == null)
             {
-                achats = new List<AchatFacture>();
+                achats = new List<AchatEtabFacture>();
             }
 
             return achats;
         }
 
 
-        // GET: api/AchatsFacture/5
+        // GET: api/AchatsEtabFacture/5
         [HttpGet("{id}")]
-        public ActionResult<List<AchatFacture>> GetAchatsFactureOrga(Guid id)
+        public ActionResult<List<AchatEtabFacture>> GetAchatsEtabFactureOrga(Guid id)
         {
             var param = new SqlParameter("@OrgId", id);
-            List<AchatFacture> achats = (List<AchatFacture>)_context.AchatsFacture.FromSqlRaw("GetAchatFactureOrga @OrgId", param).ToList();
+            List<AchatEtabFacture> achats = (List<AchatEtabFacture>)_context.AchatsEtabFacture.FromSqlRaw("GetAchatEtabFactureOrga @OrgId", param).ToList();
 
             if (achats == null)
             {
-                achats = new List<AchatFacture>();
+                achats = new List<AchatEtabFacture>();
             }
 
             return achats;

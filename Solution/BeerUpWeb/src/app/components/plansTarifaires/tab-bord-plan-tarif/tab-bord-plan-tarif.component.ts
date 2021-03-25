@@ -16,23 +16,27 @@ export class TabBordPlanTarifComponent implements OnInit {
   subscr : Subscription;
 
   lTarifsEtabs: Array<TarifModele>;
+  lTarifsEtabsActifs: Array<TarifModele>;
   lTarifsEtabsPagination :Array<TarifModele>;
 
   TypeTarifVueEtab:string;
   nextText:string;
   previousText:string;
   itemsPerPage:number;
+  onlyActif:boolean;
 
   constructor(private tarifEtabSrv:TarifsEtabsService, private util:UtilService, private toastr:ToastrService) {
     this.subscr = new Subscription();
     
     this.lTarifsEtabs = Array(0);
+    this.lTarifsEtabsActifs = Array(0);
     this.lTarifsEtabsPagination = Array(0);
 
     this.TypeTarifVueEtab = this.util.TypeTarifVueEtab;
     this.nextText=this.util.nextText;
     this.previousText=this.util.previousText;
     this.itemsPerPage = this.util.itemsPerPage;
+    this.onlyActif = false;
    }
 
   ngOnInit(): void {
@@ -40,16 +44,28 @@ export class TabBordPlanTarifComponent implements OnInit {
     this.subscr.add(this.tarifEtabSrv.lTarifsEtabs$.subscribe(
       (value) => {
         this.lTarifsEtabs = value;
+        this.lTarifsEtabs.forEach(element => {
+          if(element.actif){
+            this.lTarifsEtabsActifs.push(element);
+          }
+        });
         this.lTarifsEtabsPagination = this.lTarifsEtabs.slice(0, this.itemsPerPage);
-        }
-        ));
+      }
+    ));
     this.tarifEtabSrv.getAll();
   }
 
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
-    this.lTarifsEtabsPagination = this.lTarifsEtabs.slice(startItem, endItem);
+
+    if(this.onlyActif){
+      this.lTarifsEtabsPagination = this.lTarifsEtabsActifs.slice(startItem, endItem);
+    }
+    else{
+      this.lTarifsEtabsPagination = this.lTarifsEtabs.slice(startItem, endItem);
+    }
+    
   }
 
 
@@ -71,6 +87,24 @@ export class TabBordPlanTarifComponent implements OnInit {
   ngOnDestroy(){
     this.subscr.unsubscribe();
   }
+
+  //intervertit la valeur de onlyActif et affiche ou non uniquement les tarifs actifs
+  switchOnlyActif(){
+    this.onlyActif = !this.onlyActif;
+    this.adaptPagination();
+
+  }
+
+  adaptPagination(){
+    this.lTarifsEtabsPagination = Array(0);
+    if(this.onlyActif) {
+      this.lTarifsEtabsPagination = this.lTarifsEtabsActifs.slice(0, this.itemsPerPage);
+    }
+    else{
+      this.lTarifsEtabsPagination = this.lTarifsEtabs.slice(0, this.itemsPerPage);
+    }
+  }
+
 
 
 

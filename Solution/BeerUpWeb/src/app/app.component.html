@@ -35,7 +35,7 @@
                         </li>
 
                         <li class="btn-group" dropdown>
-                            <div *ngIf="isAuth()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link text-light dropdown-toggle" aria-controls="dropdown-animated">
+                            <div *ngIf="isAuth() && hasUserAdminAccess()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link text-light dropdown-toggle" aria-controls="dropdown-animated">
                                 Administration <span class="caret"></span>
                             </div>
 

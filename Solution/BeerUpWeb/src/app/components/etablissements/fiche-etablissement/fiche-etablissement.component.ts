@@ -82,23 +82,7 @@ export class FicheEtablissementComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.TypesEtabSrv.getAll();
-    this.orgSrv.getAll();
 
-    //récupère l'établissement si il n'est pas nouveau
-    if(id!="new")
-    {
-      this.subsr.add(this.EtablissementsSrv.getOne(id).subscribe(
-        (value) => {
-          this.etab = value;
-          this.fillInForm();
-        }
-      ));
-      this.horaireSrv.getAllHorairesEtab(id);
-      this.joursSrv.getAllJoursEtab(id);
-    }
-
-    
 
     //obtient la liste de type d'établissements
     this.subsr.add(this.TypesEtabSrv.lTypesEtab$.subscribe(
@@ -119,7 +103,21 @@ export class FicheEtablissementComponent implements OnInit {
     this.subsr.add(this.joursSrv.lJours$.subscribe(
       (value) => {this.lJours = value;}
     ));
-  
+
+    //récupère l'établissement si il n'est pas nouveau
+    if(id!="new")
+    {
+      this.subsr.add(this.EtablissementsSrv.getOne(id).subscribe(
+        (value) => {
+          this.etab = value;
+          this.fillInForm();
+        }
+      ));
+      this.horaireSrv.getAllHorairesEtab(id);
+      this.joursSrv.getAllJoursEtab(id);
+    }
+    this.TypesEtabSrv.getAll();
+    this.orgSrv.getAll();
   }
 
   addHoraire(){

@@ -1,5 +1,3 @@
-import { TimeSpan } from "./time-span";
-
 
 export class HoraireModele {
     horId:string;

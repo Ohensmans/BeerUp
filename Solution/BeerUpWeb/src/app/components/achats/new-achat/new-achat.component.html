@@ -12,6 +12,7 @@
                 <br>
                 <h5 class="control-label">Organisation</h5>
                 <select class="form-control" #t (change)="selectOrga(t.value)" [attr.disabled]="somethingOrdered() ? 'disabled' :null">
+                    <option [value]="">Veuillez choisir une organisation</option>
                     <option *ngFor="let orga of lOrganisations" [value]="orga.orgId">
                         {{orga.orgNom}}
                     </option>
@@ -55,16 +56,17 @@
             <br>
             <br>
             <div class="col-md-12 row">
-                <button class="btn btn-success" (click)="addVueBiere()">Ajouter des vues bière</button>
+                <button class="btn btn-success" (click)="addVueBiere()" [attr.disabled]="orgId=='' ? 'disabled' :null" >Ajouter des vues bière</button>
                 <br>
-                <button class="btn btn-success" (click)="addVueEtab()">Ajouter des vues établissements</button>
+                <button class="btn btn-success" (click)="addVueEtab()" [attr.disabled]="orgId=='' ? 'disabled' :null">Ajouter des vues établissements</button>
             </div>
             <div>
                 <br>
             </div>
             
         <div class="card-footer">
-            <div class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="!isAdmin()" class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="isAdmin()" class="solde"><b>Montant Offert : {{solde}} €</b></div>
         </div>
     </div>
     <div>
@@ -80,7 +82,8 @@
     <div class="card">
         <div class="card-header">
             <button class="btn btn-danger" (click)="changeStep()">Etape précédente</button>
-            <div class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="!isAdmin()" class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="isAdmin()" class="solde"><b>Montant Offert : {{solde}} €</b></div>
         </div>
         <div>
             <br>
@@ -97,11 +100,12 @@
 </div>
 
 <div *ngIf="nextStep&&toConfirm">
-    
+    <form [formGroup]="factureForm" (ngSubmit)="onSubmitForm()">  
     <div class="card">
         <div class="card-header">
             <button class="btn btn-danger" (click)="changeToConfirm()">Etape précédente</button>
-            <div class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="!isAdmin()" class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="isAdmin()" class="solde"><b>Montant Offert : {{solde}} €</b></div>
         </div>
     <table  class="table table-striped">
         <thead>
@@ -141,15 +145,30 @@
             </tbody>
         </table>
 
+        <div *ngIf="isAdmin()" class="col-md-12 row">
+            <!--Motif-->
+            <div class="form-group col-md-12">
+                <label class="control-label">Motif</label>
+                <input type="text"  class="form-control boxDescription" id="motif" formControlName="motif">
+                <div *ngIf="submitted && form.motif.invalid">
+                    <div *ngIf="form.motif.errors?.required" class="text-danger" >*champ obligatoire </div>
+                    <div *ngIf="form.motif.errors?.maxlength" class="text-danger" >*maximum 255 caractères </div>
+                </div>    
+            </div>
+        </div>
+
         <div class="card-footer">
-            <div class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="!isAdmin()" class="solde"><b>Prix total : {{solde}} €</b></div>
+            <div *ngIf="isAdmin()" class="solde"><b>Montant Offert : {{solde}} €</b></div>
         </div>
 
     </div>
 
     <div class="text-center">
         <br>
-        <button class="btn btn-primary" (click)="toPayment()" id="checkout-button" [attr.disabled]="(solde<=0 || adresse.adrFacId=='')? 'disabled' :null">Passer au paiement</button>
+        <button *ngIf="!isAdmin()" class="btn btn-primary" (click)="toPayment()" id="checkout-button" [attr.disabled]="(solde<=0 || adresse.adrFacId=='')? 'disabled' :null">Passer au paiement</button>
+        <button *ngIf="isAdmin()" class="btn btn-primary" type="submit">Confirmer l'offre</button>
     </div>
+    </form>
 </div>
 

@@ -8,14 +8,14 @@ import { UtilService } from '../util.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AchatFactureService {
+export class AchatFactureBiereService {
 
-  lAchatsFacture:Array<AchatFacture>;
-  lAchatsFacture$:BehaviorSubject<Array<AchatFacture>>;
+  lAchatsBieresFacture:Array<AchatFacture>;
+  lAchatsBieresFacture$:BehaviorSubject<Array<AchatFacture>>;
 
   constructor(private http:HttpClient, private util:UtilService, private authSrv:AuthentificationService,) { 
-    this.lAchatsFacture = Array(0);
-    this.lAchatsFacture$ = new BehaviorSubject<Array<AchatFacture>>(this.lAchatsFacture);
+    this.lAchatsBieresFacture = Array(0);
+    this.lAchatsBieresFacture$ = new BehaviorSubject<Array<AchatFacture>>(this.lAchatsBieresFacture);
   }
 
 
@@ -23,13 +23,13 @@ export class AchatFactureService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<AchatFacture[]>(
-      this.util.apiAchatsFacture+orgId,
+      this.util.apiAchatsBieresFacture+orgId,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(
       (value) => {
-        this.lAchatsFacture = value;
-        this.lAchatsFacture$.next(this.lAchatsFacture);
+        this.lAchatsBieresFacture = value;
+        this.lAchatsBieresFacture$.next(this.lAchatsBieresFacture);
       }
     );
   }
@@ -38,13 +38,13 @@ export class AchatFactureService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<AchatFacture[]>(
-      this.util.apiAchatsFacture,
+      this.util.apiAchatsBieresFacture,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(
       (value) => {
-        this.lAchatsFacture = value;
-        this.lAchatsFacture$.next(this.lAchatsFacture);
+        this.lAchatsBieresFacture = value;
+        this.lAchatsBieresFacture$.next(this.lAchatsBieresFacture);
       }
     );
   }
@@ -53,13 +53,13 @@ export class AchatFactureService {
     const token = this.authSrv.getUser().id_token;
 
     var result = this.http.get<AchatFacture[]>(
-      this.util.apiAchatFactureParFacture+facId,
+      this.util.apiAchatBieresFactureParFacture+facId,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(
       (value) => {
-        this.lAchatsFacture = value;
-        this.lAchatsFacture$.next(this.lAchatsFacture);
+        this.lAchatsBieresFacture = value;
+        this.lAchatsBieresFacture$.next(this.lAchatsBieresFacture);
       }
     );
   }

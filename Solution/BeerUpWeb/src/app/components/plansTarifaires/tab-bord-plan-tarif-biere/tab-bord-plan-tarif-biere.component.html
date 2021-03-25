@@ -44,5 +44,7 @@
     <br>
 
     <button class="btn btn-primary" (click)="addTarifBiere()">Ajouter un tarif</button>
+    <button *ngIf="onlyActif" class="btn btn-info" (click)="switchOnlyActif()">Voir tous les tarifs</button>
+    <button *ngIf="!onlyActif" class="btn btn-info" (click)="switchOnlyActif()">Voir uniquement les tarifs actifs</button>
 
 </div>

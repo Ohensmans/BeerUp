@@ -17,6 +17,7 @@ export class ElementListeAchatComponent implements OnInit {
     this.solde = 0;
   }
 
+  //change la couleur de police selon le solde restant 
   getClass(){
     if(this.solde>0){
       return "class=' text-primary '";
@@ -26,6 +27,7 @@ export class ElementListeAchatComponent implements OnInit {
     }
   }
 
+  //calcule le solde restant
   ngOnInit(): void {
     this.solde = this.achat.nbVuesAch - this.achat.nbVu;
   }

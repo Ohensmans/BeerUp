@@ -15,21 +15,25 @@ export class TabBordPlanTarifBiereComponent implements OnInit {
 
   subscr : Subscription;
   lTarifsBiere: Array<TarifModele>;
+  lTarifsBiereActifs: Array<TarifModele>;
   TypeTarifVueBiere:string;
   lTarifsBierePagination: Array<TarifModele>;
   nextText:string;
   previousText:string;
   itemsPerPage:number;
+  onlyActif:boolean;
 
   constructor(private tarifBiereSrv:TarifsBieresService,  private util:UtilService, private toastr:ToastrService) {
     this.subscr = new Subscription();
     
     this.lTarifsBiere = Array(0);
+    this.lTarifsBiereActifs = Array(0);
     this.TypeTarifVueBiere = this.util.TypeTarifVueBiere;
     this.lTarifsBierePagination = Array(0);
     this.nextText=this.util.nextText;
     this.previousText=this.util.previousText;
     this.itemsPerPage = this.util.itemsPerPage;
+    this.onlyActif = false;
    }
 
   ngOnInit(): void {
@@ -37,6 +41,11 @@ export class TabBordPlanTarifBiereComponent implements OnInit {
     this.subscr.add(this.tarifBiereSrv.lTarifsBiere$.subscribe(
       (value) => {
         this.lTarifsBiere = value;
+        this.lTarifsBiere.forEach(element => {
+          if(element.actif){
+            this.lTarifsBiereActifs.push(element);
+          }
+        });
         this.lTarifsBierePagination = this.lTarifsBiere.slice(0, this.itemsPerPage);
       }
     ));
@@ -46,7 +55,13 @@ export class TabBordPlanTarifBiereComponent implements OnInit {
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
-    this.lTarifsBierePagination = this.lTarifsBiere.slice(startItem, endItem);
+    if(this.onlyActif){
+      this.lTarifsBierePagination = this.lTarifsBiereActifs.slice(startItem, endItem);
+    }
+    else{
+      this.lTarifsBierePagination = this.lTarifsBiere.slice(startItem, endItem);
+    }
+    
   }
 
 
@@ -68,6 +83,19 @@ export class TabBordPlanTarifBiereComponent implements OnInit {
 
   ngOnDestroy(){
     this.subscr.unsubscribe();
+  }
+
+  //intervertit la valeur de onlyActif et affiche ou non uniquement les tarifs actifs
+  switchOnlyActif(){
+    this.onlyActif = !this.onlyActif;
+    this.lTarifsBierePagination = Array(0);
+
+    if(this.onlyActif) {
+      this.lTarifsBierePagination = this.lTarifsBiereActifs.slice(0, this.itemsPerPage);
+    }
+    else{
+      this.lTarifsBierePagination = this.lTarifsBiere.slice(0, this.itemsPerPage);
+    }
   }
 
 

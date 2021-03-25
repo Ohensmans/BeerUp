@@ -31,6 +31,7 @@ export class TabBordAchatBiereComponent implements OnInit {
     this.itemsPerPage = this.util.itemsPerPage;
   }
 
+  //initialisation en observant la liste des vues bières
   ngOnInit(): void {
     this.subscr.add(this.VuesAchatBiereSrv.lVuesAchatBiere$.subscribe(
       (value)=>{

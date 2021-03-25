@@ -11,7 +11,7 @@
             <br>
             <h5 class="control-label">Organisation</h5>
             <select class="form-control" #t (change)="selectOrga(t.value)">
-                <option [value]="">Toutes les organisations</option>
+                <option [value]="'all'">Toutes les organisations</option>
                 <option *ngFor="let orga of lOrganisations" [value]="orga.orgId">
                     {{orga.orgNom}}
                 </option>
@@ -22,11 +22,11 @@
     <table  class="table table-striped">
         <thead>
             <tr>
-                <th>Numéro de facture</th>
-                <th>Date de la facture</th>
-                <th *ngIf="isAdmin()">Organisation</th>
-                <th>Total tvac</th>
-                <th>Voir</th>
+                <th class="text-center">N° facture</th>
+                <th class="text-center">Date de la facture</th>
+                <th class="text-center" *ngIf="isAdmin()">Organisation</th>
+                <th class="text-center">Total tvac</th>
+                <th class="text-center">Voir</th>
             </tr>  
         </thead>
         <tbody>

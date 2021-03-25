@@ -18,7 +18,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { AppComponent } from './app.component';
 
 import { AuthentificationService } from './services/authentification.service';
-import { AuthGuardService} from 'src/app/services/authguard.service';
+import { AuthGuardService} from 'src/app/services/Guards/authguard.service';
 
 
 import { HomeComponent } from './components/home/home.component';
@@ -53,6 +53,12 @@ import { CanceledComponent } from './components/achats/result/canceled/canceled.
 import { TabBordFactComponent } from './components/facture/tab-bord-fact/tab-bord-fact.component';
 import { ElementFactureComponent } from './components/facture/element-facture/element-facture.component';
 import { FicheFactureComponent } from './components/facture/fiche-facture/fiche-facture.component';
+import { AdminGuardService } from './services/Guards/admin-guard.service';
+import { GroupEtabGuardService } from './services/Guards/group-etab-guard.service';
+import { GroupBiereGuardService } from './services/Guards/group-biere-guard.service';
+import { GroupAchatGuardService } from './services/Guards/group-achat-guard.service';
+import { LoggedGuardService } from './services/Guards/logged-guard.service';
+
 
 
 
@@ -116,22 +122,20 @@ import { FicheFactureComponent } from './components/facture/fiche-facture/fiche-
       { path:'logout', component:LoginComponent },
       { path: 'auth-callback', component : AuthCallbackComponent},
       { path: 'contact', component : ContactComponent},
-      { path: 'privacy', component : PrivacyComponent},
-      //{ path: 'call-api', canActivate:[AuthGuardService], component : CallApiComponent},
-      { path: 'PlansTarifairesEtab', component : TabBordPlanTarifComponent},
-      { path: 'PlansTarifairesBiere', component : TabBordPlanTarifBiereComponent},
-      { path: 'Etablissements', component : TabBordEtabsComponent},
-      { path: 'Bieres', component : TabBordBieresComponent},
-      { path: 'FicheBiere/:id', component : FicheBiereComponent},
-      { path: 'FicheEtablissement/:id', component : FicheEtablissementComponent},
-      { path: 'TabBordBieresEtab/:id', component : TabBordBieresEtabComponent},
-      { path: 'AchatsEtab', component : TabBordAchatComponent},
-      { path: 'AchatsBiere', component : TabBordAchatBiereComponent},
-      { path: 'NewAchat', component : NewAchatComponent},
-      { path: 'Success', component : SuccessComponent},
-      { path: 'Canceled', component : CanceledComponent},
-      { path: 'Factures', component : TabBordFactComponent},
-      { path: 'FicheFacture/:id', component : FicheFactureComponent},
+      { path: 'PlansTarifairesEtab', canActivate:[AuthGuardService], component : TabBordPlanTarifComponent, data:{syncGuards:[AdminGuardService]}},
+      { path: 'PlansTarifairesBiere', canActivate:[AuthGuardService], component : TabBordPlanTarifBiereComponent, data:{syncGuards:[AdminGuardService]}},
+      { path: 'Etablissements', canActivate:[AuthGuardService], component : TabBordEtabsComponent, data:{syncGuards:[GroupEtabGuardService]}},
+      { path: 'Bieres', canActivate:[AuthGuardService], component : TabBordBieresComponent, data:{syncGuards:[GroupBiereGuardService]}},
+      { path: 'FicheBiere/:id', canActivate:[AuthGuardService], component : FicheBiereComponent, data:{syncGuards:[GroupBiereGuardService]}},
+      { path: 'FicheEtablissement/:id', canActivate:[AuthGuardService], component : FicheEtablissementComponent, data:{syncGuards:[GroupEtabGuardService]}},
+      { path: 'TabBordBieresEtab/:id', canActivate:[AuthGuardService], component : TabBordBieresEtabComponent, data:{syncGuards:[GroupEtabGuardService]}},
+      { path: 'AchatsEtab', canActivate:[AuthGuardService], component : TabBordAchatComponent, data:{syncGuards:[GroupAchatGuardService]}},
+      { path: 'AchatsBiere', canActivate:[AuthGuardService], component : TabBordAchatBiereComponent, data:{syncGuards:[GroupAchatGuardService]}},
+      { path: 'NewAchat', canActivate:[AuthGuardService], component : NewAchatComponent, data:{syncGuards:[GroupAchatGuardService]}},
+      { path: 'Success', component : SuccessComponent, data:{syncGuards:[LoggedGuardService]}},
+      { path: 'Canceled', component : CanceledComponent, data:{syncGuards:[LoggedGuardService]}},
+      { path: 'Factures', canActivate:[AuthGuardService], component : TabBordFactComponent, data:{syncGuards:[GroupAchatGuardService]}},
+      { path: 'FicheFacture/:id', canActivate:[AuthGuardService], component : FicheFactureComponent, data:{syncGuards:[GroupAchatGuardService]}},
       { path: 'not-found', component : NotFoundComponent},      
       { path: '**', redirectTo: 'not-found' }
     ]),

@@ -1,11 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AchatFacture } from 'src/app/models/achat-facture';
-import { AchatVuesModele } from 'src/app/models/achat-vues-modele';
 import { FactureModele } from 'src/app/models/facture-modele';
 import { OrganisationModele } from 'src/app/models/organisation-modele';
 import { AuthentificationService } from 'src/app/services/authentification.service';
-import { AchatFactureService } from 'src/app/services/CallApi/achat-facture.service';
 import { FacturesService } from 'src/app/services/CallApi/factures.service';
 
 @Component({
@@ -22,8 +21,9 @@ export class ElementFactureComponent implements OnInit {
   solde:number;
   factureId:number;
   facture:FactureModele;
-  subscr:Subscription;
+  subscri:Subscription;
   orgNom:string;
+  formattedDate:string;
 
   constructor(private factureSrv:FacturesService, private authSrv:AuthentificationService) { 
     this.factureContent = Array(0);
@@ -33,10 +33,12 @@ export class ElementFactureComponent implements OnInit {
     this.solde = 0;
     this.factureId=0;
     this.facture = new FactureModele();
-    this.subscr = new Subscription();
+    this.subscri = new Subscription();
     this.orgNom = "";
+    this.formattedDate = "";
   }
 
+  //récupère le solde et le nom des orga
   ngOnInit(): void {
     this.factureContent.forEach(element => {
       if(element.etaNom!=null && element.etaNom!=""){
@@ -51,7 +53,7 @@ export class ElementFactureComponent implements OnInit {
       }
     });
     this.factureId = this.factureContent[0].facId;
-    this.subscr.add(this.factureSrv.getOne(this.factureId).subscribe(
+    this.subscri.add(this.factureSrv.getOne(this.factureId).subscribe(
       (value) => {
         this.facture = value;
         let index = this.lOrganisations.findIndex(o => o.orgId == this.factureContent[0].orgId)
@@ -60,6 +62,12 @@ export class ElementFactureComponent implements OnInit {
         }      
       }
     ));
+
+    this.dateFormat();
+
+    if(this.facture.facMotif!=""){
+      this.solde = 0;
+    }
     
   }
 
@@ -69,13 +77,21 @@ export class ElementFactureComponent implements OnInit {
   }
 
   onDestroy(){
-    this.subscr.unsubscribe();
+    this.subscri.unsubscribe();
   }
 
   isAdmin(){
     return this.authSrv.isAdmin();
   }
 
-  export(){}
+  //met en forme la date
+  dateFormat(){
+    let pipe = new DatePipe('en-US');
+    let formattedDate = pipe.transform(this.facture.facDate, 'dd/MM/yyyy');
+    if(formattedDate !=null){
+      this.formattedDate = formattedDate;
+    }
+  }
+
 
 }

@@ -28,14 +28,14 @@ namespace BeerUpApi.Controllers
         {
 
             var param = new SqlParameter("@FacId", id);
-            AdressesFacturation adresse = (AdressesFacturation)_context.AdressesFacturations.FromSqlRaw("GetAdresseFact @FacId", param);
+            List<AdressesFacturation> adresses = (List<AdressesFacturation>)_context.AdressesFacturations.FromSqlRaw("GetAdresseFact @FacId", param).ToList();
 
-            if (adresse == null)
+            if (adresses == null)
             {
                 return NotFound();
             }
 
-            return adresse;
+            return adresses[0];
         }
 
         // POST: api/AdresseFacturation

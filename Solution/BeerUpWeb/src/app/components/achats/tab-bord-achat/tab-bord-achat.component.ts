@@ -30,6 +30,7 @@ export class TabBordAchatComponent implements OnInit {
     this.itemsPerPage = this.util.itemsPerPage;
   }
 
+  //initialisation en observant la liste des vues établissments
   ngOnInit(): void {
     this.subscr.add(this.VuesAchatEtabSrv.lVuesAchatEtab$.subscribe(
       (value) =>{
@@ -41,6 +42,8 @@ export class TabBordAchatComponent implements OnInit {
     this.VuesAchatEtabSrv.get();
   }
 
+  //méthode de pagination pour limiter la liste affichée
+  //params dans le service util
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;

@@ -12,26 +12,26 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AchatFactureParFactureController : ControllerBase
+    public class AchatsBieresFactureParFactureController : ControllerBase
     {
         private readonly BeerUpContext _context;
 
-        public AchatFactureParFactureController(BeerUpContext context)
+        public AchatsBieresFactureParFactureController(BeerUpContext context)
         {
             this._context = context;
         }
 
 
-        // GET: api/AchatsFacture/5
+        // GET: api/AchatsBieresFactureParFacture/5
         [HttpGet("{id}")]
-        public ActionResult<List<AchatFacture>> GetAchatsFactureOrga(int id)
+        public ActionResult<List<AchatBieresFacture>> GetAchatsBieresFactureParFacture(int id)
         {
             var param = new SqlParameter("@FacId", id);
-            List<AchatFacture> achats = (List<AchatFacture>)_context.AchatsFacture.FromSqlRaw("GetAchatFacture @FacId", param).ToList();
+            List<AchatBieresFacture> achats = (List<AchatBieresFacture>)_context.AchatsBieresFacture.FromSqlRaw("GetAchatBieresFacture @FacId", param).ToList();
 
             if (achats == null)
             {
-                achats = new List<AchatFacture>();
+                achats = new List<AchatBieresFacture>();
             }
 
             return achats;

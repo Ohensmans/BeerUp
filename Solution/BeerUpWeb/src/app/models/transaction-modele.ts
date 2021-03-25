@@ -1,4 +1,5 @@
 import { Guid } from "guid-typescript";
+import { Status } from "./status";
 
 export class TransactionModele {
     transId:string;
@@ -9,12 +10,6 @@ export class TransactionModele {
     
 
     constructor(){
-        enum Status {
-            New = "NEW", 
-            Correction = "CORRECTION", 
-            Confirmed = "CONFIRMED"
-        }
-
         this.transId = Guid.create().toString();
         this.transDate = new Date();
         this.transStatus= Status.New;

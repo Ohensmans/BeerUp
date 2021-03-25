@@ -35,10 +35,15 @@ export class UtilService {
   apiFactures = this.apiUrl+'Factures/';
   apiFacturesOrga = this.apiUrl+'FacturesOrga/';
   apiAchatsVues = this.apiUrl+'AchatsVues/';
-  apiAchatsFacture = this.apiUrl+'AchatsFacture/';
   apiMollie = this.apiUrl+'Mollie/';
   apiStripe= this.apiUrl+'Stripe/';
-  apiAchatFactureParFacture= this.apiUrl+'AchatFactureParFacture/';
+
+  apiAchatsBieresFacture = this.apiUrl+'AchatsBieresFacture/';
+  apiAchatBieresFactureParFacture= this.apiUrl+'AchatsBieresFactureParFacture/';
+
+  apiAchatsEtabFacture = this.apiUrl+'AchatsEtabFacture/';
+  apiAchatEtabFactureParFacture= this.apiUrl+'AchatsEtabFactureParFacture/';
+
   apiTransactions= this.apiUrl+'Transactions/';
   
 

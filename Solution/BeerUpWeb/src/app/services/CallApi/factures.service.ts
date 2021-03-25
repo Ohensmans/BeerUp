@@ -37,11 +37,23 @@ export class FacturesService {
     const token = this.authSrv.getUser().id_token;
 
     let result = this.http.get<FactureModele>(
-      this.util.apiFacturesOrga+id,
+      this.util.apiFactures+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     return result;
   }
+
+  addFacture(facture: FactureModele){
+    const token:string = this.authSrv.getUser().id_token;
+
+    let result = this.http.post<FactureModele>(
+      this.util.apiFactures, facture,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    );
+    return result;
+  }
+
+
 
 }
 

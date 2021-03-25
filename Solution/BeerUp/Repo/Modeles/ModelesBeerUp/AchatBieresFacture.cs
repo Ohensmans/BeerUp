@@ -4,15 +4,12 @@ using System.Text;
 
 namespace Repo.Modeles.ModelesBeerUp
 {
-    public class AchatFacture
+    public class AchatBieresFacture
     {
         public int FacId { get; set; }
         public string BieNom { get; set; }
-        public string EtaNom { get; set; }
         public long BieNbVuAch { get; set; }
-        public long EtaNbVuAch { get; set; }
         public decimal BiePrix { get; set; }
-        public decimal EtaPrix { get; set; }
 
         public Guid OrgId { get; set; }
 

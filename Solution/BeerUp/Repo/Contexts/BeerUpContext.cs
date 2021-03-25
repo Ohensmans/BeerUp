@@ -16,7 +16,8 @@ namespace Repo.Modeles.ModelesBeerUp
             : base(options)
         {
         }
-        public virtual DbSet<AchatFacture> AchatsFacture { get; set; }
+        public virtual DbSet<AchatBieresFacture> AchatsBieresFacture { get; set; }
+        public virtual DbSet<AchatEtabFacture> AchatsEtabFacture { get; set; }
         public virtual DbSet<AchatsVue> AchatsVues { get; set; }
         public virtual DbSet<AdressesFacturation> AdressesFacturations { get; set; }
         public virtual DbSet<AvisBiereUser> AvisBiereUser { get; set; }
@@ -61,6 +62,7 @@ namespace Repo.Modeles.ModelesBeerUp
                     .IsRequired();
 
                 entity.Property(t => t.TransDate).HasColumnName("Trans.Date")
+                    .HasColumnType("datetime")
                     .IsRequired();
 
                 entity.HasOne(d => d.Orga)
@@ -85,7 +87,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
             });
 
-            modelBuilder.Entity<AchatFacture>(entity =>
+            modelBuilder.Entity<AchatBieresFacture>(entity =>
             {
                 entity.HasKey(a => a.AchId);
 
@@ -97,13 +99,26 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(a => a.BieNom).HasColumnName("Bie.Nom");
 
-                entity.Property(a => a.EtaNom).HasColumnName("Eta.Nom");
-
                 entity.Property(a => a.BieNbVuAch).HasColumnName("BieNbVuAch");
 
-                entity.Property(a => a.EtaNbVuAch).HasColumnName("EtaNbVuAch");
-
                 entity.Property(a => a.BiePrix).HasColumnName("BiePrix");
+
+
+            });
+
+            modelBuilder.Entity<AchatEtabFacture>(entity =>
+            {
+                entity.HasKey(a => a.AchId);
+
+                entity.Property(a => a.AchId).HasColumnName("Ach.Id");
+
+                entity.Property(a => a.OrgId).HasColumnName("Org.Id");
+
+                entity.Property(a => a.FacId).HasColumnName("Fac.Id");
+
+                entity.Property(a => a.EtaNom).HasColumnName("Eta.Nom");
+
+                entity.Property(a => a.EtaNbVuAch).HasColumnName("EtaNbVuAch");
 
                 entity.Property(a => a.EtaPrix).HasColumnName("EtaPrix");
 

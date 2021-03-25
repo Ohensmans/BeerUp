@@ -43,11 +43,13 @@ export class NewAchatBiereElementComponent implements OnInit {
       });
   }
 
+  //mets en forme la ligne en cas de formulaire non valide
   getClass() {
     if (this.achatVueForm.invalid && this.submitted) return "bg-danger text-white";
     else return "";
   }
 
+  //Affiche le nombre de vues restantes après sélection de la bière
   onBiereSelected(){
     let biere = this.lAllowedBiere.find(b => b.bieId == this.achatVueForm.value.bieId);
     if(biere!=undefined){
@@ -55,6 +57,7 @@ export class NewAchatBiereElementComponent implements OnInit {
     }
   }
 
+  //affiche le prix après sélection du tarif
   onTarifSelected(){
     let tarif = this.lTarifsBiere.find(t => t.id == this.achatVueForm.value.tarifBieId);
     if(tarif!=undefined){
@@ -62,6 +65,7 @@ export class NewAchatBiereElementComponent implements OnInit {
     }
   }
 
+  //met à jour l'item dans la liste des observables pour le composant parent.
   onSubmitForm(){
     this.submitted = true;
     if(this.achatVueForm.valid && this.achatVueForm.dirty){

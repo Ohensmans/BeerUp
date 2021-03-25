@@ -41,5 +41,7 @@
     <br>
 
     <button class="btn btn-primary" routerLink="/FicheBiere/new">Créer une bière</button>
+    <button *ngIf="onlyValid" class="btn btn-info" (click)="switchOnlyValid()">Voir tous les tarifs</button>
+    <button *ngIf="!onlyValid" class="btn btn-info" (click)="switchOnlyValid()">Voir uniquement les tarifs valides</button>
 
 </div>

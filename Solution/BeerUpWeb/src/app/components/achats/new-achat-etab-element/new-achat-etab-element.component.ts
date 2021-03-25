@@ -43,11 +43,13 @@ export class NewAchatEtabElementComponent implements OnInit {
       });
   }
 
+  //mets en forme la ligne en cas de formulaire non valide
   getClass() {
     if (this.achatVueForm.invalid && this.submitted) return "bg-danger text-white";
     else return "";
   }
 
+  //Affiche le nombre de vues restantes après sélection de l'étab
   onEtabSelected(){
     let etab = this.lAllowedEtab.find(e => e.etaId == this.achatVueForm.value.etabId);
     if(etab!=undefined){
@@ -55,6 +57,7 @@ export class NewAchatEtabElementComponent implements OnInit {
     }
   }
 
+  //affiche le prix après sélection du tarif
   onTarifSelected(){
     let tarif = this.lTarifsEtab.find(t => t.id == this.achatVueForm.value.tarifEtabId);
     if(tarif!=undefined){
@@ -62,6 +65,7 @@ export class NewAchatEtabElementComponent implements OnInit {
     }
   }
 
+  //met à jour l'item dans la liste des observables pour le composant parent.
   onSubmitForm(){
     this.submitted = true;
     if(this.achatVueForm.valid && this.achatVueForm.dirty){

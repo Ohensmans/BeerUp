@@ -69,6 +69,7 @@ export class AdresseFacturationComponent implements OnInit {
     this.ngOnInit();
   }
 
+  //met à jour l'adresse dans l'observable pour le composant parent
   ngOnInit(): void {
 
     if(!this.noLastAdresse() && !this.create && !this.showExisting){
@@ -86,6 +87,7 @@ export class AdresseFacturationComponent implements OnInit {
     this.adrSrv.updateChoosenAdresse(this.adresse);
   }
 
+  //crée une nouvelle adresse d'après le form
   onSubmitForm(){
     if(this.adresseForm.valid && this.adresseForm.dirty)
     {
@@ -111,6 +113,7 @@ export class AdresseFacturationComponent implements OnInit {
     return this.adresseForm;
   }
 
+  //crée l'adresse et réinitialise le form pour le disable
   createNewAdresse(){
     this.adrSrv.addAdresse(this.adresse).subscribe(
       (value)=>{
@@ -120,12 +123,14 @@ export class AdresseFacturationComponent implements OnInit {
     
   }
 
+  //sélectionne la dernière adresse et disable
   selectLastAdresse(){
     this.create = false;
     this.showExisting = false;
     this.ngOnInit();
   }
 
+  //affecte l'adresse sélectionnée au form
   selectAmongExisting(adrId:string){
     let index = this.lAdresses.findIndex(a => a.adrFacId == adrId);
     if(index!=-1){
