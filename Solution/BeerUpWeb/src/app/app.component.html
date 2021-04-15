@@ -13,14 +13,14 @@
    
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow bd-navbar mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Back">BeerUp</a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li routerLinkActive="active" class="nav-item"><a class="nav-link text-light" routerLink="home">Acceuil</a></li>
+                        <li routerLinkActive="active" class="nav-item" ><h3 class="nav-link" style="color:#9fe855" routerLink="home">BeerUp</h3></li>
                         
                         <li class="btn-group" dropdown>
                             <div *ngIf="isAuth() && hasAchatAdminAccess()" id="button-animated nav-item" dropdownToggle type="button" class="nav-link text-light dropdown-toggle" aria-controls="dropdown-animated">

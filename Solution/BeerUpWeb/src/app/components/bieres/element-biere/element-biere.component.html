@@ -8,12 +8,12 @@
     </td>
     
     <td class="text-center">
-        <button class="btn btn-secondary" routerLink="/FicheBiere/{{ biere.bieId }}">Modifier</button>
+        <button class="btn btn-primary" routerLink="/FicheBiere/{{ biere.bieId }}">Modifier</button>
     </td>
 
     <td class="text-center">
         <button *ngIf="biere.bieValide" class="btn btn-info" type="button" (click)="validation()">Dévalider</button>
-        <button *ngIf="!biere.bieValide" class="btn btn-primary" type="button" (click)="validation()">Valider</button>
+        <button *ngIf="!biere.bieValide" class="btn btn-secondary" type="button" (click)="validation()">Valider</button>
     </td>
 
     <td class="text-center">

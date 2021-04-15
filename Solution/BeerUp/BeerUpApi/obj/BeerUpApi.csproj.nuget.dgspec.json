@@ -1,21 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {}
+    "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {
+    "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
+        "projectUniqueName": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
         "projectName": "BeerUpApi",
-        "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
-        "packagesPath": "C:\\Users\\ho2175\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\obj\\",
+        "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
+        "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ho2175\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -28,8 +35,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
-                "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
+              "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+                "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
               }
             }
           }
@@ -46,18 +53,18 @@
           "dependencies": {
             "Macross.Json.Extensions": {
               "target": "Package",
-              "version": "[1.5.0, )"
+              "version": "[2.0.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[5.0.1, )",
+              "version": "[5.0.4, )",
               "noWarn": [
                 "NU1605"
               ]
             },
             "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
-              "version": "[5.0.1, )",
+              "version": "[5.0.4, )",
               "noWarn": [
                 "NU1605"
               ]
@@ -66,25 +73,25 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.3, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.2, )"
             },
             "Mollie.Api": {
               "target": "Package",
@@ -117,22 +124,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+    "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
+        "projectUniqueName": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
         "projectName": "Repo",
-        "projectPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
-        "packagesPath": "C:\\Users\\ho2175\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ho2175\\Desktop\\TFE\\repo\\BeerUp\\Solution\\BeerUp\\Repo\\obj\\",
+        "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
+        "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ho2175\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -159,31 +173,31 @@
           "dependencies": {
             "Macross.Json.Extensions": {
               "target": "Package",
-              "version": "[1.5.0, )"
+              "version": "[2.0.0, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[5.0.4, )"
             }
           },
           "imports": [
@@ -201,7 +215,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

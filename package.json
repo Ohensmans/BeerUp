@@ -1,0 +1,19 @@
+{
+  "name": "beerup",
+  "version": "1.0.0",
+  "description": "Le client souhaite développer une application mobile « BeerUp » et un site web.\r L’application mobile sera à destination du public. À travers cette application, le public pourra noter les bières selon leurs saveurs et donner une note générale ainsi qu’obtenir des suggestions et trouver où acheter/consommer une bière. Le site web sera à destination de ses clients qui pourront à travers celui-ci acheter des vues sponsorisées pour faire ressortir leur bière et/ou établissement.\r Une vue sponsorisée correspond à l’affichage d’une bière ou d’un établissement en haut de la liste de recherche ou de suggestion par l’utilisateur.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ohensmans/BeerUp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ohensmans/BeerUp/issues"
+  },
+  "homepage": "https://github.com/Ohensmans/BeerUp#readme"
+}

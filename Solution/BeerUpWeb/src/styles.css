@@ -125,3 +125,37 @@ body {
   margin-left: 15px;
 }
 
+/* boutons colors
+-------------------------------------------------- */
+.btn-success{
+  background-color: #2e2b1c;
+  border-color: #2e2b1c;
+}
+
+.btn-danger{
+  background-color: #f96645;
+  border-color: #f96645;
+}
+
+.btn-primary{
+  background-color: #636a48;
+  border-color: #636a48;
+}
+
+.btn-secondary{
+  background-color: #90aa87;
+  border-color: #90aa87;
+}
+
+.btn-info{
+  background-color: #d76844;
+  border-color: #d76844;
+}
+
+.navbar-nav .nav-link {
+  padding : 15px 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+
