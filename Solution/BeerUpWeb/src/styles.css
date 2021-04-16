@@ -16,11 +16,6 @@ a {
   margin-left: 5px;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
@@ -128,34 +123,121 @@ body {
 /* boutons colors
 -------------------------------------------------- */
 .btn-success{
-  background-color: #2e2b1c;
-  border-color: #2e2b1c;
+  background-color: #447604;
+  border-color: #447604;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #223B02;
+  border-color: #223B02;
+}
+
+.btn-success.disabled, .btn-success:disabled {
+  color: #fff;
+  background-color: #223B02;
+  border-color: #223B02;
 }
 
 .btn-danger{
-  background-color: #f96645;
-  border-color: #f96645;
+  background-color: #47624F;
+  border-color: #47624F;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #334739;
+  border-color: #334739;
+}
+
+.btn-danger.disabled, .btn-danger:disabled {
+  color: #fff;
+  background-color: #334739;
+  border-color: #334739;
 }
 
 .btn-primary{
-  background-color: #636a48;
-  border-color: #636a48;
+  background-color: #6CC551;
+  border-color: #6CC551;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #52A838;
+  border-color: #52A838;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #52A838;
+  border-color: #52A838;
 }
 
 .btn-secondary{
-  background-color: #90aa87;
-  border-color: #90aa87;
+  background-color: #52AD9C;
+  border-color: #52AD9C;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #418B7D;
+  border-color: #418B7D;
+}
+
+.btn-secondary.disabled, .btn-secondary:disabled {
+  color: #fff;
+  background-color: #418B7D;
+  border-color: #418B7D;
 }
 
 .btn-info{
-  background-color: #d76844;
-  border-color: #d76844;
+  color: #fff;
+  background-color: #036345;
+  border-color: #036345;
 }
 
-.navbar-nav .nav-link {
-  padding : 15px 0;
-  padding-right: 0;
-  padding-left: 0;
+.btn-info:hover {
+  color: #fff;
+  background-color: #01281B;
+  border-color: #01281B;
 }
+
+.btn-info.disabled, .btn-info:disabled {
+  color: #fff;
+  background-color: #01281B;
+  border-color: #01281B;
+}
+
+
+
+
+/* colors
+-------------------------------------------------- */
+:root {
+  --primary: #6CC551;
+  --secondary: #52AD9C;
+  --success: #447604;
+  --info: #036345;
+  --warning: #ffc107;
+  --danger: #47624F;
+}
+
+.text-primary{
+  color: #6CC551 !important;
+}
+
+.text-danger {
+  color: #334739 !important;
+}
+
+/* pagination
+-------------------------------------------------- */
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #6CC551;
+  border-color: #6CC551;
+}
+
 
 

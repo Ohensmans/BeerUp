@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KG2DHwksp6Y/huKRZxFEHhwKq8pACT9XvaF2e2brJD93Z47Xt8K/x0KTY9H+3qVY/SXlLWlOnQ1PlyhqCDa+aQ==",
+  "dgSpecHash": "NdOyhsTq75K8trbV1PwxG2hT+DrZkd5nBYa2zaGSXFvbfbyjZ6K3atri75EWBs9jEB82aK6SvXv7KpuEKUoJAQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
+  "projectFilePath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\BeerUpApi\\BeerUpApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Olivier\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Olivier\\.nuget\\packages\\macross.json.extensions\\2.0.0\\macross.json.extensions.2.0.0.nupkg.sha512",

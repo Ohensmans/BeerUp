@@ -7108,30 +7108,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Olivier\\.nuget\\packages\\": {},
-    "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Olivier\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
+      "projectUniqueName": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
       "projectName": "IdentityServer",
-      "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
+      "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
       "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\obj\\",
+      "outputPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
         "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -7144,8 +7134,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
-              "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
+            "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+              "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
             }
           }
         }
@@ -7221,7 +7211,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
       }
     }
   }

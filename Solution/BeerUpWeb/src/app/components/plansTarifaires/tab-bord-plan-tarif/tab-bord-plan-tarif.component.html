@@ -4,7 +4,7 @@
     <div class="card-header">
         <h3>Liste des tarifs pour les établissements</h3>
     </div>
-    <table  class="table table-striped">
+    <table  class="table">
         <thead>
             <tr>
                 <th>Nombre de vue</th>
@@ -37,9 +37,10 @@
     </div>
     <br>
     <br>
+    <div class="text-center">
     <button class="btn btn-primary" (click)="addTarifEtab()">Ajouter un tarif</button>
     <button *ngIf="onlyActif" class="btn btn-info" (click)="switchOnlyActif()">Voir tous les tarifs</button>
     <button *ngIf="!onlyActif" class="btn btn-info" (click)="switchOnlyActif()">Voir uniquement les tarifs actifs</button>
-
+    </div>
 </div>
 

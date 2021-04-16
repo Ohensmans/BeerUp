@@ -20,7 +20,7 @@
             </div>
         </div>
         
-            <table  class="table table-striped">
+            <table  class="table">
                 <thead>
                     <tr *ngIf="lAchatBiere.length">
                         <th>Bière</th>
@@ -37,7 +37,7 @@
                 </tbody>
 
                 </table>
-                <table  class="table table-striped">
+                <table  class="table">
                     <thead>
                         <tr *ngIf="lAchatEtab.length">
                             <th>Etablissement</th>
@@ -107,7 +107,7 @@
             <div *ngIf="!isAdmin()" class="solde"><b>Prix total : {{solde}} €</b></div>
             <div *ngIf="isAdmin()" class="solde"><b>Montant Offert : {{solde}} €</b></div>
         </div>
-    <table  class="table table-striped">
+    <table  class="table">
         <thead>
             <tr *ngIf="lAchatBiere.length">
                 <th class="col-md-6">Bière</th>
@@ -126,7 +126,7 @@
         </tbody>
         </table>
 
-        <table  class="table table-striped">
+        <table  class="table">
             <thead>
                 <tr *ngIf="lAchatEtab.length">
                     <th class="col-md-6">Etablissement</th>
