@@ -51,6 +51,7 @@ export class EtabsOrgaService {
 
   getAllowedEtab(lEtab : Array<EtablissementModele>, achat : boolean){
     let lAllowEtab : Array<string>;
+    this.lAllowedEtabsOrga = Array(0);
     if(achat){
       lAllowEtab = this.authSrv.getUserGroupAchatEtab();
     }
@@ -62,12 +63,21 @@ export class EtabsOrgaService {
     }
     
     else if(lAllowEtab!=null && lAllowEtab[0]!="All"){
+      if(Array.isArray(lAllowEtab)){
       lAllowEtab.forEach(element => {
         let index = lEtab.findIndex(x => x.etaId == element)
         if (index!=-1){
          this.lAllowedEtabsOrga.push(lEtab[index]);
         }
       });
+    }
+      else{
+        let aloneEtaId = lAllowEtab;
+        let index = lEtab.findIndex(x => x.etaId == aloneEtaId)
+        if (index!=-1){
+         this.lAllowedEtabsOrga.push(lEtab[index]);
+        }
+      }
     }
     
   }

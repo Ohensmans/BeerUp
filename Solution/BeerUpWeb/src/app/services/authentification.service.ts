@@ -89,19 +89,19 @@ export class AuthentificationService {
   }
 
   getUserGroupEtabEtab(){
-    return this.getToken().GroupEtablissementEtablissements;
+    return this.getToken().GroupEtablissementEtab;
   }
 
   getUserGroupBiereBieres(){
-    return this.getToken().GroupBiereBieres;
+    return this.getToken().GroupBiereBiere;
   }
 
   getUserGroupAchatBieres(){
-    return this.getToken().GroupAchatBieres;
+    return this.getToken().GroupAchatBiere;
   }
 
   getUserGroupAchatEtab(){
-    return this.getToken().GroupAchatEtablissements;
+    return this.getToken().GroupAchatEtab;
   }
 
   userIsValide(){

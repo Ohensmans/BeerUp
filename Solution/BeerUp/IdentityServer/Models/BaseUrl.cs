@@ -8,7 +8,7 @@ namespace IdentityServer.Models
     public class BaseUrl
     {
         public string BeerUpWebUrl { get; set; }
-
+        public string BeerUpWebUrlLogin { get; set; }
         public string BeerUpWebUrlEtablissements { get; set; }
         public string BeerUpWebUrlBieres { get; set; }
 

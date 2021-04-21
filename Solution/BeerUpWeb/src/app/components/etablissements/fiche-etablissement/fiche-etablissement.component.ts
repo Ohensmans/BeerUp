@@ -281,7 +281,7 @@ export class FicheEtablissementComponent implements OnInit {
     //assigne l'organisation de l'user à l'établissement
     //l'organisation des administrateurs est un guid empty
     //lorsqu'un utilisateur de l'App mobile crée une brasserie - ce même guid empty est donnée à la brasserie
-    this.etab.orgId = this.authSrv.getUserOrgId.toString();
+    this.etab.orgId = this.authSrv.getUserOrgId().toString();
     this.EtablissementsSrv.addEtab(this.etab);
   }
 

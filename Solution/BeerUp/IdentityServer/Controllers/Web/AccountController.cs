@@ -29,6 +29,8 @@ namespace IdentityServer.Controllers.Web
 
         //Adresse de retour sur le site
         private readonly string BeerUpWebUrl;
+        //adresse de redirection après enregistrement
+        private readonly string BeerUpWebUrlLogin;
 
         public AccountController(UserManager<Utilisateur> userManager, SignInManager<Utilisateur> signInManager, IIdentityServerInteractionService interaction, IEventService events,
             IOptions<Models.BaseUrl> url, IOrganisationService organisationService, IAdresseFacturationService adresseService)
@@ -38,6 +40,7 @@ namespace IdentityServer.Controllers.Web
             _interaction = interaction;
             _events = events; 
             this.BeerUpWebUrl = url.Value.BeerUpWebUrl;
+            this.BeerUpWebUrlLogin = url.Value.BeerUpWebUrlLogin;
             this.organisationService = organisationService;
             this.adresseService = adresseService;
         }
@@ -115,7 +118,7 @@ namespace IdentityServer.Controllers.Web
                                 result = await _userManager.AddToRoleAsync(model.User, role);
                                 if (result.Succeeded)
                                 {                                  
-                                    return Redirect(model.ReturnUrl);
+                                    return Redirect(BeerUpWebUrlLogin);
                                 }
                             }
                         }

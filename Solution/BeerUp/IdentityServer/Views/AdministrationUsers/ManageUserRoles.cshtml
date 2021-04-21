@@ -17,16 +17,17 @@
         <br />
     </div>
 
-    <div>
-        <button style="width:auto" type="submit" name="button" value="update" class="btn btn-success">Mettre à jour l'utilisateur</button>
-        @Html.ActionLink("Retour à la liste des utilisateurs", "ListeUsers", "AdministrationUsers", new { userId = userId, returnUrl = returnUrl }, new { @class = "btn btn-danger" })
-    </div>
-
-
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
     @using (Html.BeginForm(FormMethod.Post))
     {
+        <div>
+            <button style="width:auto" type="submit" name="button" value="update" class="btn btn-success">Mettre à jour l'utilisateur</button>
+            @Html.ActionLink("Retour à la liste des utilisateurs", "ListeUsers", "AdministrationUsers", new { userId = userId, returnUrl = returnUrl }, new { @class = "btn btn-danger" })
+        </div>
+
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
         <div class="card">
 
             @Html.HiddenFor(model => model.userId)

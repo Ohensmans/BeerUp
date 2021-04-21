@@ -49,26 +49,34 @@ export class BieresOrgaService {
 
   getAllowedBiere(lBiere : Array<BiereModele>, achat : boolean){
     let lAllowBieres : Array<string>;
+    this.lAllowedBieresOrga = Array(0);
     if(achat){
       lAllowBieres = this.authSrv.getUserGroupAchatBieres();
     }
     else{
       lAllowBieres = this.authSrv.getUserGroupBiereBieres();
     }
-    
 
-    
     if(this.authSrv.isAdminOrGroupAdmin()){
       this.lAllowedBieresOrga = lBiere;
     }
     
     else if(lAllowBieres!=null && lAllowBieres[0]!="All"){
+      if(Array.isArray(lAllowBieres)){
       lAllowBieres.forEach(element => {
         let index = lBiere.findIndex(x => x.etaId == element)
         if (index!=-1){
          this.lAllowedBieresOrga.push(lBiere[index]);
         }
       });
+    }
+    else{
+      let aloneBieId = lAllowBieres;
+      let index = lBiere.findIndex(x => x.bieId == aloneBieId)
+      if (index!=-1){
+       this.lAllowedBieresOrga.push(lBiere[index]);
+      }
+    }
     }
     
   }
