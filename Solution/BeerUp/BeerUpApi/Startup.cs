@@ -51,7 +51,7 @@ namespace BeerUpApi
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = "http://192.168.179.134:5000";
                     options.RequireHttpsMetadata = false;
                     //options.Audience = "ApiBeerUp";
                     options.TokenValidationParameters = new TokenValidationParameters

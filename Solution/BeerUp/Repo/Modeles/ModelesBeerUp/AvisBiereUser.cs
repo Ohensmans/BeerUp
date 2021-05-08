@@ -13,14 +13,14 @@ namespace Repo.Modeles.ModelesBeerUp
         public Guid OrgId { get; set; }
         public DateTime? AviBieUserDateAvis { get; set; }
         public bool AviBieUserActif { get; set; }
-        public int AvisAcid { get; set; }
-        public int AvisCafe { get; set; }
-        public int AvisCara { get; set; }
-        public int AvisFruit { get; set; }
-        public int AvisHoub { get; set; }
-        public int AvisMalt { get; set; }
-        public int AvisSucr { get; set; }
-        public int AvisNoteGlob { get; set; }
+        public decimal AvisAcid { get; set; }
+        public decimal AvisCafe { get; set; }
+        public decimal AvisCara { get; set; }
+        public decimal AvisFruit { get; set; }
+        public decimal AvisHoub { get; set; }
+        public decimal AvisMalt { get; set; }
+        public decimal AvisSucr { get; set; }
+        public decimal AvisNoteGlob { get; set; }
 
         public virtual Biere Bie { get; set; }
     }

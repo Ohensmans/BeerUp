@@ -9,6 +9,7 @@ namespace Repo.Modeles.ModelesBeerUp
     {
         public Biere()
         {
+            BieId = Guid.Empty;
             AchatsVues = new HashSet<AchatsVue>();
             AvisBiereUsers = new HashSet<AvisBiereUser>();
             LibrairieUserBieres = new HashSet<LibrairieUserBiere>();

@@ -27,5 +27,19 @@ namespace BeerUpApi.Controllers
         {
             return await _context.TypesBieres.OrderBy(t => t.TypBieNom).ToListAsync();
         }
+
+        // GET: api/TypesBieres/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TypesBiere>> GetBiere(Guid id)
+        {
+            var type = await _context.TypesBieres.FindAsync(id);
+
+            if (type == null)
+            {
+                return NotFound();
+            }
+
+            return type;
+        }
     }
 }

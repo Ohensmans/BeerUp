@@ -42,7 +42,7 @@ namespace IdentityServer
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder => builder
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins("http://localhost:4200", "http://localhost:4000")
                 .AllowAnyHeader()
                 .AllowAnyMethod());
             });
@@ -88,7 +88,7 @@ namespace IdentityServer
              .AddCookie("Cookies")
              .AddOpenIdConnect("oidc", options =>
              {
-                 options.Authority = "http://localhost:5000";
+                 options.Authority = "http://192.168.179.134:5000";
                  options.RequireHttpsMetadata = false;
                  
                  options.ClientId = "IdentityBeerUp";
@@ -106,6 +106,7 @@ namespace IdentityServer
             services.AddScoped<IValidator<Utilisateur>, UtilisateurValidator>();
             services.AddTransient<IValidator<EditRoleViewModel>, EditRoleValidator>();
             services.AddTransient<IValidator<RegisterViewModel>, RegisterValidator>();
+            services.AddTransient<IValidator<RegisterMobileVIewModel>, RegisterMobileValidator>();
             services.AddTransient<IValidator<LoginInputViewModel>, LoginValidator>();
 
 
@@ -138,6 +139,15 @@ namespace IdentityServer
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
             app.UseIdentityServer();
+
+            if (env.IsDevelopment())
+            {
+                app.UseCookiePolicy(new CookiePolicyOptions()
+                {
+                    MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax
+                });
+            }
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMvc();

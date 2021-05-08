@@ -17,6 +17,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "raf",
+              "@babel/runtime-corejs3"
+            ],
             "outputPath": "dist/BeerUpWeb",
             "index": "src/index.html",
             "main": "src/main.ts",

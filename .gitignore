@@ -341,3 +341,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+#envi
+Solution/BeerUp/BeerUpApi/appsettings.json
+Solution/BeerUp/IdentityServer/appsettings.json
+Solution/BeerUpWeb/src/environments/environment.ts

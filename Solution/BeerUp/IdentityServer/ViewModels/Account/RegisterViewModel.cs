@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.ViewModels.Account
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : RegisterMobileVIewModel
     {
         public RegisterViewModel()
         {
@@ -16,13 +16,9 @@ namespace IdentityServer.ViewModels.Account
 
         public Organisation Organisation { get; set; }
 
-        public Utilisateur User { get; set; }
 
         public List<string> lOrgaNom { get; set; }
 
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
-        public string ReturnUrl { get; set; }
 
         public bool OrgExiste { get; set; }
 

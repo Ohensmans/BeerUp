@@ -29,7 +29,7 @@ export class AuthentificationService {
   private getClientSettings() : UserManagerSettings {
     return {
         // url IS
-        authority: 'http://localhost:5000',
+        authority: 'http://192.168.179.134:5000',
         // client id dans IS
         client_id: 'BeerUpWeb',
         // url app Angular au retour d'IS

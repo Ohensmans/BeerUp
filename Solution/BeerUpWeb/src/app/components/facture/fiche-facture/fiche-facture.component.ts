@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import jsPDF from 'jspdf';
+import {jsPDF} from 'jspdf';
 import { Subscription } from 'rxjs';
 import { AchatFacture } from 'src/app/models/achat-facture';
 import { AdresseFacturationModele } from 'src/app/models/adresse-facturation-modele';

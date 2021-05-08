@@ -155,7 +155,40 @@ namespace IdentityServer
 
                 },
                 AllowOfflineAccess = true
-            }
+            },
+                new Client
+                {
+                ClientId = "BeerUpMobile",
+                ClientName = "BeerUpMobile",
+                RequireConsent = false,
+                RequireClientSecret = false,
+                RequirePkce = true,
+
+                AllowedGrantTypes = GrantTypes.Code,
+
+                // where to redirect to after login
+                RedirectUris = { "http://localhost:4000/" },
+
+                // where to redirect to after logout
+                PostLogoutRedirectUris = { "http://localhost:4000/" },
+
+                AllowedCorsOrigins =     { "http://localhost:4000" },
+
+                AllowAccessTokensViaBrowser = true,
+                AccessTokenLifetime = 3600,
+
+                AlwaysIncludeUserClaimsInIdToken = true,
+
+                AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "ApiBeerUp.all",
+                    "role",
+                    "orgId",
+                    "Valide"
+                },
+                }
 
         };
     }

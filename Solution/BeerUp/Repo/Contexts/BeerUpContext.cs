@@ -21,6 +21,8 @@ namespace Repo.Modeles.ModelesBeerUp
         public virtual DbSet<AchatsVue> AchatsVues { get; set; }
         public virtual DbSet<AdressesFacturation> AdressesFacturations { get; set; }
         public virtual DbSet<AvisBiereUser> AvisBiereUser { get; set; }
+
+        public virtual DbSet<AvisMoyen> AvisMoyens { get; set; }
         public virtual DbSet<Biere> Bieres { get; set; }
         public virtual DbSet<Etablissement> Etablissements { get; set; }
         public virtual DbSet<Facture> Factures { get; set; }
@@ -274,6 +276,31 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasConstraintName("FK_AvisBiereUser_Bieres");
             });
 
+            modelBuilder.Entity<AvisMoyen>(entity =>
+            {
+                entity.HasKey(a => a.BieId);
+
+                entity.Property(e => e.BieId).HasColumnName("Bie.Id");
+
+                entity.Property(a => a.AcidMoyen).HasColumnName("AcidMoyen");
+
+                entity.Property(a => a.CafeMoyen).HasColumnName("CafeMoyen");
+
+                entity.Property(a => a.CaraMoyen).HasColumnName("CaraMoyen");
+
+                entity.Property(a => a.FruitMoyen).HasColumnName("FruitMoyen");
+
+                entity.Property(a => a.HoubMoyen).HasColumnName("HoubMoyen");
+
+                entity.Property(a => a.MaltMoyen).HasColumnName("MaltMoyen");
+
+                entity.Property(a => a.SucrMoyen).HasColumnName("SucrMoyen");
+
+                entity.Property(a => a.NoteMoyen).HasColumnName("NoteMoyen");
+
+
+            });
+
             modelBuilder.Entity<Biere>(entity =>
             {
                 entity.HasKey(e => e.BieId);
@@ -304,7 +331,6 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasColumnName("Bie.Photo");
 
                 entity.Property(e => e.BieDegreAlcool)
-                    .HasMaxLength(200)
                     .HasColumnName("Bie.DegreAlcool");
 
                 entity.Property(e => e.BieValide).HasColumnName("Bie.Valide");

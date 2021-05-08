@@ -342,3 +342,4 @@ C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\IdentityServer\obj\D
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.pdb
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\IdentityServer.genruntimeconfig.cache
 F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+F:\Projets GitHub\BeerUp\Solution\BeerUp\IdentityServer\obj\Debug\net5.0\Razor\Views\Account\RegisterMobile.cshtml.g.cs

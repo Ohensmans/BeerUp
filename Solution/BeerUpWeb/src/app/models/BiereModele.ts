@@ -1,3 +1,4 @@
+import { UtilService } from "../services/util.service";
 
 export class BiereModele {
     bieId: string;
@@ -15,13 +16,13 @@ export class BiereModele {
     bieDegreAlcool:number;
     bieNbVuesRestantes:number;
 
-    constructor(){
+    constructor(private util:UtilService){
         this.bieId = "";
         this.etaId ="";
         this.typBieId="";
         this.bieNom= "";
         this.bieDesc="";
-        this.biePhoto="";
+        this.biePhoto=util.noImageAvailableUrl;
         this.bieNbVu=0;
         this.bieDateCre = new Date();
         this.bieValide = true;

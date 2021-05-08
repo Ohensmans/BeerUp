@@ -862,7 +862,7 @@ namespace IdentityServer.Controllers.Web
                     {
                         result = await userManager.AddClaimsAsync(user, lNewClaims);
                     }
-                    return RedirectToAction("EditScopeRole", new { vm.UserId, vm.RoleId,vm.ReturnUrl });
+                    return RedirectToAction("ManageUserRoles", new { vm.UserId, vm.ReturnUrl });
                 }
                 return View(vm);
 

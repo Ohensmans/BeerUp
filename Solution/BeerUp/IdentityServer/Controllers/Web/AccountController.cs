@@ -26,6 +26,8 @@ namespace IdentityServer.Controllers.Web
         private readonly IEventService _events;
         private readonly IOrganisationService organisationService;
         private readonly IAdresseFacturationService adresseService;
+        private const string CLIENTWEB = "BeerUpWeb";
+        private const string CLIENTMOBILE = "BeerUpMobile";
 
         //Adresse de retour sur le site
         private readonly string BeerUpWebUrl;
@@ -44,6 +46,72 @@ namespace IdentityServer.Controllers.Web
             this.organisationService = organisationService;
             this.adresseService = adresseService;
         }
+
+        [HttpGet]
+        public IActionResult RegisterMobile(string returnUrl)
+        {
+            try
+            {
+                RegisterMobileVIewModel rvm = new RegisterMobileVIewModel();
+                rvm.ReturnUrl = returnUrl;
+
+                return View(rvm);
+            }
+            catch (Exception ex)
+            {
+                ErrorViewModel vme = new ErrorViewModel(ex.Message);
+                return View("Error", vme);
+            }
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterMobile(RegisterMobileVIewModel model, string button)
+        {
+            try
+            {
+                if (button.Equals("register"))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var result = await _userManager.CreateAsync(model.User, model.Password);
+
+                        if (result.Succeeded)
+                        {
+                                                                                                                  
+                            var signInResult = await _signInManager.PasswordSignInAsync(model.User, model.Password, false, false);
+
+                            string role = "User";
+                            model.User.OrgId = Guid.Empty;
+                            model.User.Valide = true;
+
+                            result = await _userManager.UpdateAsync(model.User);
+
+                            if (result.Succeeded)
+                            {
+                                result = await _userManager.AddToRoleAsync(model.User, role);
+                                if (result.Succeeded)
+                                {
+                                    return Redirect(model.ReturnUrl);
+                                }
+                            }
+                        }
+                    }
+                    return View(model);
+                }
+                else
+                {
+                    return Redirect(model.ReturnUrl);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorViewModel vme = new ErrorViewModel(ex.Message);
+                return View("Error", vme);
+            }
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> RegisterWeb(string returnUrl)
@@ -186,9 +254,23 @@ namespace IdentityServer.Controllers.Web
                 // check if we are in the context of an authorization request
                 var context = await _interaction.GetAuthorizationContextAsync(vm.ReturnUrl);
 
+                bool BeerUpWeb = vm.ReturnUrl.Contains(CLIENTWEB);
+                bool BeerUpMobile = vm.ReturnUrl.Contains(CLIENTMOBILE);
+
                 if (button.Equals("register"))
                 {
-                    return RedirectToAction("Register", "Account", new { returnUrl = vm.ReturnUrl });
+                    if (BeerUpWeb)
+                    {
+                        return RedirectToAction("RegisterWeb", "Account", new { returnUrl = vm.ReturnUrl });
+                    }
+                    else if (BeerUpMobile)
+                    {
+                        return RedirectToAction("RegisterMobile", "Account", new { returnUrl = vm.ReturnUrl });
+                    }
+                    else
+                    {
+                        return View(vm);
+                    }
                 }
                 else if (button.Equals("login"))
                 {

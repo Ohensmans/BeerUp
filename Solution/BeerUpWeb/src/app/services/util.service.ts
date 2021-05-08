@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 export class UtilService {
 
   //Api BeerUp
-  apiUrl = 'http://localhost:5001/api/';
+  urlBeerUpApi = 'http://192.168.179.134:5001/';
+  apiUrl = 'http://192.168.179.134:5001/api/';
   apiTarifsBieresUrl = this.apiUrl+'TarifsVueBieres/';
   apiTarifsEtabsUrl = this.apiUrl+'TarifsVueEtabs/';
   apiEtabsOrgaUrl = this.apiUrl+'EtabsOrga/';
@@ -51,8 +52,8 @@ export class UtilService {
   VATUrl = "http://apilayer.net/api/validate";
 
   //IdentityServer
-  registerUrl = 'http://localhost:5000/account/registerweb';
-  adminUserUrl = 'http://localhost:5000/AdministrationUsers';
+  registerUrl = 'http://192.168.179.134:5000/account/registerweb';
+  adminUserUrl = 'http://192.168.179.134:5000/AdministrationUsers';
 
   //Parameter
   TypeTarifVueEtab = "Etab";
@@ -60,7 +61,8 @@ export class UtilService {
   NoteMAX = 5;
   nombreMiniNotesAvis = 3;
 
-  noImageAvailableUrl = 'http://localhost:5001/resources/images/no_image_available.png';
+  noImage = '/resources/images/no_image_available.png'
+  noImageAvailableUrl = this.urlBeerUpApi+'/resources/images/no_image_available.png';
 
   joursSemaine = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
