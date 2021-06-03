@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class AchatsBieresFactureParFactureController : ControllerBase
     {
@@ -23,18 +26,26 @@ namespace BeerUpApi.Controllers
 
 
         // GET: api/AchatsBieresFactureParFacture/5
+        //renvoie une facture spécifique
         [HttpGet("{id}")]
-        public ActionResult<List<AchatBieresFacture>> GetAchatsBieresFactureParFacture(int id)
-        {
+        [Authorize(Policy = "hasAchatAccess")]
+        public async Task<ActionResult<List<AchatBieresFacture>>> GetAchatsBieresFactureParFactureAsync(int id)
+        {            
             var param = new SqlParameter("@FacId", id);
-            List<AchatBieresFacture> achats = (List<AchatBieresFacture>)_context.AchatsBieresFacture.FromSqlRaw("GetAchatBieresFacture @FacId", param).ToList();
+            List<AchatBieresFacture> achats = (List<AchatBieresFacture>) await _context.AchatsBieresFacture.FromSqlRaw("GetAchatBieresFacture @FacId", param).ToListAsync();
 
-            if (achats == null)
+            if (achats == null || achats.Count == 0)
             {
                 achats = new List<AchatBieresFacture>();
             }
 
-            return achats;
+            if(AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || 
+               achats[0].OrgId == AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList()))
+            {
+                return achats;
+            }
+
+            return Forbid();            
         }
     }
 }

@@ -20,4 +20,25 @@ class EtabService {
       return Etablissement();
     }
   }
+
+  Future<List<Etablissement>> searchEtab(String text) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var accessToken = prefs.get('accessToken');
+    String url = prefs.get('apiSearchEtab').toString() + text;
+    Uri uri = Uri.parse(url);
+    List<Etablissement> etabs = [];
+    try {
+      Response response =
+          await get(uri, headers: {"Authorization": "Bearer $accessToken"});
+      if (response.statusCode == 200) {
+        Iterable list = json.decode(response.body);
+        etabs = List<Etablissement>.from(
+            list.map((model) => Etablissement.fromJson(model)));
+      }
+      return etabs;
+    } catch (e) {
+      print(e);
+      return etabs;
+    }
+  }
 }

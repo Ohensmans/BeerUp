@@ -13,6 +13,7 @@ export class AvisBiereUserModele {
     avisHoub:number;
     avisMalt:number;
     avisSucr:number;
+    avisAmer:number;
     
 
     constructor(){
@@ -29,6 +30,7 @@ export class AvisBiereUserModele {
         this.avisHoub = 0;
         this.avisMalt = 0;
         this.avisSucr = 0;
+        this.avisAmer = 0;
     }
 
 }

@@ -9,7 +9,9 @@ class Authenticate {
   Uri logoutUri;
 
   Future<void> authenticate() async {
-    var uri = new Uri(scheme: 'http', host: "192.168.179.134", port: 5000);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var uri = Uri.parse(prefs.getString('identityUrl'));
+
     var clientId = "BeerUpMobile";
     var scopes = ["openid", "profile", "ApiBeerUp.all"];
 

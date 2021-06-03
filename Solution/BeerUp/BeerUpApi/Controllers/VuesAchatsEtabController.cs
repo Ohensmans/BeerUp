@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "hasAchatAccess")]
     [Route("api/[controller]")]
     [ApiController]
     public class VuesAchatsEtabController : ControllerBase
@@ -29,6 +30,15 @@ namespace BeerUpApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<List<VueAchatsEtab>>> GetVuesAchatsEtabAsync(Guid id)
         {
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var userOrgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                if (userOrgId != id)
+                {
+                    return Forbid();
+                }
+            }
+
             var param = new SqlParameter("@OrgId", id);
             List<VueAchatsEtab> lVue = (List<VueAchatsEtab>) await _context.VueAchatsEtab.FromSqlRaw("GetAchatEtabsOrga @OrgId", param).ToListAsync();
 
@@ -41,6 +51,7 @@ namespace BeerUpApi.Controllers
         }
 
         // GET: api/VuesAchatsEtab
+        [Authorize(Policy = "isAdmin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VueAchatsEtab>>> GetAllVuesAchatsEtabAsync()
         {

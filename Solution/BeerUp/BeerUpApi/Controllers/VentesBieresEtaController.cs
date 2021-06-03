@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class VentesBieresEtaController : ControllerBase
     {
@@ -22,12 +25,12 @@ namespace BeerUpApi.Controllers
             _context = context;
         }
 
-        // GET: api/VentesBieresEta
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<VenteBiereEtum>>> GetVentesBieresEta()
-        {
-            return await _context.VenteBiereEta.ToListAsync();
-        }
+        //// GET: api/VentesBieresEta
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<VenteBiereEtum>>> GetVentesBieresEta()
+        //{
+        //    return await _context.VenteBiereEta.ToListAsync();
+        //}
 
         // GET: api/VentesBieresEta/5
         [HttpGet("{id}")]
@@ -46,12 +49,20 @@ namespace BeerUpApi.Controllers
 
         // PUT: api/VentesBieresEta/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutVenteBieresEta(Guid id, VenteBiereEtum vente)
         {
             if (id != vente.VenteBiereEtaId)
             {
                 return BadRequest();
+            }
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList())) { 
+                if(!await AuthGuard.etabIsInUserOrgAsync(vente.EtaId, _context, HttpContext.User.Claims.ToList()))
+                {
+                    return Forbid();
+                }
             }
 
             _context.Entry(vente).State = EntityState.Modified;
@@ -77,9 +88,18 @@ namespace BeerUpApi.Controllers
 
         // POST: api/VentesBieresEta
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpPost]
         public async Task<ActionResult<VenteBiereEtum>> PostVenteBieresEta(VenteBiereEtum vente)
         {
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                if (!await AuthGuard.etabIsInUserOrgAsync(vente.EtaId, _context, HttpContext.User.Claims.ToList()))
+                {
+                    return Forbid();
+                }
+            }
+
             _context.VenteBiereEta.Add(vente);
             try
             {
@@ -101,6 +121,7 @@ namespace BeerUpApi.Controllers
         }
 
         // DELETE: api/TypesServices/5
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTypesServices(Guid id)
         {
@@ -108,6 +129,14 @@ namespace BeerUpApi.Controllers
             if (vente == null)
             {
                 return NotFound();
+            }
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                if (!await AuthGuard.etabIsInUserOrgAsync(vente.EtaId, _context, HttpContext.User.Claims.ToList()))
+                {
+                    return Forbid();
+                }
             }
 
             _context.VenteBiereEta.Remove(vente);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class BiereSponsoriseeController : ControllerBase
     {
@@ -22,11 +24,11 @@ namespace BeerUpApi.Controllers
 
         // GET: api/BiereSponsorisee/true
         [HttpGet("{needOne}")]
-        public async Task<ActionResult<Biere>> GetBiereSponsoriseeAsync(string needOne)
+        public async Task<ActionResult<BiereDescr>> GetBiereSponsoriseeAsync(string needOne)
         {
-            Biere biere;
+            BiereDescr biereDescr;
 
-            List<Biere> bieres = (List<Biere>)_context.Bieres.FromSqlRaw("GetBieresSponsorisees").ToList();
+            List<BiereDescr> bieres = (List<BiereDescr>) await _context.BieresDescr.FromSqlRaw("GetBieresSponsorisees").ToListAsync();
 
             if (bieres == null)
             {
@@ -34,37 +36,57 @@ namespace BeerUpApi.Controllers
                 bool test = bool.TryParse(needOne, out need);
 
                 //si il faut absolument une bière en sélectionne une random
-                if(test && need)
+                //à modifier avec bière du top 10
+                if (test && need)
                 {
-                    biere = (Biere) _context.Bieres.FromSqlRaw("GetRandomBiere");
+                    biereDescr = (BiereDescr)  _context.Bieres.FromSqlRaw("GetRandomBiere");
                 }
                 //sinon renvoie un bière vide
                 else 
                 {
-                    biere = new Biere();
+                    biereDescr = new BiereDescr();
                 }
                 
             }
             else
             {
                 Random rnd = new Random();
-                biere = bieres[rnd.Next(bieres.Count)];
+                biereDescr = bieres[rnd.Next(bieres.Count)];
+                bool addView = await AddViewToBeerAsync(biereDescr.BieId);
 
+                if (addView)
+                {
+                    biereDescr.BieNbVu++;
+                }
+                
+
+            }
+
+            return biereDescr;
+        }
+
+        private async Task<bool> AddViewToBeerAsync(Guid id)
+        {
+            Biere biere = await _context.Bieres.FindAsync(id);
+            if (biere != null)
+            {
                 biere.BieNbVu++;
                 _context.Entry(biere).State = EntityState.Modified;
 
                 try
                 {
                     await _context.SaveChangesAsync();
+                    return true;
                 }
                 catch (Exception)
                 {
-                    return NotFound();
+                    return false ;
                 }
-
             }
-
-            return biere;
+            else
+            {
+                return false;
+            }
         }
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
 {
-    [Route("api/[controller]")]   
+    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class AvisBiereUserController : ControllerBase
     {
@@ -25,21 +27,28 @@ namespace BeerUpApi.Controllers
         }
 
         // GET api/<AvisBiereUserController>/5,5
-        //return the last avis from the user for a beer
+        //return the last avis from the organisation of the user for a beer
         [HttpGet("{orgId},{bieId}")]
         [HttpGet("{orgId, bieId}")]
-        public ActionResult<AvisBiereUser> GetAvis(Guid orgId, Guid bieId)
+        public async Task<ActionResult<AvisBiereUser>> GetAvisAsync(Guid orgId, Guid bieId)
         {
-            var paramOne = new SqlParameter("@OrgaId", orgId);
-            var paramTwo = new SqlParameter("@BieId", bieId);
-            List<AvisBiereUser> avis = (List<AvisBiereUser>)_context.AvisBiereUser.FromSqlRaw("GetDernierAvisBiereOrga @OrgaId, @BieId", paramOne, paramTwo).ToList();
+            Guid OrgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
 
-            if (avis == null || avis.Count==0)
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == OrgId)
             {
-               return new AvisBiereUser();
-            }
 
-            return avis.First() ;
+                var paramOne = new SqlParameter("@OrgaId", orgId);
+                var paramTwo = new SqlParameter("@BieId", bieId);
+                List<AvisBiereUser> avis = (List<AvisBiereUser>) await _context.AvisBiereUser.FromSqlRaw("GetDernierAvisBiereOrga @OrgaId, @BieId", paramOne, paramTwo).ToListAsync();
+
+                if (avis == null || avis.Count == 0)
+                {
+                    return new AvisBiereUser();
+                }
+
+                return avis.First();
+            }
+            return Forbid();
         }
 
 
@@ -48,29 +57,36 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<AvisBiereUser>> PostAvis(AvisBiereUser avis)
         {
-            _context.AvisBiereUser.Add(avis);
-            try
+            Guid userId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+
+            if (avis.UserId == userId)
             {
-                await _context.SaveChangesAsync();
-                await DesactivateOlderAvisAsync(avis.OrgId, avis.BieId);
-            }
-            catch (DbUpdateException)
-            {
-                if (AvisExists(avis.AviBieUserId))
+
+                _context.AvisBiereUser.Add(avis);
+                try
                 {
-                    return Conflict();
+                    await _context.SaveChangesAsync();
+                    await DesactivateOlderAvisAsync(avis.OrgId, avis.BieId);
                 }
-                else
+                catch (DbUpdateException)
+                {
+                    if (AvisExists(avis.AviBieUserId))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                catch (Exception)
                 {
                     throw;
                 }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
 
-            return CreatedAtAction("GetAvis", new { orgId = avis.OrgId, bieId = avis.BieId }, avis);
+                return CreatedAtAction("GetAvis", new { orgId = avis.OrgId, bieId = avis.BieId }, avis);
+            }
+            return Forbid();
         }
 
         private async Task DesactivateOlderAvisAsync (Guid orgaId, Guid biereId)

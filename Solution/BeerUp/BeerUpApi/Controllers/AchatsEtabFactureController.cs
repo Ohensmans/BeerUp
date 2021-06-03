@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class AchatsEtabFactureController : ControllerBase
     {
@@ -22,10 +25,12 @@ namespace BeerUpApi.Controllers
         }
 
         // GET: api/AchatsEtabFacture/
+        // renvoie toutes les factures d'étab => accès uniquement pour admin
         [HttpGet]
-        public ActionResult<List<AchatEtabFacture>> GetAchatsEtabFactureOrga()
+        [Authorize(Policy = "isAdmin")]
+        public async Task<ActionResult<List<AchatEtabFacture>>> GetAchatsEtabFactureOrgaAsync()
         {
-            List<AchatEtabFacture> achats = (List<AchatEtabFacture>)_context.AchatsEtabFacture.FromSqlRaw("GetAchatEtabFactureAll").ToList();
+            List<AchatEtabFacture> achats = (List<AchatEtabFacture>)await _context.AchatsEtabFacture.FromSqlRaw("GetAchatEtabFactureAll").ToListAsync();
 
             if (achats == null)
             {
@@ -33,22 +38,30 @@ namespace BeerUpApi.Controllers
             }
 
             return achats;
+
         }
 
 
         // GET: api/AchatsEtabFacture/5
+        // renvoie les factures d'étab d'une organisation => accès pour admin, groupAdmin et GroupAchat
         [HttpGet("{id}")]
-        public ActionResult<List<AchatEtabFacture>> GetAchatsEtabFactureOrga(Guid id)
+        [Authorize(Policy = "hasAchatAccess")]
+        public async Task<ActionResult<List<AchatEtabFacture>>> GetAchatsEtabFactureOrgaAsync(Guid id)
         {
-            var param = new SqlParameter("@OrgId", id);
-            List<AchatEtabFacture> achats = (List<AchatEtabFacture>)_context.AchatsEtabFacture.FromSqlRaw("GetAchatEtabFactureOrga @OrgId", param).ToList();
-
-            if (achats == null)
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList()) == id)
             {
-                achats = new List<AchatEtabFacture>();
-            }
+                var param = new SqlParameter("@OrgId", id);
+                List<AchatEtabFacture> achats = (List<AchatEtabFacture>)await _context.AchatsEtabFacture.FromSqlRaw("GetAchatEtabFactureOrga @OrgId", param).ToListAsync();
 
-            return achats;
+                if (achats == null)
+                {
+                    achats = new List<AchatEtabFacture>();
+                }
+
+                return achats;
+            }
+            return Forbid();
         }
+
     }
 }

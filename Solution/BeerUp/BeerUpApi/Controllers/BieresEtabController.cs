@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class BieresEtabController : ControllerBase
     {
@@ -25,10 +27,10 @@ namespace BeerUpApi.Controllers
 
         // GET: api/BieresEtab/5
         [HttpGet("{id}")]
-        public ActionResult<List<Biere>> GetBieresServiesEtablissement(Guid id)
+        public async Task<ActionResult<List<Biere>>> GetBieresServiesEtablissementAsync(Guid id)
         {
             var param = new SqlParameter("@EtaId", id);
-            List<Biere> biere = (List<Biere>)_context.Bieres.FromSqlRaw("GetBieresServiesEtab @EtaId", param).ToList();
+            List<Biere> biere = (List<Biere>) await _context.Bieres.FromSqlRaw("GetBieresServiesEtab @EtaId", param).ToListAsync();
 
             if (biere == null)
             {

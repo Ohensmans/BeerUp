@@ -24,6 +24,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
         public virtual DbSet<AvisMoyen> AvisMoyens { get; set; }
         public virtual DbSet<Biere> Bieres { get; set; }
+        public virtual DbSet<BiereDescr> BieresDescr { get; set; }
         public virtual DbSet<Etablissement> Etablissements { get; set; }
         public virtual DbSet<Facture> Factures { get; set; }
         public virtual DbSet<LibrairieUserBiere> LibrairieUserBieres { get; set; }
@@ -255,6 +256,8 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.AvisAcid).HasColumnName("Avis.Acid");
 
+                entity.Property(e => e.AvisAmer).HasColumnName("Avis.Amer");
+
                 entity.Property(e => e.AvisCafe).HasColumnName("Avis.Cafe");
 
                 entity.Property(e => e.AvisCara).HasColumnName("Avis.Cara");
@@ -283,6 +286,8 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.Property(e => e.BieId).HasColumnName("Bie.Id");
 
                 entity.Property(a => a.AcidMoyen).HasColumnName("AcidMoyen");
+
+                entity.Property(a => a.AmerMoyen).HasColumnName("AmerMoyen");
 
                 entity.Property(a => a.CafeMoyen).HasColumnName("CafeMoyen");
 
@@ -352,6 +357,56 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasForeignKey(d => d.TypBieId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Bieres_TypesBiere");
+            });
+
+            modelBuilder.Entity<BiereDescr>(entity =>
+            {
+                entity.HasKey(e => e.BieId);
+
+                entity.Property(e => e.BieId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("Bie.Id");
+
+                entity.Property(e => e.BieActif).HasColumnName("Bie.Actif");
+
+                entity.Property(e => e.BieDateCre)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Bie.DateCre");
+
+                entity.Property(e => e.BieDesc)
+                    .HasMaxLength(1000)
+                    .HasColumnName("Bie.Desc");
+
+                entity.Property(e => e.BieNbVu).HasColumnName("Bie.NbVu");
+
+                entity.Property(e => e.NoteMoyen).HasColumnName("NoteMoyen");
+
+                entity.Property(e => e.BieNom)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("Bie.Nom");
+
+                entity.Property(e => e.BiePhoto)
+                    .HasMaxLength(200)
+                    .HasColumnName("Bie.Photo");
+
+                entity.Property(e => e.BieDegreAlcool)
+                    .HasColumnName("Bie.DegreAlcool");
+
+                entity.Property(e => e.BieValide).HasColumnName("Bie.Valide");
+
+                entity.Property(e => e.EtaId).HasColumnName("Eta.Id");
+
+                entity.Property(e => e.TypBieId).HasColumnName("TypBie.Id");
+
+                entity.Property(e => e.UserId).HasColumnName("User.Id");
+
+                entity.Property(e => e.TypBieId).HasColumnName("TypBie.Id");
+
+                entity.Property(e => e.EtaNom).HasColumnName("Eta.Nom");
+
+                entity.Property(e => e.TypBieNom).HasColumnName("TypBie.Nom");
+
             });
 
             modelBuilder.Entity<Etablissement>(entity =>

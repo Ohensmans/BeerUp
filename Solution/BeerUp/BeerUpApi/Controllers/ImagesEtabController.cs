@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Policy = "hasBiereAccess")]
     [ApiController]
     public class ImagesEtabController : ControllerBase
     {

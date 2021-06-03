@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AvisMoyenController : ControllerBase
     {
         private readonly BeerUpContext _context;
@@ -23,10 +25,10 @@ namespace BeerUpApi.Controllers
 
         // GET: api/AvisMoyen/5
         [HttpGet("{id}")]
-        public ActionResult<AvisMoyen> GetAvisMoyen(Guid id)
+        public async Task<ActionResult<AvisMoyen>> GetAvisMoyenAsync(Guid id)
         {
             var param = new SqlParameter("@BieId", id);
-            List<AvisMoyen> lAvis = (List<AvisMoyen>)_context.AvisMoyens.FromSqlRaw("GetAvisMoyen @BieId", param).ToList();
+            List<AvisMoyen> lAvis = (List<AvisMoyen>) await _context.AvisMoyens.FromSqlRaw("GetAvisMoyen @BieId", param).ToListAsync();
 
             AvisMoyen avis;
 
@@ -41,5 +43,7 @@ namespace BeerUpApi.Controllers
 
             return avis;
         }
+
+
     }
 }

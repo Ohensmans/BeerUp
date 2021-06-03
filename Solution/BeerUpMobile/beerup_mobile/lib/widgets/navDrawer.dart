@@ -32,7 +32,7 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.search),
             title: Text('Faire une recherche'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.pushNamed(context, '/recherche')},
           ),
           ListTile(
             leading: Icon(Icons.star),

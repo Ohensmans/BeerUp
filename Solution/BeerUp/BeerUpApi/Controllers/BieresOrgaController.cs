@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "hasWebAccess")]
     [ApiController]
     public class BieresOrgaController : ControllerBase
     {
@@ -23,22 +26,40 @@ namespace BeerUpApi.Controllers
 
 
         // GET: api/BieresOrga/5
-        [HttpGet("{id}")]
-        public  ActionResult<List<Biere>> GetBieresOrganisations(Guid id)
+        [HttpGet("{id, isAchat}")]
+        [HttpGet("{id},{isAchat}")]
+        public async Task<ActionResult<List<Biere>>> GetBieresOrganisationsAsync(Guid id, bool isAchat)
         {
-            var param = new SqlParameter("@OrgId", id);
-            List<Biere> biere =(List<Biere>) _context.Bieres.FromSqlRaw("GetBieresOrganistion @OrgId", param).ToList();
-
-            if (biere == null)
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList()) == id)
             {
-                biere = new List<Biere>();
-            }
-            else
-            {
-                biere = biere.OrderBy(b => b.BieNom).ToList();
-            }
 
-            return biere;
+                var param = new SqlParameter("@OrgId", id);
+                List<Biere> bieres = (List<Biere>) await _context.Bieres.FromSqlRaw("GetBieresOrganistion @OrgId", param).ToListAsync();
+
+                if (bieres == null)
+                {
+                    return new List<Biere>();
+                }
+
+                if (!AuthGuard.isAdminOrGroupAdmin(HttpContext.User.Claims.ToList()) && !AuthGuard.hasFullAccess(true, isAchat, HttpContext.User.Claims.ToList()))
+                {
+                    List<Guid> lAccess = AuthGuard.getListAccess(true, isAchat, HttpContext.User.Claims.ToList());
+
+                    List<Biere> lBieres = new List<Biere>();
+                    foreach (Biere bie in bieres)
+                    {
+                        if (lAccess.Any(b => b == bie.BieId))
+                        {
+                            lBieres.Add(bie);
+                        }
+                    }
+                    bieres = lBieres;
+                }
+
+                bieres = bieres.OrderBy(b => b.BieNom).ToList();
+                return bieres;
+            }
+            return Forbid();
         }
     }
 }

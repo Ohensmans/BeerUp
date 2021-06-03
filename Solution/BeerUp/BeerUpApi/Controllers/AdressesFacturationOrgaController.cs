@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "hasAchatAccess")]
     [ApiController]
     public class AdressesFacturationOrgaController : ControllerBase
     {
@@ -25,23 +28,30 @@ namespace BeerUpApi.Controllers
 
         // GET: api/AdressesFacturation/5
         [HttpGet("{id}")]
-        public ActionResult<List<List<AdressesFacturation>>> GetAdresses(Guid id)
+        public async Task<ActionResult<List<List<AdressesFacturation>>>> GetAdressesAsync(Guid id)
         {
-            var param = new SqlParameter("@OrgId", id);
-            List<AdressesFacturation> lAdresse = (List<AdressesFacturation>)_context.AdressesFacturations.FromSqlRaw("GetAdressesOrga @OrgId", param).ToList();
+            Guid orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
 
-            if (lAdresse == null)
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == id)
             {
-                return NotFound();
+
+                var param = new SqlParameter("@OrgId", id);
+                List<AdressesFacturation> lAdresse = (List<AdressesFacturation>) await _context.AdressesFacturations.FromSqlRaw("GetAdressesOrga @OrgId", param).ToListAsync();
+
+                if (lAdresse == null || lAdresse.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                List<AdressesFacturation> lastAdressse = (List<AdressesFacturation>)await _context.AdressesFacturations.FromSqlRaw("GetLastAdressesOrga @OrgId", param).ToListAsync();
+
+                List<List<AdressesFacturation>> lFullAdresses = new List<List<AdressesFacturation>>();
+                lFullAdresses.Add(lAdresse);
+                lFullAdresses.Add(lastAdressse);
+
+                return lFullAdresses;
             }
-            
-            List<AdressesFacturation> lastAdressse = (List<AdressesFacturation>)_context.AdressesFacturations.FromSqlRaw("GetLastAdressesOrga @OrgId", param).ToList();
-
-            List<List<AdressesFacturation>> lFullAdresses = new List<List<AdressesFacturation>>();
-            lFullAdresses.Add(lAdresse);
-            lFullAdresses.Add(lastAdressse);
-
-            return lFullAdresses;
+            return Forbid();
         }
     }
 }

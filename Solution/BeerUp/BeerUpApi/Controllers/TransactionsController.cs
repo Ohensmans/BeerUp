@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repo.Modeles.ModelesBeerUp;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "hasAchatAccess")]
     [Route("api/[controller]")]
     [ApiController]
     public class TransactionsController : ControllerBase
@@ -41,6 +42,16 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                if(orgId != transaction.OrgId)
+                {
+                    return Forbid();
+                }
+            }
+
+
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
 

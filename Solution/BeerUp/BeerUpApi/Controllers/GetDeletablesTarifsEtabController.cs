@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "isAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class GetDeletablesTarifsEtabController : ControllerBase

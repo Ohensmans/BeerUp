@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BeerUpApi.External_Api_Call;
+using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -13,6 +15,7 @@ using Repo.Modeles.POC;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class EtablissementsController : ControllerBase
     {
@@ -27,14 +30,14 @@ namespace BeerUpApi.Controllers
 
         // GET: api/Etablissements
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Etablissement>>> GetEtablissements(string? orgId)
+        public async Task<ActionResult<IEnumerable<Etablissement>>> GetEtablissements()
         {
-            if (orgId != null)
-            {
-                var param = new SqlParameter("@OrgId", orgId);
-                return _context.Etablissements.FromSqlRaw("GetEtablissementsOrganistion @OrgId", param).ToList();
-            }
-            else
+            //if (orgId != null)
+            //{
+            //    var param = new SqlParameter("@OrgId", orgId);
+            //    return _context.Etablissements.FromSqlRaw("GetEtablissementsOrganistion @OrgId", param).ToList();
+            //}
+            //else
             return await _context.Etablissements.OrderBy(e => e.EtaNom).ToListAsync();
         }
 
@@ -54,44 +57,52 @@ namespace BeerUpApi.Controllers
         // PUT: api/Etablissements/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "hasEtabAccess")]
         public async Task<IActionResult> PutEtablissement(Guid id, Etablissement etablissement)
         {
-            try
+            var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == id)
             {
-                if (id != etablissement.EtaId)
+
+                try
                 {
-                    return BadRequest();
+                    if (id != etablissement.EtaId)
+                    {
+                        return BadRequest();
+                    }
+
+                    List<Etablissement> lEtab = _context.Etablissements.ToList();
+
+                    if (lEtab.Exists(e => e.EtaId == etablissement.EtaId && (e.EtaRue != etablissement.EtaRue || e.EtaVille != etablissement.EtaVille)))
+                    {
+                        etablissement = await GetCoordinatesAsync(etablissement);
+                    }
+
+                    _context.Entry(etablissement).State = EntityState.Modified;
+
+
+                    await _context.SaveChangesAsync();
                 }
-
-                List<Etablissement> lEtab = _context.Etablissements.ToList();
-
-                if (lEtab.Exists(e => e.EtaId == etablissement.EtaId && (e.EtaRue != etablissement.EtaRue || e.EtaVille != etablissement.EtaVille)))
+                catch (DbUpdateConcurrencyException)
                 {
-                    etablissement = await GetCoordinatesAsync(etablissement);
+                    if (!EtablissementExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-
-                _context.Entry(etablissement).State = EntityState.Modified;
-
-
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EtablissementExists(id))
-                {
-                    return NotFound();
-                }
-                else
+                catch (Exception)
                 {
                     throw;
                 }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
 
-            return NoContent();
+                return NoContent();
+            }
+            return Forbid();
         }
 
         // POST: api/Etablissements
@@ -103,7 +114,11 @@ namespace BeerUpApi.Controllers
             {
                 List<Etablissement> lEtab = _context.Etablissements.ToList();
 
-                etablissement = await GetCoordinatesAsync(etablissement);
+                if(etablissement.EtaRue!=null && etablissement.EtaRue != "") 
+                {
+                    etablissement = await GetCoordinatesAsync(etablissement);
+                }
+                
 
                 if (lEtab.Exists(etab => etab.EtaNom == etablissement.EtaNom && etab.OrgId == Guid.Empty))
                 {
@@ -127,18 +142,25 @@ namespace BeerUpApi.Controllers
 
         // DELETE: api/Etablissements/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "hasEtabAccess")]
         public async Task<IActionResult> DeleteEtablissement(Guid id)
         {
-            var etablissement = await _context.Etablissements.FindAsync(id);
-            if (etablissement == null)
+            var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == id)
             {
-                return NotFound();
+                var etablissement = await _context.Etablissements.FindAsync(id);
+                if (etablissement == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Etablissements.Remove(etablissement);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-
-            _context.Etablissements.Remove(etablissement);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Forbid();
         }
 
         private bool EtablissementExists(Guid id)

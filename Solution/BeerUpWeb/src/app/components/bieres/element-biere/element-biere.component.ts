@@ -7,6 +7,7 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
 import { BieresService } from 'src/app/services/CallApi/bieres.service';
 import { EtablissementsService } from 'src/app/services/CallApi/etablissements.service';
 import { EtabsOrgaService } from 'src/app/services/CallApi/etabs-orga.service';
+import { UtilService } from 'src/app/services/util.service';
 import { ConfirmComponent } from '../../confirm/confirm.component';
 
 @Component({
@@ -22,8 +23,8 @@ export class ElementBiereComponent implements OnInit {
   etabNom:string;
 
   constructor(private modalService:BsModalService, private toastr:ToastrService, private BiereSrv: BieresService, private EtabsOrgaSrv: EtabsOrgaService, 
-    private authSrv : AuthentificationService, private etabSrv: EtablissementsService) { 
-    this.biere = new BiereModele();
+    private authSrv : AuthentificationService, private etabSrv: EtablissementsService, private util:UtilService) { 
+    this.biere = new BiereModele(this.util);
     this.lEtabs = new Array(0);
     this.etabNom = "";
   }

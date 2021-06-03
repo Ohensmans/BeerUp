@@ -19,7 +19,7 @@ export class BieresEtabService {
   }
 
   addNewBiere(){
-    this.lBieresServies.push(new BiereModele());
+    this.lBieresServies.push(new BiereModele(this.util));
     this.lBieresServies$.next(this.lBieresServies);
   }
 

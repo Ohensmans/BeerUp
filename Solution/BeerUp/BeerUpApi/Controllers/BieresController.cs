@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 
@@ -12,6 +12,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BieresController : ControllerBase
     {
         private readonly BeerUpContext _context;
@@ -48,6 +49,7 @@ namespace BeerUpApi.Controllers
         // PUT: api/Bieres/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "hasBiereAccess")]
         public async Task<IActionResult> PutBiere(Guid id, Biere biere)
         {
             if (id != biere.BieId)
@@ -55,25 +57,30 @@ namespace BeerUpApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(biere).State = EntityState.Modified;
-
-            try
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || await AuthGuard.biereIsInUserOrgAsync(id, _context, HttpContext.User.Claims.ToList()))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BiereExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _context.Entry(biere).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BiereExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
+            return Forbid();
         }
 
         // POST: api/Bieres
@@ -103,18 +110,23 @@ namespace BeerUpApi.Controllers
 
         // DELETE: api/Bieres/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "hasBiereAccess")]
         public async Task<IActionResult> DeleteBiere(Guid id)
         {
-            var biere = await _context.Bieres.FindAsync(id);
-            if (biere == null)
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || await AuthGuard.biereIsInUserOrgAsync(id, _context, HttpContext.User.Claims.ToList()))
             {
-                return NotFound();
+                var biere = await _context.Bieres.FindAsync(id);
+                if (biere == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Bieres.Remove(biere);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-
-            _context.Bieres.Remove(biere);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Forbid();
         }
 
         private bool BiereExists(Guid id)

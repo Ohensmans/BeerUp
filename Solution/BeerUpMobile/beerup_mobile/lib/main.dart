@@ -1,9 +1,17 @@
 import 'dart:io';
-import 'package:beerup_mobile/pages/Loading%20pages/load_home.dart';
-import 'package:beerup_mobile/pages/login.dart';
+import 'package:beerup_mobile/pages/LandingPages/ficheBiere.dart';
+import 'package:beerup_mobile/pages/LandingPages/ficheEtablissement.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_biere.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_etab.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_home.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_resultats.dart';
+import 'package:beerup_mobile/pages/LandingPages/login.dart';
+import 'package:beerup_mobile/pages/LandingPages/notFound.dart';
+import 'package:beerup_mobile/pages/LandingPages/resultats.dart';
 import 'package:beerup_mobile/services/Initialization.dart';
 import 'package:flutter/material.dart';
-import 'package:beerup_mobile/pages/home.dart';
+import 'package:beerup_mobile/pages/LandingPages/home.dart';
+import 'package:beerup_mobile/pages/LandingPages/recherche.dart';
 
 void main() async {
   Initialization init = new Initialization();
@@ -13,11 +21,24 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
+    theme: ThemeData(
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(primary: Colors.green[700]),
+      ),
+    ),
     initialRoute: '/',
     routes: {
       '/': (context) => Login(),
       '/load_home': (context) => LoadHome(),
       '/home': (context) => Home(),
+      '/recherche': (context) => Recherche(),
+      '/loadResultats': (context) => LoadResultats(),
+      '/resultats': (context) => Resultats(),
+      '/notFound': (context) => NotFound(),
+      '/loadEtab': (context) => LoadEtab(),
+      '/etab': (context) => FicheEtablissement(),
+      '/loadBiere': (context) => LoadBiere(),
+      '/biere': (context) => FicheBiere(),
     },
   ));
 }

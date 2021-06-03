@@ -11,6 +11,7 @@ export function AvisBiereLessThanXWithValueDirective(nbMiniAvis:number): Validat
     const avisHoub = control.get('avisHoub');
     const avisMalt = control.get('avisMalt');
     const avisSucr = control.get('avisSucr');
+    const avisAmer = control.get('avisAmer');
 
     let count = 0;
     if(avisAcid?.value>0)
@@ -27,10 +28,12 @@ export function AvisBiereLessThanXWithValueDirective(nbMiniAvis:number): Validat
     count++
     if(avisSucr?.value>0)
     count++
+    if(avisAmer?.value>0)
+    count++
 
 
     if(avisAcid== null || avisCafe==null || avisCara==null ||avisFruit==null ||avisHoub==null ||avisMalt==null ||avisSucr==null ||
-      count<nbMiniAvis)
+      count<nbMiniAvis || avisAmer==null)
     {
       return {AvisBiereLessThanXWithValue: {value: true}}
     }

@@ -7,7 +7,8 @@ export class UtilService {
 
   //Api BeerUp
   urlBeerUpApi = 'http://192.168.179.134:5001/';
-  apiUrl = 'http://192.168.179.134:5001/api/';
+  urlIdentity = 'http://192.168.179.134:5000';
+  apiUrl = this.urlBeerUpApi+'api/';
   apiTarifsBieresUrl = this.apiUrl+'TarifsVueBieres/';
   apiTarifsEtabsUrl = this.apiUrl+'TarifsVueEtabs/';
   apiEtabsOrgaUrl = this.apiUrl+'EtabsOrga/';

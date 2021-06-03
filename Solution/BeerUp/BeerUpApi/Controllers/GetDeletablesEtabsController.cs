@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "hasEtabAccess")]
     [ApiController]
     public class GetDeletablesEtabsController : ControllerBase
     {
@@ -26,6 +29,7 @@ namespace BeerUpApi.Controllers
 
         // GET: api/<GetDeletablesEtabController>
         [HttpGet]
+        [Authorize(Policy = "isAdmin")]
         public ActionResult<List<Etablissement>> Get()
         {
             List<Etablissement> lEtab= (List<Etablissement>)_context.Etablissements.FromSqlRaw("GetDeletablesEta").ToList();
@@ -48,6 +52,21 @@ namespace BeerUpApi.Controllers
             if (lEtab == null)
             {
                 lEtab = new List<Etablissement>();
+            }
+
+            if (!AuthGuard.isAdminOrGroupAdmin(HttpContext.User.Claims.ToList()) && !AuthGuard.hasFullAccess(false, false, HttpContext.User.Claims.ToList()))
+            {
+                List<Guid> lAccess = AuthGuard.getListAccess(false, false, HttpContext.User.Claims.ToList());
+
+                List<Etablissement> lEtabs = new List<Etablissement>();
+                foreach (Etablissement etab in lEtab)
+                {
+                    if (lAccess.Any(a => a == etab.EtaId))
+                    {
+                        lEtabs.Add(etab);
+                    }
+                }
+                return lEtabs;
             }
 
             return lEtab;

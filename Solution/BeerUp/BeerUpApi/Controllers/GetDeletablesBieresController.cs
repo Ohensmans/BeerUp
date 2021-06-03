@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace BeerUpApi.Controllers
 {
     
     [Route("api/[controller]")]
+    [Authorize(Policy = "hasBiereAccess")]
     [ApiController]
     public class GetDeletablesBieresController : ControllerBase
     {
@@ -27,6 +29,7 @@ namespace BeerUpApi.Controllers
 
 
         // GET: api/<GetDeletablesBieresController>
+        [Authorize(Policy = "isAdmin")]
         [HttpGet]
         public ActionResult<List<Biere>> Get()
         {
@@ -50,6 +53,21 @@ namespace BeerUpApi.Controllers
             if (lbiere == null)
             {
                 lbiere = new List<Biere>();
+            }
+
+            if (!AuthGuard.isAdminOrGroupAdmin(HttpContext.User.Claims.ToList()) && !AuthGuard.hasFullAccess(true, false, HttpContext.User.Claims.ToList()))
+            {
+                List<Guid> lAccess = AuthGuard.getListAccess(true, false, HttpContext.User.Claims.ToList());
+
+                List<Biere> lBieres = new List<Biere>();
+                foreach (Biere bie in lbiere)
+                {
+                    if (lAccess.Any(b => b == bie.BieId))
+                    {
+                        lBieres.Add(bie);
+                    }
+                }
+                lbiere = lBieres;
             }
 
             return lbiere;

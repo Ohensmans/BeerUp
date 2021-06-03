@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "isAdmin")]
     [ApiController]
     public class GetDeletablesTarifsBiereController : ControllerBase
     {

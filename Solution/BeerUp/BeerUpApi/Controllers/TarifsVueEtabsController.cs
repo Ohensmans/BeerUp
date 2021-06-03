@@ -12,7 +12,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "hasAchatAccess")]
     public class TarifsVueEtabsController : ControllerBase
     {
         private readonly BeerUpContext _context;
@@ -45,6 +45,7 @@ namespace BeerUpApi.Controllers
 
         // PUT: api/TarifsVueEtabs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "isAdmin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTarifsVueEtab(Guid id, TarifsVueEtab tarifsVueEtab)
         {
@@ -76,6 +77,7 @@ namespace BeerUpApi.Controllers
 
         // POST: api/TarifsVueEtabs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "isAdmin")]
         [HttpPost]
         public async Task<ActionResult<TarifsVueEtab>> PostTarifsVueEtab(TarifsVueEtab tarifsVueEtab)
         {
@@ -87,6 +89,7 @@ namespace BeerUpApi.Controllers
         }
 
         // DELETE: api/TarifsVueEtabs/5
+        [Authorize(Policy = "isAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTarifsVueEtab(Guid id)
         {

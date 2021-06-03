@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class JoursFermetureController : ControllerBase
@@ -22,12 +24,12 @@ namespace BeerUpApi.Controllers
             _context = context;
         }
 
-        // GET: api/JoursFermeture
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<JourFermeture>>> GetJourFermeture()
-        {
-            return await _context.JoursFermeture.ToListAsync();
-        }
+        //// GET: api/JoursFermeture
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<JourFermeture>>> GetJourFermeture()
+        //{
+        //    return await _context.JoursFermeture.ToListAsync();
+        //}
 
         // GET: api/JoursFermeture/5
         [HttpGet("{id}")]
@@ -54,13 +56,24 @@ namespace BeerUpApi.Controllers
 
         // PUT: api/JoursFermeture/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutJourFermeture(Guid id, JourFermeture jour)
         {
             if (id != jour.JouId)
             {
                 return BadRequest();
+            }
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                var eta = await _context.Etablissements.FindAsync(jour.EtaId);
+
+                if (eta == null || orgId != eta.OrgId)
+                {
+                    return Forbid();
+                }
             }
 
             _context.Entry(jour).State = EntityState.Modified;
@@ -86,10 +99,21 @@ namespace BeerUpApi.Controllers
 
         // POST: api/JoursFermeture
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpPost]
         public async Task<ActionResult<JourFermeture>> PostJourFermeture(JourFermeture jour)
         {
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                var eta = await _context.Etablissements.FindAsync(jour.EtaId);
+
+                if (eta == null || orgId != eta.OrgId)
+                {
+                    return Forbid();
+                }
+            }
+
             _context.JoursFermeture.Add(jour);
             await _context.SaveChangesAsync();
 
@@ -97,7 +121,7 @@ namespace BeerUpApi.Controllers
         }
 
         // DELETE: api/JoursFermeture/5
-        [Authorize]
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJourFermeture(Guid id)
         {
@@ -105,6 +129,17 @@ namespace BeerUpApi.Controllers
             if (jour == null)
             {
                 return NotFound();
+            }
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                var eta = await _context.Etablissements.FindAsync(jour.EtaId);
+
+                if (eta == null || orgId != eta.OrgId)
+                {
+                    return Forbid();
+                }
             }
 
             _context.JoursFermeture.Remove(jour);

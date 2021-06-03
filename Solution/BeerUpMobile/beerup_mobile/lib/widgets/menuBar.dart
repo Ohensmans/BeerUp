@@ -28,7 +28,9 @@ class MenuBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.search),
           tooltip: 'Faire une recherche',
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/recherche');
+          },
         ),
         IconButton(
           icon: Icon(Icons.star),

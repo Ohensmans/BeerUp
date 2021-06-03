@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BeerUpApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,13 +45,23 @@ namespace BeerUpApi.Controllers
 
         // PUT: api/Organisations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
+        [Authorize(Policy = "hasOwnerAccess")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrganisation(Guid id, Organisation organisation)
         {
+
             if (id != organisation.OrgId)
             {
                 return BadRequest();
+            }
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                if (orgId != organisation.OrgId)
+                {
+                    return Forbid();
+                }
             }
 
             _context.Entry(organisation).State = EntityState.Modified;
@@ -87,11 +98,21 @@ namespace BeerUpApi.Controllers
         }
 
         // DELETE: api/Organisations/5
-        [Authorize]
+        [Authorize(Policy = "hasOwnerAccess")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrganisation(Guid id)
         {
             var organisation = await _context.Organisations.FindAsync(id);
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                if (orgId != organisation.OrgId)
+                {
+                    return Forbid();
+                }
+            }
+
             if (organisation == null)
             {
                 return NotFound();

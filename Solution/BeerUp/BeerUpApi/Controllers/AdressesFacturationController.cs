@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "hasAchatAccess")]
     [ApiController]
     public class AdressesFacturationController : ControllerBase
     {
@@ -24,18 +27,24 @@ namespace BeerUpApi.Controllers
 
         // GET: api/AdressesFacturation/5
         [HttpGet("{id}")]
-        public ActionResult<AdressesFacturation> GetAdresse(int id)
+        public async Task<ActionResult<AdressesFacturation>> GetAdresseAsync(int id)
         {
 
             var param = new SqlParameter("@FacId", id);
-            List<AdressesFacturation> adresses = (List<AdressesFacturation>)_context.AdressesFacturations.FromSqlRaw("GetAdresseFact @FacId", param).ToList();
+            List<AdressesFacturation> adresses = (List<AdressesFacturation>) await _context.AdressesFacturations.FromSqlRaw("GetAdresseFact @FacId", param).ToListAsync();
 
-            if (adresses == null)
+            Guid orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+
+            if (adresses == null || adresses.Count ==0)
             {
                 return NotFound();
             }
+            if(AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || adresses[0].OrgId == orgId)
+            {
+                return adresses[0];
+            }
 
-            return adresses[0];
+            return Forbid();
         }
 
         // POST: api/AdresseFacturation
@@ -43,24 +52,31 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Biere>> PostAdresse(AdressesFacturation adresse)
         {
-            _context.AdressesFacturations.Add(adresse);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AdresseExists(adresse.AdrFacId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            Guid orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
 
-            return CreatedAtAction("GetAdresse", new { id = adresse.AdrFacId }, adresse);
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || adresse.OrgId == orgId)
+            {
+
+                _context.AdressesFacturations.Add(adresse);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    if (AdresseExists(adresse.AdrFacId))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return CreatedAtAction("GetAdresse", new { id = adresse.AdrFacId }, adresse);
+            }
+            return Forbid();
         }
 
         private bool AdresseExists(Guid id)

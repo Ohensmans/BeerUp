@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HorairesController : ControllerBase
@@ -24,12 +26,12 @@ namespace BeerUpApi.Controllers
             _context = context;
         }
 
-        // GET: api/Horaires
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Horaire>>> GetHoraire()
-        {
-            return await _context.Horaires.ToListAsync();
-        }
+        //// GET: api/Horaires
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Horaire>>> GetHoraire()
+        //{
+        //    return await _context.Horaires.ToListAsync();
+        //}
 
         // GET: api/Horaires/5
         [HttpGet("{id}")]
@@ -53,7 +55,7 @@ namespace BeerUpApi.Controllers
 
         // PUT: api/Horaires/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHoraire(Guid id, Horaire horaire)
         {
@@ -61,6 +63,18 @@ namespace BeerUpApi.Controllers
             {
                 return BadRequest();
             }
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                var eta = await _context.Etablissements.FindAsync(horaire.EtaId);
+
+                if(eta==null || orgId != eta.OrgId)
+                {
+                    return Forbid();
+                }
+            }
+            
 
             _context.Entry(horaire).State = EntityState.Modified;
 
@@ -87,8 +101,20 @@ namespace BeerUpApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         
         [HttpPost]
+        [Authorize(Policy = "hasEtabAccess")]
         public async Task<ActionResult<Horaire>> PostHoraire(Horaire horaire)
         {
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                var eta = await _context.Etablissements.FindAsync(horaire.EtaId);
+
+                if (eta == null || orgId != eta.OrgId)
+                {
+                    return Forbid();
+                }
+            }
+
             _context.Horaires.Add(horaire);
             await _context.SaveChangesAsync();
 
@@ -96,11 +122,23 @@ namespace BeerUpApi.Controllers
         }
 
         // DELETE: api/Horaires/5
-        [Authorize]
+        [Authorize(Policy = "hasEtabAccess")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHoraire(Guid id)
         {
             var horaire = await _context.Horaires.FindAsync(id);
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                var eta = await _context.Etablissements.FindAsync(horaire.EtaId);
+
+                if (eta == null || orgId != eta.OrgId)
+                {
+                    return Forbid();
+                }
+            }
+
             if (horaire == null)
             {
                 return NotFound();

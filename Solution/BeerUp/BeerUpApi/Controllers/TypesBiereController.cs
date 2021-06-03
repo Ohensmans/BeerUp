@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 using System;
@@ -12,6 +13,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TypesBiereController : ControllerBase
     {
         private readonly BeerUpContext _context;
@@ -23,14 +25,14 @@ namespace BeerUpApi.Controllers
 
         // GET: api/TypesBieres
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TypesBiere>>> GetTypeServices()
+        public async Task<ActionResult<IEnumerable<TypesBiere>>> GetTypeBieres()
         {
             return await _context.TypesBieres.OrderBy(t => t.TypBieNom).ToListAsync();
         }
 
         // GET: api/TypesBieres/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TypesBiere>> GetBiere(Guid id)
+        public async Task<ActionResult<TypesBiere>> GetTypeBiere(Guid id)
         {
             var type = await _context.TypesBieres.FindAsync(id);
 

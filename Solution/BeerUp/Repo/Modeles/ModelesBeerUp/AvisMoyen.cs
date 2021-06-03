@@ -8,6 +8,8 @@ namespace Repo.Modeles.ModelesBeerUp
     {
         public Guid BieId { get; set; }
         public decimal AcidMoyen { get; set; }
+
+        public decimal AmerMoyen { get; set; }
         public decimal CafeMoyen { get; set; }
         public decimal CaraMoyen { get; set; }
         public decimal FruitMoyen { get; set; }
@@ -27,6 +29,7 @@ namespace Repo.Modeles.ModelesBeerUp
             this.MaltMoyen = 0;
             this.SucrMoyen = 0;
             this.NoteMoyen = 0;
+            this.AmerMoyen = 0;
         }
 
     }

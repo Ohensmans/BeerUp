@@ -48,7 +48,8 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
     private etabOrgaSrv : EtabsOrgaService, private typesBiereSrv : TypesBiereService, private formBuilder:FormBuilder, 
     private upImageSrv: UploadImagesService, private util:UtilService, private modalService:BsModalService, private AvisSrv : AvisBiereUserService,
     private toastr:ToastrService, private router : Router) { 
-    this.biere = new BiereModele();
+    
+    this.biere = new BiereModele(util);
     this.avis = new AvisBiereUserModele();
     this.lEtabOrga = new Array<EtablissementModele>();
     this.lTypeBiere = new Array<TypesBieresModele>();
@@ -74,7 +75,8 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
       avisFruit:new FormControl(''),
       avisHoub:new FormControl(''),
       avisMalt:new FormControl(''),
-      avisSucr:new FormControl('')
+      avisSucr:new FormControl(''),
+      avisAmer:new FormControl(''),
     });
   }
 
@@ -144,6 +146,7 @@ fillInForm()
     avisHoub:[this.avis.avisHoub, [Validators.required, Validators.min(0), Validators.max(5)]],
     avisMalt:[this.avis.avisMalt, [Validators.required, Validators.min(0), Validators.max(5)]],
     avisSucr:[this.avis.avisSucr, [Validators.required, Validators.min(0), Validators.max(5)]],
+    avisAmer:[this.avis.avisSucr, [Validators.required, Validators.min(0), Validators.max(5)]],
   }, { validators: AvisBiereLessThanXWithValueDirective(this.nbMiniAvis) });
 }
 
@@ -259,6 +262,7 @@ onSubmitForm(){
     this.avis.avisHoub = this.biereForm.value.avisHoub;
     this.avis.avisMalt = this.biereForm.value.avisMalt;
     this.avis.avisSucr = this.biereForm.value.avisSucr;
+    this.avis.avisAmer = this.biereForm.value.avisAmer;
     this.avis.aviBieUserDateAvis = new Date();
     this.avis.userId = this.authSrv.getUserId().toString();
     this.avis.orgId = this.authSrv.getUserOrgId.toString();
@@ -293,6 +297,7 @@ resetAvis(){
   this.biereForm.controls['avisHoub'].setValue(0);
   this.biereForm.controls['avisMalt'].setValue(0);
   this.biereForm.controls['avisSucr'].setValue(0);
+  this.biereForm.controls['avisAmer'].setValue(0);
 }
 
 dangerToastr(message:string)

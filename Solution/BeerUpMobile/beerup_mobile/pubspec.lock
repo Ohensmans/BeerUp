@@ -240,6 +240,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  radar_chart:
+    dependency: "direct main"
+    description:
+      name: radar_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   shared_preferences:
     dependency: "direct main"
     description:

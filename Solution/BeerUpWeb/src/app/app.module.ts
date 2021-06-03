@@ -142,7 +142,7 @@ import { LoggedGuardService } from './services/Guards/logged-guard.service';
     JwtModule.forRoot({
       config: {
       tokenGetter: tokenGetter,
-      allowedDomains: ["localhost:5000"],
+      allowedDomains: ["localhost:5000", "http://192.168.179.134:5000/"],
       disallowedRoutes: []
       }
 })  

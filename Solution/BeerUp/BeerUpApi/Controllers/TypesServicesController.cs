@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 using System;
@@ -12,6 +13,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TypesServicesController : ControllerBase
     {
         private readonly BeerUpContext _context;
@@ -44,6 +46,7 @@ namespace BeerUpApi.Controllers
 
         // PUT: api/TypesServices/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "isAdmin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTypeServices(Guid id, TypesService tservice)
         {
@@ -75,6 +78,7 @@ namespace BeerUpApi.Controllers
 
         // POST: api/TypesServices
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "isAdmin")]
         [HttpPost]
         public async Task<ActionResult<TypesService>> PostTypeServices(TypesService tservice)
         {
@@ -99,6 +103,7 @@ namespace BeerUpApi.Controllers
         }
 
         // DELETE: api/TypesServices/5
+        [Authorize(Policy = "isAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTypesServices(Guid id)
         {

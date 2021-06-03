@@ -170,9 +170,10 @@ namespace IdentityServer.Controllers.Web
                             }
                             else if (model.OrgRegister)
                             {
-                                model.User.OrgId = AddOrganisation(model.Organisation).Result;
                                 role = "GroupAdmin";
                                 model.User.Valide = true;
+                                model.User.OrgId = AddOrganisation(model.Organisation).Result;
+                                
                             }
                             else
                             {

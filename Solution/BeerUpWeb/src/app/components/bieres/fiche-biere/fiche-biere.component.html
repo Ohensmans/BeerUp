@@ -76,20 +76,34 @@
                     </div>
                   </ng-template>
                 </div>
-            
-                <!--Cafe-->
+
+                <!--Amer-->
                 <div class="col-md-6">
-                    <div class="control-label"> Café: {{form.avisCafe.value}} </div>
-                    <rating [max]="noteMax" formControlName="avisCafe" [customTemplate]="tCafe"></rating>
-                    <ng-template #tCafe let-i="index" let-v="value">
-                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
-                        {{i < v ? '&#9733;' : '&#9734;'}}
-                      </div>
-                    </ng-template>
-                  </div>
+                  <div class="control-label"> Café: {{form.avisAmer.value}} </div>
+                  <rating [max]="noteMax" formControlName="avisAmer" [customTemplate]="tAmer"></rating>
+                  <ng-template #tAmer let-i="index" let-v="value">
+                    <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                      {{i < v ? '&#9733;' : '&#9734;'}}
+                    </div>
+                  </ng-template>
+                </div>
+            
+
             </div>
 
             <div class="col-md-12 row">
+
+                <!--Cafe-->
+                <div class="col-md-6">
+                  <div class="control-label"> Café: {{form.avisCafe.value}} </div>
+                  <rating [max]="noteMax" formControlName="avisCafe" [customTemplate]="tCafe"></rating>
+                  <ng-template #tCafe let-i="index" let-v="value">
+                    <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                      {{i < v ? '&#9733;' : '&#9734;'}}
+                    </div>
+                  </ng-template>
+                </div>
+                
                 <!--Caramel-->
                 <div class="col-md-6">
                     <div class="control-label"> Caramel: {{form.avisCara.value}} </div>
@@ -101,19 +115,22 @@
                     </ng-template>
                   </div>
 
-                <!--Fruité-->
-                <div class="col-md-6">
-                    <div class="control-label"> Fruitée: {{form.avisFruit.value}} </div>
-                    <rating [max]="noteMax" formControlName="avisFruit" [customTemplate]="tFruit"></rating>
-                    <ng-template #tFruit let-i="index" let-v="value">
-                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
-                        {{i < v ? '&#9733;' : '&#9734;'}}
-                      </div>
-                    </ng-template>
-                  </div>
+
             </div>
 
             <div class="col-md-12 row">
+
+                <!--Fruité-->
+                <div class="col-md-6">
+                  <div class="control-label"> Fruitée: {{form.avisFruit.value}} </div>
+                  <rating [max]="noteMax" formControlName="avisFruit" [customTemplate]="tFruit"></rating>
+                  <ng-template #tFruit let-i="index" let-v="value">
+                    <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                      {{i < v ? '&#9733;' : '&#9734;'}}
+                    </div>
+                  </ng-template>
+                </div>
+
                 <!--Houblonnée-->
                 <div class="col-md-6">
                     <div class="control-label"> Houblonnée: {{form.avisHoub.value}} </div>
@@ -125,19 +142,21 @@
                     </ng-template>
                   </div>
 
-                <!--Maltée-->
-                <div class="col-md-6">
-                    <div class="control-label"> Maltée: {{form.avisMalt.value}} </div>
-                    <rating [max]="noteMax" formControlName="avisMalt" [customTemplate]="tMalt"></rating>
-                    <ng-template #tMalt let-i="index" let-v="value">
-                      <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
-                        {{i < v ? '&#9733;' : '&#9734;'}}
-                      </div>
-                    </ng-template>
-                  </div>
+                
             </div>
 
             <div class="col-md-12 row">
+              <!--Maltée-->
+              <div class="col-md-6">
+                <div class="control-label"> Maltée: {{form.avisMalt.value}} </div>
+                <rating [max]="noteMax" formControlName="avisMalt" [customTemplate]="tMalt"></rating>
+                <ng-template #tMalt let-i="index" let-v="value">
+                  <div class="btn btn-{{i < v ? 'warning' : 'default'}}">
+                    {{i < v ? '&#9733;' : '&#9734;'}}
+                  </div>
+                </ng-template>
+              </div>
+
                 <!--Sucrée-->
                   <div class="col-md-6">
                     <div class="control-label"> Sucrée: {{form.avisSucr.value}} </div>

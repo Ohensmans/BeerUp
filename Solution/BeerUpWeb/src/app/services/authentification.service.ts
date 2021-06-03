@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserManager, User, UserManagerSettings, WebStorageStateStore} from 'oidc-client';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthentificationService {
 
   private user = null as any;
 
-  constructor(private jwtSrv : JwtHelperService) { 
+  constructor(private jwtSrv : JwtHelperService, private util:UtilService) { 
     this.manager = new UserManager(this.getClientSettings());
     this.manager.getUser()
     .then(
@@ -29,7 +30,7 @@ export class AuthentificationService {
   private getClientSettings() : UserManagerSettings {
     return {
         // url IS
-        authority: 'http://192.168.179.134:5000',
+        authority: this.util.urlIdentity,
         // client id dans IS
         client_id: 'BeerUpWeb',
         // url app Angular au retour d'IS

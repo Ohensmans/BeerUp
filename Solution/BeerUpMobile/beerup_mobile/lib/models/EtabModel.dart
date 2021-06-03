@@ -16,6 +16,10 @@ class Etablissement {
   String etaCoordLong;
   String etaCoordLat;
   bool etaActif;
+  bool estOuvert;
+  double distance;
+  String nomTypeEta;
+  bool estJourFermeture;
 
   Etablissement() {
     etaNom = '';
@@ -31,11 +35,15 @@ class Etablissement {
         etaNum = json['etaNum'],
         etaCp = json['etaCp'],
         etaVille = json['etaVille'],
+        etaPays = json['etaPays'],
         etaEmail = json['etaEmail'],
         etaWeb = json['etaWeb'],
         etaPhoto = json['etaPhoto'],
         etaNbVu = json['etaNbVu'],
         etaCoordLong = json['etaCoordLong'],
         etaCoordLat = json['etaCoordLat'],
-        etaActif = json['etaActif'] == 'true';
+        distance = json['distance'].toDouble(),
+        estOuvert = json['estOuvert'] == 'true',
+        etaActif = json['etaActif'] == 'true',
+        nomTypeEta = json['nomTypeEta'];
 }

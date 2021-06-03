@@ -36,9 +36,9 @@ namespace BeerUpApi
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder => builder
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins("http://localhost:4200", "http://192.168.179.134:5000")
                 .AllowAnyHeader()
-                .AllowAnyMethod());
+                .AllowAnyMethod()) ;
             });
 
             services.AddControllers();
@@ -59,6 +59,16 @@ namespace BeerUpApi
                         ValidateAudience = false
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("isAdmin", policy => policy.RequireClaim("role", "Administrateur").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasOwnerAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasAchatAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupAchat").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasBiereAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupBiere").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasEtabAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupEtablissement").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasWebAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupEtablissement", "GroupBiere", "GroupAchat").RequireClaim("Valide", "True"));
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -93,7 +103,7 @@ namespace BeerUpApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(MyAllowSpecificOrigins);
+            
 
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
@@ -102,6 +112,7 @@ namespace BeerUpApi
                 RequestPath = new PathString("/Resources")
             }) ;
 
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
             app.UseAuthorization();

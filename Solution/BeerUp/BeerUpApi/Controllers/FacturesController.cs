@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 using System;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "hasAchatAccess")]
     [ApiController]
     public class FacturesController : ControllerBase
     {
@@ -23,6 +26,7 @@ namespace BeerUpApi.Controllers
 
         // GET: api/Factures
         [HttpGet]
+        [Authorize(Policy = "isAdmin")]
         public async Task<ActionResult<IEnumerable<Facture>>> GetFacture()
         {
             List<Facture> lFacture = await _context.Factures.ToListAsync();
@@ -36,6 +40,17 @@ namespace BeerUpApi.Controllers
         public async Task<ActionResult<Facture>> GetFacture(int id)
         {
             var fact = await _context.Factures.FindAsync(id);
+
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var trans = await _context.Transactions.FindAsync(fact.TransId);
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+
+                if (trans == null || orgId != trans.OrgId)
+                {
+                    return Forbid();
+                }
+            }
 
             if (fact == null)
             {
@@ -51,6 +66,17 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Facture>> PostFacture(Facture fact)
         {
+            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            {
+                var trans = await _context.Transactions.FindAsync(fact.TransId);
+                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+
+                if (trans == null || orgId != trans.OrgId)
+                {
+                    return Forbid();
+                }
+            }
+
             _context.Factures.Add(fact);
             try
             {

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
@@ -13,6 +15,7 @@ namespace BeerUpApi.Controllers
 {   
 
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class AchatsVuesController : ControllerBase
     {
@@ -24,53 +27,65 @@ namespace BeerUpApi.Controllers
             _context = context;
         }
 
-        // GET: api/AchatsVues
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<AchatsVue>>> GetAchatsVue()
-        {
-            List<AchatsVue> lAchat = await _context.AchatsVues.ToListAsync();
-            return lAchat;
+        //// GET: api/AchatsVues
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<AchatsVue>>> GetAchatsVue()
+        //{
+        //    List<AchatsVue> lAchat = await _context.AchatsVues.ToListAsync();
 
-        }
+        //    return lAchat;
 
-        // GET: api/AchatsVues/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AchatsVue>> GetAchatsVues(Guid id)
-        {
-            var achat = await _context.AchatsVues.FindAsync(id);
+        //}
 
-            if (achat == null)
-            {
-                return NotFound();
-            }
+        //// GET: api/AchatsVues/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<AchatsVue>> GetAchatsVues(Guid id)
+        //{
+        //    var achat = await _context.AchatsVues.FindAsync(id);
 
-            return achat;
-        }
+        //    if (achat == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return achat;
+        //}
 
 
         // POST: api/AchatsVues
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "hasAchatAccess")]
         public async Task<ActionResult<Biere>> PostAchatsVue(AchatsVue achat)
-        {
-            _context.AchatsVues.Add(achat);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AchatExists(achat.AchId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        {           
 
-            return CreatedAtAction("GetAchatsVue", new { id = achat.AchId }, achat);
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) 
+                || (achat.EtaId!=null && await AuthGuard.etabIsInUserOrgAsync(achat.EtaId, _context, HttpContext.User.Claims.ToList())) 
+               || (achat.BieId!=null && await AuthGuard.biereIsInUserOrgAsync(achat.BieId,_context, HttpContext.User.Claims.ToList())))
+            {
+
+
+                _context.AchatsVues.Add(achat);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    if (AchatExists(achat.AchId))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return CreatedAtAction("GetAchatsVue", new { id = achat.AchId }, achat);
+            }
+            return Forbid();
+
         }
 
 

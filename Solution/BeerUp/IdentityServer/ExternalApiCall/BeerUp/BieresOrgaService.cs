@@ -23,7 +23,7 @@ namespace IdentityServer.ExternalApiCall.BeerUp
 
         public async Task<List<Biere>> GetAllBieresOrgaAsync(Guid id)
         {
-            var httpResponse = await client.GetAsync($"{baseUrl}{id}");
+            var httpResponse = await client.GetAsync($"{baseUrl}{id},{false}");
 
             if (!httpResponse.IsSuccessStatusCode)
             {

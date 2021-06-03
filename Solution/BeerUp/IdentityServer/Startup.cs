@@ -144,8 +144,9 @@ namespace IdentityServer
             {
                 app.UseCookiePolicy(new CookiePolicyOptions()
                 {
-                    MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax
-                });
+                    MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None,
+                    //Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.None
+                }) ;
             }
 
             app.UseAuthentication();
