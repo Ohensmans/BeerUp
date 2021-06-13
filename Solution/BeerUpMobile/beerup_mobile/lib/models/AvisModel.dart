@@ -34,4 +34,17 @@ class Avis {
         sucrMoyen = json['sucrMoyen'].toDouble(),
         amerMoyen = json['amerMoyen'].toDouble(),
         noteMoyen = json['noteMoyen'].toDouble();
+
+  Map<String, dynamic> avisToJson() => <String, dynamic>{
+        'bieId': bieId,
+        'cafeMoyen': cafeMoyen,
+        'acidMoyen': acidMoyen,
+        'caraMoyen': caraMoyen,
+        'fruitMoyen': fruitMoyen,
+        'houbMoyen': houbMoyen,
+        'maltMoyen': maltMoyen,
+        'sucrMoyen': sucrMoyen,
+        'amerMoyen': amerMoyen,
+        'noteMoyen': noteMoyen,
+      };
 }

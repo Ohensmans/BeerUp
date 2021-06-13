@@ -47,10 +47,17 @@ class AvisService {
     var accessToken = prefs.get('accessToken');
     String url = prefs.get('apiAvisUser').toString();
     Uri uri = Uri.parse(url);
+
+    var avisJson = jsonEncode(avis.avisToJson());
+
     try {
       Response response = await post(uri,
-          headers: {"Authorization": "Bearer $accessToken"}, body: avis);
-      if (response.statusCode == 200) {
+          headers: {
+            "Authorization": "Bearer $accessToken",
+            "content-type": "application/json"
+          },
+          body: avisJson);
+      if (response.statusCode == 204) {
         return true;
       }
       return false;

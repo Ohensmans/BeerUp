@@ -52,7 +52,7 @@ class _State extends State<Home> {
                         child: Text(
                       biere.bieNom != null ? biere.bieNom : '',
                       style: TextStyle(
-                          color: Colors.greenAccent[400],
+                          color: Colors.amber[900],
                           fontStyle: FontStyle.italic,
                           letterSpacing: 1.0,
                           fontSize: 18.0),

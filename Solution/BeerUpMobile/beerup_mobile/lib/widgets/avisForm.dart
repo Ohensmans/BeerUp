@@ -44,15 +44,25 @@ class _AvisFormState extends State<AvisForm> {
 
   @override
   Widget build(BuildContext context) {
-    controllerAcid.text = widget.avisUser.acidMoyen.toString();
-    controllerCafe.text = widget.avisUser.cafeMoyen.toString();
-    controllerCara.text = widget.avisUser.caraMoyen.toString();
-    controllerFruit.text = widget.avisUser.fruitMoyen.toString();
-    controllerHoub.text = widget.avisUser.houbMoyen.toString();
-    controllerMalt.text = widget.avisUser.maltMoyen.toString();
-    controllerSucr.text = widget.avisUser.sucrMoyen.toString();
-    controllerAmer.text = widget.avisUser.amerMoyen.toString();
-    controllerNote.text = widget.avisUser.noteMoyen.toString();
+    if (widget.avisUser.acidMoyen != 0 ||
+        widget.avisUser.cafeMoyen != 0 ||
+        widget.avisUser.caraMoyen != 0 ||
+        widget.avisUser.fruitMoyen != 0 ||
+        widget.avisUser.houbMoyen != 0 ||
+        widget.avisUser.maltMoyen != 0 ||
+        widget.avisUser.sucrMoyen != 0 ||
+        widget.avisUser.amerMoyen != 0 ||
+        widget.avisUser.noteMoyen != 0) {
+      controllerAcid.text = widget.avisUser.acidMoyen.toString();
+      controllerCafe.text = widget.avisUser.cafeMoyen.toString();
+      controllerCara.text = widget.avisUser.caraMoyen.toString();
+      controllerFruit.text = widget.avisUser.fruitMoyen.toString();
+      controllerHoub.text = widget.avisUser.houbMoyen.toString();
+      controllerMalt.text = widget.avisUser.maltMoyen.toString();
+      controllerSucr.text = widget.avisUser.sucrMoyen.toString();
+      controllerAmer.text = widget.avisUser.amerMoyen.toString();
+      controllerNote.text = widget.avisUser.noteMoyen.toString();
+    }
 
     return Form(
       key: _formKey,
@@ -60,20 +70,6 @@ class _AvisFormState extends State<AvisForm> {
         children: [
           Row(
             children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          widget.ressourceBaseUrl + widget.biere.biePhoto),
-                    ),
-                  ),
-                ),
-              ),
               Expanded(
                 flex: 3,
                 child: Column(
@@ -290,6 +286,7 @@ class _AvisFormState extends State<AvisForm> {
                   newAvis.maltMoyen = int.parse(controllerMalt.text).toDouble();
                   newAvis.sucrMoyen = int.parse(controllerSucr.text).toDouble();
                   newAvis.noteMoyen = int.parse(controllerNote.text).toDouble();
+                  newAvis.bieId = widget.biere.bieId;
 
                   bool test = await AvisService().postAvisUser(newAvis);
                   if (test) {

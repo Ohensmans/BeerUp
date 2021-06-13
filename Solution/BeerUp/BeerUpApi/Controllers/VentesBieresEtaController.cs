@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Policy = "isRegistred")]
     [ApiController]
     public class VentesBieresEtaController : ControllerBase
     {
@@ -117,7 +117,7 @@ namespace BeerUpApi.Controllers
                 }
             }
 
-            return CreatedAtAction("GetTypeService", new { id = vente.VenteBiereEtaId }, vente);
+            return CreatedAtAction("GetVenteBieresEta", new { id = vente.VenteBiereEtaId }, vente);
         }
 
         // DELETE: api/TypesServices/5

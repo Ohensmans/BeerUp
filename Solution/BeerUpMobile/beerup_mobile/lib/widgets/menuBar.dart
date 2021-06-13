@@ -35,12 +35,18 @@ class MenuBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.star),
           tooltip: 'Demander une suggestion',
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/loadSuggestions', arguments: {
+              'isBiereLinked': 'false',
+            });
+          },
         ),
         IconButton(
           icon: Icon(Icons.collections_bookmark_outlined),
           tooltip: 'Voir ses favoris',
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/loadFavoris');
+          },
         ),
       ],
     );

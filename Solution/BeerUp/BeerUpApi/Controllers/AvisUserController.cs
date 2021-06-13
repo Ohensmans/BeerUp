@@ -89,7 +89,7 @@ namespace BeerUpApi.Controllers
                 throw;
             }
 
-            return CreatedAtAction("GetAvisUserAsync", new { bieId = avis.BieId }, avis);
+            return NoContent();
         }
 
         private async Task DesactivateOlderAvisAsync(Guid userId, Guid biereId)
@@ -98,7 +98,7 @@ namespace BeerUpApi.Controllers
             var paramTwo = new SqlParameter("@BieId", biereId);
             List<AvisBiereUser> lAvis = (List<AvisBiereUser>)_context.AvisBiereUser.FromSqlRaw("GetAvisBiereUserToDesactivate @UserId, @BieId", parameters: new[] { paramOne, paramTwo }).ToList();
 
-            if (lAvis.Any())
+            if (lAvis!=null && lAvis.Any())
             {
                 foreach (AvisBiereUser avis in lAvis)
                 {

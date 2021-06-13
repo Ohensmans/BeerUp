@@ -42,7 +42,9 @@ class NotFound extends StatelessWidget {
               SizedBox(height: 10),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/loadNewBiere');
+                  },
                   child: Text("Ajouter une bière à l'application"),
                 ),
               ),

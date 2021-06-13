@@ -25,6 +25,11 @@ class Etablissement {
     etaNom = '';
   }
 
+  Etablissement.newOne(String etaNom, String etaId) {
+    this.etaNom = etaNom;
+    this.etaId = etaId;
+  }
+
   Etablissement.fromJson(Map<String, dynamic> json)
       : etaId = json['etaId'],
         orgId = json['orgId'],
@@ -42,8 +47,14 @@ class Etablissement {
         etaNbVu = json['etaNbVu'],
         etaCoordLong = json['etaCoordLong'],
         etaCoordLat = json['etaCoordLat'],
-        distance = json['distance'].toDouble(),
+        distance =
+            json['distance'] != null ? json['distance'].toDouble() : null,
         estOuvert = json['estOuvert'] == 'true',
         etaActif = json['etaActif'] == 'true',
         nomTypeEta = json['nomTypeEta'];
+
+  Map<String, dynamic> etabToJson() => <String, dynamic>{
+        'etaId': etaId,
+        'etaNom': etaNom,
+      };
 }

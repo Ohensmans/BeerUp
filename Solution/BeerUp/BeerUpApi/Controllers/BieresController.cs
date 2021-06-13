@@ -88,6 +88,18 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Biere>> PostBiere(Biere biere)
         {
+            biere.UserId = AuthGuard.getUserId(HttpContext.User.Claims.ToList());
+
+            if (AuthGuard.isMobileUser(HttpContext.User.Claims.ToList())|| !AuthGuard.hasBiereAccess(HttpContext.User.Claims.ToList()))
+            {
+                DateTime today = DateTime.Today;
+                List<Biere> lbieres = await _context.Bieres.Where(b => b.BieDateCre.HasValue && b.BieDateCre.Value.Date == today.Date&& b.UserId == biere.UserId).ToListAsync();
+                if (lbieres.Count > 4)
+                {
+                    return StatusCode(429);
+                }
+            }
+
             _context.Bieres.Add(biere);
             try
             {

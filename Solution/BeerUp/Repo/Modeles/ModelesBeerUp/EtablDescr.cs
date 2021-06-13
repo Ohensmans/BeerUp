@@ -7,7 +7,7 @@ namespace Repo.Modeles.ModelesBeerUp
     public class EtablDescr : Etablissement
     {
         public bool estOuvert { get; set; }
-        public decimal distance { get; set; }
+        public double distance { get; set; }
 
         public string nomTypeEta { get; set; }
 

@@ -265,7 +265,7 @@ onSubmitForm(){
     this.avis.avisAmer = this.biereForm.value.avisAmer;
     this.avis.aviBieUserDateAvis = new Date();
     this.avis.userId = this.authSrv.getUserId().toString();
-    this.avis.orgId = this.authSrv.getUserOrgId.toString();
+    this.avis.orgId = this.authSrv.getUserOrgId().toString();
     this.avis.aviBieUserId = Guid.create().toString();
     this.avis.aviBieUserActif = true;
     

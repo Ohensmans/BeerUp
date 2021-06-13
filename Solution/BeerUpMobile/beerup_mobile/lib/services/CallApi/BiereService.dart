@@ -44,4 +44,27 @@ class BiereService {
       return bieres;
     }
   }
+
+  Future<int> postBiere(Biere biere) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var accessToken = prefs.get('accessToken');
+    String url = prefs.get('apiAvisUser').toString();
+    Uri uri = Uri.parse(url);
+
+    var biereJson = jsonEncode(biere.biereToJson());
+
+    try {
+      Response response = await post(uri,
+          headers: {
+            "Authorization": "Bearer $accessToken",
+            "content-type": "application/json"
+          },
+          body: biereJson);
+
+      return response.statusCode;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }

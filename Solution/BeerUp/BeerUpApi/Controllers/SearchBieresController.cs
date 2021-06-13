@@ -25,12 +25,12 @@ namespace BeerUpApi.Controllers
 
         // GET: api/SearchBieres/aaa
         [HttpGet("{text}")]
-        public ActionResult<List<BiereDescr>> SearchBieres(string text)
+        public async Task<ActionResult<List<BiereDescr>>> SearchBieresAsync(string text)
         {
             if (text != null && text != "")
             {
                 var param = new SqlParameter("@text", text);
-                List<BiereDescr> bieres = (List<BiereDescr>)_context.BieresDescr.FromSqlRaw("SearchBiere @text", param).ToList();
+                List<BiereDescr> bieres = (List<BiereDescr>)await _context.BieresDescr.FromSqlRaw("SearchBiere @text", param).ToListAsync();
 
                 if (bieres == null)
                 {

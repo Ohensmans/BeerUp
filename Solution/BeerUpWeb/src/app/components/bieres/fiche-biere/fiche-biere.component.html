@@ -79,7 +79,7 @@
 
                 <!--Amer-->
                 <div class="col-md-6">
-                  <div class="control-label"> Café: {{form.avisAmer.value}} </div>
+                  <div class="control-label"> Amertume: {{form.avisAmer.value}} </div>
                   <rating [max]="noteMax" formControlName="avisAmer" [customTemplate]="tAmer"></rating>
                   <ng-template #tAmer let-i="index" let-v="value">
                     <div class="btn btn-{{i < v ? 'warning' : 'default'}}">

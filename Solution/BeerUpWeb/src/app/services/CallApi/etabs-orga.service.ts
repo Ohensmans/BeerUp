@@ -87,7 +87,7 @@ export class EtabsOrgaService {
     
 
     var result = this.http.get<EtablissementModele[]>(
-      this.util.apiEtabsOrgaUrl+orgId,
+      this.util.apiEtabsOrgaUrl+orgId+","+achat,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(

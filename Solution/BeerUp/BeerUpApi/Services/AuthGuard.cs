@@ -43,6 +43,26 @@ namespace BeerUpApi.Services
             return false;
         }
 
+        public static bool hasBiereAccess(List<Claim> userClaims)
+        {
+            if (isAdminOrGroupAdmin(userClaims) || userClaims.Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "GroupBiere").Any()
+                && userClaims.Where(c => c.Type == "Valide" && c.Value == "True").Any())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool isMobileUser(List<Claim> userClaims)
+        {
+            if (userClaims.Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "User").Any()
+                && userClaims.Where(c => c.Type == "Valide" && c.Value == "True").Any())
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static Guid getOrgIdUser (List<Claim> userClaims)
         {
             if (userClaims.FirstOrDefault(c => c.Type == "OrgId") != null)
@@ -57,7 +77,7 @@ namespace BeerUpApi.Services
         {
             if (userClaims.FirstOrDefault(c => c.Type == "sid") != null)
             {
-                return Guid.Parse(userClaims.FirstOrDefault(c => c.Type == "sid").Value);
+                return Guid.Parse(userClaims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
             }
             else
                 return Guid.Empty;

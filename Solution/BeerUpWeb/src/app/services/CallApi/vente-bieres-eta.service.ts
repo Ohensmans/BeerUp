@@ -19,9 +19,9 @@ export class VenteBieresEtaService {
   }
 
   getAllVentesBieresParEtab(id:string){
-
+    const token:string = this.authSrv.getUser().id_token;
     var result = this.http.get<VenteBiereEtaModele[]>(
-      this.util.apiVentesBieresEtaUrl+id);
+      this.util.apiVentesBieresEtaUrl+id, { headers: new HttpHeaders({ "Authorization": "Bearer " + token })});
     result.subscribe(
       (value) => {
         this.lVentesBieresEtab = value;

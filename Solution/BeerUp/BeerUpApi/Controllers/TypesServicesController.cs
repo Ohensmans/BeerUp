@@ -13,7 +13,7 @@ namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "isRegistred")]
     public class TypesServicesController : ControllerBase
     {
         private readonly BeerUpContext _context;

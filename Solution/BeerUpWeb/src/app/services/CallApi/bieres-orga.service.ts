@@ -92,7 +92,7 @@ export class BieresOrgaService {
      }
 
     var result = this.http.get<BiereModele[]>(
-      this.util.apiBieresOrgaUrl+id,
+      this.util.apiBieresOrgaUrl+id+","+achat,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     );
     result.subscribe(

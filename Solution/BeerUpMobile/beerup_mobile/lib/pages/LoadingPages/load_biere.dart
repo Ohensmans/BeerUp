@@ -1,6 +1,7 @@
 import 'package:beerup_mobile/models/AvisModel.dart';
 import 'package:beerup_mobile/models/BiereDescrModel.dart';
 import 'package:beerup_mobile/services/CallApi/AvisService.dart';
+import 'package:beerup_mobile/services/CallApi/FavorisService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class _LoadBiereState extends State<LoadBiere> {
   Biere biere;
   Avis avisMoyen;
   Avis avisUser;
+  bool isFavoris;
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _LoadBiereState extends State<LoadBiere> {
   load() async {
     avisMoyen = await AvisService().getAvisMoyen(biere.bieId);
     avisUser = await AvisService().getAvisUser(biere.bieId);
+    isFavoris = await FavorisService().isFavoris(biere.bieId);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
 
@@ -44,6 +47,7 @@ class _LoadBiereState extends State<LoadBiere> {
       'ressourceBaseUrl': ressourceBaseUrl,
       'avisMoyen': avisMoyen,
       'avisUser': avisUser,
+      'isFavoris': isFavoris,
     });
   }
 

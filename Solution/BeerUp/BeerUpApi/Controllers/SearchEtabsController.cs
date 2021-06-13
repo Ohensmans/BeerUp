@@ -32,7 +32,7 @@ namespace BeerUpApi.Controllers
             if (text != null && text != "")
             {
                 var param = new SqlParameter("@text", text);
-                List<Etablissement> etabs = (List<Etablissement>)_context.Etablissements.FromSqlRaw("SearchEtab @text", param).ToList();
+                List<Etablissement> etabs = (List<Etablissement>)await _context.Etablissements.FromSqlRaw("SearchEtab @text", param).ToListAsync();
 
                 if (etabs == null)
                 {

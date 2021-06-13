@@ -26,168 +26,189 @@ class _FicheEtablissementState extends State<FicheEtablissement> {
       backgroundColor: Colors.black,
       drawer: NavDrawer(),
       appBar: MenuBar(appBar: AppBar()),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-          child: Column(
-            children: [
-              Text(
-                etab.etaNom.toUpperCase() + ' - ' + etab.nomTypeEta,
-                style: TextStyle(
-                  color: Colors.grey[200],
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  letterSpacing: 2.0,
-                ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            Text(
+              etab.etaNom.toUpperCase(),
+              style: TextStyle(
+                color: Colors.amber[900],
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                letterSpacing: 2.0,
               ),
-              SizedBox(height: 20.0),
-              etab.etaPhoto != null && etab.etaPhoto.isNotEmpty
-                  ? Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          image: DecorationImage(
-                              fit: BoxFit.fitWidth,
-                              image: NetworkImage(
-                                  ressourceBaseUrl + etab.etaPhoto))),
-                    )
-                  : Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          image: DecorationImage(
-                              fit: BoxFit.fitWidth,
-                              image: AssetImage('assets/images/biere6.jpg'))),
-                    ),
-              SizedBox(height: 30),
-              Row(
+            ),
+            Text(
+              etab.nomTypeEta,
+              style: TextStyle(
+                color: Colors.amber[900],
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                letterSpacing: 2.0,
+              ),
+            ),
+            SizedBox(height: 20.0),
+            etab.etaPhoto != null && etab.etaPhoto.isNotEmpty
+                ? Container(
+                    height: 100.0,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        image: DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            image: NetworkImage(
+                                ressourceBaseUrl + etab.etaPhoto))),
+                  )
+                : Container(
+                    height: 100.0,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        image: DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            image: AssetImage('assets/images/biere6.jpg'))),
+                  ),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  Expanded(
+                    flex: 1,
                     child: Icon(
                       Icons.location_city,
                       color: Colors.white,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        etab.etaNum +
-                            ' ' +
-                            etab.etaRue +
-                            ' ' +
-                            etab.etaCp +
-                            ' ' +
-                            etab.etaVille +
-                            ' ' +
-                            etab.etaPays,
-                        style: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 14,
-                        )),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          etab.etaNum + ' ' + etab.etaRue,
+                          style: TextStyle(
+                            color: Colors.grey[200],
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          etab.etaCp + ' ' + etab.etaVille + ' ' + etab.etaPays,
+                          style: TextStyle(
+                            color: Colors.grey[200],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              etab.etaWeb != null && etab.etaWeb.isNotEmpty
-                  ? Row(
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.link,
-                            color: Colors.white,
-                          ),
-                          label: Text(etab.etaWeb,
-                              style: TextStyle(
-                                color: Colors.grey[200],
-                                fontSize: 14,
-                              )),
+            ),
+            etab.etaWeb != null && etab.etaWeb.isNotEmpty
+                ? Row(
+                    children: [
+                      TextButton.icon(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.link,
+                          color: Colors.white,
                         ),
-                      ],
-                    )
-                  : Container(),
-              etab.etaEmail != null && etab.etaEmail.isNotEmpty
-                  ? Row(
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.email,
-                            color: Colors.white,
-                          ),
-                          label: Text(etab.etaEmail,
-                              style: TextStyle(
-                                color: Colors.grey[200],
-                                fontSize: 14,
-                              )),
+                        label: Text(etab.etaWeb,
+                            style: TextStyle(
+                              color: Colors.grey[200],
+                              fontSize: 14,
+                            )),
+                      ),
+                    ],
+                  )
+                : Container(),
+            etab.etaEmail != null && etab.etaEmail.isNotEmpty
+                ? Row(
+                    children: [
+                      TextButton.icon(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.email,
+                          color: Colors.white,
                         ),
-                      ],
-                    )
-                  : Container(),
-              SizedBox(height: 40),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Voir la liste des bières"),
-                ),
+                        label: Text(etab.etaEmail,
+                            style: TextStyle(
+                              color: Colors.grey[200],
+                              fontSize: 14,
+                            )),
+                      ),
+                    ],
+                  )
+                : Container(),
+            SizedBox(height: 40),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/loadBieresEtab',
+                      arguments: {
+                        'etaId': etab.etaId,
+                      });
+                },
+                child: Text("Voir la liste des bières"),
               ),
-              SizedBox(height: 40.0),
-              etab.estOuvert
-                  ? Text(
-                      'HORAIRE - Ouvert',
-                      style: TextStyle(
-                        color: Colors.greenAccent[400],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        letterSpacing: 2.0,
-                      ),
-                    )
-                  : Text(
-                      'HORAIRE - Fermé',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        letterSpacing: 2.0,
-                      ),
+            ),
+            SizedBox(height: 40.0),
+            etab.estOuvert
+                ? Text(
+                    'HORAIRE - Ouvert',
+                    style: TextStyle(
+                      color: Colors.greenAccent[400],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      letterSpacing: 2.0,
                     ),
-              etab.estJourFermeture
-                  ? SizedBox(
-                      height: 20.0,
-                    )
-                  : Container(),
-              etab.estJourFermeture
-                  ? Text(
-                      "Aujourd'hui est un jour de fermeture exceptionnel",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        letterSpacing: 1.0,
-                      ),
-                    )
-                  : Container(),
-              lJours.length > 2 ? SizedBox(height: 20) : Container(),
-              lJours.length > 2
-                  ? Text(
-                      "Le prochain jour de fermeture est le : ${lJours[1].jouDate.day}-${lJours[1].jouDate.month}-${lJours[1].jouDate.year}",
-                      style: TextStyle(
-                        color: Colors.grey[200],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        letterSpacing: 1.0,
-                      ),
-                    )
-                  : Container(),
-              SizedBox(height: 20),
-              lHoraires.isNotEmpty
-                  ? ListeHoraire(
-                      lHoraires: lHoraires,
-                      ressourceBaseUrl: ressourceBaseUrl,
-                    )
-                  : Container(),
-            ],
-          ),
+                  )
+                : Text(
+                    'HORAIRE - Fermé',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+            etab.estJourFermeture
+                ? SizedBox(
+                    height: 20.0,
+                  )
+                : Container(),
+            etab.estJourFermeture
+                ? Text(
+                    "Aujourd'hui est un jour de fermeture exceptionnel",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      letterSpacing: 1.0,
+                    ),
+                  )
+                : Container(),
+            lJours.length > 2 ? SizedBox(height: 20) : Container(),
+            lJours.length > 2
+                ? Text(
+                    "Le prochain jour de fermeture est le : ${lJours[1].jouDate.day}-${lJours[1].jouDate.month}-${lJours[1].jouDate.year}",
+                    style: TextStyle(
+                      color: Colors.grey[200],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      letterSpacing: 1.0,
+                    ),
+                  )
+                : Container(),
+            SizedBox(height: 20),
+            lHoraires.isNotEmpty
+                ? ListeHoraire(
+                    lHoraires: lHoraires,
+                    ressourceBaseUrl: ressourceBaseUrl,
+                  )
+                : Container(),
+          ],
         ),
       ),
     );

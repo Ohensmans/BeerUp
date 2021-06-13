@@ -21,6 +21,7 @@ namespace BeerUpApi.Controllers
     {
         private readonly BeerUpContext _context;
         private readonly IMapService mapService;
+        const string brasserie = "BRASSERIE";
 
         public EtablissementsController(BeerUpContext context, IMapService mapService)
         {
@@ -72,17 +73,17 @@ namespace BeerUpApi.Controllers
                         return BadRequest();
                     }
 
-                    List<Etablissement> lEtab = _context.Etablissements.ToList();
+                    List<Etablissement> lEtab = await _context.Etablissements.AsNoTracking().ToListAsync();
 
-                    if (lEtab.Exists(e => e.EtaId == etablissement.EtaId && (e.EtaRue != etablissement.EtaRue || e.EtaVille != etablissement.EtaVille)))
+                    if (lEtab.Any(e => e.EtaId == etablissement.EtaId && (e.EtaRue != etablissement.EtaRue || e.EtaVille != etablissement.EtaVille)))
                     {
                         etablissement = await GetCoordinatesAsync(etablissement);
                     }
 
                     _context.Entry(etablissement).State = EntityState.Modified;
 
-
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -113,14 +114,29 @@ namespace BeerUpApi.Controllers
             try
             {
                 List<Etablissement> lEtab = _context.Etablissements.ToList();
+                
 
                 if(etablissement.EtaRue!=null && etablissement.EtaRue != "") 
                 {
                     etablissement = await GetCoordinatesAsync(etablissement);
                 }
-                
 
-                if (lEtab.Exists(etab => etab.EtaNom == etablissement.EtaNom && etab.OrgId == Guid.Empty))
+                //new Etab from Mobile orgId = Guid.Empty
+                //new Etab from Web (not from Admin) orgId = new Guid
+                //new Etab from Web and Admin orgId = Guid.Empty
+
+                if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) && etablissement.OrgId == Guid.Empty)
+                {
+                    TypesEtablissement type = await _context.TypesEtablissements.FirstOrDefaultAsync(t => t.TypEtaNom.ToUpper() == brasserie);
+                    etablissement.TypEtaId = type.TypEtaId;
+
+                    if(lEtab.Exists(e => e.EtaNom == etablissement.EtaNom && e.TypEtaId == type.TypEtaId))
+                    {
+                        return lEtab.FirstOrDefault(e => e.EtaNom == etablissement.EtaNom);
+                    }
+                }
+                
+                if (lEtab.Exists(etab => etab.EtaNom == etablissement.EtaNom && etab.OrgId == Guid.Empty)&& etablissement.OrgId!=Guid.Empty)
                 {
                     etablissement.EtaId = lEtab.First(etab => etab.EtaNom == etablissement.EtaNom).EtaId;
                     _context.Entry(etablissement).State = EntityState.Modified;
@@ -178,5 +194,7 @@ namespace BeerUpApi.Controllers
 
             return etablissement;
         }
+
+
     }
 }

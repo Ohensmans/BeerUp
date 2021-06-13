@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:beerup_mobile/models/AvisModel.dart';
 import 'package:flutter/material.dart';
-import 'package:radar_chart/radar_chart.dart';
+import 'package:multi_charts/multi_charts.dart';
 
 class AvisChart extends StatelessWidget {
   final Avis avisMoyen;
@@ -11,16 +9,25 @@ class AvisChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<double> _values = [
-      avisMoyen.acidMoyen,
-      avisMoyen.amerMoyen,
-      avisMoyen.cafeMoyen,
-      avisMoyen.caraMoyen,
-      avisMoyen.fruitMoyen,
-      avisMoyen.houbMoyen,
-      avisMoyen.maltMoyen,
-      avisMoyen.sucrMoyen
+      avisMoyen.acidMoyen + 1,
+      avisMoyen.amerMoyen + 1,
+      avisMoyen.cafeMoyen + 1,
+      avisMoyen.caraMoyen + 1,
+      avisMoyen.fruitMoyen + 1,
+      avisMoyen.houbMoyen + 1,
+      avisMoyen.maltMoyen + 1,
+      avisMoyen.sucrMoyen + 1
     ];
-    final int _length = 8;
+    final List<String> _labels = [
+      'acidité',
+      'amertume',
+      'café',
+      'caramel',
+      'fruitée',
+      'houblonnée',
+      'maltée',
+      'sucrée'
+    ];
 
     return Container(
       child: Column(
@@ -36,20 +43,13 @@ class AvisChart extends StatelessWidget {
           SizedBox(height: 20),
           Center(
             child: RadarChart(
-              length: _length,
-              radius: 150,
-              initialAngle: pi / 3,
-              radialStroke: 2,
-              radialColor: Colors.grey,
-              radars: [
-                RadarTile(
-                  values: _values,
-                  borderStroke: 2,
-                  borderColor: Colors.orange,
-                  backgroundColor: Colors.orange.withOpacity(0.4),
-                  vertices: [],
-                )
-              ],
+              maxWidth: 500,
+              strokeColor: Colors.grey[200],
+              labelColor: Colors.grey[200],
+              values: _values,
+              labels: _labels,
+              maxValue: 6,
+              fillColor: Colors.deepOrangeAccent[400],
             ),
           ),
         ],

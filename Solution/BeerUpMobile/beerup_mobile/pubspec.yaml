@@ -33,7 +33,12 @@ dependencies:
   url_launcher: ^6.0.3
   shared_preferences: ^2.0.5
   flutter_spinkit: "^4.1.2"
-  radar_chart: ^2.0.1
+  multi_charts: ^0.3.0
+  fluttertoast: ^8.0.7
+  uuid: ^3.0.4
+  image_picker: ^0.8.0+1
+  google_maps_flutter: ^2.0.6
+  geolocator: ^7.0.3
 
 dev_dependencies:
   flutter_test:

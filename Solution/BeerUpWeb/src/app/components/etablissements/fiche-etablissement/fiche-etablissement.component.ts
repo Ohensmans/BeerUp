@@ -244,19 +244,20 @@ export class FicheEtablissementComponent implements OnInit {
               this.etab.etaMail = this.etabForm.value.etaMail;
               this.etab.etaWeb = this.etabForm.value.etaWeb;
               this.etab.typEtaId = this.etabForm.value.typEta;
-              if (this.isAdmin()){
-                this.etab.orgId = this.etabForm.value.orgId;
-              }
-        
-              if(this.etab.isNew())
-              {
-                if(this.etab.orgId==""){
+              if(this.etab.orgId==""){
+                if (this.isAdmin()){
+                  this.etab.orgId = this.etabForm.value.orgId;
+                }
+                else{
                   this.etab.orgId = Guid.create().toString();
-                } 
-                this.creer();      
+                }
+                this.creer(); 
               }
               else
               {
+                if (this.isAdmin()){
+                  this.etab.orgId = this.etabForm.value.orgId;
+                }
                 this.sauvegarder();     
               }
               //redirige l'utilisateur lorsque la liste d'établissement est modifiée

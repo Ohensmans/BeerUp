@@ -62,12 +62,13 @@ namespace BeerUpApi
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("isAdmin", policy => policy.RequireClaim("role", "Administrateur").RequireClaim("Valide", "True"));
-                options.AddPolicy("hasOwnerAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin").RequireClaim("Valide", "True"));
-                options.AddPolicy("hasAchatAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupAchat").RequireClaim("Valide", "True"));
-                options.AddPolicy("hasBiereAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupBiere").RequireClaim("Valide", "True"));
-                options.AddPolicy("hasEtabAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupEtablissement").RequireClaim("Valide", "True"));
-                options.AddPolicy("hasWebAccess", policy => policy.RequireClaim("role", "Administrateur", "GroupAdmin", "GroupEtablissement", "GroupBiere", "GroupAchat").RequireClaim("Valide", "True"));
+                options.AddPolicy("isAdmin", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Administrateur").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasOwnerAccess", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Administrateur", "GroupAdmin").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasAchatAccess", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Administrateur", "GroupAdmin", "GroupAchat").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasBiereAccess", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Administrateur", "GroupAdmin", "GroupBiere").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasEtabAccess", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Administrateur", "GroupAdmin", "GroupEtablissement").RequireClaim("Valide", "True"));
+                options.AddPolicy("hasWebAccess", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Administrateur", "GroupAdmin", "GroupEtablissement", "GroupBiere", "GroupAchat").RequireClaim("Valide", "True"));
+                options.AddPolicy("isRegistred", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Administrateur", "GroupAdmin", "GroupEtablissement", "GroupBiere", "GroupAchat", "User", "GroupUser"));
             });
 
             services.AddSwaggerGen(c =>

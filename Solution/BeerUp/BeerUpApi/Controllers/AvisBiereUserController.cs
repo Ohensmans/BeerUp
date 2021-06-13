@@ -57,7 +57,7 @@ namespace BeerUpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<AvisBiereUser>> PostAvis(AvisBiereUser avis)
         {
-            Guid userId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+            Guid userId = AuthGuard.getUserId(HttpContext.User.Claims.ToList());
 
             if (avis.UserId == userId)
             {

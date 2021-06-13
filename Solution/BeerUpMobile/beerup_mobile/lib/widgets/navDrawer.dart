@@ -27,7 +27,7 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.input),
             title: Text('Bienvenue'),
-            onTap: () => {},
+            onTap: () => {Navigator.pushNamed(context, '/')},
           ),
           ListTile(
             leading: Icon(Icons.search),
@@ -37,12 +37,16 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.star),
             title: Text('Recevoir des suggestions de bières'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.pushNamed(context, '/loadSuggestions', arguments: {
+                'isBiereLinked': 'false',
+              })
+            },
           ),
           ListTile(
             leading: Icon(Icons.collections_bookmark_outlined),
             title: Text('Consulter ses favoris'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.pushNamed(context, '/loadFavoris')},
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),

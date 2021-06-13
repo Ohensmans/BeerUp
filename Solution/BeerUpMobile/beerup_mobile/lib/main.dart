@@ -1,13 +1,23 @@
 import 'dart:io';
+import 'package:beerup_mobile/pages/LandingPages/bieresEtab.dart';
+import 'package:beerup_mobile/pages/LandingPages/favoris.dart';
 import 'package:beerup_mobile/pages/LandingPages/ficheBiere.dart';
 import 'package:beerup_mobile/pages/LandingPages/ficheEtablissement.dart';
+import 'package:beerup_mobile/pages/LandingPages/newBiere.dart';
+import 'package:beerup_mobile/pages/LandingPages/ouTrouver.dart';
+import 'package:beerup_mobile/pages/LandingPages/suggestions.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_ouTrouver.dart';
 import 'package:beerup_mobile/pages/LoadingPages/load_biere.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_biereEtab.dart';
 import 'package:beerup_mobile/pages/LoadingPages/load_etab.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_favoris.dart';
 import 'package:beerup_mobile/pages/LoadingPages/load_home.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_newBiere.dart';
 import 'package:beerup_mobile/pages/LoadingPages/load_resultats.dart';
 import 'package:beerup_mobile/pages/LandingPages/login.dart';
 import 'package:beerup_mobile/pages/LandingPages/notFound.dart';
 import 'package:beerup_mobile/pages/LandingPages/resultats.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_suggestions.dart';
 import 'package:beerup_mobile/services/Initialization.dart';
 import 'package:flutter/material.dart';
 import 'package:beerup_mobile/pages/LandingPages/home.dart';
@@ -39,6 +49,16 @@ void main() async {
       '/etab': (context) => FicheEtablissement(),
       '/loadBiere': (context) => LoadBiere(),
       '/biere': (context) => FicheBiere(),
+      '/loadFavoris': (context) => LoadFavoris(),
+      '/favoris': (context) => FavorisPage(),
+      '/loadNewBiere': (context) => LoadNewBiere(),
+      '/newBiere': (context) => NewBiere(),
+      '/loadSuggestions': (context) => LoadSuggestions(),
+      '/suggestions': (context) => Suggestions(),
+      '/loadBieresEtab': (context) => LoadBiereEtab(),
+      '/bieresEtab': (context) => BieresEtab(),
+      '/loadOuTrouver': (context) => LoadOuTrouver(),
+      '/ouTrouver': (context) => OuTrouver(),
     },
   ));
 }

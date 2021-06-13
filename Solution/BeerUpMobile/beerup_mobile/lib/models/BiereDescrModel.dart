@@ -38,4 +38,16 @@ class Biere {
         etaNom = json['etaNom'],
         noteMoyen = json['noteMoyen'],
         typBieNom = json['typBieNom'];
+
+  Map<String, dynamic> biereToJson() => <String, dynamic>{
+        'bieId': bieId,
+        'etaId': etaId,
+        'typBieId': typBieId,
+        'bieNom': bieNom,
+        'bieDesc': bieDesc,
+        'biePhoto': biePhoto,
+        'bieDegreAlcool': bieDegreAlcool,
+        'bieValide': true,
+        'bieActif': true,
+      };
 }
