@@ -9,5 +9,7 @@ namespace BeerUpApi.ParamAccess
     {
         public string MapQuest { get; set; }
         public string apiMollie { get; set; }
+
+        public string baseImages { get; set; }
     }
 }

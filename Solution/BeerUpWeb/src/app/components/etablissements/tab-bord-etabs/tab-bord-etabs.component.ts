@@ -18,6 +18,7 @@ export class TabBordEtabsComponent implements OnInit {
   nextText:string;
   previousText:string;
   itemsPerPage:number;
+  maxSize:number;
 
   constructor(private EtabsOrgaSrv:EtabsOrgaService, private EtablissementsSrv: EtablissementsService, private AuthSrv:AuthentificationService, 
     private util:UtilService) {
@@ -26,6 +27,7 @@ export class TabBordEtabsComponent implements OnInit {
     this.nextText=this.util.nextText;
     this.previousText=this.util.previousText;
     this.itemsPerPage = this.util.itemsPerPage;
+    this.maxSize = this.util.maxSize;
    }
 
   ngOnInit(): void {

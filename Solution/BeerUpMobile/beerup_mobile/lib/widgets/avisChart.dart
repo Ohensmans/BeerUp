@@ -33,7 +33,7 @@ class AvisChart extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'AVIS DE LA COMMUNAUTE :',
+            'AVIS DE LA COMMUNAUTE',
             style: TextStyle(
                 color: Colors.grey[200],
                 fontWeight: FontWeight.bold,

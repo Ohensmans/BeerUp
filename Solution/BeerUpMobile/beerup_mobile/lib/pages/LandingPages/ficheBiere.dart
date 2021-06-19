@@ -36,8 +36,11 @@ class _FicheBiereState extends State<FicheBiere> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
+    String noPicture = data['noPicture'];
+    String bierePicture = data['bierePicture'];
     Biere biere = data['biere'];
     Avis avisMoyen = data['avisMoyen'];
     Avis avisUser = data['avisUser'];
@@ -57,7 +60,7 @@ class _FicheBiereState extends State<FicheBiere> {
               Text(
                 biere.bieNom.toUpperCase(),
                 style: TextStyle(
-                  color: Colors.grey[200],
+                  color: Colors.amber[900],
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                   letterSpacing: 2.0,
@@ -77,15 +80,10 @@ class _FicheBiereState extends State<FicheBiere> {
                   ? Text(
                       'Description',
                       style: TextStyle(
-                          color: Colors.grey[200],
+                          color: Colors.amber[900],
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                           letterSpacing: 2.0),
-                    )
-                  : Container(),
-              biere.bieDesc != null && biere.bieDesc.isNotEmpty
-                  ? SizedBox(
-                      height: 20,
                     )
                   : Container(),
               biere.bieDesc != null && biere.bieDesc.isNotEmpty
@@ -109,11 +107,13 @@ class _FicheBiereState extends State<FicheBiere> {
                     child: Container(
                       height: 200,
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.grey[200],
                         image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image:
-                              NetworkImage(ressourceBaseUrl + biere.biePhoto),
+                          fit: BoxFit.contain,
+                          image: NetworkImage(biere.biePhoto != null &&
+                                  biere.biePhoto.isNotEmpty
+                              ? bierePicture + biere.biePhoto
+                              : noPicture),
                         ),
                       ),
                     ),
@@ -147,12 +147,13 @@ class _FicheBiereState extends State<FicheBiere> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 40),
               Center(
                 child: Text(
-                  'VOTRE AVIS :',
+                  'VOTRE AVIS',
                   style: TextStyle(
                     color: Colors.grey[200],
+                    fontWeight: FontWeight.bold,
                     fontSize: 16,
                     letterSpacing: 2.0,
                   ),
@@ -163,7 +164,6 @@ class _FicheBiereState extends State<FicheBiere> {
               ),
               AvisForm(
                 biere: biere,
-                ressourceBaseUrl: ressourceBaseUrl,
                 avisUser: avisUser,
               ),
               SizedBox(
@@ -184,7 +184,10 @@ class _FicheBiereState extends State<FicheBiere> {
                           color: Colors.grey[200],
                         ),
                         label: Text('Où en trouver ?'),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/loadOuTrouver',
+                              arguments: {'bieId': biere.bieId});
+                        },
                       ),
                       ElevatedButton.icon(
                         icon: Icon(

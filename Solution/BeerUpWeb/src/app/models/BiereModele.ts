@@ -22,7 +22,7 @@ export class BiereModele {
         this.typBieId="";
         this.bieNom= "";
         this.bieDesc="";
-        this.biePhoto=util.noImageAvailableUrl;
+        this.biePhoto="";
         this.bieNbVu=0;
         this.bieDateCre = new Date();
         this.bieValide = true;

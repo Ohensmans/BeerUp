@@ -270,26 +270,28 @@ class _NewBiereFormState extends State<NewBiereForm> {
                         Container(
                           height: 200,
                           decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.grey[200],
                             image: DecorationImage(
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                               image: _image == null
                                   ? NetworkImage(widget.noPictureAvailableUrl)
-                                  : Image.file(_image),
+                                  : FileImage(_image),
                             ),
                           ),
                         ),
                         ElevatedButton.icon(
-                            onPressed: () {
-                              getImage();
-                            },
-                            icon: Icon(Icons.add_a_photo),
-                            label: Text(
-                                _image == null
-                                    ? "Ajouter une photo"
-                                    : "Changer la photo",
-                                style: TextStyle(
-                                    color: Colors.grey[200], fontSize: 12))),
+                          onPressed: () {
+                            getImage();
+                          },
+                          icon: Icon(Icons.add_a_photo),
+                          label: Text(
+                            _image == null
+                                ? "Ajouter une photo"
+                                : "Changer la photo",
+                            style: TextStyle(
+                                color: Colors.grey[200], fontSize: 12),
+                          ),
+                        ),
                       ],
                     )
                   ],

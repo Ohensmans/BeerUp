@@ -22,11 +22,14 @@ class _LoadHomeState extends State<LoadHome> {
     biere = await BiereService().getBiereSponsorisee(true);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
+
+    var noPicture = prefs.getString('noPicture');
+    var bierePicture = prefs.getString('bierePicture');
 
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'biere': biere,
-      'ressourceBaseUrl': ressourceBaseUrl,
+      'noPicture': noPicture,
+      'bierePicture': bierePicture,
     });
   }
 

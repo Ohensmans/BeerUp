@@ -34,7 +34,7 @@
   
     <div class="d-flex justify-content-center">
         <pagination [totalItems]="lBieresOrga.length" (pageChanged)="pageChanged($event)" previousText="{{previousText}}"
-        nextText="{{nextText}}" [itemsPerPage]="itemsPerPage"></pagination>
+        nextText="{{nextText}}" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"></pagination>
     </div>
 
     <br>
@@ -42,8 +42,8 @@
     <br>
     <div class="text-center">
         <button class="btn btn-primary" routerLink="/FicheBiere/new">Créer une bière</button>
-        <button *ngIf="onlyValid" class="btn btn-info" (click)="switchOnlyValid()">Voir tous les tarifs</button>
-        <button *ngIf="!onlyValid" class="btn btn-info" (click)="switchOnlyValid()">Voir uniquement les tarifs valides</button>
+        <button *ngIf="onlyValid" class="btn btn-info" (click)="switchOnlyValid()">Voir toutes les bières</button>
+        <button *ngIf="!onlyValid" class="btn btn-info" (click)="switchOnlyValid()">Voir uniquement les bières validées</button>
     </div>
 
 

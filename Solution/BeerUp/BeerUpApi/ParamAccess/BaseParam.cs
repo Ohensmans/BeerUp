@@ -16,5 +16,14 @@ namespace BeerUpApi.ParamAccess
         public string successUrl { get; set; }
 
         public string canceledUrl { get; set; }
+
+        public string bucketName { get; set; }
+
+        public string credentialGoogleJsonPath { get; set; }
+
+        public string googleProjectId { get; set; }
+        public string googleLocation { get; set; }
+        public string googleProductSetId { get; set; }
+
     }
 }

@@ -28,7 +28,7 @@ export class UtilService {
   apiTypesServicesUrl = this.apiUrl+'TypesServices/';
   apiVentesBieresEtaUrl = this.apiUrl+'VentesBieresEta/';
   apiTypesBiereUrl = this.apiUrl+'TypesBiere/';
-  apiImagesBiereUrl = this.apiUrl+'ImagesEtab/';
+  apiImagesBiereUrl = this.apiUrl+'ImagesBiere/';
   apiAvisBiereUserUrl = this.apiUrl+'AvisBiereUser/';
   apiVuesAchatsBiere = this.apiUrl+'VuesAchatsBiere/';
   apiVuesAchatsEtab = this.apiUrl+'VuesAchatsEtab/';
@@ -62,14 +62,18 @@ export class UtilService {
   NoteMAX = 5;
   nombreMiniNotesAvis = 3;
 
-  noImage = '/resources/images/no_image_available.png'
-  noImageAvailableUrl = this.urlBeerUpApi+'/resources/images/no_image_available.png';
+  noImage = '/No_image_available.png'
+  googleStorage = 'https://storage.googleapis.com/beerup/images';
+  noImageAvailableUrl = this.googleStorage+this.noImage;
+  imageEtabsUrl = this.googleStorage+'/Etabs';
+  imageBieresUrl = this.googleStorage+'/Bieres';
 
   joursSemaine = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
   //Pagination Parameters
   nextText="»";
   previousText="«"
+  maxSize = 5;
   itemsPerPage = 7;
 
   //BeerUp Properties

@@ -15,20 +15,19 @@ export class UploadImagesService {
     const token:string = this.authSrv.getUser().id_token;
 
     let result = this.http.post(
-      isEtab? this.util.apiImagesEtabUrl : this.util.apiImagesBiereUrl
-      , formData,
+      isEtab? this.util.apiImagesEtabUrl : this.util.apiImagesBiereUrl,formData,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token }), reportProgress:true, observe:'events'},
     );
 
     return result;
   }
 
-  deleteImage(path:string, isEtab:boolean){
+  deleteImage(path:string, id:string, isEtab:boolean){
     const token:string = this.authSrv.getUser().id_token;
 
-    let result = this.http.delete(
-      isEtab? this.util.apiImagesEtabUrl : this.util.apiImagesBiereUrl
-      +path,
+    let result = this.http.delete<string>(
+      isEtab? this.util.apiImagesEtabUrl +path : this.util.apiImagesBiereUrl
+      +path+','+id,
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     )
     return result;

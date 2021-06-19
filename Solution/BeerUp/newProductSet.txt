@@ -1,0 +1,9 @@
+$cred = gcloud auth application-default print-access-token
+$headers = @{ "Authorization" = "Bearer $cred" }
+
+Invoke-WebRequest `
+  -Method POST `
+  -Headers $headers `
+  -ContentType: "application/json; charset=utf-8" `
+  -InFile requestbiere.json `
+  -Uri "https://vision.googleapis.com/v1/projects/beerup-316308/locations/europe-west1/productSets" | Select-Object -Expand Content

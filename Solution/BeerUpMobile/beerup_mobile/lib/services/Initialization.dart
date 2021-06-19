@@ -6,18 +6,21 @@ class Initialization {
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String baseUrl = 'http://192.168.179.134:5001/api/';
-    String ressourceBaseUrl = 'http://192.168.179.134:5001';
+    String ressourceBaseUrl = 'https://storage.googleapis.com/beerup/images';
     String identityUrl = 'http://192.168.179.134:5000';
     //String baseUrl = 'http://localhost:5001/api/';
     //String ressourceBaseUrl = 'http://localhost:5001';
     //String identityUrl = 'http://localhost:5000';
-    String noPicture =
-        ressourceBaseUrl + '/resources/images/no_image_available.png';
+    String noPicture = ressourceBaseUrl + '/No_image_available.png';
+    String bierePicture = ressourceBaseUrl + '/Bieres/';
+    String etabPicture = ressourceBaseUrl + '/Etabs/';
 
     await prefs.setString('userInfo', '');
+    await prefs.setString('bierePicture', bierePicture);
+    await prefs.setString('etabPicture', etabPicture);
     await prefs.setString('noPicture', noPicture);
-    await prefs.setString(
-        'apiEtabDistance', '192.168.179.134:5001/api/' + 'EtabDistance/');
+    await prefs.setString('apiSearchBiereImage', baseUrl + 'SearchBiereImage/');
+    await prefs.setString('apiEtabDistance', baseUrl + 'EtabDistance/');
     await prefs.setString('apiEtabSponsorise', baseUrl + 'EtabsSponsorises/');
     await prefs.setString(
         'apiBiereMobileVenduesEtab', baseUrl + 'BiereMobileVenduesEtab/');

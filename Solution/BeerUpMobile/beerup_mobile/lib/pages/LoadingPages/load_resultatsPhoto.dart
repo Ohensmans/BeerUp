@@ -1,22 +1,23 @@
+import 'dart:io';
 import 'package:beerup_mobile/services/CallApi/BiereService.dart';
-import 'package:beerup_mobile/services/CallApi/EtabService.dart';
 import 'package:beerup_mobile/services/CallApi/FavorisService.dart';
+import 'package:beerup_mobile/services/CallApi/ImageService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:beerup_mobile/models/BiereDescrModel.dart';
 import 'package:beerup_mobile/models/EtabModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoadResultats extends StatefulWidget {
+class LoadResultatsPhoto extends StatefulWidget {
   @override
-  _LoadResultatsState createState() => _LoadResultatsState();
+  _LoadResultatsPhotoState createState() => _LoadResultatsPhotoState();
 }
 
-class _LoadResultatsState extends State<LoadResultats> {
+class _LoadResultatsPhotoState extends State<LoadResultatsPhoto> {
   Map data = {};
-  String text;
-  List<Biere> lBieres;
-  List<Etablissement> lEtabs;
+  File image;
+  List<Biere> lBieres = [];
+  List<Etablissement> lEtabs = [];
   List<bool> lIsFavorite = [];
 
   @override
@@ -28,21 +29,20 @@ class _LoadResultatsState extends State<LoadResultats> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-    text = data['text'];
-    if (text != null && text.isNotEmpty) {
-      load(text);
+    image = data['image'];
+    if (image != null) {
+      load(image);
     } else {
-      Navigator.pushReplacementNamed(context, '/load_home');
+      Navigator.pushReplacementNamed(context, '/recherche');
     }
   }
 
-  load(String text) async {
-    lBieres = await BiereService().searchBiere(text);
-    lEtabs = await EtabService().searchEtab(text);
+  load(File image) async {
+    lBieres = await ImageService().searchImage(image);
 
-    //erreur dans le chargement => vers home page
-    if (lBieres == null || lEtabs == null) {
-      Navigator.pushReplacementNamed(context, '/load_home');
+    //erreur dans le chargement => vers recherche
+    if (lBieres == null) {
+      Navigator.pushReplacementNamed(context, '/recherche');
     }
 
     for (var i = 0; i < lBieres.length; i++) {
@@ -51,10 +51,7 @@ class _LoadResultatsState extends State<LoadResultats> {
     }
 
     //aucun résultat
-    if (lBieres != null &&
-        lBieres.isEmpty &&
-        lEtabs != null &&
-        lEtabs.isEmpty) {
+    if (lBieres != null && lBieres.isEmpty) {
       Navigator.pushNamed(context, '/notFound');
     } else {
       List<Biere> lBiereSpon = [];
@@ -67,13 +64,6 @@ class _LoadResultatsState extends State<LoadResultats> {
           lBiereSpon.add(biereSpon);
           bool isFav = await FavorisService().isFavoris(biereSpon.bieId);
           lSponIsFav.add(isFav);
-        }
-      }
-
-      if (lEtabs.isNotEmpty) {
-        Etablissement etaSponso = await EtabService().getEtabSponso();
-        if (etaSponso != null || etaSponso.etaId != null) {
-          lEtaSponso.add(etaSponso);
         }
       }
 

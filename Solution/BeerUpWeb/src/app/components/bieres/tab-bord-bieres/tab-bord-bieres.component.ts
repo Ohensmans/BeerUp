@@ -25,6 +25,7 @@ export class TabBordBieresComponent implements OnInit, OnDestroy {
   nextText:string;
   previousText:string;
   itemsPerPage:number;
+  maxSize:number;
   onlyValid:boolean;
 
 
@@ -39,6 +40,7 @@ export class TabBordBieresComponent implements OnInit, OnDestroy {
     this.previousText=this.util.previousText;
     this.itemsPerPage = this.util.itemsPerPage;
     this.onlyValid = false;
+    this.maxSize = this.util.maxSize;
    }
 
   ngOnInit(): void {

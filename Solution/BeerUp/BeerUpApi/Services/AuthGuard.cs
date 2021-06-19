@@ -85,7 +85,7 @@ namespace BeerUpApi.Services
 
         public static async Task<bool> etabIsInUserOrgAsync (Guid? etaId, BeerUpContext context, List<Claim> userClaims)
         {
-            List<Etablissement> lEtab = await context.Etablissements.Where(e => e.EtaId == etaId).ToListAsync();
+            List<Etablissement> lEtab = await context.Etablissements.AsNoTracking().Where(e => e.EtaId == etaId).ToListAsync();
             Guid orgId = Guid.Parse(userClaims.FirstOrDefault(c => c.Type == "OrgId").Value);
             
             if (lEtab.Any(e => e.OrgId == orgId))
@@ -100,7 +100,7 @@ namespace BeerUpApi.Services
             Guid orgId = Guid.Parse(userClaims.FirstOrDefault(c => c.Type == "OrgId").Value);
 
             var param = new SqlParameter("@OrgId", orgId);
-            List<Biere> lBieres = (List<Biere>) await context.Bieres.FromSqlRaw("GetBieresOrganistion @OrgId", param).ToListAsync();
+            List<Biere> lBieres = (List<Biere>) await context.Bieres.FromSqlRaw("GetBieresOrganistion @OrgId", param).AsNoTracking().ToListAsync();
             
 
             if (lBieres.Any(e => e.BieId == bieId))

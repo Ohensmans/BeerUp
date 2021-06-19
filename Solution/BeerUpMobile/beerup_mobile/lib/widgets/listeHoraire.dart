@@ -2,10 +2,9 @@ import 'package:beerup_mobile/models/HoraireModel.dart';
 import 'package:flutter/material.dart';
 
 class ListeHoraire extends StatelessWidget {
-  ListeHoraire({this.lHoraires, this.ressourceBaseUrl});
+  ListeHoraire({this.lHoraires});
 
   final List<Horaire> lHoraires;
-  final String ressourceBaseUrl;
 
   @override
   Widget build(BuildContext context) {

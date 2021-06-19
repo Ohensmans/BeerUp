@@ -17,6 +17,7 @@ import 'package:beerup_mobile/pages/LoadingPages/load_resultats.dart';
 import 'package:beerup_mobile/pages/LandingPages/login.dart';
 import 'package:beerup_mobile/pages/LandingPages/notFound.dart';
 import 'package:beerup_mobile/pages/LandingPages/resultats.dart';
+import 'package:beerup_mobile/pages/LoadingPages/load_resultatsPhoto.dart';
 import 'package:beerup_mobile/pages/LoadingPages/load_suggestions.dart';
 import 'package:beerup_mobile/services/Initialization.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ void main() async {
       '/bieresEtab': (context) => BieresEtab(),
       '/loadOuTrouver': (context) => LoadOuTrouver(),
       '/ouTrouver': (context) => OuTrouver(),
+      '/loadResultatsPhoto': (context) => LoadResultatsPhoto(),
     },
   ));
 }

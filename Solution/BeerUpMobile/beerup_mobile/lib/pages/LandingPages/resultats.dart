@@ -16,10 +16,13 @@ class _ResultatsState extends State<Resultats> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
     List<Biere> lBieres = data['lBieres'];
     List<Etablissement> lEtabs = data['lEtabs'];
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    String bierePicture = data['bierePicture'];
+    String etabPicture = data['etabPicture'];
     String noPicture = data['noPicture'];
     List<bool> lIsFavorite = data['lIsFavorite'];
     List<Biere> lBiereSpon = data['lBiereSpon'];
@@ -62,7 +65,8 @@ class _ResultatsState extends State<Resultats> {
                           padding: const EdgeInsets.all(8.0),
                           child: ListeBieres(
                             lBieres: lBiereSpon,
-                            ressourceBaseUrl: ressourceBaseUrl,
+                            noPicture: noPicture,
+                            bierePicture: bierePicture,
                             lIsFavorite: lSponIsFav,
                             isSuggestion: true,
                           ),
@@ -83,7 +87,8 @@ class _ResultatsState extends State<Resultats> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListeBieres(
                       lBieres: lBieres,
-                      ressourceBaseUrl: ressourceBaseUrl,
+                      noPicture: noPicture,
+                      bierePicture: bierePicture,
                       lIsFavorite: lIsFavorite,
                       isSuggestion: true,
                     ),
@@ -104,7 +109,7 @@ class _ResultatsState extends State<Resultats> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListeEtabs(
                       lEtabs: lEtaSponso,
-                      ressourceBaseUrl: ressourceBaseUrl,
+                      etabPicture: etabPicture,
                       noPictureUrl: noPicture,
                     ),
                   ),
@@ -123,7 +128,7 @@ class _ResultatsState extends State<Resultats> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListeEtabs(
                       lEtabs: lEtabs,
-                      ressourceBaseUrl: ressourceBaseUrl,
+                      etabPicture: etabPicture,
                       noPictureUrl: noPicture,
                     ),
                   ),

@@ -104,7 +104,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(a => a.BieNbVuAch).HasColumnName("BieNbVuAch");
 
-                entity.Property(a => a.BiePrix).HasColumnName("BiePrix");
+                entity.Property(a => a.BiePrix).HasColumnName("BiePrix").HasColumnType("decimal(8,2)");
 
 
             });
@@ -123,7 +123,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(a => a.EtaNbVuAch).HasColumnName("EtaNbVuAch");
 
-                entity.Property(a => a.EtaPrix).HasColumnName("EtaPrix");
+                entity.Property(a => a.EtaPrix).HasColumnName("EtaPrix").HasColumnType("decimal(8,2)");
 
             });
 
@@ -254,23 +254,23 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.OrgId).HasColumnName("Org.Id");
 
-                entity.Property(e => e.AvisAcid).HasColumnName("Avis.Acid");
+                entity.Property(e => e.AvisAcid).HasColumnName("Avis.Acid").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisAmer).HasColumnName("Avis.Amer");
+                entity.Property(e => e.AvisAmer).HasColumnName("Avis.Amer").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisCafe).HasColumnName("Avis.Cafe");
+                entity.Property(e => e.AvisCafe).HasColumnName("Avis.Cafe").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisCara).HasColumnName("Avis.Cara");
+                entity.Property(e => e.AvisCara).HasColumnName("Avis.Cara").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisFruit).HasColumnName("Avis.Fruit");
+                entity.Property(e => e.AvisFruit).HasColumnName("Avis.Fruit").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisHoub).HasColumnName("Avis.Houb");
+                entity.Property(e => e.AvisHoub).HasColumnName("Avis.Houb").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisMalt).HasColumnName("Avis.Malt");
+                entity.Property(e => e.AvisMalt).HasColumnName("Avis.Malt").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisNoteGlob).HasColumnName("Avis.NoteGlob");
+                entity.Property(e => e.AvisNoteGlob).HasColumnName("Avis.NoteGlob").HasColumnType("decimal(2,1)");
 
-                entity.Property(e => e.AvisSucr).HasColumnName("Avis.Sucr");
+                entity.Property(e => e.AvisSucr).HasColumnName("Avis.Sucr").HasColumnType("decimal(2,1)");
 
                 entity.HasOne(d => d.Bie)
                     .WithMany(p => p.AvisBiereUsers)
@@ -285,23 +285,23 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.BieId).HasColumnName("Bie.Id");
 
-                entity.Property(a => a.AcidMoyen).HasColumnName("AcidMoyen");
+                entity.Property(a => a.AcidMoyen).HasColumnName("AcidMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.AmerMoyen).HasColumnName("AmerMoyen");
+                entity.Property(a => a.AmerMoyen).HasColumnName("AmerMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.CafeMoyen).HasColumnName("CafeMoyen");
+                entity.Property(a => a.CafeMoyen).HasColumnName("CafeMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.CaraMoyen).HasColumnName("CaraMoyen");
+                entity.Property(a => a.CaraMoyen).HasColumnName("CaraMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.FruitMoyen).HasColumnName("FruitMoyen");
+                entity.Property(a => a.FruitMoyen).HasColumnName("FruitMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.HoubMoyen).HasColumnName("HoubMoyen");
+                entity.Property(a => a.HoubMoyen).HasColumnName("HoubMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.MaltMoyen).HasColumnName("MaltMoyen");
+                entity.Property(a => a.MaltMoyen).HasColumnName("MaltMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.SucrMoyen).HasColumnName("SucrMoyen");
+                entity.Property(a => a.SucrMoyen).HasColumnName("SucrMoyen").HasColumnType("decimal(2,1)");
 
-                entity.Property(a => a.NoteMoyen).HasColumnName("NoteMoyen");
+                entity.Property(a => a.NoteMoyen).HasColumnName("NoteMoyen").HasColumnType("decimal(2,1)");
 
 
             });
@@ -336,7 +336,7 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasColumnName("Bie.Photo");
 
                 entity.Property(e => e.BieDegreAlcool)
-                    .HasColumnName("Bie.DegreAlcool");
+                    .HasColumnName("Bie.DegreAlcool").HasColumnType("decimal(3,1)");
 
                 entity.Property(e => e.BieValide).HasColumnName("Bie.Valide");
 
@@ -379,7 +379,7 @@ namespace Repo.Modeles.ModelesBeerUp
 
                 entity.Property(e => e.BieNbVu).HasColumnName("Bie.NbVu");
 
-                entity.Property(e => e.NoteMoyen).HasColumnName("NoteMoyen");
+                entity.Property(e => e.NoteMoyen).HasColumnName("NoteMoyen").HasColumnType("decimal(2,1)");
 
                 entity.Property(e => e.BieNom)
                     .IsRequired()
@@ -391,7 +391,7 @@ namespace Repo.Modeles.ModelesBeerUp
                     .HasColumnName("Bie.Photo");
 
                 entity.Property(e => e.BieDegreAlcool)
-                    .HasColumnName("Bie.DegreAlcool");
+                    .HasColumnName("Bie.DegreAlcool").HasColumnType("decimal(3,1)");
 
                 entity.Property(e => e.BieValide).HasColumnName("Bie.Valide");
 

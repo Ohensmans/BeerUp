@@ -81,11 +81,13 @@ class _LoadSuggestionsState extends State<LoadSuggestions> {
     hasContent = lSuggestions.isNotEmpty;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
+    var noPicture = prefs.getString('noPicture');
+    var bierePicture = prefs.getString('bierePicture');
     Navigator.pushReplacementNamed(context, '/suggestions', arguments: {
       'lSuggestions': lSuggestions,
       'lIsFavorite': lIsFavorite,
-      'ressourceBaseUrl': ressourceBaseUrl,
+      'noPicture': noPicture,
+      'bierePicture': bierePicture,
       'hasContent': hasContent,
       'lBiereSpon': lBiereSpon,
       'lSponIsFav': lSponIsFav,

@@ -40,6 +40,7 @@ export class FicheEtablissementComponent implements OnInit {
   response!: { dbPath: ''; };
 
   submitted:boolean;
+  uploadedPicture:boolean;
   messageUpload:string;
   progressUpload:number;
   validVat:boolean;
@@ -62,6 +63,7 @@ export class FicheEtablissementComponent implements OnInit {
     this.noImageAvailableUrl = this.util.noImageAvailableUrl;
     this.submitted = false;
     this.validVat = false;
+    this.uploadedPicture = false;
     
 
     this.etabForm = new FormGroup({
@@ -115,6 +117,10 @@ export class FicheEtablissementComponent implements OnInit {
       ));
       this.horaireSrv.getAllHorairesEtab(id);
       this.joursSrv.getAllJoursEtab(id);
+    }
+    else{
+      this.etab = new EtablissementModele();
+      this.fillInForm();
     }
     this.TypesEtabSrv.getAll();
     this.orgSrv.getAll();
@@ -183,12 +189,16 @@ export class FicheEtablissementComponent implements OnInit {
         this.modalRef.content.onClose$.subscribe(
           (value: boolean) =>{
             if(value){
-              let path = this.etab.etaPhoto.split("\\",4)[3];
-              this.upImageSrv.deleteImage(path, true).subscribe(
+              if(this.etab.etaPhoto!=null && this.etab.etaPhoto.length!=0)
+              this.upImageSrv.deleteImage(this.etab.etaPhoto,this.etab.etaId, true).subscribe(
                 () => {
                   this.upload(files);
                 }
-              )}}
+              )}
+              else{
+                this.upload(files);
+              }
+            }
         ); 
   }
 
@@ -204,8 +214,8 @@ export class FicheEtablissementComponent implements OnInit {
         }
         else if (event.type === HttpEventType.Response) {
           this.messageUpload = 'Chargement réussi';
-          if(event.body!=null && event.body.propertyIsEnumerable('dbPath')){
-            this.etab.etaPhoto = (event.body as any).dbPath;
+          if(event.body!=null && event.body.propertyIsEnumerable('fileName')){
+            this.etab.etaPhoto = (event.body as any).fileName;
             this.EtablissementsSrv.updateEtab(this.etab, this.etab.etaId);
           }   
         }
@@ -213,8 +223,10 @@ export class FicheEtablissementComponent implements OnInit {
   }
 
 
+
+
   public createImgPath = (serverPath: string) => {
-    return this.util.apiUrl+`/${serverPath}`;
+    return this.util.imageEtabsUrl+`/${serverPath}`;
   }
 
   ngOnDestroy(){

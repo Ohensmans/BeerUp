@@ -40,11 +40,13 @@ class _LoadBiereState extends State<LoadBiere> {
     avisUser = await AvisService().getAvisUser(biere.bieId);
     isFavoris = await FavorisService().isFavoris(biere.bieId);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
+    var noPicture = prefs.getString('noPicture');
+    var bierePicture = prefs.getString('bierePicture');
 
     Navigator.pushReplacementNamed(context, '/biere', arguments: {
       'biere': biere,
-      'ressourceBaseUrl': ressourceBaseUrl,
+      'noPicture': noPicture,
+      'bierePicture': bierePicture,
       'avisMoyen': avisMoyen,
       'avisUser': avisUser,
       'isFavoris': isFavoris,

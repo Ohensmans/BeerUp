@@ -3,12 +3,11 @@ import 'package:beerup_mobile/widgets/itemListEtabs.dart';
 import 'package:flutter/material.dart';
 
 class ListeEtabs extends StatelessWidget {
-  const ListeEtabs(
-      {Key key, this.lEtabs, this.ressourceBaseUrl, this.noPictureUrl})
+  const ListeEtabs({Key key, this.lEtabs, this.etabPicture, this.noPictureUrl})
       : super(key: key);
 
   final List<Etablissement> lEtabs;
-  final String ressourceBaseUrl;
+  final String etabPicture;
   final String noPictureUrl;
 
   @override
@@ -24,7 +23,7 @@ class ListeEtabs extends StatelessWidget {
               child: Card(
                 child: ItemListEtabs(
                   etab: lEtabs[index],
-                  ressourceBaseUrl: ressourceBaseUrl,
+                  etabPicture: etabPicture,
                   noPictureUrl: noPictureUrl,
                 ),
               ),

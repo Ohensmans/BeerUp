@@ -6,13 +6,15 @@ class ItemListBiere extends StatefulWidget {
   const ItemListBiere(
       {Key key,
       this.biere,
-      this.ressourceBaseUrl,
+      this.noPicture,
+      this.bierePicture,
       this.isFavorite,
       this.isSuggestion,
       this.typeService})
       : super(key: key);
 
-  final String ressourceBaseUrl;
+  final String noPicture;
+  final String bierePicture;
   final Biere biere;
   final bool isFavorite;
   final bool isSuggestion;
@@ -76,11 +78,13 @@ class _ItemListBiereState extends State<ItemListBiere> {
                   child: Container(
                     height: 80,
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: Colors.grey[200],
                       image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            widget.ressourceBaseUrl + widget.biere.biePhoto),
+                        fit: BoxFit.contain,
+                        image: NetworkImage(widget.biere.biePhoto != null &&
+                                widget.biere.biePhoto.isNotEmpty
+                            ? widget.bierePicture + widget.biere.biePhoto
+                            : widget.noPicture),
                       ),
                     ),
                   ),

@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 class ListeBieres extends StatelessWidget {
   ListeBieres(
       {this.lBieres,
-      this.ressourceBaseUrl,
+      this.noPicture,
+      this.bierePicture,
       this.lIsFavorite,
       this.isSuggestion,
       this.lTypesNom});
 
   final List<Biere> lBieres;
-  final String ressourceBaseUrl;
+  final String noPicture;
+  final String bierePicture;
   final List<bool> lIsFavorite;
   final bool isSuggestion;
   final List<String> lTypesNom;
@@ -29,7 +31,8 @@ class ListeBieres extends StatelessWidget {
               child: Card(
                   child: ItemListBiere(
                 biere: lBieres[index],
-                ressourceBaseUrl: ressourceBaseUrl,
+                noPicture: noPicture,
+                bierePicture: bierePicture,
                 isFavorite: lIsFavorite[index],
                 isSuggestion: isSuggestion,
                 typeService: lTypesNom != null ? lTypesNom[index] : null,

@@ -4,12 +4,10 @@ import 'package:beerup_mobile/services/CallApi/AvisService.dart';
 import 'package:flutter/material.dart';
 
 class AvisForm extends StatefulWidget {
-  final String ressourceBaseUrl;
   final Biere biere;
   final Avis avisUser;
 
-  AvisForm({Key key, this.ressourceBaseUrl, this.biere, this.avisUser})
-      : super(key: key);
+  AvisForm({Key key, this.biere, this.avisUser}) : super(key: key);
 
   @override
   _AvisFormState createState() => _AvisFormState();
@@ -76,173 +74,214 @@ class _AvisFormState extends State<AvisForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'SAVEURS',
+                      'Saveurs',
                       style: TextStyle(
-                        color: Colors.grey[200],
-                        fontWeight: FontWeight.bold,
+                        color: Colors.amber[900],
                         fontSize: 16,
+                        fontWeight: FontWeight.bold,
                         letterSpacing: 2.0,
                       ),
                     ),
-                    TextFormField(
-                      controller: controllerAcid,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Acidité /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: controllerAcid,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Acidité /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                              TextFormField(
+                                controller: controllerAmer,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Amertume /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                              TextFormField(
+                                controller: controllerCafe,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Café /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                              TextFormField(
+                                controller: controllerCara,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Caramel /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            width: 5,
+                          ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: controllerFruit,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Fruitée /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                              TextFormField(
+                                controller: controllerHoub,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Houblonnée /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                              TextFormField(
+                                controller: controllerMalt,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Maltée /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                              TextFormField(
+                                controller: controllerSucr,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  labelText: 'Sucrée /5',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey[200],
+                                    fontSize: 12,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[800]),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return validateAvis(value);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
-                    ),
-                    TextFormField(
-                      controller: controllerAmer,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Amertume /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
-                    ),
-                    TextFormField(
-                      controller: controllerCafe,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Café /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
-                    ),
-                    TextFormField(
-                      controller: controllerCara,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Caramel /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
-                    ),
-                    TextFormField(
-                      controller: controllerFruit,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Fruitée /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
-                    ),
-                    TextFormField(
-                      controller: controllerHoub,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Houblonnée /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
-                    ),
-                    TextFormField(
-                      controller: controllerMalt,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Maltée /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
-                    ),
-                    TextFormField(
-                      controller: controllerSucr,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Sucrée /5',
-                        labelStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontSize: 12,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[800]),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validateAvis(value);
-                      },
+                      ],
                     ),
                   ],
                 ),

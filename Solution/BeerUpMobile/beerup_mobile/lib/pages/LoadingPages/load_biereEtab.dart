@@ -63,13 +63,15 @@ class _LoadBiereEtabState extends State<LoadBiereEtab> {
     });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
+    var noPicture = prefs.getString('noPicture');
+    var bierePicture = prefs.getString('bierePicture');
 
     Navigator.pushReplacementNamed(context, '/bieresEtab', arguments: {
       'lBieres': lBieres,
       'lTypesNom': lTypesNom,
       'lIsFavorite': lIsFavorite,
-      'ressourceBaseUrl': ressourceBaseUrl,
+      'noPicture': noPicture,
+      'bierePicture': bierePicture,
       'etab': etab,
     });
   }

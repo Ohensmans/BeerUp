@@ -31,12 +31,14 @@ class _LoadFavorisState extends State<LoadFavoris> {
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
+    var noPicture = prefs.getString('noPicture');
+    var bierePicture = prefs.getString('bierePicture');
 
     Navigator.pushReplacementNamed(context, '/favoris', arguments: {
       'lBieres': lBieres,
       'lIsFavorite': lIsFavorite,
-      'ressourceBaseUrl': ressourceBaseUrl,
+      'noPicture': noPicture,
+      'bierePicture': bierePicture,
     });
   }
 

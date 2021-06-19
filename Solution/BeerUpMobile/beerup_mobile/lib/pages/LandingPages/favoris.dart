@@ -74,9 +74,12 @@ class _FavorisPageState extends State<FavorisPage> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
     bool upFilter = data['upFilter'] != null ? data['upFilter'] : true;
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    String noPicture = data['noPicture'];
+    String bierePicture = data['bierePicture'];
     List<Biere> lBieres = data['lBieres'];
     List<bool> lIsFavorite = data['lIsFavorite'];
 
@@ -97,7 +100,7 @@ class _FavorisPageState extends State<FavorisPage> {
                           color: Colors.green,
                           image: DecorationImage(
                               fit: BoxFit.fitWidth,
-                              image: AssetImage('assets/images/biere7.png'))),
+                              image: AssetImage('assets/images/biere11.jpg'))),
                     ),
                     SizedBox(height: 40),
                     Text(
@@ -113,7 +116,8 @@ class _FavorisPageState extends State<FavorisPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: ListeBieres(
                         lBieres: lBieres,
-                        ressourceBaseUrl: ressourceBaseUrl,
+                        noPicture: noPicture,
+                        bierePicture: bierePicture,
                         lIsFavorite: lIsFavorite,
                         isSuggestion: false,
                       ),

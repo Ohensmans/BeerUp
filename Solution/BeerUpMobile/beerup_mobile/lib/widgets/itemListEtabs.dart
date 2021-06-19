@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class ItemListEtabs extends StatefulWidget {
-  const ItemListEtabs(
-      {Key key, this.ressourceBaseUrl, this.etab, this.noPictureUrl})
+  const ItemListEtabs({Key key, this.etabPicture, this.etab, this.noPictureUrl})
       : super(key: key);
 
-  final String ressourceBaseUrl;
   final Etablissement etab;
   final String noPictureUrl;
+  final String etabPicture;
 
   @override
   _ItemListEtabsState createState() => _ItemListEtabsState();
@@ -35,15 +34,14 @@ class _ItemListEtabsState extends State<ItemListEtabs> {
                       ? Container(
                           height: 80,
                           decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.grey[200],
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  widget.etab.etaPhoto != null &&
-                                          widget.etab.etaPhoto.isNotEmpty
-                                      ? widget.ressourceBaseUrl +
-                                          widget.etab.etaPhoto
-                                      : widget.noPictureUrl),
+                              image: NetworkImage(widget.etab.etaPhoto !=
+                                          null &&
+                                      widget.etab.etaPhoto.isNotEmpty
+                                  ? widget.etabPicture + widget.etab.etaPhoto
+                                  : widget.noPictureUrl),
                             ),
                           ),
                         )

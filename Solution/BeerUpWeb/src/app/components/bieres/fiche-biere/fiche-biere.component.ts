@@ -41,6 +41,7 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
   noteMax:number;
   nbMiniAvis:number;
   noImageAvailableUrl:string;
+  isNouveau:boolean;
 
   modalRef!: BsModalRef;
 
@@ -60,6 +61,7 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
     this.noteMax = this.util.NoteMAX;
     this.noImageAvailableUrl = this.util.noImageAvailableUrl;
     this.nbMiniAvis = this.util.nombreMiniNotesAvis;
+    this.isNouveau = false;
 
     
     this.biereForm = new FormGroup({
@@ -125,6 +127,7 @@ export class FicheBiereComponent implements OnInit, OnDestroy {
     ));
   }
   else{
+    this.isNouveau = true;
     this.fillInForm();
   }
 }
@@ -172,8 +175,11 @@ confirmModifImage(files:FileList)
       this.modalRef.content.onClose$.subscribe(
         (value: boolean) =>{
           if(value){
+            if(this.biere.bieId==''){
+              this.biere.bieId = Guid.create().toString();
+            }
             let path = this.biere.biePhoto.split("\\",4)[3];
-            this.upImageSrv.deleteImage(path, false).subscribe(
+            this.upImageSrv.deleteImage(path, this.biere.bieId, false).subscribe(
               () => {
                 this.upload(files);
               }
@@ -183,9 +189,10 @@ confirmModifImage(files:FileList)
 
 //chargement des photos
 upload(files:FileList){
+  
   let fileToUpload = <File>files[0];
   const formData = new FormData();
-  formData.append('file', fileToUpload, fileToUpload.name);
+  formData.append('file', fileToUpload, (this.biere.bieId+fileToUpload.name));
   this.upImageSrv.uploadImage(formData, false)
     .subscribe(event => {
       if (event.type === HttpEventType.UploadProgress){
@@ -194,8 +201,8 @@ upload(files:FileList){
       }
       else if (event.type === HttpEventType.Response) {
         this.messageUpload = 'Chargement réussi';
-        if(event.body!=null && event.body.propertyIsEnumerable('dbPath')){
-          this.biere.biePhoto = (event.body as any).dbPath;
+        if(event.body!=null && event.body.propertyIsEnumerable('fileName')){
+          this.biere.biePhoto = (event.body as any).fileName;
           this.biereSrv.updateBiere(this.biere, this.biere.bieId);
         }   
       }
@@ -204,7 +211,7 @@ upload(files:FileList){
 
 
 public createImgPath = (serverPath: string) => {
-  return this.util.apiUrl+`/${serverPath}`;
+  return this.util.imageBieresUrl+`/${serverPath}`;
 }
 
 ngOnDestroy(){
@@ -239,10 +246,7 @@ sauvegarder(){
 }
 
 isNew(){
-    if(this.biere.bieId==""){
-        return true;
-    }
-    return false;
+    return this.isNouveau;
 }
 
 
@@ -271,7 +275,9 @@ onSubmitForm(){
     
     if(this.isNew())
     {
-      this.biere.bieId = Guid.create().toString();
+      if(this.biere.bieId==''){
+        this.biere.bieId = Guid.create().toString();
+      }
       this.creer();      
     }
     else

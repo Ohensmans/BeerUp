@@ -43,13 +43,15 @@ namespace BeerUpApi.Controllers
 
             if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
             {
-                var trans = await _context.Transactions.FindAsync(fact.TransId);
+
+                var trans = await _context.Transactions.AsNoTracking().FirstOrDefaultAsync(t => t.TransId == fact.TransId);
                 var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
 
                 if (trans == null || orgId != trans.OrgId)
                 {
                     return Forbid();
                 }
+             
             }
 
             if (fact == null)

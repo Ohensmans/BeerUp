@@ -1,9 +1,27 @@
+import 'dart:io';
 import 'package:beerup_mobile/widgets/menuBar.dart';
 import 'package:beerup_mobile/widgets/navDrawer.dart';
 import 'package:beerup_mobile/widgets/rechercheForm.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Recherche extends StatelessWidget {
+  final picker = ImagePicker();
+
+  Future getImage(BuildContext context) async {
+    //final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      File image = File(pickedFile.path);
+      Navigator.pushReplacementNamed(context, '/loadResultatsPhoto',
+          arguments: {
+            'image': image,
+          });
+    } else {
+      print('No image selected.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +70,9 @@ class Recherche extends StatelessWidget {
                       icon: Icon(Icons.camera_alt),
                       iconSize: 48,
                       tooltip: 'Faire une recherche photo',
-                      onPressed: () {},
+                      onPressed: () {
+                        getImage(context);
+                      },
                     ),
                   ),
                 ],

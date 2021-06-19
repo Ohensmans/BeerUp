@@ -35,11 +35,13 @@ class _LoadEtabState extends State<LoadEtab> {
       etab.estJourFermeture = checkDate();
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
+      var noPicture = prefs.getString('noPicture');
+      var etabPicture = prefs.getString('etabPicture');
 
       Navigator.pushReplacementNamed(context, '/etab', arguments: {
         'etab': etab,
-        'ressourceBaseUrl': ressourceBaseUrl,
+        'noPicture': noPicture,
+        'etabPicture': etabPicture,
         'lHoraires': lHoraires,
         'lJours': lJours,
       });

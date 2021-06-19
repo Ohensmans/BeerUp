@@ -17,10 +17,13 @@ class _BieresEtabState extends State<BieresEtab> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
     List<Biere> lBieres = data['lBieres'];
     List<String> lTypesNom = data['lTypesNom'];
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    String noPicture = data['noPicture'];
+    String bierePicture = data['bierePicture'];
     List<bool> lIsFavorite = data['lIsFavorite'];
     Etablissement etab = data['etab'];
 
@@ -75,7 +78,8 @@ class _BieresEtabState extends State<BieresEtab> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListeBieres(
                       lBieres: lBieres,
-                      ressourceBaseUrl: ressourceBaseUrl,
+                      noPicture: noPicture,
+                      bierePicture: bierePicture,
                       lIsFavorite: lIsFavorite,
                       isSuggestion: true,
                       lTypesNom: lTypesNom,

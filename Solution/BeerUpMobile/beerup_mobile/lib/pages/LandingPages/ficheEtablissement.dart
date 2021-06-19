@@ -16,8 +16,11 @@ class _FicheEtablissementState extends State<FicheEtablissement> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
+    String noPicture = data['noPicture'];
+    String etabPicture = data['etabPicture'];
     Etablissement etab = data['etab'];
     List<Horaire> lHoraires = data['lHoraires'];
     List<JourFermeture> lJours = data['lJours'];
@@ -57,8 +60,10 @@ class _FicheEtablissementState extends State<FicheEtablissement> {
                         color: Colors.green,
                         image: DecorationImage(
                             fit: BoxFit.fitWidth,
-                            image: NetworkImage(
-                                ressourceBaseUrl + etab.etaPhoto))),
+                            image: NetworkImage(etab.etaPhoto != null &&
+                                    etab.etaPhoto.isNotEmpty
+                                ? etabPicture + etab.etaPhoto
+                                : noPicture))),
                   )
                 : Container(
                     height: 100.0,
@@ -205,7 +210,6 @@ class _FicheEtablissementState extends State<FicheEtablissement> {
             lHoraires.isNotEmpty
                 ? ListeHoraire(
                     lHoraires: lHoraires,
-                    ressourceBaseUrl: ressourceBaseUrl,
                   )
                 : Container(),
           ],

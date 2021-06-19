@@ -29,7 +29,6 @@ namespace BeerUpApi.Controllers
 
         // GET: api/<GetDeletablesEtabController>
         [HttpGet]
-        [Authorize(Policy = "isAdmin")]
         public ActionResult<List<Etablissement>> Get()
         {
             List<Etablissement> lEtab= (List<Etablissement>)_context.Etablissements.FromSqlRaw("GetDeletablesEta").ToList();

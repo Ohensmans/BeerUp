@@ -39,7 +39,9 @@ class _OuTrouverState extends State<OuTrouver> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
     lEtaSponso = data['lEtabSponso'];
     lEtabs = data['lEtabs'];
   }
@@ -97,7 +99,7 @@ class _OuTrouverState extends State<OuTrouver> {
   Widget build(BuildContext context) {
     double startLatitude = data['startLatitude'];
     double startLongitude = data['startLongitude'];
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    String etabPicture = data['etabPicture'];
     String noPicture = data['noPicture'];
     String bieId = data['bieId'];
 
@@ -198,72 +200,66 @@ class _OuTrouverState extends State<OuTrouver> {
               ),
               SizedBox(height: 20),
               bieId != null && bieId.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                  primary: !magasinFilter
-                                      ? Colors.green[700]
-                                      : Colors.red),
-                              onPressed: () {
-                                _filterMagasin();
-                              },
-                              label: Text(
-                                'MAGASINS',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.shopping_cart_outlined,
-                                color: Colors.grey[200],
-                              ),
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary: !magasinFilter
+                                  ? Colors.green[700]
+                                  : Colors.red),
+                          onPressed: () {
+                            _filterMagasin();
+                          },
+                          label: Text(
+                            'MAGASINS',
+                            style: TextStyle(
+                              fontSize: 10,
                             ),
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                  primary: !barFilter
-                                      ? Colors.green[700]
-                                      : Colors.red),
-                              onPressed: () {
-                                _filterBrasserie();
-                              },
-                              label: Text(
-                                'BARS/BRASSERIES',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.local_drink_outlined,
-                                color: Colors.grey[200],
-                              ),
-                            ),
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                  primary: !barFilter && !magasinFilter
-                                      ? Colors.red
-                                      : Colors.green[700]),
-                              onPressed: () {
-                                _noFilter();
-                              },
-                              label: Text(
-                                'TOUS',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.blur_circular,
-                                color: Colors.grey[200],
-                              ),
-                            ),
-                          ],
+                          ),
+                          icon: Icon(
+                            Icons.shopping_cart_outlined,
+                            color: Colors.grey[200],
+                          ),
                         ),
-                      ),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary:
+                                  !barFilter ? Colors.green[700] : Colors.red),
+                          onPressed: () {
+                            _filterBrasserie();
+                          },
+                          label: Text(
+                            'BARS/BRASSERIES',
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.local_drink_outlined,
+                            color: Colors.grey[200],
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary: !barFilter && !magasinFilter
+                                  ? Colors.red
+                                  : Colors.green[700]),
+                          onPressed: () {
+                            _noFilter();
+                          },
+                          label: Text(
+                            'TOUS',
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.blur_circular,
+                            color: Colors.grey[200],
+                          ),
+                        ),
+                      ],
                     )
                   : Container(),
               lEtaSponso.isNotEmpty ? SizedBox(height: 20) : Container(),
@@ -282,7 +278,7 @@ class _OuTrouverState extends State<OuTrouver> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListeEtabs(
                   lEtabs: lEtaSponso,
-                  ressourceBaseUrl: ressourceBaseUrl,
+                  etabPicture: etabPicture,
                   noPictureUrl: noPicture,
                 ),
               ),
@@ -303,7 +299,7 @@ class _OuTrouverState extends State<OuTrouver> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListeEtabs(
                   lEtabs: lEtabs,
-                  ressourceBaseUrl: ressourceBaseUrl,
+                  etabPicture: etabPicture,
                   noPictureUrl: noPicture,
                 ),
               ),

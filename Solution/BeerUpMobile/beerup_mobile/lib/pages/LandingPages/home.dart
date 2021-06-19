@@ -13,15 +13,18 @@ class _State extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
     Biere biere = data['biere'];
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    String noPicture = data['noPicture'];
+    String bierePicture = data['bierePicture'];
 
     return Scaffold(
       backgroundColor: Colors.black,
       drawer: NavDrawer(),
       appBar: MenuBar(appBar: AppBar()),
-      body: Container(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
           child: Column(
@@ -33,14 +36,14 @@ class _State extends State<Home> {
                     color: Colors.green,
                     image: DecorationImage(
                         fit: BoxFit.fitWidth,
-                        image: AssetImage('assets/images/biere3.jpg'))),
+                        image: AssetImage('assets/images/biere7.png'))),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Text(
-                      'Proposition du moment :',
+                      'Proposition du moment',
                       style: TextStyle(
                         color: Colors.grey[200],
                         fontWeight: FontWeight.bold,
@@ -53,7 +56,6 @@ class _State extends State<Home> {
                       biere.bieNom != null ? biere.bieNom : '',
                       style: TextStyle(
                           color: Colors.amber[900],
-                          fontStyle: FontStyle.italic,
                           letterSpacing: 1.0,
                           fontSize: 18.0),
                     )),
@@ -65,11 +67,14 @@ class _State extends State<Home> {
                           child: Container(
                             height: 200,
                             decoration: BoxDecoration(
-                                color: Colors.green,
+                                color: Colors.grey[200],
                                 image: DecorationImage(
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                     image: NetworkImage(
-                                        ressourceBaseUrl + biere.biePhoto))),
+                                        biere.biePhoto != null &&
+                                                biere.biePhoto.isNotEmpty
+                                            ? bierePicture + biere.biePhoto
+                                            : noPicture))),
                           ),
                         ),
                         Expanded(
@@ -145,24 +150,54 @@ class _State extends State<Home> {
                     ),
                     SizedBox(height: 16),
                     Container(
-                        padding: EdgeInsets.fromLTRB(8, 16, 0, 0),
-                        child: Text(
-                          'DESCRIPTION DE LA BIERE',
-                          style: TextStyle(
-                            color: Colors.grey[200],
-                            fontSize: 12.0,
-                            letterSpacing: 2.0,
-                          ),
-                        )),
+                      padding: EdgeInsets.fromLTRB(8, 16, 0, 0),
+                      child: Text(
+                        'DESCRIPTION DE LA BIERE',
+                        style: TextStyle(
+                          color: Colors.amber[900],
+                          fontSize: 12.0,
+                          letterSpacing: 2.0,
+                        ),
+                      ),
+                    ),
                     Container(
-                        padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: Text(
-                          biere.bieDesc != null ? biere.bieDesc : '',
-                          style: TextStyle(
-                              color: Colors.greenAccent[400],
-                              letterSpacing: 1.0,
-                              fontSize: 14.0),
-                        )),
+                      padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                      child: Text(
+                        biere.bieDesc != null ? biere.bieDesc : '',
+                        style: TextStyle(
+                            color: Colors.grey[200],
+                            letterSpacing: 1.0,
+                            fontSize: 14.0),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.grading_sharp,
+                            color: Colors.grey[200],
+                          ),
+                          label: Text('Voir la fiche'),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/loadBiere',
+                                arguments: {'biere': biere});
+                          },
+                        ),
+                        ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.map,
+                            color: Colors.grey[200],
+                          ),
+                          label: Text('Où en trouver ?'),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/loadOuTrouver',
+                                arguments: {'bieId': biere.bieId});
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

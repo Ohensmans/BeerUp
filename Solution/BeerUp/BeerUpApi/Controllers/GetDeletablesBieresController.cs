@@ -29,7 +29,6 @@ namespace BeerUpApi.Controllers
 
 
         // GET: api/<GetDeletablesBieresController>
-        [Authorize(Policy = "isAdmin")]
         [HttpGet]
         public ActionResult<List<Biere>> Get()
         {

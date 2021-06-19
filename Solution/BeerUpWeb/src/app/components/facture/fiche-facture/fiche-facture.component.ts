@@ -103,10 +103,8 @@ export class FicheFactureComponent implements OnInit {
 
     this.subscr.add(this.achatEtabFactureSrv.lAchatsEtabFacture$.subscribe(
       (value) =>{
-        value.forEach(element => {
-          this.lAchatEtab.push(element);
-          this.getSoldes();
-        });
+        this.lAchatEtab = value;
+        this.getSoldes();        
       }
     ));
     this.achatEtabFactureSrv.getAllParFacture(this.id);

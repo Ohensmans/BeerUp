@@ -16,7 +16,9 @@ class _NewBiereState extends State<NewBiere> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
     List<TypeBiere> lTypes = data['lTypes'];
     String noPictureAvailableUrl = data['noPictureAvailableUrl'];
 

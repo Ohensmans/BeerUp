@@ -36,7 +36,7 @@ class _LoadOuTrouverState extends State<LoadOuTrouver> {
     bieId = data['bieId'];
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ressourceBaseUrl = prefs.getString('ressourceBaseUrl');
+    var etabPicture = prefs.getString('etabPicture');
     var noPicture = prefs.getString('noPicture');
 
     if (etab != null) {
@@ -49,7 +49,7 @@ class _LoadOuTrouverState extends State<LoadOuTrouver> {
         'startLatitude': startLatitude,
         'startLongitude': startLongitude,
         'lEtabSponso': lEtabSponso,
-        'ressourceBaseUrl': ressourceBaseUrl,
+        'etabPicture': etabPicture,
         'noPicture': noPicture,
         'bieId': bieId,
       });
@@ -76,7 +76,7 @@ class _LoadOuTrouverState extends State<LoadOuTrouver> {
         'startLatitude': startLatitude,
         'startLongitude': startLongitude,
         'lEtabSponso': lEtabSponso,
-        'ressourceBaseUrl': ressourceBaseUrl,
+        'etabPicture': etabPicture,
         'noPicture': noPicture,
         'bieId': bieId,
       });

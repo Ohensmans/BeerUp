@@ -63,7 +63,7 @@ namespace BeerUpApi.Controllers
         {
             var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
 
-            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == id)
+            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == etablissement.OrgId)
             {
 
                 try

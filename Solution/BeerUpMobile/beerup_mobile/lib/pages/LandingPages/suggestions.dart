@@ -79,8 +79,11 @@ class _SuggestionsState extends State<Suggestions> {
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-    String ressourceBaseUrl = data['ressourceBaseUrl'];
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
+    String noPicture = data['noPicture'];
+    String bierePicture = data['bierePicture'];
     List<Biere> lSuggestions = data['lSuggestions'];
     List<bool> lIsFavorite = data['lIsFavorite'];
     bool hasContent = data['hasContent'];
@@ -124,7 +127,8 @@ class _SuggestionsState extends State<Suggestions> {
                           padding: const EdgeInsets.all(8.0),
                           child: ListeBieres(
                             lBieres: lBiereSpon,
-                            ressourceBaseUrl: ressourceBaseUrl,
+                            noPicture: noPicture,
+                            bierePicture: bierePicture,
                             lIsFavorite: lSponIsFav,
                             isSuggestion: true,
                           ),
@@ -151,7 +155,8 @@ class _SuggestionsState extends State<Suggestions> {
                           padding: const EdgeInsets.all(8.0),
                           child: ListeBieres(
                             lBieres: lSuggestions,
-                            ressourceBaseUrl: ressourceBaseUrl,
+                            noPicture: noPicture,
+                            bierePicture: bierePicture,
                             lIsFavorite: lIsFavorite,
                             isSuggestion: true,
                           ),

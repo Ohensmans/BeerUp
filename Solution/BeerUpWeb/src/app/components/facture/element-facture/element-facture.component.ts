@@ -56,6 +56,9 @@ export class ElementFactureComponent implements OnInit {
     this.subscri.add(this.factureSrv.getOne(this.factureId).subscribe(
       (value) => {
         this.facture = value;
+        if(this.facture.facMotif!=null && this.facture.facMotif!=""){
+          this.solde = 0;
+        }
         let index = this.lOrganisations.findIndex(o => o.orgId == this.factureContent[0].orgId)
         if(index!=-1){
           this.orgNom = this.lOrganisations[index].orgNom;
@@ -65,9 +68,7 @@ export class ElementFactureComponent implements OnInit {
 
     this.dateFormat();
 
-    if(this.facture.facMotif!=""){
-      this.solde = 0;
-    }
+    
     
   }
 

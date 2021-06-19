@@ -37,6 +37,7 @@
                 <div class="form-group col-md-6">
                     <label class="control-label">Type</label>
                     <select formControlName="typEta" class="form-control">
+                        
                         <option *ngFor="let type of lTypeEtab" [ngValue]="type.typEtaId">
                             {{type.typEtaNom}}
                         </option>

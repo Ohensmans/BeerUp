@@ -31,7 +31,7 @@
   
     <div class="d-flex justify-content-center">
         <pagination [totalItems]="lEtabsOrga.length" (pageChanged)="pageChanged($event)" previousText="{{previousText}}"
-        nextText="{{nextText}}" [itemsPerPage]="itemsPerPage"></pagination>
+        nextText="{{nextText}}" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"></pagination>
     </div>
 
     <br>
