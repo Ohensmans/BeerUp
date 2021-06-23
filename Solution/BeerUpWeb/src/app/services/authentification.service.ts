@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserManager, User, UserManagerSettings, WebStorageStateStore} from 'oidc-client';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UtilService } from './util.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthentificationService {
 
   private user = null as any;
 
-  constructor(private jwtSrv : JwtHelperService, private util:UtilService) { 
+  constructor(private jwtSrv : JwtHelperService, private util:UtilService, private router : Router) { 
     this.manager = new UserManager(this.getClientSettings());
     this.manager.getUser()
     .then(
@@ -40,7 +41,7 @@ export class AuthentificationService {
         // les scopes
         scope:"openid profile ApiBeerUp.all",
         // url app Angular au retour d'IS après logout (attention AccountOptions à modifier dans IS)
-        post_logout_redirect_uri:'http://localhost:4200/',
+        post_logout_redirect_uri:'http://localhost:4200/home',
         // pour save le user dans localStorage
         userStore: new WebStorageStateStore({ store: window.localStorage })
     }
@@ -63,7 +64,8 @@ export class AuthentificationService {
   }
 
   signOut() {
-    return this.manager.signoutRedirect();
+    this.manager.removeUser();
+    this.manager.signoutRedirect();
   }
 
   getToken(){
@@ -90,19 +92,19 @@ export class AuthentificationService {
   }
 
   getUserGroupEtabEtab(){
-    return this.getToken().GroupEtablissementEtab;
+    return this.getToken().GroupEtablissementEtablissements;
   }
 
   getUserGroupBiereBieres(){
-    return this.getToken().GroupBiereBiere;
+    return this.getToken().GroupBiereBieres;
   }
 
   getUserGroupAchatBieres(){
-    return this.getToken().GroupAchatBiere;
+    return this.getToken().GroupAchatBieres;
   }
 
   getUserGroupAchatEtab(){
-    return this.getToken().GroupAchatEtab;
+    return this.getToken().GroupAchatEtablissements;
   }
 
   userIsValide(){

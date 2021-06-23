@@ -35,7 +35,7 @@ namespace BeerUpApi.Controllers
 
         // GET: api/Horaires/5
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Horaire>> GetHoraire(Guid id)
+        public ActionResult<IEnumerable<Horaire>> GetHorairesEtab(Guid id)
         {
             var param = new SqlParameter("@EtaId", id);
             List<Horaire> horaires = (List<Horaire>)_context.Horaires.FromSqlRaw("GetHorairesEtab @EtaId", param).ToList();
@@ -104,22 +104,31 @@ namespace BeerUpApi.Controllers
         [Authorize(Policy = "hasEtabAccess")]
         public async Task<ActionResult<Horaire>> PostHoraire(Horaire horaire)
         {
-            if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
+            try
             {
-                var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
-                var eta = await _context.Etablissements.FindAsync(horaire.EtaId);
-
-                if (eta == null || orgId != eta.OrgId)
+                if (!AuthGuard.isAdmin(HttpContext.User.Claims.ToList()))
                 {
-                    return Forbid();
+                    var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
+                    var eta = await _context.Etablissements.FindAsync(horaire.EtaId);
+
+                    if (eta == null || orgId != eta.OrgId)
+                    {
+                        return Forbid();
+                    }
                 }
+
+                _context.Horaires.Add(horaire);
+                await _context.SaveChangesAsync();
+                var item = await _context.Horaires.FindAsync(horaire.HorId);
+
+                return Ok(item);
             }
-
-            _context.Horaires.Add(horaire);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHoraire", new { id = horaire.HorId }, horaire);
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
 
         // DELETE: api/Horaires/5
         [Authorize(Policy = "hasEtabAccess")]

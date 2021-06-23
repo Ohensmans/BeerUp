@@ -27,7 +27,7 @@ $(document).ready(function () {
 
 function CheckAll(listeCheckBox) {
 
-    console.log(listeCheckBox.length);
+    
 
     if (listeCheckBox.length) {
 

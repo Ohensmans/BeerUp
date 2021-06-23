@@ -1,16 +1,16 @@
 <form class="innerForm" [formGroup]="jourForm" (ngSubmit)="onSubmitForm()">
     <tr [ngClass]="getClass()">
-        <td>
+        <td style="text-align: center;">
             <input type="date" class="form-control" min="{{dateMin}}" id="jouDate" formControlName="jouDate">
         </td>
 
-        <td>
-            <button *ngIf="!isNew()" class="text-center btn btn-primary" type="submit">Sauvegarder</button>
-            <button *ngIf="isNew()" class="text-center btn btn-primary" type="submit">Créer</button>
+        <td style="text-align: center;">
+            <button *ngIf="!isNew()" class=" btn btn-primary" type="submit">Sauvegarder</button>
+            <button *ngIf="isNew()" class="text-align: center; btn btn-primary" type="submit">Créer</button>
         </td>
     
-        <td>
-            <button *ngIf="!isNew()" class="text-center btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
+        <td style="text-align: center;">
+            <button *ngIf="!isNew()" class=" btn btn-danger" type="button" (click)="supprimer()">Supprimer</button>
         </td>
     
     </tr>

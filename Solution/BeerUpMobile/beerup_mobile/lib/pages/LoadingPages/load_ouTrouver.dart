@@ -1,5 +1,7 @@
 import 'package:beerup_mobile/models/EtabModel.dart';
+import 'package:beerup_mobile/models/JourFermetureModel.dart';
 import 'package:beerup_mobile/services/CallApi/EtabService.dart';
+import 'package:beerup_mobile/services/CallApi/JourFermetureService.dart';
 import 'package:beerup_mobile/services/LocalizationService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -65,9 +67,12 @@ class _LoadOuTrouverState extends State<LoadOuTrouver> {
       // }
       startLatitude = lattitudeTest;
       startLongitude = longitudeTest;
-
+      
       lEtabs = await EtabService()
           .getEtabDistance(distance, startLatitude, startLongitude, bieId);
+      lEtabs.forEach((element) async {
+        List<JourFermeture> lJours = await JourFermetureService().getJours(element.etaId);
+        element.checkDate(lJours);});
       Etablissement etabl = await EtabService().getEtabSponso();
       lEtabSponso.add(etabl);
 

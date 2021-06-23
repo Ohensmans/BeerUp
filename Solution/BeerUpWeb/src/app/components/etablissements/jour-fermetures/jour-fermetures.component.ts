@@ -22,6 +22,7 @@ export class JourFermeturesComponent implements OnInit {
   modalRef!: BsModalRef;
   jourForm: FormGroup;
   dateMin:string;
+  estNew:Boolean;
 
   constructor(private util:UtilService, private formBuilder:FormBuilder, private modalService:BsModalService, private toastr:ToastrService, 
     private jourSrv : JoursFermetureService, private datePipe: DatePipe) { 
@@ -30,7 +31,8 @@ export class JourFermeturesComponent implements OnInit {
     this.dateMin = new Date().toISOString().substr(0, 10);
     this.jourForm = new FormGroup({
       jouDate: new FormControl(''),
-    })
+    });
+    this.estNew =false;
   }
 
   ngOnInit(): void {
@@ -38,17 +40,18 @@ export class JourFermeturesComponent implements OnInit {
       jouDate: [this.jour.jouDate.toString().substr(0, 10), [Validators.required]]
     });
     this.jour.etaId = this.eta.etaId;
+    if(this.jour.jouId==''){
+      this.estNew = true;
+    }
   }
 
   isNew(){
-    if(this.jour.jouId==""){
-      return true;
-    }
-    return false;
+    return this.estNew;
   }
 
   creer(){
     this.jourSrv.addJour(this.jour);
+    this.estNew = false;
   }
 
   sauvegarder(){
@@ -71,8 +74,8 @@ export class JourFermeturesComponent implements OnInit {
 
       if(this.isNew())
       {
-        this.jour.jouId = Guid.create().toString();
-        this.creer();      
+        this.jour.jouId = Guid.create().toString(); 
+        this.creer();    
       }
       else
       {

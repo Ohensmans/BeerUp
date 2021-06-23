@@ -47,6 +47,26 @@ export class BieresOrgaService {
     );  
   }
 
+  deleteBiere(id:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+  this.http.delete<string>(
+      this.util.apiBieresUrl+id,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        let index = this.lAllowedBieresOrga.findIndex(x => x.bieId == id);
+        if(this.lAllowedBieresOrga.length>1){
+        this.lAllowedBieresOrga.splice(index,1);
+        }
+        else{
+          this.lAllowedBieresOrga = new Array<BiereModele>();
+        }
+        this.lAllowedBieresOrga$.next(this.lAllowedBieresOrga);
+      }
+    )
+  }
+
   getAllowedBiere(lBiere : Array<BiereModele>, achat : boolean){
     let lAllowBieres : Array<string>;
     this.lAllowedBieresOrga = Array(0);
@@ -61,20 +81,24 @@ export class BieresOrgaService {
       this.lAllowedBieresOrga = lBiere;
     }
     
-    else if(lAllowBieres!=null && lAllowBieres[0]!="All"){
+    else if(lAllowBieres!=null){
       if(Array.isArray(lAllowBieres)){
       lAllowBieres.forEach(element => {
-        let index = lBiere.findIndex(x => x.etaId == element)
+        let index = lBiere.findIndex(x => x.bieId == element)
         if (index!=-1){
          this.lAllowedBieresOrga.push(lBiere[index]);
         }
       });
     }
     else{
+      if(lAllowBieres!="All"){
       let aloneBieId = lAllowBieres;
       let index = lBiere.findIndex(x => x.bieId == aloneBieId)
       if (index!=-1){
        this.lAllowedBieresOrga.push(lBiere[index]);
+      }}
+      else{
+        this.lAllowedBieresOrga = lBiere;
       }
     }
     }

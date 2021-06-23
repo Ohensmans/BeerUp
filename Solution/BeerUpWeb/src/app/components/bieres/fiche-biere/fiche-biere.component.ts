@@ -161,6 +161,7 @@ uploadFileCheck = (files: FileList | null) =>{
     this.confirmModifImage(files);
   }
   else{
+    this.biere.bieId = Guid.create().toString();
     this.upload(files);
   }
 }
@@ -203,7 +204,9 @@ upload(files:FileList){
         this.messageUpload = 'Chargement réussi';
         if(event.body!=null && event.body.propertyIsEnumerable('fileName')){
           this.biere.biePhoto = (event.body as any).fileName;
+          if(!this.isNew()){
           this.biereSrv.updateBiere(this.biere, this.biere.bieId);
+          }
         }   
       }
     });
@@ -259,6 +262,7 @@ onSubmitForm(){
     this.biere.bieDesc = this.biereForm.value.bieDesc;
     this.biere.biePhoto = this.biereForm.value.biePhoto;
     this.biere.bieDegreAlcool = this.biereForm.value.bieDegreAlcool;
+    this.biere.userId = this.authSrv.getUserId().toString();
     this.avis.avisAcid = this.biereForm.value.avisAcid;
     this.avis.avisCafe = this.biereForm.value.avisCafe;
     this.avis.avisCara = this.biereForm.value.avisCara;

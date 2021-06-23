@@ -137,7 +137,7 @@
 
             <div class="col-md-12 row">
                 <!--Photo-->
-                <div class="photo col-md-6" style="text-align:center;">
+                <div class="photo col-md-12" style="text-align:center;">
                     <label class="control-label">Photo</label>
                     <div *ngIf="etab.etaPhoto!=null && etab.etaPhoto!=''" class="photo">
                         <img [src]="createImgPath(etab.etaPhoto)" style="height:120px;">
@@ -163,81 +163,17 @@
                         </span>
                     </div>
                 </div>
-
-                 <!--Jours Fermetures-->
-                <div class="card col-md-6">
-                    <div class="card-header">
-                        Jours de fermetures
-                    </div>
-                    <table  class="table">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Jour</th>
-                                <th class="text-center">Enregistrer</th>
-                                <th class="text-center">Supprimer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <app-jour-fermetures class="innerForm" *ngFor="let jo of lJours"
-                            [jour]="jo"
-                            [eta]="etab">
-                            </app-jour-fermetures>
-                        </tbody>
-                    </table>
-                    <div *ngIf="!lJours.length" class="card-header">
-                        Il n'existe pas encore de jour de fermeture pour cet établissement
-                    </div>
-                    <br>
-                    <br>
-                
-                    <button class="btn btn-primary" (click)="addJour()">Ajouter un jour</button>
-                
-                </div>
             </div>
-
-            <br>
-            <br>
-
-
-        <div class="col-md-12">
-            <!--Horaires-->
-            <div class="card">
-                <div class="card-header">
-                    Horaires d'ouvertures
-                </div>
-                <table  class="table">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Jour</th>
-                            <th class="text-center">Ouverture</th>
-                            <th class="text-center">Fermeture</th>
-                            <th class="text-center">Enregistrer</th>
-                            <th class="text-center">Supprimer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <app-horaire class="innerForm" *ngFor="let hor of lHoraires"
-                        [horaire]="hor"
-                        [eta]="etab"
-                        [lHoraires]="lHoraires">
-                        </app-horaire>
-                    </tbody>
-                </table>
-                <div *ngIf="!lHoraires.length" class="card-header">
-                    Il n'existe pas encore d'horaire pour cet établissement
-                </div>
+            
+            <div>
                 <br>
                 <br>
-            
-                <button class="btn btn-primary" (click)="addHoraire()">Ajouter un horaire</button>
-            
             </div>
-        </div>
 
-        <br>
-        <br>
-
-        <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <div class="col-md-12 row">
+            <button class="btn btn-primary" type="submit">Enregistrer</button>
+            <div class="btn btn-danger" routerLink="/Etablissements/">Retour au tableau de bord des établissements</div>
+          </div>
         </form>
     </div>
 

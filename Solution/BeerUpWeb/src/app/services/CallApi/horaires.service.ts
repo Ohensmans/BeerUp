@@ -22,6 +22,8 @@ export class HorairesService {
 
   getAllHorairesEtab(id:string){
     const token = this.authSrv.getUser().id_token;
+    this.lHoraire= Array(0);
+    this.lHoraire$.next(this.lHoraire);
 
     var result = this.http.get<HoraireModele[]>(
       this.util.apiHorairesUrl+id,
@@ -33,6 +35,12 @@ export class HorairesService {
         this.lHoraire$.next(this.lHoraire);
       }
     )
+  }
+
+  saveAllNewHoraire(){
+    this.lHoraire.forEach(element => {
+      this.addHoraire(element);
+    })
   }
 
   addNewHoraire(){

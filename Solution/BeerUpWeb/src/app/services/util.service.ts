@@ -5,9 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class UtilService {
 
+  //IdentityServer
+  registerUrl = 'http://192.168.179.194:5000/account/registerweb';
+  adminUserUrl = 'http://192.168.179.194:5000/AdministrationUsers';
+
+
   //Api BeerUp
-  urlBeerUpApi = 'http://192.168.179.134:5001/';
-  urlIdentity = 'http://192.168.179.134:5000';
+  urlBeerUpApi = 'http://192.168.179.194:5001/';
+  urlIdentity = 'http://192.168.179.194:5000';
   apiUrl = this.urlBeerUpApi+'api/';
   apiTarifsBieresUrl = this.apiUrl+'TarifsVueBieres/';
   apiTarifsEtabsUrl = this.apiUrl+'TarifsVueEtabs/';
@@ -52,9 +57,6 @@ export class UtilService {
   //External Api
   VATUrl = "http://apilayer.net/api/validate";
 
-  //IdentityServer
-  registerUrl = 'http://192.168.179.134:5000/account/registerweb';
-  adminUserUrl = 'http://192.168.179.134:5000/AdministrationUsers';
 
   //Parameter
   TypeTarifVueEtab = "Etab";

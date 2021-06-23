@@ -43,8 +43,17 @@ export class VenteBieresEtaService {
       { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
     ).subscribe(
       (value) => {
-        this.lVentesBieresEtab.push(value);
-        this.lVentesBieresEtab$.next(this.lVentesBieresEtab)
+        let index = this.lVentesBieresEtab.findIndex(x => x.venteBiereEtaId == '')
+        if(index!=1){
+          if(this.lVentesBieresEtab.length>1){
+            this.lVentesBieresEtab[index] = value;
+            }
+          else{
+            this.lVentesBieresEtab = new Array<VenteBiereEtaModele>();
+            this.lVentesBieresEtab.push(value);
+            }
+          this.lVentesBieresEtab$.next(this.lVentesBieresEtab);
+        }
       }
     );
   }

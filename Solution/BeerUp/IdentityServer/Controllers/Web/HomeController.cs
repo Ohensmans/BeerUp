@@ -144,17 +144,18 @@ namespace IdentityServer.Controllers.Web
 
             var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
-                Address = "http://localhost:5000/connect/token",
+                Address = "http://192.168.179.194:5000/connect/token",
 
                 ClientId = "IdentityBeerUp",
                 ClientSecret = "secret",
                 Scope = "ApiBeerUp.all"
             });
-
+            var custom = response.Json.TryGetString("access_token");
             var user = User;
-
-            var idToken = await HttpContext.GetTokenAsync("id_token");
             
+
+            string idToken = await HttpContext.GetTokenAsync("id_token");
+
             return View();
         }
     }

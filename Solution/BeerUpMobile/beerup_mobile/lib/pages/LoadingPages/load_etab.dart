@@ -32,7 +32,7 @@ class _LoadEtabState extends State<LoadEtab> {
       lHoraires = await HoraireService().getHoraires(etab.etaId);
       lJours = await JourFermetureService().getJours(etab.etaId);
 
-      etab.estJourFermeture = checkDate();
+      etab.checkDate(lJours);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var noPicture = prefs.getString('noPicture');
@@ -50,13 +50,7 @@ class _LoadEtabState extends State<LoadEtab> {
     }
   }
 
-  bool checkDate() {
-    var now = new DateTime.now();
-    return lJours.any((element) =>
-        element.jouDate.day == now.day &&
-        element.jouDate.month == now.month &&
-        element.jouDate.year == now.year);
-  }
+  
 
   @override
   Widget build(BuildContext context) {

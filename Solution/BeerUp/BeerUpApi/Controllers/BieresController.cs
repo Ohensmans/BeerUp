@@ -128,6 +128,9 @@ namespace BeerUpApi.Controllers
             if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || await AuthGuard.biereIsInUserOrgAsync(id, _context, HttpContext.User.Claims.ToList()))
             {
                 var biere = await _context.Bieres.FindAsync(id);
+                var avis = await _context.AvisBiereUser.Where(a => a.BieId == biere.BieId).ToListAsync();
+                var librairies = await _context.LibrairieUserBieres.Where(l => l.BieId == biere.BieId).ToListAsync();
+                var ventes = await _context.VenteBiereEta.Where(v => v.BieId == biere.BieId).ToListAsync();
                 if (biere == null)
                 {
                     return NotFound();

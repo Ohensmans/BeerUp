@@ -1,11 +1,13 @@
 ﻿using IdentityServer.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Repo.Modeles.ModelesBeerUp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace IdentityServer.ExternalApiCall.BeerUp
@@ -21,8 +23,11 @@ namespace IdentityServer.ExternalApiCall.BeerUp
             this.client = client;
         }
 
-        public async Task<List<Biere>> GetAllBieresOrgaAsync(Guid id)
+        public async Task<List<Biere>> GetAllBieresOrgaAsync(Guid id, string token)
         {
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             var httpResponse = await client.GetAsync($"{baseUrl}{id},{false}");
 
             if (!httpResponse.IsSuccessStatusCode)

@@ -72,10 +72,14 @@ export class EtabsOrgaService {
       });
     }
       else{
+        if(lAllowEtab!='All'){
         let aloneEtaId = lAllowEtab;
         let index = lEtab.findIndex(x => x.etaId == aloneEtaId)
         if (index!=-1){
          this.lAllowedEtabsOrga.push(lEtab[index]);
+        }}
+        else{
+          this.lAllowedEtabsOrga = lEtab;
         }
       }
     }
@@ -95,6 +99,27 @@ export class EtabsOrgaService {
         this.lAllEtabsOrga = value;
         this.getAllowedEtab(value, achat);
         this.getDeletablesEtab();
+      }
+    )
+  }
+
+  deleteEtab(id:string){
+    const token:string = this.authSrv.getUser().id_token;
+
+  this.http.delete<string>(
+      this.util.apiEtablissementsUrl+id,
+      { headers: new HttpHeaders({ "Authorization": "Bearer " + token })}
+    ).subscribe(
+      () => {
+        let index = this.lAllowedEtabsOrga.findIndex(x => x.etaId == id);
+        if(this.lAllowedEtabsOrga.length>1){
+          this.lAllowedEtabsOrga.splice(index,1);
+        }
+        else{
+          this.lAllowedEtabsOrga = new Array<EtablissementModele>();
+        }
+        
+        this.lAllowedEtabsOrga$.next(this.lAllowedEtabsOrga);
       }
     )
   }

@@ -65,7 +65,7 @@ class EtabService {
     String url = prefs.get('apiEtablissements').toString();
     Uri uri = Uri.parse(url);
 
-    var avisJson = jsonEncode(etab.etabToJson());
+    var etabJson = jsonEncode(etab.etabToJson());
 
     try {
       Response response = await post(uri,
@@ -73,7 +73,7 @@ class EtabService {
             "Authorization": "Bearer $accessToken",
             "content-type": "application/json"
           },
-          body: avisJson);
+          body: etabJson);
       if (response.statusCode == 201) {
         return Etablissement.fromJson(jsonDecode(response.body));
       }
@@ -97,7 +97,7 @@ class EtabService {
     };
 
     Uri uri =
-        Uri.http('192.168.179.134:5001', '/api/EtabDistance/', queryParams);
+        Uri.http('192.168.179.194:5001', '/api/EtabDistance/', queryParams);
     List<Etablissement> etabs = [];
     try {
       Response response = await get(uri, headers: {

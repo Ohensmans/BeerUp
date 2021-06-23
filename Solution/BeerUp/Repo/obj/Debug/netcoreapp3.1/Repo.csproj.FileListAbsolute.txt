@@ -27,10 +27,10 @@ C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\bin\Debug\netco
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\bin\Debug\netcoreapp3.1\Repo.runtimeconfig.dev.json
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\bin\Debug\netcoreapp3.1\Repo.dll
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\bin\Debug\netcoreapp3.1\Repo.pdb
-C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.csprojAssemblyReference.cache
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.AssemblyInfoInputs.cache
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.AssemblyInfo.cs
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.csproj.CoreCompileInputs.cache
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.dll
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.pdb
 C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.genruntimeconfig.cache
+C:\Users\Olivier\Desktop\Projets Git\BeerUp\Solution\BeerUp\Repo\obj\Debug\netcoreapp3.1\Repo.csproj.AssemblyReference.cache

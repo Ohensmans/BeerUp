@@ -5,9 +5,9 @@ class Initialization {
   Future<void> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String baseUrl = 'http://192.168.179.134:5001/api/';
+    String baseUrl = 'http://192.168.179.194:5001/api/';
     String ressourceBaseUrl = 'https://storage.googleapis.com/beerup/images';
-    String identityUrl = 'http://192.168.179.134:5000';
+    String identityUrl = 'http://192.168.179.194:5000';
     //String baseUrl = 'http://localhost:5001/api/';
     //String ressourceBaseUrl = 'http://localhost:5001';
     //String identityUrl = 'http://localhost:5000';

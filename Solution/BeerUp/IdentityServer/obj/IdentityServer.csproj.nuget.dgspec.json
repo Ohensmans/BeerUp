@@ -1,21 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj": {}
+    "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj": {}
   },
   "projects": {
-    "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj": {
+    "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
+        "projectUniqueName": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
         "projectName": "IdentityServer",
-        "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
+        "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\IdentityServer.csproj",
         "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
-        "outputPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\IdentityServer\\obj\\",
+        "outputPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\IdentityServer\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -28,8 +35,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
-                "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
+              "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+                "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj"
               }
             }
           }
@@ -50,19 +57,27 @@
             },
             "IdentityModel": {
               "target": "Package",
-              "version": "[4.6.0, )"
+              "version": "[5.1.0, )"
+            },
+            "IdentityModel.AspNetCore": {
+              "target": "Package",
+              "version": "[3.0.0, )"
             },
             "IdentityServer4": {
               "target": "Package",
-              "version": "[4.1.1, )"
+              "version": "[4.1.2, )"
             },
             "IdentityServer4.AspNetIdentity": {
               "target": "Package",
-              "version": "[4.1.1, )"
+              "version": "[4.1.2, )"
             },
             "IdentityServer4.EntityFramework": {
               "target": "Package",
-              "version": "[4.1.1, )"
+              "version": "[4.1.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.4, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -105,22 +120,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
+    "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
+        "projectUniqueName": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
         "projectName": "Repo",
-        "projectPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
+        "projectPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\Repo.csproj",
         "packagesPath": "C:\\Users\\Olivier\\.nuget\\packages\\",
-        "outputPath": "F:\\Projets GitHub\\BeerUp\\Solution\\BeerUp\\Repo\\obj\\",
+        "outputPath": "C:\\Users\\Olivier\\Desktop\\Projets Git\\BeerUp\\Solution\\BeerUp\\Repo\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\Olivier\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -189,7 +211,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

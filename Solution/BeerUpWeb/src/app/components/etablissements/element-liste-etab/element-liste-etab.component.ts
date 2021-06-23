@@ -2,7 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { EtablissementModele } from 'src/app/models/etablissement-modele';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { EtablissementsService } from 'src/app/services/CallApi/etablissements.service';
+import { EtabsOrgaService } from 'src/app/services/CallApi/etabs-orga.service';
 import { ConfirmComponent } from '../../confirm/confirm.component';
 
 @Component({
@@ -17,7 +19,8 @@ export class ElementListeEtabComponent implements OnInit{
   @Input() etab:EtablissementModele;
   modalRef!: BsModalRef;
 
-  constructor(private modalService:BsModalService, private toastr:ToastrService, private EtablissementsSrv: EtablissementsService,) { 
+  constructor(private modalService:BsModalService, private toastr:ToastrService, private EtablissementsSrv: EtablissementsService,private EtabsOrgaSrv:EtabsOrgaService,
+    private authSrv:AuthentificationService ) { 
     this.etab = new EtablissementModele();
   }
 
@@ -38,7 +41,13 @@ export class ElementListeEtabComponent implements OnInit{
           (value: boolean) =>{
           if(value){
             {
-              this.EtablissementsSrv.deleteEtab(this.etab.etaId);
+              if(this.authSrv.isAdmin()){
+                this.EtablissementsSrv.deleteEtab(this.etab.etaId);
+              }
+              else{
+                this.EtabsOrgaSrv.deleteEtab(this.etab.etaId);
+              }
+              
             }
           }
         }); 

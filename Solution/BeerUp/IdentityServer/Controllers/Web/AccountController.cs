@@ -34,6 +34,7 @@ namespace IdentityServer.Controllers.Web
         //adresse de redirection après enregistrement
         private readonly string BeerUpWebUrlLogin;
 
+
         public AccountController(UserManager<Utilisateur> userManager, SignInManager<Utilisateur> signInManager, IIdentityServerInteractionService interaction, IEventService events,
             IOptions<Models.BaseUrl> url, IOrganisationService organisationService, IAdresseFacturationService adresseService)
         {
@@ -336,7 +337,7 @@ namespace IdentityServer.Controllers.Web
 
                 if (PostLogoutRedirectUri==null)
                 {
-                    PostLogoutRedirectUri = BeerUpWebUrl;
+                    PostLogoutRedirectUri = BeerUpWebUrlLogin;
                 }
 
                 if (User?.Identity.IsAuthenticated == true)

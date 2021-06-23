@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "hasWebAccess")]
+    [Authorize]
     [ApiController]
     public class BieresOrgaController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace BeerUpApi.Controllers
         [HttpGet("{id},{isAchat}")]
         public async Task<ActionResult<List<Biere>>> GetBieresOrganisationsAsync(Guid id, bool isAchat)
         {
-            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList()) == id)
+            if (AuthGuard.isAdminOrGroupAdmin(HttpContext.User.Claims.ToList()) || AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList()) == id)
             {
 
                 var param = new SqlParameter("@OrgId", id);

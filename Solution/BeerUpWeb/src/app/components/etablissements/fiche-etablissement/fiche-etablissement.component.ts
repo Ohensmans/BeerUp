@@ -33,8 +33,6 @@ export class FicheEtablissementComponent implements OnInit {
   subsr:Subscription;
   lTypeEtab:TypesEtabModele[];
   lOrganisations:OrganisationModele[];
-  lHoraires:HoraireModele[];
-  lJours:JourFermetureModele[];
   etabForm: FormGroup;
   noImageAvailableUrl = "";
   response!: { dbPath: ''; };
@@ -44,26 +42,26 @@ export class FicheEtablissementComponent implements OnInit {
   messageUpload:string;
   progressUpload:number;
   validVat:boolean;
+  estNouveau:boolean;
 
   modalRef!: BsModalRef;
 
   constructor(private EtablissementsSrv: EtablissementsService, private route:ActivatedRoute, private TypesEtabSrv : TypesEtabService, private formBuilder:FormBuilder,
     private upImageSrv: UploadImagesService, private util:UtilService, private modalService:BsModalService, private authSrv : AuthentificationService, 
-    private orgSrv:OrganisationsService, private horaireSrv : HorairesService, private joursSrv:JoursFermetureService, private toastr:ToastrService, 
+    private orgSrv:OrganisationsService,  private toastr:ToastrService, 
    private router : Router, private vatSrv:VatLayerService ) {
 
     this.etab = new EtablissementModele();
     this.subsr = new Subscription();
     this.lTypeEtab = new Array<TypesEtabModele>(0);
     this.lOrganisations = new Array<OrganisationModele>(0);
-    this.lHoraires = new Array(0);
-    this.lJours = new Array(0);
     this.messageUpload ="";
     this.progressUpload =0;
     this.noImageAvailableUrl = this.util.noImageAvailableUrl;
     this.submitted = false;
     this.validVat = false;
     this.uploadedPicture = false;
+    this.estNouveau = false;
     
 
     this.etabForm = new FormGroup({
@@ -96,15 +94,7 @@ export class FicheEtablissementComponent implements OnInit {
       (value) =>{this.lOrganisations = value;}
     ));
 
-     //obtient la liste de type des horaires
-     this.subsr.add(this.horaireSrv.lHoraire$.subscribe(
-      (value) => {this.lHoraires = value;}
-    ));
-
-    //obtient la liste de type des jours de fermeture
-    this.subsr.add(this.joursSrv.lJours$.subscribe(
-      (value) => {this.lJours = value;}
-    ));
+    
 
     //récupère l'établissement si il n'est pas nouveau
     if(id!="new")
@@ -113,38 +103,21 @@ export class FicheEtablissementComponent implements OnInit {
         (value) => {
           this.etab = value;
           this.fillInForm();
+          this.estNouveau = false;
         }
       ));
-      this.horaireSrv.getAllHorairesEtab(id);
-      this.joursSrv.getAllJoursEtab(id);
+      
     }
     else{
       this.etab = new EtablissementModele();
       this.fillInForm();
+      this.estNouveau = true;
     }
     this.TypesEtabSrv.getAll();
     this.orgSrv.getAll();
   }
 
-  addHoraire(){
-    if (this.lHoraires.find(x => x.horId == "")==undefined){
-      this.horaireSrv.addNewHoraire();
-    }
-    else
-    {
-      this.infoToastr("Veuillez créer le nouvel horaire avant d'en faire un nouveau");
-    } 
-  }
 
-  addJour(){
-    if (this.lJours.find(x => x.jouId == "")==undefined){
-      this.joursSrv.addNewJour();
-    }
-    else
-    {
-      this.infoToastr("Veuillez créer le nouveau jour de fermeture avant d'en faire un nouveau");
-    } 
-  }
 
   isAdmin(){
     return this.authSrv.isAdmin();
@@ -216,7 +189,9 @@ export class FicheEtablissementComponent implements OnInit {
           this.messageUpload = 'Chargement réussi';
           if(event.body!=null && event.body.propertyIsEnumerable('fileName')){
             this.etab.etaPhoto = (event.body as any).fileName;
+            if(!this.etabIsNew){
             this.EtablissementsSrv.updateEtab(this.etab, this.etab.etaId);
+            }
           }   
         }
       });
@@ -313,6 +288,13 @@ export class FicheEtablissementComponent implements OnInit {
 
   get f(){
     return this.etabForm;
+  }
+
+  etabIsNew(){
+    if(this.etab.orgId==''){
+      return true;
+    }
+    return false;
   }
 
 

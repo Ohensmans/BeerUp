@@ -1,6 +1,8 @@
+import 'package:beerup_mobile/models/JourFermetureModel.dart';
 import 'package:beerup_mobile/services/CallApi/BiereService.dart';
 import 'package:beerup_mobile/services/CallApi/EtabService.dart';
 import 'package:beerup_mobile/services/CallApi/FavorisService.dart';
+import 'package:beerup_mobile/services/CallApi/JourFermetureService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:beerup_mobile/models/BiereDescrModel.dart';
@@ -73,6 +75,8 @@ class _LoadResultatsState extends State<LoadResultats> {
       if (lEtabs.isNotEmpty) {
         Etablissement etaSponso = await EtabService().getEtabSponso();
         if (etaSponso != null || etaSponso.etaId != null) {
+          List<JourFermeture> lJours = await JourFermetureService().getJours(etaSponso.etaId);
+          etaSponso.checkDate(lJours);
           lEtaSponso.add(etaSponso);
         }
       }

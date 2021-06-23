@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace BeerUpApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "hasEtabAccess")]
+    [Authorize]
     [ApiController]
     public class EtabsOrgaController : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace BeerUpApi.Controllers
         {
             var orgId = AuthGuard.getOrgIdUser(HttpContext.User.Claims.ToList());
 
-            if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == id)
+            if (AuthGuard.isAdminOrGroupAdmin(HttpContext.User.Claims.ToList()) || orgId == id)
             {
 
                 var param = new SqlParameter("@OrgId", id);
@@ -44,19 +44,6 @@ namespace BeerUpApi.Controllers
                     etabs = new List<Etablissement>();
                 }
 
-                if (!AuthGuard.isAdminOrGroupAdmin(HttpContext.User.Claims.ToList()) && !AuthGuard.hasFullAccess(false, isAchat, HttpContext.User.Claims.ToList())){
-                    List<Guid> lAccess = AuthGuard.getListAccess(false, isAchat, HttpContext.User.Claims.ToList());
-
-                    List<Etablissement> lEtabs = new List<Etablissement>();
-                    foreach(Etablissement etab in etabs)
-                    {
-                        if(lAccess.Any(a => a == etab.EtaId))
-                        {
-                            lEtabs.Add(etab);
-                        }
-                    }
-                    return lEtabs;
-                }
 
                 return etabs;
             }

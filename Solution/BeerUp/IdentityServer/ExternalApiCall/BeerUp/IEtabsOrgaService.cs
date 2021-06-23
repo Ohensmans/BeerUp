@@ -7,6 +7,6 @@ namespace IdentityServer.ExternalApiCall.BeerUp
 {
     public interface IEtabsOrgaService
     {
-        Task<List<Etablissement>> GetAllEtablissementsOrgaAsync(Guid id);
+        Task<List<Etablissement>> GetAllEtablissementsOrgaAsync(Guid id, string token);
     }
 }

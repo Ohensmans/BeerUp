@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace IdentityServer.ExternalApiCall.BeerUp
@@ -21,8 +22,10 @@ namespace IdentityServer.ExternalApiCall.BeerUp
             this.client = client;
         }
 
-        public async Task<List<Etablissement>> GetAllEtablissementsOrgaAsync(Guid id)
+        public async Task<List<Etablissement>> GetAllEtablissementsOrgaAsync(Guid id, string token)
         {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             var httpResponse = await client.GetAsync($"{baseUrl}{id},{false}");
 
             if (!httpResponse.IsSuccessStatusCode)

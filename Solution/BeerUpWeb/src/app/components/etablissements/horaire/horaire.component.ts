@@ -25,6 +25,7 @@ export class HoraireComponent implements OnInit {
   
   @Input() eta:EtablissementModele;
   lJoursSemaine:Array<string>;
+  estNew:Boolean;
 
   modalRef!: BsModalRef;
   horaireForm: FormGroup;
@@ -40,7 +41,8 @@ export class HoraireComponent implements OnInit {
       horDebut: new FormControl(''),
       horFin: new FormControl(''),
       horId: new FormControl(''),
-    })
+    });
+    this.estNew = false;
   }
 
   ngOnInit(): void {
@@ -52,18 +54,19 @@ export class HoraireComponent implements OnInit {
       horId:[this.horaire.horId],
     }, { validators: [TimeDebutIsOlderDirective(), TimeDebEqualTimeFinDirective(), JoinScheduleDirective(this.lHoraires)] });
     this.horaire.etaId = this.eta.etaId;
+    if(this.horaire.horId==""){
+      this.estNew = true;
+    }
     
   }
 
   isNew(){
-    if(this.horaire.horId==""){
-      return true;
-    }
-    return false;
+    return this.estNew;
   }
 
   creer(){
     this.horaireSrv.addHoraire(this.horaire);
+    this.estNew = false;
     this.toastrCreate();
   }
 
@@ -104,8 +107,8 @@ export class HoraireComponent implements OnInit {
 
       if(this.isNew())
       {
-        this.horaire.horId = Guid.create().toString();
-        this.creer();      
+        this.horaire.horId = Guid.create().toString();     
+        this.creer();
       }
       else
       {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -66,6 +67,7 @@ namespace BeerUpApi.Controllers
                     {
                         EtablDescr etabDes = new EtablDescr();
                         etabDes.Convert(etab);
+                        etabDes.estOuvert = await EtabEstOuvert.estOuvertAsync(etab, _context);
 
                         etabDes.nomTypeEta = lTypes.FirstOrDefault(t => t.TypEtaId == etab.TypEtaId).TypEtaNom;
 

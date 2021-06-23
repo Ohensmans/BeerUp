@@ -47,12 +47,16 @@ namespace BeerUpApi.Controllers
         public async Task<ActionResult<Etablissement>> GetEtablissement(Guid id)
         {
             var etablissement = await _context.Etablissements.FindAsync(id);
+            
+            EtablDescr etabDes = new EtablDescr();
+            etabDes.Convert(etablissement);
+            etabDes.estOuvert = await EtabEstOuvert.estOuvertAsync(etablissement, _context);
 
             if (etablissement == null)
             {
                 return NotFound();
             }
-            return etablissement;
+            return etabDes;
         }
 
         // PUT: api/Etablissements/5
@@ -166,6 +170,9 @@ namespace BeerUpApi.Controllers
             if (AuthGuard.isAdmin(HttpContext.User.Claims.ToList()) || orgId == id)
             {
                 var etablissement = await _context.Etablissements.FindAsync(id);
+                var horaires = await _context.Horaires.Where(h => h.EtaId == etablissement.EtaId).ToListAsync();
+                var jours = await _context.JoursFermeture.Where(j => j.EtaId == etablissement.EtaId).ToListAsync();
+                var ventes = await _context.VenteBiereEta.Where(v => v.EtaId == etablissement.EtaId).ToListAsync();
                 if (etablissement == null)
                 {
                     return NotFound();

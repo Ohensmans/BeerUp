@@ -36,7 +36,7 @@ namespace BeerUpApi
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder => builder
-                .WithOrigins("http://localhost:4200", "http://192.168.179.134:5000")
+                .WithOrigins("http://localhost:4200", "http://192.168.179.194:5000")
                 .AllowAnyHeader()
                 .AllowAnyMethod()) ;
             });
@@ -51,7 +51,7 @@ namespace BeerUpApi
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://192.168.179.134:5000";
+                    options.Authority = "http://192.168.179.194:5000";
                     options.RequireHttpsMetadata = false;
                     //options.Audience = "ApiBeerUp";
                     options.TokenValidationParameters = new TokenValidationParameters

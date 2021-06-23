@@ -275,7 +275,7 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.HasOne(d => d.Bie)
                     .WithMany(p => p.AvisBiereUsers)
                     .HasForeignKey(d => d.BieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_AvisBiereUser_Bieres");
             });
 
@@ -526,7 +526,7 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.HasOne(d => d.Bie)
                     .WithMany(p => p.LibrairieUserBieres)
                     .HasForeignKey(d => d.BieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_LibrairieUserBieres_Bieres");
             });
 
@@ -703,13 +703,13 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.HasOne(d => d.Bie)
                     .WithMany(p => p.VenteBiereEta)
                     .HasForeignKey(d => d.BieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_VenteBiereEta_Bieres1");
 
                 entity.HasOne(d => d.Eta)
                     .WithMany(p => p.VenteBiereEta)
                     .HasForeignKey(d => d.EtaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_VenteBiereEta_Etablissements");
 
                 entity.HasOne(d => d.TypServ)
@@ -745,7 +745,7 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.HasOne(d => d.Eta)
                     .WithMany(p => p.Horaires)
                     .HasForeignKey(d => d.EtaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_Horaires_Etablissements");
             });
 
@@ -767,7 +767,7 @@ namespace Repo.Modeles.ModelesBeerUp
                 entity.HasOne(d => d.Eta)
                     .WithMany(p => p.JoursFermeture)
                     .HasForeignKey(d => d.EtaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_JoursFermeture_Etablissements");
             });
 

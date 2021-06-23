@@ -24,7 +24,7 @@ class _ItemListEtabsState extends State<ItemListEtabs> {
       child: Column(
         children: [
           SizedBox(
-            height: widget.etab.orgId != orgIdEmpty ? 80 : 45,
+            height: 80,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

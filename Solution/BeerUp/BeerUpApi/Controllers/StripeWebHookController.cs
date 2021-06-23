@@ -85,7 +85,7 @@ namespace BeerUpApi.Controllers
 
                 return Ok();
             }
-            catch (StripeException e)
+            catch (StripeException)
             {
                 return BadRequest();
             }

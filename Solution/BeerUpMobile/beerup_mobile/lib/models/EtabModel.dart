@@ -1,3 +1,5 @@
+import 'package:beerup_mobile/models/JourFermetureModel.dart';
+
 class Etablissement {
   String etaId;
   String orgId;
@@ -49,7 +51,7 @@ class Etablissement {
         etaCoordLat = json['etaCoordLat'],
         distance =
             json['distance'] != null ? json['distance'].toDouble() : null,
-        estOuvert = json['estOuvert'] == 'true',
+        estOuvert = json['estOuvert'],
         etaActif = json['etaActif'] == 'true',
         nomTypeEta = json['nomTypeEta'];
 
@@ -57,4 +59,13 @@ class Etablissement {
         'etaId': etaId,
         'etaNom': etaNom,
       };
+
+    checkDate(List<JourFermeture>lJours) {
+    var now = new DateTime.now();
+    this.estJourFermeture = lJours.any((element) =>
+        element.jouDate.day == now.day &&
+        element.jouDate.month == now.month &&
+        element.jouDate.year == now.year);
+    } 
+
 }

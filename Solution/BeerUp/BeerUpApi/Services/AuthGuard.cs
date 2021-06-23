@@ -34,9 +34,19 @@ namespace BeerUpApi.Services
             return false;
         }
 
+        public static bool isFromIS(List<Claim> userClaims)
+        {
+            if (userClaims.Where(c => c.Type == "client_id" && c.Value == "IdentityBeerUp").Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool isAdminOrGroupAdmin(List<Claim> userClaims)
         {
-            if (isAdmin(userClaims) || isGroupAdmin(userClaims))
+            if (isAdmin(userClaims) || isGroupAdmin(userClaims) || isFromIS(userClaims))
             {
                 return true;
             }
@@ -119,7 +129,7 @@ namespace BeerUpApi.Services
             List<Guid> listAccess = new List<Guid>();
             if(isBiere && isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatBiere").ToList();
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatBieres").ToList();
                 foreach(Claim claim in listAcces)
                 {
                     listAccess.Add(Guid.Parse(claim.Value));
@@ -128,7 +138,7 @@ namespace BeerUpApi.Services
 
             if (!isBiere && isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatEtab").ToList();
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatEtablissements").ToList();
                 foreach (Claim claim in listAcces)
                 {
                     listAccess.Add(Guid.Parse(claim.Value));
@@ -137,7 +147,7 @@ namespace BeerUpApi.Services
 
             if (!isBiere && !isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupEtablissementEtab").ToList();
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupEtablissementEtablissements").ToList();
                 foreach (Claim claim in listAcces)
                 {
                     listAccess.Add(Guid.Parse(claim.Value));
@@ -146,7 +156,7 @@ namespace BeerUpApi.Services
 
             if (isBiere && !isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupBiereBiere").ToList();
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupBiereBieres").ToList();
                 foreach (Claim claim in listAcces)
                 {
                     listAccess.Add(Guid.Parse(claim.Value));
@@ -165,8 +175,8 @@ namespace BeerUpApi.Services
         {
             if (isBiere && isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatBiere").ToList();
-                if (listAcces[0].Value == "All")
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatBieres").ToList();
+                if (listAcces != null && listAcces[0].Value == "All")
                 {
                     return true;
                 }
@@ -175,8 +185,8 @@ namespace BeerUpApi.Services
 
             if (!isBiere && isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatEtab").ToList();
-                if (listAcces[0].Value == "All")
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupAchatEtablissements").ToList();
+                if (listAcces != null && listAcces[0].Value == "All")
                 {
                     return true;
                 }
@@ -184,8 +194,8 @@ namespace BeerUpApi.Services
 
             if (!isBiere && !isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupEtablissementEtab").ToList();
-                if (listAcces[0].Value == "All")
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupEtablissementEtablissements").ToList();
+                if (listAcces != null&& listAcces[0].Value == "All")
                 {
                     return true;
                 }
@@ -193,8 +203,8 @@ namespace BeerUpApi.Services
 
             if (isBiere && !isAchat)
             {
-                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupBiereBiere").ToList();
-                if (listAcces[0].Value == "All")
+                List<Claim> listAcces = userClaims.Where(c => c.Type == "GroupBiereBieres").ToList();
+                if (listAcces!=null &&listAcces[0].Value == "All")
                 {
                     return true;
                 }

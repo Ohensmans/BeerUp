@@ -17,8 +17,8 @@ using FluentValidation;
 using IdentityServer.Validator;
 using IdentityServer.ViewModels.Account;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
 using IdentityServer.ViewModels.Administration;
+
 
 namespace IdentityServer
 {
@@ -88,18 +88,19 @@ namespace IdentityServer
              .AddCookie("Cookies")
              .AddOpenIdConnect("oidc", options =>
              {
-                 options.Authority = "http://192.168.179.134:5000";
+                 options.Authority = "http://192.168.179.194:5000";
                  options.RequireHttpsMetadata = false;
-                 
+
                  options.ClientId = "IdentityBeerUp";
                  options.ClientSecret = "secret";
                  options.ResponseType = "code id_token";
-                 
-                 options.SaveTokens = true;
-                 options.GetClaimsFromUserInfoEndpoint = true;
 
                  options.Scope.Add("ApiBeerUp.all");
+
+                 options.SaveTokens = true;
+                 options.GetClaimsFromUserInfoEndpoint = true;
              });
+            
 
             services.AddScoped<IUserClaimsPrincipalFactory<Utilisateur>, MyUserClaimsPrincipalFactory>();
 

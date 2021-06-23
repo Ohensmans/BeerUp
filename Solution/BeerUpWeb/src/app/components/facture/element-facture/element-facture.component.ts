@@ -62,11 +62,12 @@ export class ElementFactureComponent implements OnInit {
         let index = this.lOrganisations.findIndex(o => o.orgId == this.factureContent[0].orgId)
         if(index!=-1){
           this.orgNom = this.lOrganisations[index].orgNom;
-        }      
+        } 
+        this.dateFormat();
       }
     ));
 
-    this.dateFormat();
+    
 
     
     

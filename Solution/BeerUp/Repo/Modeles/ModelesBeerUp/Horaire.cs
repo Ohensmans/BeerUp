@@ -22,7 +22,7 @@ namespace Repo.Modeles.ModelesBeerUp
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
         public TimeSpan HorFin { get; set; }
-
+        [JsonIgnore]
         public virtual Etablissement Eta { get; set; }
     }
 }

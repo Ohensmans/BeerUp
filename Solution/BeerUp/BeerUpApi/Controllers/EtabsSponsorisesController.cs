@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using BeerUpApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Modeles.ModelesBeerUp;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BeerUpApi.Controllers
@@ -41,7 +39,8 @@ namespace BeerUpApi.Controllers
                 {
                     EtablDescr etabDe = new EtablDescr();
                     etabDe.Convert(etab);
-                    etabDe.estOuvert = await estOuvertAsync(etab);
+                    etabDe.estOuvert = await EtabEstOuvert.estOuvertAsync(etab, _context);
+                    
 
                     TypesEtablissement type = await _context.TypesEtablissements.FirstOrDefaultAsync(t => t.TypEtaId == etabDe.TypEtaId);
                     if (type != null)
@@ -92,27 +91,7 @@ namespace BeerUpApi.Controllers
             }
         }
 
-        private async Task<bool> estOuvertAsync(Etablissement etab)
-        {
-            DateTime today = DateTime.Today;
-            List<JourFermeture> lJours = await _context.JoursFermeture.Where(j => j.EtaId == etab.EtaId && j.JouDate == today).ToListAsync();
-
-            if (lJours.Count == 0)
-            {
-                TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-
-                DateTimeFormatInfo dateTimeFormats = new CultureInfo("fr-FR").DateTimeFormat;
-                String jour = DateTime.Now.ToString("dddd", dateTimeFormats);
-
-                List<Horaire> horaires = await _context.Horaires.Where(h => h.EtaId == etab.EtaId && h.HorJour.ToUpper() == jour.ToUpper() && h.HorDebut <= now && h.HorFin > now).ToListAsync();
-
-                if (horaires.Any())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+       
 
 
     }

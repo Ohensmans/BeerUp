@@ -58,6 +58,7 @@ import { GroupEtabGuardService } from './services/Guards/group-etab-guard.servic
 import { GroupBiereGuardService } from './services/Guards/group-biere-guard.service';
 import { GroupAchatGuardService } from './services/Guards/group-achat-guard.service';
 import { LoggedGuardService } from './services/Guards/logged-guard.service';
+import { FicheHorairesComponent } from './components/etablissements/fiche-horaires/fiche-horaires.component';
 
 
 
@@ -99,6 +100,7 @@ import { LoggedGuardService } from './services/Guards/logged-guard.service';
     TabBordFactComponent,
     ElementFactureComponent,
     FicheFactureComponent,
+    FicheHorairesComponent,
   ],
   imports: [
     CommonModule,
@@ -128,6 +130,7 @@ import { LoggedGuardService } from './services/Guards/logged-guard.service';
       { path: 'Bieres', canActivate:[AuthGuardService], component : TabBordBieresComponent, data:{syncGuards:[GroupBiereGuardService]}},
       { path: 'FicheBiere/:id', canActivate:[AuthGuardService], component : FicheBiereComponent, data:{syncGuards:[GroupBiereGuardService]}},
       { path: 'FicheEtablissement/:id', canActivate:[AuthGuardService], component : FicheEtablissementComponent, data:{syncGuards:[GroupEtabGuardService]}},
+      { path: 'FicheHoraires/:id', canActivate:[AuthGuardService], component : FicheHorairesComponent, data:{syncGuards:[GroupEtabGuardService]}},
       { path: 'TabBordBieresEtab/:id', canActivate:[AuthGuardService], component : TabBordBieresEtabComponent, data:{syncGuards:[GroupEtabGuardService]}},
       { path: 'AchatsEtab', canActivate:[AuthGuardService], component : TabBordAchatComponent, data:{syncGuards:[GroupAchatGuardService]}},
       { path: 'AchatsBiere', canActivate:[AuthGuardService], component : TabBordAchatBiereComponent, data:{syncGuards:[GroupAchatGuardService]}},

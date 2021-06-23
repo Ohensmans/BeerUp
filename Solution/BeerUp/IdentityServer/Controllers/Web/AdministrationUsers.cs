@@ -1,6 +1,8 @@
-﻿using IdentityServer.ExternalApiCall.BeerUp;
+﻿using IdentityModel.Client;
+using IdentityServer.ExternalApiCall.BeerUp;
 using IdentityServer.ViewModels;
 using IdentityServer.ViewModels.Administration;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +12,9 @@ using Repo.Modeles.ModelesBeerUp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Controllers.Web
@@ -26,8 +30,8 @@ namespace IdentityServer.Controllers.Web
         private readonly IEtabsOrgaService etabsOrgaService;
 
         private const string accessAll = "All";
-        private const string accessBiere = "Biere";
-        private const string accessEtablissement = "Etab";
+        private const string accessBiere = "Bieres";
+        private const string accessEtablissement = "Etablissements";
 
         public AdministrationUsers(RoleManager<Role> roleManager, UserManager<Utilisateur> userManager, IOptions<Models.BaseUrl> url, IBieresOrgaService bieresOrgaService, IEtabsOrgaService etabsOrgaService)
         {
@@ -661,13 +665,13 @@ namespace IdentityServer.Controllers.Web
                 }
 
                 var roles = await userManager.GetRolesAsync(user);
-                var result = await userManager.RemoveFromRolesAsync(user, roles);
+                //var result = await userManager.RemoveFromRolesAsync(user, roles);
 
-                if (!result.Succeeded)
-                {
-                    ModelState.AddModelError("", "Ne peut pas retirer l'utilisaeur des rôles existants");
-                    return View(model);
-                }
+                //if (!result.Succeeded)
+                //{
+                //    ModelState.AddModelError("", "Ne peut pas retirer l'utilisaeur des rôles existants");
+                //    return View(model);
+                //}
 
                 List<string> lRoleName = new List<string>();
 
@@ -676,19 +680,36 @@ namespace IdentityServer.Controllers.Web
                     if (role.isSelected)
                         lRoleName.Add(role.RoleName);
                 }
+                var rolesUser = await userManager.GetRolesAsync(user);
+
+                foreach (string roleName in rolesUser)
+                {
+                    if (!lRoleName.Contains(roleName))
+                    {
+                        await userManager.RemoveFromRoleAsync(user, roleName);
+                        var lClaims = await userManager.GetClaimsAsync(user);
+                        lClaims = lClaims.Where(c => c.Type.Contains(roleName)).ToList();
+                        await userManager.RemoveClaimsAsync(user, lClaims);
+                    }
+                }
 
                 if (lRoleName.Any())
                 {
-                    result = await userManager.AddToRolesAsync(user, lRoleName);
-
-                    if (!result.Succeeded)
+                   foreach (string roleName in lRoleName)
                     {
-                        ModelState.AddModelError("", "Ne peut pas ajouter l'utilisaeur à ces rôles");
-                        return View(model);
-                    }
+                        bool alreadyInRole = await userManager.IsInRoleAsync(user, roleName);
+                        if(!alreadyInRole)
+                        {
+                             var resultAdd = await userManager.AddToRoleAsync(user, roleName);
 
-                    foreach (string roleName in lRoleName)
-                    {
+                            if (!resultAdd.Succeeded)
+                            {
+                                ModelState.AddModelError("", "Ne peut pas ajouter l'utilisaeur à ces rôles");
+                                return View(model);
+                            }
+
+                        }
+
                         List<Claim> lClaimsUser = new List<Claim>();
 
                         Role role = await roleManager.FindByNameAsync(roleName);
@@ -699,11 +720,11 @@ namespace IdentityServer.Controllers.Web
                             lClaimsUser.Add(new Claim(roleName + claim.Value, accessAll));
                         }
 
-                        result = await userManager.AddClaimsAsync(user, lClaimsUser);
+                        var result = await userManager.AddClaimsAsync(user, lClaimsUser);
 
                         if (!result.Succeeded)
                         {
-                            ModelState.AddModelError("", "Ne peut pas ajouter l'utilisaeur les claims liés à ces rôles");
+                            ModelState.AddModelError("", "Ne peut pas ajouter l'utilisateur les claims liés à ces rôles");
                             return View(model);
                         }
 
@@ -738,8 +759,21 @@ namespace IdentityServer.Controllers.Web
                 vm.NomUser = user.UserName;
                 vm.NomRole = role.Name;
 
-                List<Biere> lBieres = await bieresOrgaService.GetAllBieresOrgaAsync(userOrgId);
-                List<Etablissement> lEtablissements = await etabsOrgaService.GetAllEtablissementsOrgaAsync(userOrgId);
+                var client = new HttpClient();
+
+                var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+                {
+                    Address = "http://192.168.179.194:5000/connect/token",
+
+                    ClientId = "IdentityBeerUp",
+                    ClientSecret = "secret",
+                    Scope = "ApiBeerUp.all"
+                });
+
+                var token = response.Json.GetString("access_token");
+
+                List<Biere> lBieres = await bieresOrgaService.GetAllBieresOrgaAsync(userOrgId, token);
+                List<Etablissement> lEtablissements = await etabsOrgaService.GetAllEtablissementsOrgaAsync(userOrgId, token);
 
                 var claimsRole = await roleManager.GetClaimsAsync(role);
                 var claimsUser = await userManager.GetClaimsAsync(user);

@@ -21,6 +21,8 @@ export class JoursFermetureService {
 
   getAllJoursEtab(id:string){
     const token = this.authSrv.getUser().id_token;
+    this.lJours= Array(0);
+    this.lJours$.next(this.lJours);
 
     var result = this.http.get<JourFermetureModele[]>(
       this.util.apiJoursFermetureUrl+id,
@@ -32,6 +34,12 @@ export class JoursFermetureService {
         this.lJours$.next(this.lJours);
       }
     )
+  }
+
+  saveAllNewJours(){
+    this.lJours.forEach(element => {
+      this.addJour(element);
+    })
   }
 
   addNewJour(){
